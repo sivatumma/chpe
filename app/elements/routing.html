@@ -31,6 +31,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page('/contact', function () {
       app.route = 'contact';
     });
+    page('/mahesh', function () {
+      app.route = 'mahesh';
+    });
+    page('/mahesh/:message', function (data) {
+      console.log(data.params);
+      app.route = 'mahesh-info'; 
+      app.params = data.params;
+    });
 
     // add #! before urls
     page({

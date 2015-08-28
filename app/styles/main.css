@@ -12,3 +12,40 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
 }
+
+.list {
+      padding-top: 12px;
+      background-color: white;
+      display: inline-block;
+      width: 240px;
+      height: 228px;
+      margin: 12px;
+      @apply(--shadow-elevation-2dp);
+    }
+    .short {
+      padding-top: 12px;
+      height: 216px;
+    }
+    h4 {
+      margin-left: 24px;
+    }
+    .avatar {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #ccc;
+    }
+    .blue {
+      background-color: var(--paper-light-blue-300);
+    }
+    .red {
+      background-color: var(--paper-red-300);
+    }
+    .orange {
+      background-color: var(--paper-amber-300);
+    }
+    .green {
+      background-color: var(--paper-green-300);
+    }

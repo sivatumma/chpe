@@ -51,8 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- endbuild -->
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
-  <link rel="import" href="elements/elements.html">
-  <!-- endreplace-->
+  <link rel="import" href="elements/elements.html">  <!-- endreplace-->
 </head>
 
 <body unresolved class="fullbleed layout vertical">
@@ -61,6 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template is="dom-bind" id="app">
 
     <paper-drawer-panel id="paperDrawerPanel">
+
       <!-- Drawer Scroll Header Panel -->
       <paper-scroll-header-panel drawer fixed>
 
@@ -85,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="mail"></iron-icon>
             <span>Contact</span>
           </a>
-           <a data-route="mahesh" href="/mahesh">
+          <a data-route="mahesh" href="/mahesh">
             <iron-icon icon="mail"></iron-icon>
             <span>Mahesh</span>
           </a>
@@ -97,6 +97,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-scroll-header-panel main condenses keep-condensed-header>
 
         <!-- Main Toolbar -->
+    
         <paper-toolbar id="mainToolbar" class="tall">
           <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
           <span class="flex"></span>
@@ -115,10 +116,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="bottom-title paper-font-subhead">The Guts of Healthcare Industry</div>
           </div>
 
-        </paper-toolbar>
-
+        </paper-toolbar class="tall">
+          <paper-toolbar style="width:100%;height:65px;border-bootm:1px solid #ccc; position:fixed; background:#efefef;">
+        <paper-icon-button icon="more-vert" on-tap="moreAction"></paper-icon-button>
+      </paper-toolbar>
         <!-- Main Content -->
-        <div class="content">
+
+
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
@@ -178,25 +182,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <p>This is the contact section</p>
               </paper-material>
             </section>
-
-            <section data-route="mahesh">
+             <section data-route="mahesh">
               <paper-material elevation="1">
                 <h2 class="paper-font-display2">Mahesh</h2>
-                <p>mahesh </p>
-                <a href="/mahesh/testing">Click Me</a>
+                <p>This is the mahesh section</p>
               </paper-material>
             </section>
-
-            <section data-route="mahesh-info">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">Mahesh</h2>
-                user:<span>{{params.message}} </span>
-              </paper-material>
-            </section>
-
 
           </iron-pages>
         </div>
+        
       </paper-scroll-header-panel>
     </paper-drawer-panel>
 
@@ -216,7 +211,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </platinum-sw-cache>
     </platinum-sw-register>
     -->
-
+    
   </template>
 
   <!-- build:js scripts/app.js -->
