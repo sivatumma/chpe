@@ -90,22 +90,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </a>
 
                     <a data-route="schemes" href="/schemes">
-                        <iron-icon icon="info"></iron-icon>
+                        <iron-icon icon="social:pages"></iron-icon>
                         <span>View Scheme</span>
                     </a>
 
                     <a data-route="createScheme" href="/schemes/Add-On">
-                        <iron-icon icon="info"></iron-icon>
+                        <iron-icon icon="star-half"></iron-icon>
                         <span>Create Scheme</span>
                     </a>
 
                     <a data-route="createScheme" href="/schemes/Coupon">
-                        <iron-icon icon="info"></iron-icon>
+                        <iron-icon icon="star-half"></iron-icon>
                         <span>Create Coupon</span>
                     </a>
 
                     <a data-route="createScheme" href="/schemes/Gift-Card">
-                        <iron-icon icon="info"></iron-icon>
+                        <iron-icon icon="star-half"></iron-icon>
                         <span>Create Gift Card</span>
                     </a>
 
@@ -223,11 +223,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </paper-material>
                         </section>
 
-                        <section data-route="createScheme">
+                        <!-- <section data-route="createScheme">
                             <paper-material elevation="1">
                                 <h2 class="paper-font-display2">Create Scheme - <span>{{params.create}}</span></h2>
                                 <p>View where we create <span>{{params.create}}</span></p>
                             </paper-material>
+                        </section> -->
+                        <section data-route="createScheme">
+                            <chpe-scheme scheme-type="{{params.create}}"></chpe-scheme>
                         </section>
 
                         <section data-route="specialEffects">
