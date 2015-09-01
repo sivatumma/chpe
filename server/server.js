@@ -26,7 +26,6 @@ require('./models/order.js')(mongoose);
 require('./models/diagnostic.js')(mongoose);
 require('./models/TestModel.js')(mongoose);
 
-var logFile = fs.createWriteStream('./pricingEngine.log', {flags: 'a'}); //use {flags: 'w'} to open in write mode
 
 app.configure(function() {
     app.set('default_http_port', process.env.PORT || 90);

@@ -19,21 +19,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'home';
     });
 
-    page('/users', function () {
-      app.route = 'users';
-    });
-
-    page('/users/:operation', function (data) {
-      app.route = 'user-info';
-      app.params = data.params;
-    });
-
-    page('/contact', function () {
-      app.route = 'contact';
-    });
     page('/mahesh', function () {
       app.route = 'mahesh';
     });
+    
     page('/mahesh/:message', function (data) {
       console.log(data.params);
       app.route = 'mahesh-info'; 
@@ -47,7 +36,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     page('/schemes/:create', function (data) {
-      app.route = 'createScheme';
       app.params = data.params;
       console.log(data.params.create);
     });
