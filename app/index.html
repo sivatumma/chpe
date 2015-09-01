@@ -71,6 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span class="paper-font-title"><img src="ch-logo.png"/></span>
         </paper-toolbar>
 
+
         <!-- Drawer Content -->
         <paper-menu class="list pad" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
           <a data-route="home" href="/">
@@ -136,14 +137,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         </paper-toolbar>
 
+
+
         <!-- Main Content -->
         <div class="content">
+
+        <paper-toolbar id="iconToolBar" class="fixed">
+            <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+            <link-icon icon-type="social:share"></link-icon>
+            <link-icon icon-type="visibility"></link-icon>
+            <link-icon icon-type="list"></link-icon>
+            <link-icon icon-type="settings"></link-icon>
+            <link-icon icon-type="face"></link-icon>
+            <link-icon icon-type="apps"></link-icon>
+      </div>
+          </paper-toolbar>
+
+        <paper-dialog heading="Title for dialog" transition="paper-transition-center">
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home" selected>
 
               <paper-material elevation="1">
                 <p class="paper-font-body2">Schemes (ADD_ON) section</p>
+                    
               </paper-material>
 
 
@@ -180,7 +197,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
 
               <paper-card elevation="1">
-              <h1>Iron Ajax test</h1>
               <iron-ajax
                   id="ajax" auto 
                   url="http://172.16.2.88:90/api/pricingengine?API_KEY=MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9" 
