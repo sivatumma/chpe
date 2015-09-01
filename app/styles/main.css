@@ -10,7 +10,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 body {
   background: #fafafa;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #333;
+  color: #000;
+}
+
+/*#topBar {padding:20px !important;}*/
+
+paper-material.radial-gradiant-addon {
+	padding:20px !important;
 }
 
 .list {
@@ -49,3 +55,72 @@ body {
     .green {
       background-color: var(--paper-green-300);
     }
+
+/*Too bar styles*/
+#iconToolBar{
+  margin-top:10px; 
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+  background-color: #fff;
+  color:#000;
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid #e5e5e5;
+}
+.dropdown-content{
+    background-color: #fff;
+    max-height:360px;
+    max-width: 360px;
+
+}
+#iconToolBar .content{
+  max-height:200px;
+    background-color: #fff;
+}
+.paper-menu-button-0 paper-material.paper-menu-button{
+  background-color:#fff;
+}
+#contentWrapper.iron-dropdown > *{
+  width:360px;
+  height:260px;
+}
+.content{
+  height: auto !important;
+}
+iron-dropdown{
+  top:248px;
+  border-top: none;
+}
+#topBar paper-menu-button{
+  padding:0px;
+  color:#444343;
+}
+#topBar link-icon{
+  margin: 10px;
+}
+.activeLink{
+    background: #d4d4d4;
+    border-radius:2px;
+    transition: background-color 0.8s ease;   
+}
+.arrow-up {
+  width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #ccc; 
+  position:absolute; 
+  right: 0px; 
+  top:0px; 
+  left:13px;
+}
+.arrow-up-white {
+  width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff; 
+  position:absolute; 
+  right: 0px; 
+  top: 1px; 
+  left: 13px;
+}
+

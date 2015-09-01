@@ -1,0 +1,52 @@
+<dom-module id="link-icon">
+    <template>
+        <paper-menu-button vertical-align="bottom" verticalAlign="200">
+            <paper-icon-button class="dropdown-trigger" icon="{{iconType}}">
+             </paper-icon-button>
+            <div class="content dropdown-content">
+<!--                 <span class="arrow-up"></span>
+                <span class="arrow-up-white"></span> -->
+                <div class="list short">
+                    <template is="dom-repeat"  items="{{iconLinks}}">
+                    <paper-icon-item>
+                        <iron-icon icon="home" item-icon></iron-icon>
+                        <span><a data-route="{{item.route}}" href="{{item.route}}">{{item.route}}</a></span>
+                    </paper-icon-item>
+                    </template>
+                </div>
+            </div>
+        </paper-menu-button>
+    </template>
+
+    <script>
+         var toggleClass = function(element, cName) {
+            if (element) {
+                if (element.className.length > 0) {
+                    element.className += ' ';
+                }
+                element.className = cName;
+            }
+        };
+
+
+        Polymer({
+            is: 'link-icon',
+            properties:{
+              iconType:String,
+              iconLinks:Array
+            },
+            
+            listeners:{
+                'paper-dropdown-open':'activeMenu',
+                'paper-dropdown-close':'removeActiveMenu'
+            },
+            activeMenu:function(){
+                toggleClass(this,"activeLink");
+            },
+            removeActiveMenu:function(){
+                toggleClass(this,"");
+            }
+        });
+    </script>
+
+</dom-module>
