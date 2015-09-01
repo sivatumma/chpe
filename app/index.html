@@ -12,82 +12,82 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <html lang="">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="description" content="The Pricing Engine Team, Callhealth.">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="The Pricing Engine Team, Callhealth." />
-  <title>Schemes Dashboard</title>
-  <!-- Place favicon.ico in the `app/` directory -->
+    <meta charset="utf-8">
+    <meta name="description" content="The Pricing Engine Team, Callhealth.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="The Pricing Engine Team, Callhealth." />
+    <title>Schemes Dashboard</title>
+    <!-- Place favicon.ico in the `app/` directory -->
 
-  <!-- Chrome for Android theme color -->
-  <meta name="theme-color" content="#303F9F">
+    <!-- Chrome for Android theme color -->
+    <meta name="theme-color" content="#303F9F">
 
-  <!-- Web Application Manifest -->
-  <link rel="manifest" href="manifest.json">
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
 
-  <!-- Tile color for Win8 -->
-  <meta name="msapplication-TileColor" content="#3372DF">
+    <!-- Tile color for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
 
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="CHPE">
-  <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="CHPE">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
 
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
-  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
+    <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
 
-  <!-- Tile icon for Win8 (144x144) -->
-  <meta name="msapplication-TileImage" content="favicon.png">
+    <!-- Tile icon for Win8 (144x144) -->
+    <meta name="msapplication-TileImage" content="favicon.png">
 
-  <!-- build:css styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css">
-  <!-- endbuild-->
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild-->
 
-  <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
-  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <!-- endbuild -->
+    <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <!-- endbuild -->
 
-  <!-- will be replaced with elements/elements.vulcanized.html -->
-  <link rel="import" href="elements/elements.html">
-  <!-- endreplace-->
+    <!-- will be replaced with elements/elements.vulcanized.html -->
+    <link rel="import" href="elements/elements.html">
+    <!-- endreplace-->
 </head>
 
 
 <body unresolved class="fullbleed layout vertical">
 
-  <span id="browser-sync-binding"></span>
+    <span id="browser-sync-binding"></span>
 
-  <template is="dom-bind" id="app">
+    <template is="dom-bind" id="app">
 
-    <paper-drawer-panel id="paperDrawerPanel">
-      <!-- Drawer Scroll Header Panel -->
-      <paper-scroll-header-panel drawer fixed>
+        <paper-drawer-panel id="paperDrawerPanel">
+            <!-- Drawer Scroll Header Panel -->
+            <paper-scroll-header-panel drawer fixed>
 
-        <!-- Drawer Toolbar -->
-        <paper-toolbar id="drawerToolbar">
-          <span class="paper-font-title"><img src="ch-logo.png"/></span>
-        </paper-toolbar>
+                <!-- Drawer Toolbar -->
+                <paper-toolbar id="drawerToolbar">
+                    <span class="paper-font-title"><img src="ch-logo.png"/></span>
+                </paper-toolbar>
 
 
-        <!-- Drawer Content -->
-        <paper-menu class="list pad" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
-          <a data-route="home" href="/">
-            <iron-icon icon="home"></iron-icon>
-            <span>Home</span>
-          </a>
+                <!-- Drawer Content -->
+                <paper-menu class="pad" id="chepeMenu" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
+                    <a data-route="home" href="/">
+                        <iron-icon icon="home"></iron-icon>
+                        <span>Home</span>
+                    </a>
 
-          <a data-route="users" href="/users">
-            <iron-icon icon="info"></iron-icon>
-            <span>Users</span>
-          </a>
+                    <a data-route="users" href="/users">
+                        <iron-icon icon="info"></iron-icon>
+                        <span>Users</span>
+                    </a>
 
-          <a data-route="contact" href="/contact">
-            <iron-icon icon="mail"></iron-icon>
-            <span>Contact</span>
-          </a>
+                    <a data-route="contact" href="/contact">
+                        <iron-icon icon="mail"></iron-icon>
+                        <span>Contact</span>
+                    </a>
 
           <a data-route="schemes" href="/schemes">
             <iron-icon icon="social:pages"></iron-icon>
@@ -109,158 +109,143 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>Create Gift Card</span>
           </a>
 
-        </paper-menu>
-      </paper-scroll-header-panel>
+                </paper-menu>
+            </paper-scroll-header-panel>
 
 
-      <!-- Main Area -->
-      <paper-scroll-header-panel main condenses keep-condensed-header>
+            <!-- Main Area -->
+            <paper-scroll-header-panel main condenses keep-condensed-header>
 
-        <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar" class="tall">
-          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
-          <span class="flex"></span>
+                <!-- Main Toolbar -->
+                <paper-toolbar id="mainToolbar" class="tall">
+                    <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+                    <span class="flex"></span>
 
-          <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
+                    <!-- Toolbar icons -->
+                    <paper-icon-button icon="refresh"></paper-icon-button>
+                    <paper-icon-button icon="search"></paper-icon-button>
 
-          <!-- Application name -->
-          <div class="middle middle-container center horizontal layout">
-            <div class="app-name">Schemes Dashboard</div>
-          </div>
+                    <!-- Application name -->
+                    <div class="middle middle-container center horizontal layout">
+                        <div class="app-name">Schemes Dashboard</div>
+                    </div>
 
-          <!-- Application sub title -->
-          <div class="bottom bottom-container center horizontal layout">
-            <div class="bottom-title paper-font-subhead">The Guts of Healthcare Industry</div>
-          </div>
+                    <!-- Application sub title -->
+                    <div class="bottom bottom-container center horizontal layout">
+                        <div class="bottom-title paper-font-subhead">The Guts of Healthcare Industry</div>
+                    </div>
 
-        </paper-toolbar>
+                </paper-toolbar>
 
+                <paper-toolbar id="iconToolBar" class="fixed">
+                    <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                    <link-icon icon-type="social:share"></link-icon>
+                    <link-icon icon-type="visibility"></link-icon>
+                    <link-icon icon-type="list"></link-icon>
+                    <link-icon icon-type="settings"></link-icon>
+                    <link-icon icon-type="face"></link-icon>
+                    <link-icon icon-type="apps"></link-icon>
+                </paper-toolbar>
 
+                <paper-dialog heading="Title for dialog" transition="paper-transition-center">
+                    <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
-        <!-- Main Content -->
-        <div class="content">
+                        <section data-route="home" selected>
 
-        <paper-toolbar id="iconToolBar" class="fixed">
-            <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-            <link-icon icon-type="social:share"></link-icon>
-            <link-icon icon-type="visibility"></link-icon>
-            <link-icon icon-type="list"></link-icon>
-            <link-icon icon-type="settings"></link-icon>
-            <link-icon icon-type="face"></link-icon>
-            <link-icon icon-type="apps"></link-icon>
-      </div>
-          </paper-toolbar>
+                            <paper-material elevation="1">
+                                <p class="paper-font-body2">Schemes (ADD_ON) section</p>
 
-        <paper-dialog heading="Title for dialog" transition="paper-transition-center">
-          <iron-pages attr-for-selected="data-route" selected="{{route}}">
-
-            <section data-route="home" selected>
-
-              <paper-material elevation="1">
-                <p class="paper-font-body2">Schemes (ADD_ON) section</p>
-                    
-              </paper-material>
+                            </paper-material>
 
 
-              <paper-material elevation="0" class="style-scope radial-gradiant-addon">
-                <p class="paper-font-body2">Coupons section</p>
+                            <paper-material elevation="0" class="style-scope radial-gradiant-addon">
+                                <p class="paper-font-body2">Coupons section</p>
 
-                <paper-card inline elevation="0" class="style-scope radial-gradiant-addon">
-                  <p class="paper-font-body2">Example Coupon 1</p>
-                </paper-card>
-                <paper-card elevation="0" class="style-scope radial-gradiant-addon">
-                  <p class="paper-font-body2">Example Coupon 2</p>
-                </paper-card>
-                <paper-card elevation="0" class="style-scope radial-gradiant-addon">
-                  <p class="paper-font-body2">Example Coupon 3</p>
-                </paper-card>
-
-
-              </paper-material>
+                                <paper-card inline elevation="0" class="style-scope radial-gradiant-addon">
+                                    <p class="paper-font-body2">Example Coupon 1</p>
+                                </paper-card>
+                                <paper-card elevation="0" class="style-scope radial-gradiant-addon">
+                                    <p class="paper-font-body2">Example Coupon 2</p>
+                                </paper-card>
+                                <paper-card elevation="0" class="style-scope radial-gradiant-addon">
+                                    <p class="paper-font-body2">Example Coupon 3</p>
+                                </paper-card>
 
 
-              <paper-material elevation="1">
-                <p class="paper-font-body2">Gift Cards section</p>
-              </paper-material> 
-
-                           <paper-material elevation="1">
-                <p class="paper-font-body2">Hey Siva ! Make Components, Plug.</p>
-              </paper-material>
-
-              <paper-material elevation="1" class="paper-font-body2">
-                <h1 id="license">License</h1>
-                <p>Everything in this repo is private and Confidential and to be used by the intended people only. </p>
-                <p>Copyright (c) 2015 The Pricing Engine Team, Callhealth. All rights reserved.</p>
-                
-              </paper-material>
-
-              <paper-card elevation="1">
-              <iron-ajax
-                  id="ajax" auto 
-                  url="http://172.16.2.88:90/api/pricingengine?API_KEY=MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9" 
-                  method="POST" 
-                  content-type="application/json" 
-                  body='{"on": "newscheme", "operation": "find"}'
-                  handle-as="json">
-              </iron-ajax>
-              </paper-card>
+                            </paper-material>
 
 
-            </section>
+                            <paper-material elevation="1">
+                                <p class="paper-font-body2">Gift Cards section</p>
+                            </paper-material>
 
-            <section data-route="users">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">Users</h2>
-                <p>This is the users section</p>
-                <a href="/users/Siva">Siva</a>
-              </paper-material>
-            </section>
+                            <paper-material elevation="1">
+                                <p class="paper-font-body2">Hey Siva ! Make Components, Plug.</p>
+                            </paper-material>
 
-            <section data-route="user-info">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">
+                            <paper-material elevation="1" class="paper-font-body2">
+                                <h1 id="license">License</h1>
+                                <p>Everything in this repo is private and Confidential and to be used by the intended people only. </p>
+                                <p>Copyright (c) 2015 The Pricing Engine Team, Callhealth. All rights reserved.</p>
+
+                            </paper-material>
+
+                       
+
+
+                        </section>
+
+                        <section data-route="users">
+                            <paper-material elevation="1">
+                                <h2 class="paper-font-display2">Users</h2>
+                                <p>This is the users section</p>
+                                <a href="/users/Siva">Siva</a>
+                            </paper-material>
+                        </section>
+
+                        <section data-route="user-info">
+                            <paper-material elevation="1">
+                                <h2 class="paper-font-display2">
                 User:<span>{{params.operation}}</span>
                 </h2>
-                <div>This is <span>{{params.operation}}</span>'s section</div>
-              </paper-material>
-            </section>
+                                <div>This is <span>{{params.operation}}</span>'s section</div>
+                            </paper-material>
+                        </section>
 
-            <section data-route="contact">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">Contact</h2>
-                <p>This is the contact section</p>
-              </paper-material>
-            </section>
+                        <section data-route="contact">
+                            <paper-material elevation="1">
+                                <h2 class="paper-font-display2">Contact</h2>
+                                <p>This is the contact section</p>
+                            </paper-material>
+                        </section>
 
-            <section data-route="schemes">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">View Schemes</h2>
-                <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
-              </paper-material>
-            </section>
+                        <section data-route="schemes">
+                            <paper-material elevation="1">
+                                <h2 class="paper-font-display2">View Schemes</h2>
+                                <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
+                            </paper-material>
+                        </section>
 
-            <section data-route="createScheme">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">Create Scheme - <span>{{params.create}}</span></h2>
-                <p>View where we create <span>{{params.create}}</span></p>
-              </paper-material>
-            </section>
+                        <section data-route="createScheme">
+                            <paper-material elevation="1">
+                                <h2 class="paper-font-display2">Create Scheme - <span>{{params.create}}</span></h2>
+                                <p>View where we create <span>{{params.create}}</span></p>
+                            </paper-material>
+                        </section>
 
-            <section data-route="specialEffects">
-              <paper-material elevation="1">
-                
-              </paper-material>
-            </section>
+                        <section data-route="specialEffects">
+                            <paper-material elevation="1">
 
-          </iron-pages>
-        </div>
-      </paper-scroll-header-panel>
-    </paper-drawer-panel>
+                            </paper-material>
+                        </section>
 
-    <!-- Uncomment next block to enable Service Worker support (1/2) -->
-    <!--
+                    </iron-pages>
+                    </div>
+            </paper-scroll-header-panel>
+        </paper-drawer-panel>
+
+        <!-- Uncomment next block to enable Service Worker support (1/2) -->
+        <!--
     <paper-toast id="caching-complete"
                  duration="6000"
                  text="Caching complete! This app will work offline.">
@@ -276,11 +261,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </platinum-sw-register>
     -->
 
-  </template>
+    </template>
 
-  <!-- build:js scripts/app.js -->
-  <script src="scripts/app.js"></script>
-  <!-- endbuild-->
+    <!-- build:js scripts/app.js -->
+    <script src="scripts/app.js"></script>
+    <!-- endbuild-->
 </body>
 
 </html>

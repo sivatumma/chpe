@@ -11,6 +11,7 @@ body {
   background: #fafafa;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #000;
+  padding: 0px !important;
 }
 
 paper-material.radial-gradiant-addon {
@@ -56,7 +57,6 @@ paper-material.radial-gradiant-addon {
 
 /*Too bar styles*/
 #iconToolBar{
-  margin-top:10px; 
   box-shadow: 0 2px 4px rgba(0,0,0,.2);
   background-color: #fff;
   color:#000;
@@ -122,3 +122,27 @@ iron-dropdown{
   left: 13px;
 }
 
+/*Dashboard styles*/
+iron-pages{
+  padding: 60px 0px !important ;
+}
+#chepeMenu{
+  padding:10px 0px; 
+}
+
+
+/*scroll bar css in chrome browser*/
+
+::-webkit-scrollbar {
+    width:10px;
+    height: 10px;
+}
+::-webkit-scrollbar-button {
+    background: #ccc;
+}
+::-webkit-scrollbar-track-piece {
+    background: #ccc;
+}
+::-webkit-scrollbar-thumb {
+    background:#888;
+}
