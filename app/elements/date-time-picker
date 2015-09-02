@@ -1,0 +1,38 @@
+<link rel="import"  href="../bower_components/paper-date-picker/paper-date-picker.html">
+<link rel="import"  href="../bower_components/paper-time-picker/paper-time-picker.html">
+
+<dom-module id="date-time-picker">
+    <template>
+    	<paper-item>
+    	<button on-click="_onPrevClick">&lt;&lt;</button>
+        <button on-click="_onNextClick">&gt;&gt;</button>
+         <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
+        <neon-animatable><paper-date-picker></paper-date-picker></neon-animatable>
+        <neon-animatable><paper-time-picker></paper-time-picker></neon-animatable>
+
+      </neon-animated-pages>
+					 
+					 
+			   </paper-item>
+        
+    </template>
+    <script>
+        Polymer({
+            is: 'date-time-picker',
+            properties: {
+                schemeType: String
+            },
+      		this.selected = 0
+            _onPrevClick = function() {
+		        this.entryAnimation = 'slide-from-left-animation';
+		        this.exitAnimation = 'slide-right-animation';
+		        this.selected = this.selected === 0 ? 4 : (this.selected - 1);
+		      },
+      		_onNextClick = function() {
+	        this.entryAnimation = 'slide-from-right-animation';
+	        this.exitAnimation = 'slide-left-animation';
+	        this.selected = this.selected === 4 ? 0 : (this.selected + 1);
+	      }
+        });
+    </script>
+</dom-module>
