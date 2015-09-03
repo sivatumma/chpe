@@ -1,5 +1,5 @@
-<!-- <link rel="import"  href="chips.html"> -->
 
+<link rel="import"  href="date-time-picker.html">
 <dom-module id="chpe-scheme">
     <template>
         <paper-material elevation="1" >
@@ -7,16 +7,15 @@
              <form is="iron-form" id="form" method="post" action="javascript:void(0);">
 	            <paper-input name="name" label="Scheme Name"></paper-input>
 	            <paper-input name="maximumUsages" label="Maximum Usages" type="number" maximum="10"></paper-input>
-	            <paper-input name="startDate" label="Start Date"></paper-input>
+	            <!-- <paper-input name="startDate" label="Start Date" onfocus="openDialog"></paper-input> -->
+	            <date-time-picker></date-time-picker>
 	            <paper-input name="endDate" label="End Date" ></paper-input>
 	            <label>Discount Type</label>
 	            <paper-radio-group selected="%">
 				  <paper-radio-button name="%">%</paper-radio-button>
 				  <paper-radio-button name="Flat">Flat</paper-radio-button>
 				</paper-radio-group>
-
-				
-				    <!-- <multi-value-suggestbox id="multi_suggest" list-options='{
+				<!-- <multi-value-suggestbox id="multi_suggest" list-options='{
 		                "allow_space": false,
 		                "allow_nonmatching": false,"box_width":"" ,"box_height":""
 		            }' list-suggestions = "['siva','suresh']" >
@@ -27,16 +26,21 @@
         </paper-material>
     </template>
     <script>
-        Polymer({
+    	Polymer({
             is: 'chpe-scheme',
             properties: {
                 schemeType: String
             },
             listeners:{
             	'changed':'defaultDiscount',
+            	 'onfocus':'openDialog'
+
             },
             defaultDiscount:function(status){
             	console.log(status);
+            },
+            openDialog:function(){
+            	console.log("Hiii");
             }
         });
     </script>
