@@ -1,31 +1,33 @@
 
 <link rel="import"  href="date-time-picker.html">
+
 <dom-module id="chpe-scheme">
+<style type="text/css">
+	date-time-picker{
+		margin-top: 0px;
+		cursor: pointer;
+	}
+</style>
     <template>
         <paper-material elevation="1" >
-            <h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4>
+      		<h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4>
              <form is="iron-form" id="form" method="post" action="javascript:void(0);">
-	            <paper-input name="name" label="Scheme Name"></paper-input>
-	            <paper-input name="maximumUsages" label="Maximum Usages" type="number" maximum="10"></paper-input>
-	            <!-- <paper-input name="startDate" label="Start Date" onfocus="openDialog"></paper-input> -->
-	            <date-time-picker></date-time-picker>
-	            <paper-input name="endDate" label="End Date" ></paper-input>
+	            <paper-input name="name" pattern="/^[a-zA-Z0-9,-]{3,}[a-zA-Z]*$/" no-label-float 
+	            autoCapitalize="true"   label="Scheme Name"></paper-input>
+	            <paper-input name="maximumUsages" no-label-float label="Maximum Usages" type="number" max="10" min="0"></paper-input>
+	            <date-time-picker date-type="startDate" date-modal="startDateModal" date-time-value="schemeStarts" date-label="Start Date" date-id="startDateDatepicker" time-id="startDateTimepicker"></date-time-picker>
+	            <date-time-picker date-type="endDate"  date-modal="endDateModal" date-time-value="schemeEnds" date-label="End Date" date-id="endDateDatepicker" time-id="endDateTimepicker"></date-time-picker>
 	            <label>Discount Type</label>
 	            <paper-radio-group selected="%">
 				  <paper-radio-button name="%">%</paper-radio-button>
 				  <paper-radio-button name="Flat">Flat</paper-radio-button>
 				</paper-radio-group>
-				<!-- <multi-value-suggestbox id="multi_suggest" list-options='{
-		                "allow_space": false,
-		                "allow_nonmatching": false,"box_width":"" ,"box_height":""
-		            }' list-suggestions = "['siva','suresh']" >
-		    </multi-value-suggestbox> -->
-
 				<paper-button name="submit" type="submit" raised class="pull-right">Submit</paper-input>
 			</form>
         </paper-material>
     </template>
     <script>
+
     	Polymer({
             is: 'chpe-scheme',
             properties: {
@@ -41,6 +43,9 @@
             },
             openDialog:function(){
             	console.log("Hiii");
+            },
+            test:function(evt){
+            	console.log(evt);
             }
         });
     </script>

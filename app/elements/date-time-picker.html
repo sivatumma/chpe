@@ -1,62 +1,122 @@
-
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <dom-module id="date-time-picker">
 	<style type="text/css">
 		.card-actions{
 			padding:10px;
 		}
+		paper-dialog{
+			background: #fff;
+			padding: 0px;
+		}
+		#heading{
+			width: 100px;
+		}
+		#pages{
+			width: 200px;
+		}
+		section > paper-button {
+	      background-color: var(--google-grey-300);
+	      padding: 5px;
+	    }
+	    section > paper-button:hover {
+	      background-color: var(--paper-light-blue-200);
+	      padding: 5px;
+	    }
+	    paper-dialog.colored {
+	      border: 2px solid;
+	      border-color: var(--paper-green-500);
+	      background-color: var(--paper-light-green-50);
+	      color: var(--paper-green-500);
+	    }
+	    paper-dialog.size-position {
+	      position: fixed;
+	      top: 100px;
+	      left:30%;
+	    }
+	   @media(max-width:960px){
+	   	paper-dialog.size-position{
+	   		left: 10%;
+	   	}
+	   }
 	</style>
     <template>
-     <paper-input name="startDate" label="Start Date" on-click="openDialog"></paper-input>
-	 		<paper-card  layout vertical  elevation="1" on-focusout="closeDialog" hidden class="showDatepickerPopup" id="dateTimePopup">
-			  <div class="card-content">
-			  	<div id="showDatepicker">
-			  	<paper-date-picker></paper-date-picker>
-			  	</div>
-			  	<div id="showTimePicker" hidden>
-					<paper-time-picker></paper-time-picker>
-			  	</div>
-			  </div>
-			  <div class="card-actions">
-			    <paper-button raised name="showHideDateTimepicker" type="time" id="showHideDateTimePicker" 
-			     onclick="showHideDateTimePicker()">
-			    	Time Picker
-				</paper-button>
-			  </div>
-			</paper-card>
+     <section onclick="clickHandler(event)">
+     <paper-input name="{{dateType}}"  no-label-float readonly="true" label="{{dateLabel}}"  on-tap="showDialog" id="{{dateTimeValue}}" ></paper-input>
+     	<paper-dialog id="{{dateModal}}" modal class="size-position paper-date-picker-dialog"  on-iron-overlay-closed="dismissDialog">
 
+			  	<div class="datePicker">
+				  	<paper-date-picker id="{{dateId}}"></paper-date-picker>
+			  	</div>
+			  	<div class="timePicker">
+					<paper-time-picker id="{{timeId}}" ></paper-time-picker>
+			  	</div>
+			      <div class="buttons">
+			        <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+			      </div>
+    </paper-dialog>
+    </section>
 	 </template>
     <script>
-    	function showHideDateTimePicker(type){
-            	var type = document.querySelector("#showHideDateTimePicker").getAttribute("type");
-            	console.log(type);
-            	if(type=="time"){
-            		document.querySelector("#showTimePicker").hidden = false;	
-            		document.querySelector("#showDatepicker").setAttribute("hidden",true);
-            		document.querySelector("#showHideDateTimePicker").setAttribute("type","date");
-            		document.querySelector("#showHideDateTimePicker").innerText = "Date Picker";	
-            	}else{
-            		document.querySelector("#showDatepicker").hidden = false;	
-            		document.querySelector("#showTimePicker").setAttribute("hidden",true);
-            		document.querySelector("#showHideDateTimePicker").setAttribute("type","time");
-            		document.querySelector("#showHideDateTimePicker").innerText = "Time Picker";
-            	}
-            }
+    	function clickHandler(e) {
+	      var button = e.target;
+	      while (!button.hasAttribute('data-dialog') && button !== document.body) {
+	        button = button.parentElement;
+	      }
+	      if (!button.hasAttribute('data-dialog')) {
+	        return;
+	      }
+	      var id = button.getAttribute('data-dialog');
+	      var dialog = document.getElementById(id);
+	      if (dialog) {
+	        dialog.open();
+	      }
+	    }
         Polymer({
             is: 'date-time-picker',
             properties: {
-                pickerType: String
+                pickedDate:String,
+                pickedTime:String,
+                dateTimeValue:String,
+                dateType:String,
+                dateLabel:String,
+                dateModal:String,
+                timeId:String,
+                dateId:String
             },
             ready:function(){
-
+            	var monthNames = ["January", "February", "March", "April", "May", "June",
+	                "July", "August", "September", "October", "November", "December"
+	            ];
+            	this.formatDate = function(datestr) {
+            		var date = new Date();
+            		if(datestr){
+					    date = new Date(datestr);
+            		}
+				 return  monthNames[date.getMonth()] + "-"+ ('0' + date.getDate()).slice(-2)+"-"+ date.getFullYear();
+				};
             },
-            openDialog:function(){
-            	document.querySelector("#dateTimePopup").hidden = false;
+            listeners:{
+            	'dismissDialog ':'getDate',
+            	'_onBackdropClick':'getDateTime',
+            	'on-tap':'showDialog'
             },
-            closeDialog:function(){
-            	document.querySelector("#dateTimePopup").style.display="none";
-            }
-            
-            
+            getDateTime:function(){
+            	console.log(document.querySelector("#datePicker").date);
+            },
+            showDialog:function(type){
+            	document.querySelector("#"+this.dateModal).open();
+            },
+            dismissDialog : function(event) {
+		        if (event.detail.confirmed) {
+		        	this.pickedDate = this.formatDate(document.querySelector("#"+this.dateId).date);
+		        	this.pickedTime = document.querySelector("#"+this.timeId).time;
+		            var dateTime = this.pickedDate+' '+this.pickedTime;
+		            document.querySelector("#"+this.dateTimeValue).setAttribute("value",dateTime);
+		            var isoDate = new Date(dateTime);
+		            isoDate = isoDate.toISOString();
+		            document.querySelector("#"+this.dateTimeValue).setAttribute("isoDate",isoDate);
+		        }
+		      }
         });
     </script>
 </dom-module>
