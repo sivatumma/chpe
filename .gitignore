@@ -2,3 +2,5 @@ node_modules
 dist
 bower_components
 .tmp
+C:\\nppdf32Log\\debuglog.txt
+client/external
