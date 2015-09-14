@@ -52,7 +52,7 @@
 </style>
 <template>
 	<paper-material elevation="1">
-		<template is="dom-repeat" items="{{allSchemes}}">
+		<template is="dom-repeat" items="{{allSchemes}}"> 
 			<paper-card heading="{{item.metadata.type}}" class="cards">
 				<div class="card-content">{{item.metadata.name}}</div>
 				<div class="card-actions">
@@ -76,7 +76,6 @@
 		},
 		ready:function(){
 			console.log("Hi Schemes as cards loaded....!");
-			this.allSchemes = schemeData;
 			this.scheme = {"on":"newscheme","operation":"find"};
 			this.$.fetchSchemes.url = restApiUrls.scheme.basic;
 	        this.$.fetchSchemes.method = "POST";
