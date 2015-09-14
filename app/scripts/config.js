@@ -24,7 +24,7 @@ metadata = {
 //init behaviour as per schema
 behaviour = {
 	defaultDiscount:0,
-    maximumUsages: 0,
+    maximumUsages: "",
     startDate: "",
     endDate: "",
     discountType:"%",
@@ -32,42 +32,42 @@ behaviour = {
     	locations:[]
     }],
     serviceRateCategoryDiscounts: [{
-        discount: 0,
+        discount: "",
         discountType: "%",
         srcTypes: []
     }],
     serviceLevelDiscounts: [{
-        discount: 0,
+        discount: "",
         discountType: "%",
         services: []
     }],
     cumulativeAmountPoints: [{
-        amount: 0,
-        points: 100
+        amount: "",
+        points: ""
     }],
     doctorLevelDiscounts: {
         userChosenDiscountType: "%",
         doctorChosenDiscountType: "%"
     },
     advancePaidDiscounts: [{
-        points: 100,
-        amount: 0
+        points: "",
+        amount: ""
     }],
     billValueDiscounts: [{
         billRange: {
-            from: 1000,
-            to: 1000
+            from: "",
+            to: ""
         },
-        discount: 1,
+        discount: "",
         discountType: "%"
     }],
     modeOfPaymentDiscounts: [{
         epay: {
-            discount: 1,
+            discount: "",
             discountType: "%"
         },
         cod: {
-            discount: 2,
+            discount: "",
             discountType: "%"
         }
     }]

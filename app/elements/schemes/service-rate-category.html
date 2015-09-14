@@ -1,0 +1,40 @@
+
+<dom-module id="service-rate-category">
+    <style type="text/css"></style>
+
+    <template is="dom-repeat" items="{{behaviour.serviceRateCategories}}">
+        <paper-input name="serviceRateCategories" value="{{item.srcTypes}}"  no-label-float  label="Search">
+        </paper-input>
+    </template>
+        <iron-ajax  id="srcAjax" content-type="application/json"  method="POST" params='{}'   
+         handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
+    <script>
+
+        Polymer({
+            is: 'service-rate-category',
+            properties: {
+                behaviour:Object
+            },
+            attached:function(){
+            },
+            ready:function(){
+                console.log(stateVariables);
+                this.count = 0;
+                this.behaviour = behaviour;
+            },
+            listeners:{
+                
+            },
+            handleResponse:function(event){
+                console.log(event.detail.response);
+                
+            },
+            handleError:function(event){
+                var request=event.detail.request;
+                console.log(event.detail.response);
+            }
+        });
+       
+        
+    </script>
+</dom-module>
