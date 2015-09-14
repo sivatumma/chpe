@@ -36,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     page('/schemes/:create', function (data) {
-      app.route = 'schemes/:create';
+      app.route = 'createScheme';
       app.params = data.params;
       stateVariables.schemeType = data.params.create;
       console.log(stateVariables);
