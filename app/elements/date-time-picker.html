@@ -30,20 +30,23 @@
 	    }
 	    paper-dialog.size-position {
 	      position: fixed;
-	      top: 100px;
+	      top:30px;
 	      left:30%;
 	    }
-	   @media(max-width:960px){
+	    
+	    @media(max-width:960px){
 	   	paper-dialog.size-position{
 	   		left: 10%;
 	   	}
 	   }
+	   section{
+	   	margin-left: 5px;
+	   }
 	</style>
     <template>
      <section onclick="clickHandler(event)">
-     <paper-input name="{{dateType}}"  no-label-float readonly="true" label="{{dateLabel}}"  on-tap="showDialog" id="{{dateTimeValue}}" ></paper-input>
-     	<paper-dialog id="{{dateModal}}" modal class="size-position paper-date-picker-dialog"  on-iron-overlay-closed="dismissDialog">
-
+     <paper-input name="{{dateType}}" class="date-time-picker-input"  no-label-float readonly="true" label="{{dateLabel}}"  on-tap="showDialog" id="{{dateTimeValue}}"  ></paper-input>
+     	<paper-dialog id="{{dateModal}}"  class="size-position paper-date-picker-dialog" with-backdrop on-iron-overlay-closed="dismissDialog">
 			  	<div class="datePicker">
 				  	<paper-date-picker id="{{dateId}}"></paper-date-picker>
 			  	</div>
@@ -97,24 +100,27 @@
             },
             listeners:{
             	'dismissDialog ':'getDate',
-            	'_onBackdropClick':'getDateTime',
-            	'on-tap':'showDialog'
+            	'on-tap':'showDialog',
+            	'iron-overlay-closed':'getdateTime'
             },
-            getDateTime:function(){
-            	console.log(document.querySelector("#datePicker").date);
-            },
-            showDialog:function(type){
-            	document.querySelector("#"+this.dateModal).open();
-            },
-            dismissDialog : function(event) {
-		        if (event.detail.confirmed) {
-		        	this.pickedDate = this.formatDate(document.querySelector("#"+this.dateId).date);
+            setDateTime:function(){
+            	this.pickedDate = this.formatDate(document.querySelector("#"+this.dateId).date);
 		        	this.pickedTime = document.querySelector("#"+this.timeId).time;
 		            var dateTime = this.pickedDate+' '+this.pickedTime;
 		            document.querySelector("#"+this.dateTimeValue).setAttribute("value",dateTime);
 		            var isoDate = new Date(dateTime);
 		            isoDate = isoDate.toISOString();
 		            document.querySelector("#"+this.dateTimeValue).setAttribute("isoDate",isoDate);
+            },
+            getdateTime:function(){
+		        	this.setDateTime();
+            },
+            showDialog:function(type){
+            	document.querySelector("#"+this.dateModal).open();
+            },
+            dismissDialog : function(event) {
+		        if (event.detail.confirmed) {
+		        	this.setDateTime();
 		        }
 		      }
         });

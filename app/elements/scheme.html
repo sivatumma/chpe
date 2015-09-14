@@ -7,36 +7,104 @@
 		margin-top: 0px;
 		cursor: pointer;
 	}
+   
+    .pull-right{
+        float: right;
+    }
+    .radioButtons{
+        padding: 0px;
+        display: inline;
+    }
+    .ddiscount{
+        margin-top: 0px;
+    }
+    paper-input{
+        margin-top: 0px !important;
+    }
+    .radioButtons{
+        display: inline;
+    }
+    .radioButtons{
+        margin: 0 -5px;
+    }
+    .submitButtons{
+        text-align: right;
+    }
+    
+     .submitButtons span{
+        display: inline-block;
+     }
 </style>
     <template>
-        <paper-material elevation="1" >
+        <paper-material elevation="1" type="{{schemeType}}">
       		<h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4>
-             <form is="iron-form" id="form" method="post" action="javascript:void(0);">
-	            <paper-input name="name" pattern="/^[a-zA-Z0-9,-]{3,}[a-zA-Z]*$/" no-label-float 
-	            autoCapitalize="true"   label="Scheme Name"></paper-input>
-	            <paper-input name="maximumUsages" no-label-float label="Maximum Usages" type="number" max="10" min="0"></paper-input>
-	            <date-time-picker date-type="startDate" date-modal="startDateModal" date-time-value="schemeStarts" date-label="Start Date" date-id="startDateDatepicker" time-id="startDateTimepicker"></date-time-picker>
-	            <date-time-picker date-type="endDate"  date-modal="endDateModal" date-time-value="schemeEnds" date-label="End Date" date-id="endDateDatepicker" time-id="endDateTimepicker"></date-time-picker>
-	            <label>Discount Type</label>
-	            <paper-radio-group selected="%">
-				  <paper-radio-button name="%">%</paper-radio-button>
-				  <paper-radio-button name="Flat">Flat</paper-radio-button>
-				</paper-radio-group>
-				<paper-button name="submit" type="submit" raised class="pull-right">Submit</paper-input>
+             <form is="iron-form" id="form" method="POST" action="#">
+	            <paper-input name="name" autocapitalize="on" value="{{metadata.name}}" required auto-validate pattern="^[a-zA-Z,-,0-9]{3,}[a-zA-Z]*$" no-label-float  error-message="Scheme Name must starts with character, Minimum 3 characters required,Cannot contains special characters except -"   label="Scheme Name">
+                </paper-input>
+
+                 <date-time-picker date-type="startDate" date-modal="startDateModal" date-time-value="schemeStarts" date-label="Start Date" date-id="startDateDatepicker" time-id="startDateTimepicker"></date-time-picker>
+                <date-time-picker date-type="endDate"  date-modal="endDateModal" date-time-value="schemeEnds" date-label="End Date" date-id="endDateDatepicker" time-id="endDateTimepicker"></date-time-picker>
+                <div class="radioButtons">
+                    <label>Discount Type</label>
+                <paper-radio-group selected="{{behaviour.discountType}}" on-click="updateDiscount">
+                  <paper-radio-button name="%">%</paper-radio-button>
+                  <paper-radio-button name="Flat">Flat</paper-radio-button>
+                </paper-radio-group>
+                <paper-input name="defaultDiscount" label="Discount"  class="ddiscount" no-label-float type="number" max="{{discountLength}}" min="0" required auto-validate  pattern="{{discountPattern}}" error-message="Max 999 if Flat ; 10 if %"  value="{{behaviour.defaultDiscount}}" step="any"></paper-input >
+                </div>
+	            
+                <paper-input name="Maximum Usages" no-label-float label="Maximum Usages" type="number" 
+                 value="{{behaviour.maximumUsages}}" max="10" min="0"></paper-input>
+               
+                 <div class="submitButtons">
+                    <span>
+                        <paper-button name="createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
+                    </span>
+                    <span>
+                        <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
+                    </span>
+                </div>
+                
 			</form>
         </paper-material>
+         <iron-ajax  id="schemeAjax" content-type="application/json"  method="POST" params='{}'   
+         handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
     </template>
     <script>
 
+        function toIsoString(str){
+            var date = new Date();
+                if(str){
+                    date = new Date(str);
+                    return date.toISOString();
+                }else{
+                    return date.toISOString();
+                }
+        }
     	Polymer({
             is: 'chpe-scheme',
             properties: {
-                schemeType: String
+                schemeType: String,
+                schemeStatus:Boolean,
+                succErrMsg:String
+            },
+            attached:function(){
+                console.log(this.schemeType);
+            },
+            ready:function(){
+                console.log(stateVariables);
+                this.metadata = metadata;
+                this.behaviour = behaviour;
+                this.scheme = {"metadata":metadata,"behaviour":behaviour};
+                this.discountType = "%";
+                this.discountLength = 10;
+                this.discountPattern = "^([0-10])$";
             },
             listeners:{
             	'changed':'defaultDiscount',
-            	 'onfocus':'openDialog'
-
+            	'onfocus':'openDialog',
+                'iron-form-submit':'createScheme',
+                'saveBtn.onClick':'submitForm',
             },
             defaultDiscount:function(status){
             	console.log(status);
@@ -44,9 +112,55 @@
             openDialog:function(){
             	console.log("Hiii");
             },
-            test:function(evt){
-            	console.log(evt);
+            updateDiscount:function(){
+            	if(this.behaviour.discountType=="%"){
+                    this.discountLength = 10;
+                    this.discountPattern = "^([0-10])$";
+                }else{
+                    this.discountLength = 999;
+                    this.discountPattern = "^([0-999])$";
+                }
+            },
+            createScheme:function(){
+                 this.formData = document.getElementById('form').serialize();
+
+                 this.scheme.behaviour.startDate = toIsoString(this.formData.startDate);
+                 this.scheme.behaviour.endDate = toIsoString(this.formData.endDate);
+
+                 this.metadata.type = this.schemeType;
+                 this.metadata.published = this.schemeStatus || this.metadata.published;
+                 this.scheme.on  = "newscheme";
+                 this.scheme.operation = "create";
+                 console.log(this.scheme);
+                 if(this.scheme!== undefined){
+                     this.$.schemeAjax.url = restApiUrls.scheme.basic;
+                     this.$.schemeAjax.method = "POST";
+                     this.$.schemeAjax.body = JSON.stringify(this.scheme);
+                     this.$.schemeAjax.generateRequest();
+                     //console.log(JSON.stringify(this.scheme));
+                 }
+            },
+            handleResponse:function(event){
+                console.log(event.detail.response);
+                document.querySelector("#schemeSuccErrMessageToast").show();
+                console.log("Received response: " + JSON.stringify(response.detail.response));
+                setTimeout(function(){
+
+                },3000);
+            },
+            handleError:function(event){
+                var request=event.detail.request;
+                console.log(event);
+                var error=event.detail.error;
+                var toast=document.querySelector("#schemeSuccErrMessageToast");
+                toast.text= "Error while creating "+this.scheme.metadata.type+" Please try again.. ";
+                toast.show();
+            },
+            submitForm:function(evt,details,sender){
+                document.getElementById('form').submit();
             }
         });
+       
+        
     </script>
 </dom-module>

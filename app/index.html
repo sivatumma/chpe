@@ -1,13 +1,11 @@
 <!doctype html>
-<!--
-@license
+<!--@license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
 The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt-->
 
 <html lang="">
 
@@ -53,6 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- will be replaced with elements/elements.vulcanized.html -->
     <link rel="import" href="elements/elements.html">
     <!-- endreplace-->
+    <script src="scripts/config.js"></script>
 </head>
 
 
@@ -79,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <span>Home</span>
                     </a>
 
-                    <!-- <a data-route="users" href="/users">
+                    <!--<a data-route="users" href="/users">
                         <iron-icon icon="info"></iron-icon>
                         <span>Users</span>
                     </a>
@@ -87,24 +86,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <a data-route="contact" href="/contact">
                         <iron-icon icon="mail"></iron-icon>
                         <span>Contact</span>
-                    </a>
- -->
+                    </a>-->
                     <a data-route="schemes" href="/schemes">
                         <iron-icon icon="social:pages"></iron-icon>
                         <span>View Scheme</span>
                     </a>
 
-                    <a data-route="createScheme" href="/schemes/Add-On">
+                    <a data-route="createScheme" href="/schemes/ADD_ON">
                         <iron-icon icon="star-half"></iron-icon>
                         <span>Create Scheme</span>
                     </a>
 
-                    <a data-route="createScheme" href="/schemes/Coupon">
+                    <a data-route="createScheme" href="/schemes/COUPON">
                         <iron-icon icon="star-half"></iron-icon>
                         <span>Create Coupon</span>
                     </a>
 
-                    <a data-route="createScheme" href="/schemes/Gift-Card">
+                    <a data-route="createScheme" href="/schemes/GIFT_CARD">
                         <iron-icon icon="star-half"></iron-icon>
                         <span>Create Gift Card</span>
                     </a>
@@ -148,106 +146,66 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </paper-toolbar>
 
                 <paper-dialog heading="Title for dialog" transition="paper-transition-center">
-              </paper-dialog>
-                    <iron-pages attr-for-selected="data-route" selected="{{route}}">
+                </paper-dialog>
+                <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
-                        <section data-route="home" selected>
+                    <section data-route="home" selected>
+                        <schemes-as-cards></schemes-as-cards>
+                    </section>
 
-                            <paper-material elevation="1">
-                                <p class="paper-font-body2">Schemes (ADD_ON) section</p>
+                    <section data-route="users">
+                        <paper-material elevation="1">
+                            <h2 class="paper-font-display2">Users</h2>
+                            <p>This is the users section</p>
+                            <a href="/users/Siva">Siva</a>
+                        </paper-material>
+                    </section>
 
-                            </paper-material>
+                    <section data-route="user-info">
+                        <paper-material elevation="1">
+                            <div>This is <span>{{params.operation}}</span>'s section</div>
+                        </paper-material>
+                    </section>
 
+                    <section data-route="contact">
+                        <paper-material elevation="1">
+                            <h2 class="paper-font-display2">Contact</h2>
+                            <p>This is the contact section</p>
+                        </paper-material>
+                    </section>
 
-                            <paper-material elevation="0" class="style-scope radial-gradiant-addon">
-                                <p class="paper-font-body2">Coupons section</p>
+                    <section data-route="schemes">
+                        <paper-material elevation="1">
+                            <h2 class="paper-font-display2">View Schemes</h2>
+                            <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
+                        </paper-material>
+                    </section>
 
-                                <paper-card inline elevation="0" class="style-scope radial-gradiant-addon">
-                                    <p class="paper-font-body2">Example Coupon 1</p>
-                                </paper-card>
-                                <paper-card elevation="0" class="style-scope radial-gradiant-addon">
-                                    <p class="paper-font-body2">Example Coupon 2</p>
-                                </paper-card>
-                                <paper-card elevation="0" class="style-scope radial-gradiant-addon">
-                                    <p class="paper-font-body2">Example Coupon 3</p>
-                                </paper-card>
-
-
-                            </paper-material>
-
-
-                            <paper-material elevation="1">
-                                <p class="paper-font-body2">Gift Cards section</p>
-                            </paper-material>
-
-                            <paper-material elevation="1">
-                                <p class="paper-font-body2">Hey Siva ! Make Components, Plug.</p>
-                            </paper-material>
-
-                            <paper-material elevation="1" class="paper-font-body2">
-                                <h1 id="license">License</h1>
-                                <p>Everything in this repo is private and Confidential and to be used by the intended people only. </p>
-                                <p>Copyright (c) 2015 The Pricing Engine Team, Callhealth. All rights reserved.</p>
-
-                            </paper-material>
-
-                       
-
-
-                        </section>
-
-                        <section data-route="users">
-                            <paper-material elevation="1">
-                                <h2 class="paper-font-display2">Users</h2>
-                                <p>This is the users section</p>
-                                <a href="/users/Siva">Siva</a>
-                            </paper-material>
-                        </section>
-
-                        <section data-route="user-info">
-                            <paper-material elevation="1">
-                                <div>This is <span>{{params.operation}}</span>'s section</div>
-                            </paper-material>
-                        </section>
-
-                        <section data-route="contact">
-                            <paper-material elevation="1">
-                                <h2 class="paper-font-display2">Contact</h2>
-                                <p>This is the contact section</p>
-                            </paper-material>
-                        </section>
-
-                        <section data-route="schemes">
-                            <paper-material elevation="1">
-                                <h2 class="paper-font-display2">View Schemes</h2>
-                                <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
-                            </paper-material>
-                        </section>
-
-                        <!-- <section data-route="createScheme">
+                    <!-- <section data-route="createScheme">
                             <paper-material elevation="1">
                                 <h2 class="paper-font-display2">Create Scheme - <span>{{params.create}}</span></h2>
                                 <p>View where we create <span>{{params.create}}</span></p>
                             </paper-material>
                         </section> -->
-                        <section data-route="createScheme">
-                            <chpe-scheme scheme-type="{{params.create}}"></chpe-scheme>
-                        </section>
+                    <section data-route="createScheme">
+                        <chpe-scheme scheme-type="{{params.create}}"></chpe-scheme>
+                    </section>
 
-                        <section data-route="specialEffects">
-                            <paper-material elevation="1">
 
-                            </paper-material>
-                        </section>
+                    <section data-route="specialEffects">
+                        <paper-material elevation="1">
 
-                    </iron-pages>
-                    </div>
+                        </paper-material>
+                    </section>
+
+                </iron-pages>
+                </div>
             </paper-scroll-header-panel>
         </paper-drawer-panel>
 
         <!-- Uncomment next block to enable Service Worker support (1/2) -->
-        <!--
-    <paper-toast id="caching-complete"
+        
+ <!--<paper-toast id="caching-complete"
                  duration="6000"
                  text="Caching complete! This app will work offline.">
     </paper-toast>
@@ -259,9 +217,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <platinum-sw-cache default-cache-strategy="networkFirst"
                          precache-file="precache.json">
       </platinum-sw-cache>
-    </platinum-sw-register>
-    -->
+    </platinum-sw-register>-->
 
+        <paper-toast id="schemeSuccErrMessageToast" text="Scheme Created Successfully"></paper-toast>
     </template>
 
     <!-- build:js scripts/app.js -->
