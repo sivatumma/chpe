@@ -52,7 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="elements/elements.html">
     <!-- endreplace-->
     <script src="scripts/config.js"></script>
-    <script src="scripts/common.js"></script>
+    <script src="../lib/chUtils.js"></script>
 </head>
 
 
@@ -79,15 +79,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <span>Home</span>
                     </a>
 
-                    <!--<a data-route="users" href="/users">
-                        <iron-icon icon="info"></iron-icon>
-                        <span>Users</span>
-                    </a>
-
-                    <a data-route="contact" href="/contact">
-                        <iron-icon icon="mail"></iron-icon>
-                        <span>Contact</span>
-                    </a>-->
                     <a data-route="schemes" href="/schemes">
                         <iron-icon icon="social:pages"></iron-icon>
                         <span>View Scheme</span>
@@ -198,9 +189,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <section data-route="createGiftCard">
                         <chpe-gift-card scheme-type="{{params.create}}"></chpe-gift-card>
                     </section>
-
-
-
                     <section data-route="specialEffects">
                         <paper-material elevation="1">
 
