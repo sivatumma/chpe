@@ -80,25 +80,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </a>
 
 
-          <a data-route="schemes" href="/schemes">
-            <iron-icon icon="social:pages"></iron-icon>
-            <span>View Scheme</span>
-          </a>
+                    <a data-route="schemes" href="/schemes">
+                        <iron-icon icon="social:pages"></iron-icon>
+                        <span>View Scheme</span>
+                    </a>
 
-          <a data-route="createScheme" href="/schemes/Add-On">
-            <iron-icon icon="star"></iron-icon>
-            <span>Create Scheme</span>
-          </a>
+                    <a data-route="schemes/:create" href="/schemes/Add-On">
+                        <iron-icon icon="star"></iron-icon>
+                        <span>Create Scheme</span>
+                    </a>
 
-          <a data-route="createCoupon" href="/schemes/Coupon">
-            <iron-icon icon="star-border"></iron-icon>
-            <span>Create Coupon</span>
-          </a>
+                    <a data-route="schemes/:create" href="/schemes/Coupon">
+                        <iron-icon icon="star-border"></iron-icon>
+                        <span>Create Coupon</span>
+                    </a>
 
-          <a data-route="createGiftCard" href="/schemes/Gift-Card">
-            <iron-icon icon="star-half"></iron-icon>
-            <span>Create Gift Card</span>
-          </a>
+                    <a data-route="schemes/:create" href="/schemes/Gift-Card">
+                        <iron-icon icon="star-half"></iron-icon>
+                        <span>Create Gift Card</span>
+                    </a>
 
                 </paper-menu>
             </paper-scroll-header-panel>
@@ -186,21 +186,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </paper-material>
                         </section>
 
-                        <section data-route="createScheme">
-                            <paper-material elevation="1">
-                                <h2 class="paper-font-display2">Create Scheme - <span>{{params.create}}</span></h2>
-                                <p>View where we create <span>{{params.create}}</span></p>
-                            </paper-material>
-                        </section>
-
-                        <section data-route="createCoupon">
-                            <paper-material elevation="1">
-                                <h2 class="paper-font-display2">Create Scheme - <span>{{params.create}}</span></h2>
-                                <p>View where we create <span>{{params.create}}</span></p>
-                            </paper-material>
-                        </section>
-
-                        <section data-route="createGiftCard">
+                        <section data-route="schemes/:create">
                             <paper-material elevation="1">
                                 <h2 class="paper-font-display2">Create Scheme - <span>{{params.create}}</span></h2>
                                 <p>View where we create <span>{{params.create}}</span></p>

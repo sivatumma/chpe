@@ -84,7 +84,7 @@ paper-material.radial-gradiant-addon {
   height: auto !important;
 }
 iron-dropdown{
-  top:248px;
+  top:248px !important;
   border-top: none;
 }
 #topBar paper-menu-button{
@@ -130,7 +130,6 @@ iron-pages{
   padding:10px 0px; 
 }
 
-
 /*scroll bar css in chrome browser*/
 
 ::-webkit-scrollbar {
@@ -145,4 +144,18 @@ iron-pages{
 }
 ::-webkit-scrollbar-thumb {
     background:#888;
+}
+
+/*scheme styles*/
+.chpe-scheme{
+    border-radius: 2px;
+    padding:0;
+    margin:15px 5px;
+    background: white;
+}
+.chpe-scheme h4{
+  font-size:24px !important;
+}
+.chpe-scheme paper-button{
+  float: right;
 }

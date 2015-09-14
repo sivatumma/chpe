@@ -36,7 +36,7 @@
         "grunt-contrib-jshint": "^0.11.2",
         "grunt-contrib-uglify": "*",
         "grunt-contrib-watch": "*",
-        "grunt-usemin": "^3.0.0",
+        "grunt-usemin": "^3.0.0"
 
     },
 
@@ -47,7 +47,7 @@
         "nodemailer-smtp-transport":"*",
         "lodash": "3.10.1",
         "express": "^4.0.0",
-        "express-ipfilter": "^0.0.20",
+        "express-ipfilter": "^0.0.20"
     },
     "scripts": {
         "test": "gulp test:local",
