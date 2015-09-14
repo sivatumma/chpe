@@ -36,7 +36,7 @@ var AUTOPREFIXER_BROWSERS = [
 
 var styleTask = function (stylesPath, srcs) {
   return gulp.src(srcs.map(function(src) {
-      return path.join('app', stylesPath, src);
+      return path.join('client', stylesPath, src);
     }))
     .pipe($.changed(stylesPath, {extension: '.css'}))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
@@ -58,9 +58,9 @@ gulp.task('elements', function () {
 // Lint JavaScript
 gulp.task('jshint', function () {
   return gulp.src([
-      'app/scripts/**/*.js',
-      'app/elements/**/*.js',
-      'app/elements/**/*.html'
+      'client/scripts/**/*.js',
+      'client/elements/**/*.js',
+      'client/elements/**/*.html'
     ])
     .pipe(reload({stream: true, once: true}))
     .pipe($.jshint.extract()) // Extract JS from .html files
@@ -71,7 +71,7 @@ gulp.task('jshint', function () {
 
 // Optimize Images
 gulp.task('images', function () {
-  return gulp.src('app/images/**/*')
+  return gulp.src('client/images/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
       interlaced: true
@@ -80,12 +80,12 @@ gulp.task('images', function () {
     .pipe($.size({title: 'images'}));
 });
 
-// Copy All Files At The Root Level (app)
+// Copy All Files At The Root Level (client)
 gulp.task('copy', function () {
-  var app = gulp.src([
-    'app/*',
-    '!app/test',
-    '!app/precache.json'
+  var client = gulp.src([
+    'client/*',
+    '!client/test',
+    '!client/precache.json'
   ], {
     dot: true
   }).pipe(gulp.dest('dist'));
@@ -94,7 +94,7 @@ gulp.task('copy', function () {
     'bower_components/**/*'
   ]).pipe(gulp.dest('dist/bower_components'));
 
-  var elements = gulp.src(['app/elements/**/*.html'])
+  var elements = gulp.src(['client/elements/**/*.html'])
     .pipe(gulp.dest('dist/elements'));
 
   var swBootstrap = gulp.src(['bower_components/platinum-sw/bootstrap/*.js'])
@@ -103,26 +103,26 @@ gulp.task('copy', function () {
   var swToolbox = gulp.src(['bower_components/sw-toolbox/*.js'])
     .pipe(gulp.dest('dist/sw-toolbox'));
 
-  var vulcanized = gulp.src(['app/elements/elements.html'])
+  var vulcanized = gulp.src(['client/elements/elements.html'])
     .pipe($.rename('elements.vulcanized.html'))
     .pipe(gulp.dest('dist/elements'));
 
-  return merge(app, bower, elements, vulcanized, swBootstrap, swToolbox)
+  return merge(client, bower, elements, vulcanized, swBootstrap, swToolbox)
     .pipe($.size({title: 'copy'}));
 });
 
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {
-  return gulp.src(['app/fonts/**'])
+  return gulp.src(['client/fonts/**'])
     .pipe(gulp.dest('dist/fonts'))
     .pipe($.size({title: 'fonts'}));
 });
 
 // Scan Your HTML For Assets & Optimize Them
 gulp.task('html', function () {
-  var assets = $.useref.assets({searchPath: ['.tmp', 'app', 'dist']});
+  var assets = $.useref.assets({searchPath: ['.tmp', 'client', 'dist']});
 
-  return gulp.src(['app/**/*.html', '!app/{elements,test}/**/*.html'])
+  return gulp.src(['client/**/*.html', '!client/{elements,test}/**/*.html'])
     // Replace path for vulcanized assets
     .pipe($.if('*.html', $.replace('elements/elements.html', 'elements/elements.vulcanized.html')))
     .pipe(assets)
@@ -195,7 +195,7 @@ gulp.task('serve', ['styles', 'elements', 'images'], function () {
     //       will present a certificate warning in the browser.
     // https: true,
     server: {
-      baseDir: ['.tmp', 'app'],
+      baseDir: ['.tmp', 'client'],
       middleware: [ historyApiFallback() ],
       routes: {
         '/bower_components': 'bower_components'
@@ -203,11 +203,11 @@ gulp.task('serve', ['styles', 'elements', 'images'], function () {
     }
   });
 
-  gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.css'], ['styles', reload]);
-  gulp.watch(['app/elements/**/*.css'], ['elements', reload]);
-  gulp.watch(['app/{scripts,elements}/**/*.js'], ['jshint']);
-  gulp.watch(['app/images/**/*'], reload);
+  gulp.watch(['client/**/*.html'], reload);
+  gulp.watch(['client/styles/**/*.css'], ['styles', reload]);
+  gulp.watch(['client/elements/**/*.css'], ['elements', reload]);
+  gulp.watch(['client/{scripts,elements}/**/*.js'], ['jshint']);
+  gulp.watch(['client/images/**/*'], reload);
 });
 
 // Build and serve the output from the dist build
