@@ -1,0 +1,128 @@
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<dom-module id="date-time-picker">
+	<style type="text/css">
+		.card-actions{
+			padding:10px;
+		}
+		paper-dialog{
+			background: #fff;
+			padding: 0px;
+		}
+		#heading{
+			width: 100px;
+		}
+		#pages{
+			width: 200px;
+		}
+		section > paper-button {
+	      background-color: var(--google-grey-300);
+	      padding: 5px;
+	    }
+	    section > paper-button:hover {
+	      background-color: var(--paper-light-blue-200);
+	      padding: 5px;
+	    }
+	    paper-dialog.colored {
+	      border: 2px solid;
+	      border-color: var(--paper-green-500);
+	      background-color: var(--paper-light-green-50);
+	      color: var(--paper-green-500);
+	    }
+	    paper-dialog.size-position {
+	      position: fixed;
+	      top:30px;
+	      left:30%;
+	    }
+	    
+	    @media(max-width:960px){
+	   	paper-dialog.size-position{
+	   		left: 10%;
+	   	}
+	   }
+	   section{
+	   	margin-left: 5px;
+	   }
+	</style>
+    <template>
+     <section onclick="clickHandler(event)">
+     <paper-input name="{{dateType}}" class="date-time-picker-input"  no-label-float readonly="true" label="{{dateLabel}}"  on-tap="showDialog" id="{{dateTimeValue}}"  ></paper-input>
+     	<paper-dialog id="{{dateModal}}"  class="size-position paper-date-picker-dialog" with-backdrop on-iron-overlay-closed="dismissDialog">
+			  	<div class="datePicker">
+				  	<paper-date-picker id="{{dateId}}"></paper-date-picker>
+			  	</div>
+			  	<div class="timePicker">
+					<paper-time-picker id="{{timeId}}" ></paper-time-picker>
+			  	</div>
+			      <div class="buttons">
+			        <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+			      </div>
+    </paper-dialog>
+    </section>
+	 </template>
+    <script>
+    	function clickHandler(e) {
+	      var button = e.target;
+	      while (!button.hasAttribute('data-dialog') && button !== document.body) {
+	        button = button.parentElement;
+	      }
+	      if (!button.hasAttribute('data-dialog')) {
+	        return;
+	      }
+	      var id = button.getAttribute('data-dialog');
+	      var dialog = document.getElementById(id);
+	      if (dialog) {
+	        dialog.open();
+	      }
+	    }
+        Polymer({
+            is: 'date-time-picker',
+            properties: {
+                pickedDate:String,
+                pickedTime:String,
+                dateTimeValue:String,
+                dateType:String,
+                dateLabel:String,
+                dateModal:String,
+                timeId:String,
+                dateId:String
+            },
+            ready:function(){
+            	var monthNames = ["January", "February", "March", "April", "May", "June",
+	                "July", "August", "September", "October", "November", "December"
+	            ];
+            	this.formatDate = function(datestr) {
+            		var date = new Date();
+            		if(datestr){
+					    date = new Date(datestr);
+            		}
+				 return  monthNames[date.getMonth()] + "-"+ ('0' + date.getDate()).slice(-2)+"-"+ date.getFullYear();
+				};
+            },
+            listeners:{
+            	'dismissDialog ':'getDate',
+            	'on-tap':'showDialog',
+            	'iron-overlay-closed':'getdateTime'
+            },
+            setDateTime:function(){
+            	this.pickedDate = this.formatDate(document.querySelector("#"+this.dateId).date);
+		        	this.pickedTime = document.querySelector("#"+this.timeId).time;
+		            var dateTime = this.pickedDate+' '+this.pickedTime;
+		            document.querySelector("#"+this.dateTimeValue).setAttribute("value",dateTime);
+		            var isoDate = new Date(dateTime);
+		            isoDate = isoDate.toISOString();
+		            document.querySelector("#"+this.dateTimeValue).setAttribute("isoDate",isoDate);
+            },
+            getdateTime:function(){
+		        	this.setDateTime();
+            },
+            showDialog:function(type){
+            	document.querySelector("#"+this.dateModal).open();
+            },
+            dismissDialog : function(event) {
+		        if (event.detail.confirmed) {
+		        	this.setDateTime();
+		        }
+		      }
+        });
+    </script>
+</dom-module>

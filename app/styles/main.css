@@ -156,6 +156,18 @@ iron-pages{
 .chpe-scheme h4{
   font-size:24px !important;
 }
-.chpe-scheme paper-button{
-  float: right;
+
+.hide{
+  display: none;
+}
+.show{
+  display: block;
+}
+
+.showDatepickerPopup{
+     -moz-animation: slide 2s ease 3.5s forwards;
+   -webkit-animation: slide 2s ease 3.5s forwards;
+   -o-animation: slide 2s ease 3.5s forwards;
+   -ms-animation: slide 2s ease 3.5s forwards;
+    animation: slide 2s ease 3.5s forwards;
 }

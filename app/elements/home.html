@@ -1,0 +1,106 @@
+<dom-module id="schemes-as-cards">
+<style type="text/css">
+	.cards {
+      @apply(--layout-vertical);
+      @apply(--center-justified);
+      margin-top:30px;
+      font-size: 16px;
+    }
+    paper-card {
+        display: block;
+	    width: calc(33% - 20px);
+	    margin: 10px;
+	    cursor: pointer;
+	    transition: box-shadow 0.1s;
+	    float: left;
+    }
+    .avatar {
+      display: inline-block;
+      height: 64px;
+      width: 64px;
+      border-radius: 50%;
+      background: var(--paper-pink-500);
+      color: white;
+      line-height: 64px;
+      font-size: 30px;
+      text-align: center;
+    }
+    .fancy .title {
+      position: absolute;
+      top: 30px;
+      left: 100px;
+      color: var(--paper-indigo-500);
+    }
+    .fancy img {
+      width: 100%;
+    }
+    .fancy .big {
+      font-size: 22px;
+      padding: 8px 0 16px;
+      color: var(--google-grey-500);
+    }
+    .fancy .medium {
+      font-size: 16px;
+      padding-bottom: 8px;
+    }
+    .pink {
+      --paper-card-header-color: var(--paper-pink-500);
+    }
+    paper-card .header{
+    	font-size: 16px !important;
+    }
+</style>
+<template>
+	<paper-material elevation="1">
+		<template is="dom-repeat" items="{{allSchemes}}">
+			<paper-card heading="{{item.metadata.type}}" class="cards">
+				<div class="card-content">{{item.metadata.name}}</div>
+				<div class="card-actions">
+				<paper-button>Edit</paper-button>
+				</div>
+			</paper-card>
+		</template>
+    </paper-material>
+    <iron-ajax  id="fetchSchemes" content-type="application/json"  method="POST" params='{}'   
+         handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
+</template>
+<script>
+	Polymer({
+		is: 'schemes-as-cards',
+		properties:{
+			allSchemes:Object,
+			scheme:Object,
+		},
+		listeners:{
+
+		},
+		ready:function(){
+			console.log("Hi Schemes as cards loaded....!");
+			this.allSchemes = schemeData;
+			this.scheme = {"on":"newscheme","operation":"find"};
+			this.$.fetchSchemes.url = restApiUrls.scheme.basic;
+	        this.$.fetchSchemes.method = "POST";
+	        this.$.fetchSchemes.body = JSON.stringify(this.scheme);
+	        this.$.fetchSchemes.generateRequest();
+		},
+		handleResponse:function(event){
+                console.log(event.detail.response);
+                var data = event.detail.response;
+                if(data!==undefined && data!=null){
+                	this.allSchemes = data;
+                }else{
+                	this.allSchemes = [{}];
+                }
+            },
+        handleError:function(event){
+            var request=event.detail.request;
+            console.log(event);
+            var error=event.detail.error;
+            console.log(event.detail.response);
+            
+        }
+
+	});
+</script>
+</dom-module>
+
