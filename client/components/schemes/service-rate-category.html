@@ -2,9 +2,11 @@
 <dom-module id="service-rate-category">
     <style type="text/css"></style>
 
-    <template is="dom-repeat" items="{{behaviour.serviceRateCategories}}">
-        <paper-input name="serviceRateCategories" value="{{item.srcTypes}}"  no-label-float  label="Search">
-        </paper-input>
+    <template>
+        <template is="dom-repeat" items="{{behaviour.serviceRateCategoryDiscounts}}">
+            <paper-input name="serviceRateCategoryDiscounts" multi value="{{item.srcTypes}}"  no-label-float  label="Search">
+            </paper-input>
+        </template>
     </template>
         <iron-ajax  id="srcAjax" content-type="application/json"  method="POST" params='{}'   
          handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
@@ -15,11 +17,7 @@
             properties: {
                 behaviour:Object
             },
-            attached:function(){
-            },
             ready:function(){
-                console.log(stateVariables);
-                this.count = 0;
                 this.behaviour = behaviour;
             },
             listeners:{
@@ -32,6 +30,9 @@
             handleError:function(event){
                 var request=event.detail.request;
                 console.log(event.detail.response);
+            },
+            addRows:function(){
+
             }
         });
        

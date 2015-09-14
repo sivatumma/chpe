@@ -52,6 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="elements/elements.html">
     <!-- endreplace-->
     <script src="scripts/config.js"></script>
+    <script src="scripts/common.js"></script>
 </head>
 
 
@@ -88,12 +89,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <span>Create Scheme</span>
                     </a>
 
-                    <a data-route="createScheme" href="/schemes/COUPON">
+                    <a data-route="createCoupon" href="/schemes/COUPON">
                         <iron-icon icon="star-half"></iron-icon>
                         <span>Create Coupon</span>
                     </a>
 
-                    <a data-route="createScheme" href="/schemes/GIFT_CARD">
+                    <a data-route="createGiftCard" href="/schemes/GIFT_CARD">
                         <iron-icon icon="star-half"></iron-icon>
                         <span>Create Gift Card</span>
                     </a>
@@ -172,8 +173,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-material>
                     </section>
 
-                   <section data-route="createScheme">
-                        <chpe-scheme scheme-type="{{params.create}}"></chpe-scheme>
+                    <!-- <section data-route="createScheme">
+                            <paper-material elevation="1">
+                                <h2 class="paper-font-display2">Create Scheme - <span>{{params.create}}</span></h2>
+                                <p>View where we create <span>{{params.create}}</span></p>
+                            </paper-material>
+                        </section> -->
+                    <section data-route="createScheme">
+                        <chpe-addon scheme-type="{{params.create}}"></chpe-addon>
+                    </section>
+                    <section data-route="createCoupon">
+                        <chpe-coupon scheme-type="{{params.create}}"></chpe-coupon>
+                    </section>
+
+                    <section data-route="createGiftCard">
+                        <chpe-gift-card scheme-type="{{params.create}}"></chpe-gift-card>
                     </section>
                     <section data-route="specialEffects">
                         <paper-material elevation="1">

@@ -1,0 +1,97 @@
+
+<dom-module id="chpe-coupon">
+<style type="text/css">
+    .radioButtons{
+        display: inline;
+        margin: 0 -5px;
+        padding: 0px;
+    }
+    .submitButtons{
+        text-align: right;
+    }
+    .submitButtons span{
+        display: inline-block;
+     }
+</style>
+    <template>
+        <paper-material elevation="1" type="{{schemeType}}">
+      		<h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4>
+             <form is="iron-form" id="form" method="POST" action="#">
+	               <basic-scheme></basic-scheme>
+                 <div class="submitButtons">
+                    <span>
+                        <paper-button name="createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
+                    </span>
+                    <span>
+                        <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
+                    </span>
+                </div>
+                
+			</form>
+        </paper-material>
+         <iron-ajax  id="schemeAjax" content-type="application/json"  method="POST" params='{}'   
+         handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
+    </template>
+    <script>
+        Polymer({
+            is: 'chpe-coupon',
+            properties: {
+                schemeType: String,
+                schemeStatus:Boolean,
+                succErrMsg:String
+            },
+            attached:function(){
+                console.log(this.schemeType);
+            },
+            ready:function(){
+                console.log(stateVariables);
+                this.metadata = metadata;
+                this.behaviour = behaviour;
+                this.scheme = {"metadata":metadata,"behaviour":behaviour};
+            },
+            listeners:{
+              'iron-form-submit':'createScheme',
+              'saveBtn.onClick':'submitForm',
+            },
+            createScheme:function(){
+                 this.formData = document.getElementById('form').serialize();
+
+                 this.scheme.behaviour.startDate = toIsoString(this.formData.startDate);
+                 this.scheme.behaviour.endDate = toIsoString(this.formData.endDate);
+
+                 this.metadata.type = this.schemeType;
+                 this.metadata.published = this.schemeStatus || this.metadata.published;
+                 this.scheme.on  = "newscheme";
+                 this.scheme.operation = "create";
+                 console.log(this.scheme);
+                 if(this.scheme!== undefined){
+                     this.$.schemeAjax.url = restApiUrls.scheme.basic;
+                     this.$.schemeAjax.method = "POST";
+                     this.$.schemeAjax.body = JSON.stringify(this.scheme);
+                     this.$.schemeAjax.generateRequest();
+                 }
+            },
+            handleResponse:function(event){
+                console.log(event.detail.response);
+                document.querySelector("#schemeSuccErrMessageToast").show();
+                console.log("Received response: " + JSON.stringify(response.detail.response));
+                setTimeout(function(){
+
+                },3000);
+            },
+            handleError:function(event){
+                var request=event.detail.request;
+                console.log(event);
+                var error=event.detail.error;
+                var toast=document.querySelector("#schemeSuccErrMessageToast");
+                toast.text= "Error while creating "+this.scheme.metadata.type+" Please try again.. ";
+                toast.show();
+            },
+            submitForm:function(evt,details,sender){
+                document.getElementById('form').submit();
+            }
+        });
+       
+        
+    </script>
+</dom-module>

@@ -36,10 +36,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     page('/schemes/:create', function (data) {
-      app.route = 'createScheme';
       app.params = data.params;
-      stateVariables.schemeType = data.params.create;
-      console.log(stateVariables);
+      if(data.params.create=="ADD_ON"){
+        app.route = 'createScheme';
+      }else if(data.params.create=="COUPON"){
+        app.route = 'createCoupon';
+      }else{
+        app.route = 'createGiftCard';
+      }
     });
 
 
