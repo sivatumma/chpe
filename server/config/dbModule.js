@@ -1,5 +1,5 @@
 var path = require("path"),
-	serverConfig = require("./serverConfig.js"),
+	serverConfig = require("./serverConfig.js")
 	mongoose = require('mongoose');
 
 var models = [
@@ -15,7 +15,7 @@ var models = [
 
 exports.setupMongoDB = setupMongoDB; 
 exports.dbConnection = dbConnection;
-function dbConnnection()
+function dbConnection()
 {
 	console.log(serverConfig.database);
 	    var path = serverConfig.database;
