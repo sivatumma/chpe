@@ -1,11 +1,6 @@
 
 <dom-module id="chpe-gift-card">
 <style type="text/css">
-    .radioButtons{
-        display: inline;
-        margin: 0 -5px;
-        padding: 0px;
-    }
     .submitButtons{
         text-align: right;
     }
@@ -16,8 +11,8 @@
     <template>
         <paper-material elevation="1" type="{{schemeType}}">
       		<h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4>
-             <form is="iron-form" id="form" method="POST" action="#">
-	               <basic-scheme></basic-scheme>
+             <form is="iron-form" id="gift-card-form" method="POST" action="#">
+	               <basic-scheme start-date-modal="giftCardStartDate" end-date-modal="giftCardEndDate" scheme-starts="giftCardStart" scheme-ends="giftCardEnds" start-date-type"gcsd" end-date-type="gced" sd-dp="stgcDp" sd-tp="stgcTp" ed-dp="eDgcDp"  ed-tp="eDgcTp"></basic-scheme>
                  <div class="submitButtons">
                     <span>
                         <paper-button name="createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
@@ -29,7 +24,7 @@
                 
 			</form>
         </paper-material>
-         <iron-ajax  id="schemeAjax" content-type="application/json"  method="POST" params='{}'   
+         <iron-ajax  id="giftCardAjax" content-type="application/json"  method="POST" params='{}'   
          handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
     </template>
     <script>
@@ -47,17 +42,17 @@
                 console.log(stateVariables);
                 this.metadata = metadata;
                 this.behaviour = behaviour;
-                this.scheme = {"metadata":metadata,"behaviour":behaviour};
+                this.scheme = {"metadata":metadata,"behaviour":behaviour} || editSchemeObj;
             },
             listeners:{
-              'iron-form-submit':'createScheme',
+              'gift-card-form.iron-form-submit':'createScheme',
               'saveBtn.onClick':'submitForm',
             },
             createScheme:function(){
-                 this.formData = document.getElementById('form').serialize();
+                 this.formData = document.getElementById('gift-card-form').serialize();
 
-                 this.scheme.behaviour.startDate = toIsoString(this.formData.startDate);
-                 this.scheme.behaviour.endDate = toIsoString(this.formData.endDate);
+                 this.scheme.behaviour.startDate = chUtils.toIsoString(this.formData.startDate);
+                 this.scheme.behaviour.endDate = chUtils.toIsoString(this.formData.endDate);
 
                  this.metadata.type = this.schemeType;
                  this.metadata.published = this.schemeStatus || this.metadata.published;
@@ -65,10 +60,10 @@
                  this.scheme.operation = "create";
                  console.log(this.scheme);
                  if(this.scheme!== undefined){
-                     this.$.schemeAjax.url = restApiUrls.scheme.basic;
-                     this.$.schemeAjax.method = "POST";
-                     this.$.schemeAjax.body = JSON.stringify(this.scheme);
-                     this.$.schemeAjax.generateRequest();
+                     this.$.giftCardAjax.url = restApiUrls.scheme.basic;
+                     this.$.giftCardAjax.method = "POST";
+                     this.$.giftCardAjax.body = JSON.stringify(this.scheme);
+                     this.$.giftCardAjax.generateRequest();
                  }
             },
             handleResponse:function(event){
@@ -88,7 +83,7 @@
                 toast.show();
             },
             submitForm:function(evt,details,sender){
-                document.getElementById('form').submit();
+                document.getElementById('gift-card-form').submit();
             }
         });
        
