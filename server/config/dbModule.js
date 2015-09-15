@@ -17,7 +17,8 @@ exports.setupMongoDB = setupMongoDB;
 exports.dbConnection = dbConnection;
 function dbConnnection()
 {
-	 var path = serverConfig.database;
+	console.log(serverConfig.database);
+	    var path = serverConfig.database;
            
           module.exports._db = mongoose.connect(path);
 
@@ -32,8 +33,8 @@ function setupMongoDB (){
 function initializeMongoModels() {
     var l = models.length;
     for (var i = 0; i < l; i++) {
-        // require(path.join(serverConfig.modelsFolder,models[i]+".js"))(mongoose);
-        console.log(models[i]);
+        
+        //return  require(path.join(serverConfig.modelsFolder,models[i]+".js"))(mongoose);
     }
 }
 
