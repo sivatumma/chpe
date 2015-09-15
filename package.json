@@ -41,6 +41,7 @@
     },
 
     "dependencies": {
+        "cors":"https://github.com/expressjs/cors.git",
         "mongoose": "4.1.6",
         "node-uuid": "1.4.3",
         "nodemailer": "1.4.0",

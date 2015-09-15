@@ -1,4 +1,5 @@
-var express = require('express'),
+var express = require('express')
+  cors = require('cors'),
   app = new express(),
   exceptionHandlers = require('./config/exceptionHandlers.js'),
   dbModule = require('./config/dbModule'),
@@ -44,7 +45,7 @@ function deleteModels(req, res) {
 }
 
 
-// app.use(require('./config/cors')());
+app.use(cors());
 
 app.use('lib', express.static('../lib'));
 app.use('dist', express.static('../dist'));
