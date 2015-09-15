@@ -23,6 +23,13 @@ module.exports = function(env) {
             exceptionLogFile:"exceptions.log",
             plainLogFile:"pricingEngine.log"
         },
+
+        var configVariable = {
+            user  : {Discount:9},
+            admin : {Discount : 30},
+            loginuser : "user"
+        },
+
         modelsFolder: '../models',
         database: 'mongodb://localhost/pricingEngine',
         memcache_host: 'http://172.16.2.113:8081/AutoSuggestion/rest',
