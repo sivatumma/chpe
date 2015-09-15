@@ -17,15 +17,17 @@ exports.setupMongoDB = setupMongoDB;
 exports.dbConnection = dbConnection;
 function dbConnection()
 {
-	console.log(serverConfig.database);
+	console.log("in dbConnection()");
 	    var path = serverConfig.database;
-           
-          module.exports._db = mongoose.connect(path);
+          
+          var db = mongoose.connect(path);
+	console.log("This is _db", db);
 
- return   module.exports._db;
+ return   db;
 }
 
 function setupMongoDB (){
+	console.log("in setupMongoDB()");
 	initializeMongoModels();
 	    
 }

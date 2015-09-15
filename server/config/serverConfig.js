@@ -69,7 +69,7 @@ module.exports = function(env) {
         services_json_path: path.join('C:', 'work', 'chpe', 'src-ui', 'services.json')
     };
     var prod = {
-        database:"prod-database",
+        database: 'mongodb://localhost/pricingEngine',
         temp: path.join('/', 'tmp'),
         env: 'production',
         certificates_dir: path.join('/', 'etc', 'ssl', 'self-signed'),
