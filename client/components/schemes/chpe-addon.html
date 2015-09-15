@@ -1,11 +1,6 @@
 
 <dom-module id="chpe-addon">
 <style type="text/css">
-    .radioButtons{
-        display: inline;
-        margin: 0 -5px;
-        padding: 0px;
-    }
     .submitButtons{
         text-align: right;
     }
@@ -16,8 +11,10 @@
     <template>
         <paper-material elevation="1" type="{{schemeType}}">
       		<h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4>
-             <form is="iron-form" id="form" method="POST" action="#">
-	               <basic-scheme></basic-scheme>
+             <form is="iron-form" id="addon-form" method="POST" action="#">
+
+	               <basic-scheme start-date-modal="addOnStartDate" end-date-modal="addOnEndDate" scheme-starts="addOnStart" scheme-ends="addOnEnds" start-date-type"addOnsd" end-date-type="addOned" sd-dp="staddOnDp" sd-tp="staddOnTp" ed-dp="eDaddOnDp"  ed-tp="eDaddOnTp"></basic-scheme>
+
                  <div class="submitButtons">
                     <span>
                         <paper-button name="createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
@@ -47,17 +44,17 @@
                 console.log(stateVariables);
                 this.metadata = metadata;
                 this.behaviour = behaviour;
-                this.scheme = {"metadata":metadata,"behaviour":behaviour};
+                this.scheme = {"metadata":metadata,"behaviour":behaviour} || editSchemeObj;
             },
             listeners:{
-              'iron-form-submit':'createScheme',
+              'addon-form.iron-form-submit':'createScheme',
               'saveBtn.onClick':'submitForm',
             },
             createScheme:function(){
-                 this.formData = document.getElementById('form').serialize();
+                 this.formData = document.getElementById('addon-form').serialize();
 
-                 this.scheme.behaviour.startDate = toIsoString(this.formData.startDate);
-                 this.scheme.behaviour.endDate = toIsoString(this.formData.endDate);
+                 this.scheme.behaviour.startDate = cHutils.toIsoString(this.formData.startDate);
+                 this.scheme.behaviour.endDate = cHutils.toIsoString(this.formData.endDate);
 
                  this.metadata.type = this.schemeType;
                  this.metadata.published = this.schemeStatus || this.metadata.published;
@@ -88,7 +85,7 @@
                 toast.show();
             },
             submitForm:function(evt,details,sender){
-                document.getElementById('form').submit();
+                document.getElementById('addon-form').submit();
             }
         });
        

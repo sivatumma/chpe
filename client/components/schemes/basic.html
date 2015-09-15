@@ -24,17 +24,12 @@
         <paper-input name="name" autocapitalize="on" value="{{metadata.name}}" required auto-validate pattern="^[a-zA-Z,-,0-9]{3,}[a-zA-Z]*$" no-label-float error-message="Scheme Name must starts with character, Minimum 3 characters required,Cannot contains special characters except -" label="Scheme Name">
         </paper-input>
 
-        <date-time-picker date-type="startDate" date-modal="startDateModal" date-time-value="schemeStarts" date-label="Start Date" date-id="startDateDatepicker" time-id="startDateTimepicker"></date-time-picker>
-        <date-time-picker date-type="endDate" date-modal="endDateModal" date-time-value="schemeEnds" date-label="End Date" date-id="endDateDatepicker" time-id="endDateTimepicker"></date-time-picker>
-        <div class="radioButtons">
-            <label>Discount Type</label>
-            <paper-radio-group selected="{{behaviour.discountType}}" on-click="updateDiscount">
-                <paper-radio-button name="%">%</paper-radio-button>
-                <paper-radio-button name="Flat">Flat</paper-radio-button>
-            </paper-radio-group>
-            <paper-input name="defaultDiscount" label="Discount" class="ddiscount" no-label-float type="number" max="{{discountLength}}" min="0" required auto-validate pattern="{{discountPattern}}" error-message="Max 999 if Flat ; 10 if %" value="{{behaviour.defaultDiscount}}" step="any"></paper-input>
-        </div>
+        <date-time-picker date-type="{{startDateType}}" date-modal="{{startDateModal}}" date-time-value="{{schemeStarts}}" date-label="Start Date" date-id="{{sdDp}}" time-id="{{sdTp}}"></date-time-picker>
 
+        <date-time-picker date-type="{{endDateType}}" date-modal="{{endDateModal}}" date-time-value="{{schemeEnds}}" date-label="End Date" date-id="{{edDp}}" time-id="{{edTp}}"></date-time-picker>
+
+        <chpe-discount></chpe-discount>
+        
         <paper-input name="Maximum Usages" no-label-float label="Maximum Usages" type="number" value="{{behaviour.maximumUsages}}" max="10" min="0"></paper-input>
 
     </template>
@@ -42,32 +37,28 @@
         Polymer({
             is: 'basic-scheme',
             properties: {
-                succErrMsg: String
+                succErrMsg: String,
+                startDateModal:String,
+                endDateModal:String,
+                schemeStarts:String,
+                schemeEnds:String,
+                startDateType:String,
+                endDateType:String,
+                sdTp:String,
+                sdDp:String,
+                edTp:String,
+                edDp:String,
             },
             ready: function() {
                 console.log(stateVariables);
                 this.metadata = metadata;
                 this.behaviour = behaviour;
-                this.scheme = {
-                    "metadata": metadata,
-                    "behaviour": behaviour
-                };
-                this.discountType = "%";
-                this.discountLength = 10;
-                this.discountPattern = "^([0-10])$";
+                this.scheme = this.scheme = {"metadata": metadata, "behaviour": behaviour};
             },
             listeners: {
 
-            },
-            updateDiscount: function() {
-                if (this.behaviour.discountType == "%") {
-                    this.discountLength = 10;
-                    this.discountPattern = "^([0-10])$";
-                } else {
-                    this.discountLength = 999;
-                    this.discountPattern = "^([0-999])$";
-                }
             }
+            
         });
     </script>
 </dom-module>

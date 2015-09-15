@@ -1,0 +1,58 @@
+
+<dom-module id="chpe-discount">
+<style type="text/css">
+   .discountButton{
+        background-color: #f4f4f4 !important;
+        min-width:30px;
+        position: relative;
+        border:1px solid #ccc;
+    }
+    .noBorderRight{
+         border-right:none !important;
+    }
+    .discountButton.active{
+        color:#000 !important;
+        background: lightgreen !important;
+        box-shadow: none;
+
+    }
+    .btn-group {
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .btn-group > paper-button {
+      position: relative;
+      float: left;
+      margin: 0px;
+    }
+</style>
+    <template>
+        <paper-input-continaer class="btn-group">
+            <paper-button type="button" class="discountButton noBorderRight"  btn-radio="'%'">%</paper-button>
+            <paper-button type="button" class="discountButton" btn-radio="'Flat'">Flat</paper-button>
+        </paper-input-continaer>
+      		
+    </template>
+    <script>
+        Polymer({
+            is: 'chpe-discount',
+            properties: {
+                dataModal: Object,
+                discountId:Boolean,
+            },
+            attached:function(){
+                console.log(this.schemeType);
+            },
+            ready:function(){
+
+            },
+            listeners:{
+              
+            },
+          
+        });
+       
+        
+    </script>
+</dom-module>
