@@ -1,13 +1,35 @@
 
 var express = require('express'),
     app = new express(),
-    exceptionHandlers = require('./exceptionHandlers.js');
-
+    exceptionHandlers = require('./config/exceptionHandlers.js'),
+    dbModule = require('./config/dbModule');
+  //   qurey = require('./queryBuilder.js');;
+//var mongoose = require('mongoose');
 function fetchModels(req, res) {
     res.status(200).end("Fetch is executed " + req.params.modelName);
 }
 
 function createModels(req, res) {
+
+  config.loginuser = "admin";
+  console.log("helo");
+
+    var u1 = models[req.params.modelName](qurey.createSchema(req.body));
+
+    u1.save().then(function(people) {
+
+      res.send(people);
+
+    }, function(err) {
+
+      res.send(JSON.stringify({
+        "status": "fail",
+        "message": err.message
+      }));
+
+    });
+
+    
 
 }
 
@@ -25,7 +47,7 @@ app.use('lib', express.static('../lib'));
 app.use('dist', express.static('../dist'));
 app.use('build', express.static('../build'));
 
-app.use(require('./cors').enable());
+app.use(require('./config/cors'));
 
 app.all('/', function(req, res) {
     console.log(req.method);

@@ -24,7 +24,7 @@ module.exports = function(env) {
             plainLogFile:"pricingEngine.log"
         },
 
-        var configVariable = {
+       configVariable : {
             user  : {Discount:9},
             admin : {Discount : 30},
             loginuser : "user"
