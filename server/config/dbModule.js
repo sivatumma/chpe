@@ -14,9 +14,19 @@ var models = [
 ];
 
 exports.setupMongoDB = setupMongoDB; 
+exports.dbConnection = dbConnection;
+function dbConnnection()
+{
+	 var path = serverConfig.database;
+           
+          module.exports._db = mongoose.connect(path);
+
+ return   module.exports._db;
+}
 
 function setupMongoDB (){
 	initializeMongoModels();
+	    
 }
 
 function initializeMongoModels() {
@@ -29,3 +39,4 @@ function initializeMongoModels() {
 
 console.log("hei");
 setupMongoDB();
+dbConnection();
