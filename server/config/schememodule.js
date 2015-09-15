@@ -1,9 +1,10 @@
 module.exports = function(mongoose) {
 
 	var Schema = mongoose.Schema;
-var	serverConfig = require("./serverConfig.js")
-var _ = require('underscore');
-	var schemeSchema = mongoose.Schema({
+	var serverConfig = require("./serverConfig.js")
+	var _ = require('lodash');
+
+	var schemeSchema = Schema({
 		//	Metadata to be used while creating the scheme. 
 		//	These fields collectively identify a scheme uniquely
 		metadata: {
@@ -15,8 +16,12 @@ var _ = require('underscore');
 				}
 			},
 			toIds: [{
-				id: {type: Number},
-				name:{type: String}
+				id: {
+					type: Number
+				},
+				name: {
+					type: String
+				}
 			}],
 			userID: {
 				//  MCID
@@ -80,14 +85,6 @@ var _ = require('underscore');
 				type: Number
 			},
 
-			// validityPeriod: [{
-			// 	startDate: {
-			// 		type: Date
-			// 	},
-			// 	endDate: {
-			// 		type: Date
-			// 	}
-			// }],
 			startDate: {
 				type: Date
 			},
@@ -152,26 +149,26 @@ var _ = require('underscore');
 				},
 			},
 
-			modeOfPaymentDiscounts:[ {
-				
-                    mop:{
-                type: String,
-				enum: "ePay,cod,cheque".split(",")
-	
+			modeOfPaymentDiscounts: [{
 
-                    },
-					discount: {
-						type: Number
-					},
-					discountType: {
-						type: String
-					},
-					discountLength: {
-						type: Number,
-						default: 1
-					}
+				mop: {
+					type: String,
+					enum: "ePay,cod,cheque".split(",")
 
-				
+
+				},
+				discount: {
+					type: Number
+				},
+				discountType: {
+					type: String
+				},
+				discountLength: {
+					type: Number,
+					default: 1
+				}
+
+
 			}],
 
 			billValueDiscounts: [{
@@ -241,23 +238,10 @@ var _ = require('underscore');
 		//	This is a record of all the usages
 		//	Somethings are provided by businesses, 
 		//	some we will have to note for our analysis
-
 	});
 
-
-
-
-
-
-
-	schemeSchema.pre('save', function(next) {
-
-		// If metadata type is COUPON here we validate
-
-
-	if (this.metadata.type == "COUPON" && this.metadata.defaultLife !== undefined) {
-
-
+	schemeSchema.couponValidate(next) {
+		if (this.metadata.defaultLife !== undefined) {
 			var startDate = new Date(this.behaviour.startDate);
 			var daysCount = {
 				"DAY": 1,
@@ -265,39 +249,25 @@ var _ = require('underscore');
 				"MONTH": 30
 			};
 			this.behaviour.endDate = startDate;
-
 			this.behaviour.endDate.setDate(startDate.getDate() + daysCount[this.metadata.defaultLife]);
 		}
 
-
-
-
 		if (this.behaviour && !this.behaviour.startDate) {
-			this.behaviour.startDate = new Date();
-
-			var d = new Date();
-
-			d.setFullYear(d.getFullYear() + 10);
-
-			this.behaviour.endDate = d;
-
-
+			this.behaviour.startDate = this.behaviour.endDate = new Date(),
+				this.behavior.endDate.setFullYear(this.behaviour.endDate.getFullYear() + 10);
 		}
 
-		if (!this.behaviour.maximumUsages) {
-			this.behaviour.maximumUsages = 15;
-		}
-		if (!this.behaviour.defaultDiscount) {
+		this.behaviour.maximumUsages = this.behaviour.maximumUsages || 15;
+		this.behaviour.defaultDiscount = this.behaviour.defaultDiscount || 0;
+		this.behaviour.discountType = this.behaviour.discountType || '%';
 
-			this.behaviour.defaultDiscount = 0;
-			this.behaviour.discountType = '%';
-		}
+	}
 
+	var validators = {"COUPON":couponValidate, "GIFT_CARD":giftCardValidate, "ADD_ON": addOnValidate};
 
+	schemeSchema.pre('save', function(next) {
 
-		// If locationOfServices empty here we adding Default Locations
-
-
+		validators[this.metadata.type]();
 		if (this.behaviour.locationOfServices[0].locations.length <= 0) {
 
 
@@ -313,11 +283,10 @@ var _ = require('underscore');
 					]
 				}
 
-			]
+			];
 
 
 		}
-
 
 
 
@@ -342,13 +311,11 @@ var _ = require('underscore');
 			return serviceDiscount;
 		});
 
-	
+
 		if (serviceMaxval > 9) {
 
 			return next(new Error("serviceLevelDiscount should be below 9"));
 		}
-
-
 
 
 
@@ -371,8 +338,6 @@ var _ = require('underscore');
 
 			return next(new Error("billValueDiscounts should be below 9"));
 		}
-
-
 
 
 
@@ -406,26 +371,22 @@ var _ = require('underscore');
 		//modeOfPaymentDiscounts validate
 
 		var discountPayment = null;
-		
-	
 
 
 
+		_.each(this.behaviour.modeOfPaymentDiscounts, function(single, index) {
+
+			if (single.discount > config[config.loginuser].Discount && single.discountType == "%")
+
+			{
 
 
- _.each(this.behaviour.modeOfPaymentDiscounts,function(single,index){
+				return next(new Error(single.mop + "- NOT ALLOW DISCOUNT MORE THAN 9"))
 
-if(single.discount >config[config.loginuser].Discount && single.discountType =="%")
+			}
+		})
 
-{
-
-
-return next(new Error(single.mop+"- NOT ALLOW DISCOUNT MORE THAN 9"))
-
-}
-})	
-				
- next();
+		next();
 	});
 
 
