@@ -1,4 +1,4 @@
-var config = require('config/config'),
+var config = require('./config/config.js'),
   express = require('express'),
   cors = require('cors'),
   app = new express(),
@@ -39,7 +39,7 @@ app.use('lib', express.static('../lib'));
 app.use('dist', express.static('../dist'));
 app.use('build', express.static('../build'));
 app.all('/', function(req, res) {
-  // console.log(req.method);
+  console.log(req.method);
   res.send('GET REQUEST : HEH, NO MODEL');
 });
 
@@ -52,6 +52,6 @@ app.route('/:modelName')
 // app.close();
 
 app.listen(config.port || 91, function() {
-  console.log("listening on ", config.port || 90);
+  console.log("listening on ", config.port || 91);
 });
 

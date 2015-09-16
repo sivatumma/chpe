@@ -1,8 +1,8 @@
 module.exports = function(mongoose) {
 
 	var Schema = mongoose.Schema;
-	var serverConfig = require("../config/serverConfig.js")
-	var _ = require('underscore');
+	var serverConfig = require("../config/config.js")
+	var _ = require('lodash');
 	var schemeSchema = mongoose.Schema({
 		//	Metadata to be used while creating the scheme. 
 		//	These fields collectively identify a scheme uniquely

@@ -1,5 +1,5 @@
 var path = require("path"),
-	config = require("../config/config.js")
+	config = require("./config.js")
 mongoose = require('mongoose');
 /*var models = [
 	"associate",
@@ -19,10 +19,8 @@ var models = [
 exports.setupMongoDB = setupMongoDB;
 exports.dbConnection = dbConnection;
 function dbConnection() {
-	console.log("in dbConnection()");
 	var path = config.database;
 	var db = mongoose.connect(path);
-	console.log("This is _db", db);
 	return db;
 }
 function setupMongoDB() {
