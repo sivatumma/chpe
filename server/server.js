@@ -50,9 +50,18 @@ app.route('/:modelName')
   .put(updateModels)
   .delete(deleteModels);
 
-// app.close();
+var server_credentials = {
+    key: fs.readFileSync(path.join(config.certificates_dir, 'server.key')),
+    ca: fs.readFileSync(path.join(config.certificates_dir, 'server.csr')),
+    cert: fs.readFileSync(path.join(config.certificates_dir, 'server.crt'))
+};
 
-app.listen(config.port || 91, function() {
-  console.log("listening on ", config.port || 91);
+dbModule.once('open', function callback() {
+    // https.createServer(server_credentials, app).listen(config.port || 91, function() {
+    //     console.log('Express HTTPS server listening on port ' + app.get('default_https_port'));
+    // });
+
+    http.createServer(app).listen(config.port || 91, function() {
+        console.log('Express server listening on port ' + app.get('default_http_port'));
+    });
 });
-

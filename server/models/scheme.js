@@ -1,246 +1,239 @@
 module.exports = function(mongoose) {
 
-	var Schema = mongoose.Schema;
-	var serverConfig = require("../config/config.js")
-	var _ = require('lodash');
-	var schemeSchema = mongoose.Schema({
-		//	Metadata to be used while creating the scheme. 
-		//	These fields collectively identify a scheme uniquely
-		metadata: {
-			name: {
-				type: String,
-				//required: true,
-				index: {
-					unique: true
-				}
-			},
-			toIds: [{
-				id: {
-					type: Number
-				},
+	var Schema = mongoose.Schema,
+		config = require("../config/config.js"),
+		schemeBase = require('../client/config/schemeBase'),
+		require('lodash'),
+		schemeSchema = Schema({
+			metadata: {
 				name: {
-					type: String
-				}
-			}],
-			userID: {
-				//  MCID
-				type: String /* This should be unique across all the businesses that request our services    */
-			},
-			locations: [{
-				type: String
-			}],
-			createdBy: {
-				type: String
-			},
-			creationTime: {
-				type: Date,
-				default: Date.now()
-			},
-			lastUpdated: {
-				type: Date,
-			},
-			lastUpdatedBy: {
-				type: String
-			},
-			createdLatlng: {
-
-			},
-			published: {
-				type: Boolean
-			},
-			type: {
-				type: String,
-				enum: "ADD_ON,COUPON,GIFT_CARD".split(","),
-				//required: true
-			},
-			defaultLife: {
-				//required: false,
-				type: String,
-				enum: ",REGULAR,DAY,WEEK,MONTH".split(","),
-				default: "REGULAR"
-			}
-		},
-
-		//	This is the specification of the Scheme. 
-		//	A scheme's behavior can not be altered once published
-		behavior: {
-			maximumUsages: {
-				type: Number
-			},
-
-			startDate: {
-				type: Date
-			},
-
-			endDate: {
-				type: Date
-			},
-
-			discountType: {
-				type: String,
-				enum: "%,FLAT".split(","),
-				default: "%"
-			},
-
-			defaultDiscount: {
-				type: Number
-			},
-
-			// validityPeriod: [{
-			// 	startDate: {
-			// 		type: Date
-			// 	},
-			// 	endDate: {
-			// 		type: Date
-			// 	}
-			// }],
-			startDate: {
-				type: Date
-			},
-
-			endDate: {
-				type: Date
-			},
-
-			// Service Rate Categories (SRC imply High Margin, low margin kind 
-			// of products categorized, grouped already)
-			serviceRateCategoryDiscounts: [{
-				srcTypes: [{
-					type: String
-				}],
-				discount: {
-					type: Number
-				},
-				discountType: {
-					type: String
-				},
-				discountLength: {
-					type: Number,
-				},
-				maxLength: {
-					type: Number
-				}
-			}],
-
-			advancePaidPoints: [{
-				amount: {
-					type: Number
-				},
-				points: {
-					type: Number
-				}
-			}],
-
-			doctorLevelDiscounts: {
-				systemAllocationDiscount: {
-					type: Number
-				},
-				systemAllocationDiscountType: {
 					type: String,
-					enum: "Flat,%".split(",")
-				},
-				userChosenDiscount: {
-					type: Number
-				},
-				userChosenDiscountType: {
-					type: String,
-					enum: "Flat,%".split(",")
-				},
-				userChosenDiscountMaxLength: {
-					type: Number,
-				},
-				systemChosenDiscountMaxLength: {
-					type: Number,
-				},
-			},
-
-			modeOfPaymentDiscounts: [{
-
-				mop: {
-					type: String,
-					enum: "ePay,cod,cheque".split(",")
-
-
-				},
-				discount: {
-					type: Number
-				},
-				discountType: {
-					type: String
-				},
-				discountLength: {
-					type: Number,
-					default: 1
-				}
-
-
-			}],
-
-			billValueDiscounts: [{
-				billRange: {
-					from: {
-						type: Number
-					},
-					to: {
-						type: Number
+					//required: true,
+					index: {
+						unique: true
 					}
 				},
-				discount: {
-					type: Number
+				toIds: [{
+					id: {
+						type: Number
+					},
+					name: {
+						type: String
+					}
+				}],
+				userID: {
+					//  MCID
+					type: String /* This should be unique across all the businesses that request our services    */
 				},
-				discountType: {
-					type: String
-				},
-				discountLength: {
-					type: Number,
-					default: 1
-				}
-			}],
-
-			cumulativeAmountPoints: [{
-				amount: {
-					type: Number
-				},
-				points: {
-					type: Number
-				}
-			}],
-
-			locationOfServices: [{
-				type: String
-			}],
-
-			serviceLevelDiscounts: [{
-				services: [{
+				locations: [{
 					type: String
 				}],
-				discount: {
+				createdBy: {
+					type: String
+				},
+				creationTime: {
+					type: Date,
+					default: Date.now()
+				},
+				lastUpdated: {
+					type: Date,
+				},
+				lastUpdatedBy: {
+					type: String
+				},
+				createdLatlng: {
+
+				},
+				published: {
+					type: Boolean
+				},
+				type: {
+					type: String,
+					enum: "ADD_ON,COUPON,GIFT_CARD".split(","),
+					//required: true
+				},
+				defaultLife: {
+					//required: false,
+					type: String,
+					enum: ",REGULAR,DAY,WEEK,MONTH".split(","),
+					default: "REGULAR"
+				}
+			},
+			behavior: {
+				maximumUsages: {
 					type: Number
 				},
-				discountLength: {
-					type: Number,
-					default: 1
+
+				startDate: {
+					type: Date
 				},
+
+				endDate: {
+					type: Date
+				},
+
 				discountType: {
+					type: String,
+					enum: "%,FLAT".split(","),
+					default: "%"
+				},
+
+				defaultDiscount: {
+					type: Number
+				},
+
+				// validityPeriod: [{
+				// 	startDate: {
+				// 		type: Date
+				// 	},
+				// 	endDate: {
+				// 		type: Date
+				// 	}
+				// }],
+				startDate: {
+					type: Date
+				},
+
+				endDate: {
+					type: Date
+				},
+
+				// Service Rate Categories (SRC imply High Margin, low margin kind 
+				// of products categorized, grouped already)
+				serviceRateCategoryDiscounts: [{
+					srcTypes: [{
+						type: String
+					}],
+					discount: {
+						type: Number
+					},
+					discountType: {
+						type: String
+					},
+					discountLength: {
+						type: Number,
+					},
+					maxLength: {
+						type: Number
+					}
+				}],
+
+				advancePaidPoints: [{
+					amount: {
+						type: Number
+					},
+					points: {
+						type: Number
+					}
+				}],
+
+				doctorLevelDiscounts: {
+					systemAllocationDiscount: {
+						type: Number
+					},
+					systemAllocationDiscountType: {
+						type: String,
+						enum: "Flat,%".split(",")
+					},
+					userChosenDiscount: {
+						type: Number
+					},
+					userChosenDiscountType: {
+						type: String,
+						enum: "Flat,%".split(",")
+					},
+					userChosenDiscountMaxLength: {
+						type: Number,
+					},
+					systemChosenDiscountMaxLength: {
+						type: Number,
+					},
+				},
+
+				modeOfPaymentDiscounts: [{
+
+					mop: {
+						type: String,
+						enum: "ePay,cod,cheque".split(",")
+
+
+					},
+					discount: {
+						type: Number
+					},
+					discountType: {
+						type: String
+					},
+					discountLength: {
+						type: Number,
+						default: 1
+					}
+
+
+				}],
+
+				billValueDiscounts: [{
+					billRange: {
+						from: {
+							type: Number
+						},
+						to: {
+							type: Number
+						}
+					},
+					discount: {
+						type: Number
+					},
+					discountType: {
+						type: String
+					},
+					discountLength: {
+						type: Number,
+						default: 1
+					}
+				}],
+
+				cumulativeAmountPoints: [{
+					amount: {
+						type: Number
+					},
+					points: {
+						type: Number
+					}
+				}],
+
+				locationOfServices: [{
 					type: String
+				}],
+
+				serviceLevelDiscounts: [{
+					services: [{
+						type: String
+					}],
+					discount: {
+						type: Number
+					},
+					discountLength: {
+						type: Number,
+						default: 1
+					},
+					discountType: {
+						type: String
+					}
+				}],
+
+				createdAt: {
+					type: Date
+				},
+
+				updateAt: {
+
+					type: Date
 				}
-			}],
-
-			createdAt: {
-				type: Date
-			},
-
-			updateAt: {
-
-				type: Date
 			}
-		}
+		});
 
-		//	This is a record of all the usages
-		//	Somethings are provided by businesses, 
-		//	some we will have to note for our analysis
-
-	});
+	console.log(schemeBase);
 
 
 

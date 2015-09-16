@@ -18,6 +18,12 @@ module.exports = function(props) {
 	function dbConnection() {
 		var path = config.database;
 		var db = mongoose.connect(path);
+
+		db.on('error', console.error.bind(console, 'connection error:'));
+		db.on('error', function(err) {
+			console.log(err.stack);
+		});
+
 		return db;
 	}
 
