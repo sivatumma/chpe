@@ -33,6 +33,7 @@ function deleteModels(req, res) {
   res.status(200).end("Executed delete method on model : " + req.params.modelName);
 }
 
+
 app.use(session({secret: 'Welcome2C@llHealth'}));
 app.use(cors());
 app.use('lib', express.static('../lib'));
@@ -40,7 +41,7 @@ app.use('dist', express.static('../dist'));
 app.use('build', express.static('../build'));
 app.all('/', function(req, res) {
   console.log(req.method);
-  res.send('GET REQUEST : HEH, NO MODEL');
+  res.status(200).send('GET REQUEST : HEH, NO MODEL' + new Date());
 });
 
 app.route('/:modelName')
