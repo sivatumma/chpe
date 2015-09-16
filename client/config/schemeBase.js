@@ -1,68 +1,75 @@
-(function(scheme) {
-var scheme = {};
+module.exports = function(scheme) {
+    //init metadata as per schema
+    scheme = scheme || {
+        "metadata": {},
+        "behavior": {}
+    };
 
-//init metadata as per schema
-var metadata = {
-    name: "",
-    type: "",
-    createdBy: "",
-    published: false,
-    defaultLife: "",
-    toIds: []
-};
+    var metadata = {
+        name: "",
+        type: "",
+        createdBy: "",
+        published: false,
+        defaultLife: "",
+        toIds: []
+    };
 
-//init behavior as per schema
-var behavior = {
-	defaultDiscount:0,
-    maximumUsages: 0,
-    startDate: "",
-    endDate: "",
-    discountType:"%",
-    locationOfServices: [{
-    	locations:[]
-    }],
-    serviceRateCategoryDiscounts: [{
-        discount: 0,
+    //init behavior as per schema
+    var behavior = {
+        defaultDiscount: 0,
+        maximumUsages: 0,
+        startDate: "",
+        endDate: "",
         discountType: "%",
-        srcTypes: []
-    }],
-    serviceLevelDiscounts: [{
-        discount: 0,
-        discountType: "%",
-        services: []
-    }],
-    cumulativeAmountPoints: [{
-        amount: 0,
-        points: 0
-    }],
-    doctorLevelDiscounts: {
-        userChosenDiscountType: "%",
-        doctorChosenDiscountType: "%"
-    },
-    advancePaidDiscounts: [{
-        points: 0,
-        amount: 0
-    }],
-    billValueDiscounts: [{
-        billRange: {
-            from: 0,
-            to: 0
+        locationOfServices: [{
+            locations: []
+        }],
+        serviceRateCategoryDiscounts: [{
+            discount: 0,
+            discountType: "%",
+            srcTypes: []
+        }],
+        serviceLevelDiscounts: [{
+            discount: 0,
+            discountType: "%",
+            services: []
+        }],
+        cumulativeAmountPoints: [{
+            amount: 0,
+            points: 0
+        }],
+        doctorLevelDiscounts: {
+            userChosenDiscountType: "%",
+            doctorChosenDiscountType: "%"
         },
-        discount: 0,
-        discountType: "%"
-    }],
-    modeOfPaymentDiscounts: [{
-        epay: {
+        advancePaidDiscounts: [{
+            points: 0,
+            amount: 0
+        }],
+        billValueDiscounts: [{
+            billRange: {
+                from: 0,
+                to: 0
+            },
             discount: 0,
             discountType: "%"
-        },
-        cod: {
-            discount: 0,
-            discountType: "%"
-        }
-    }]
-};
+        }],
+        modeOfPaymentDiscounts: [{
+            epay: {
+                discount: 0,
+                discountType: "%"
+            },
+            cod: {
+                discount: 0,
+                discountType: "%"
+            }
+        }]
+    };
 
-scheme.metadata = metadata;
-scheme.behavior = behavior;
-})(typeof scheme === 'undefined' ? this.scheme = {} : scheme);
+    scheme.metadata = metadata;
+    scheme.behavior = behavior;
+
+    console.log(scheme);
+    return scheme;
+
+}

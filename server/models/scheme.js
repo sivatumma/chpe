@@ -4,6 +4,12 @@ var mongoose = require('mongoose'),
 	schemeBase = require('../../client/config/schemeBase'),
 	_ = require('lodash');
 
+
+	// console.log(_.extend(this,schemeBase));
+	// console.log(this);
+	console.log(schemeBase(undefined).metadata);
+
+
 module.exports = function(mongoose) {
 
 	var schemeSchema = Schema({
@@ -236,9 +242,6 @@ module.exports = function(mongoose) {
 		}
 	});
 
-	console.log(schemeBase);
-
-
 
 	schemeSchema.pre('save', function(next) {
 
@@ -401,4 +404,4 @@ module.exports = function(mongoose) {
 
 }
 
-console.log(schemeBase, schemeBase.metadata);
+
