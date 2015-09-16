@@ -1,9 +1,7 @@
 var scheme = {};
-var metadata = {};
-var behavior = {};
 
 //init metadata as per schema
-metadata = {
+var metadata = {
     name: "",
     type: "",
     createdBy: "",
@@ -13,7 +11,7 @@ metadata = {
 };
 
 //init behavior as per schema
-behavior = {
+var behavior = {
 	defaultDiscount:0,
     maximumUsages: 0,
     startDate: "",
@@ -67,5 +65,4 @@ behavior = {
 scheme.metadata = metadata;
 scheme.behavior = behavior;
 
-
-module.export = scheme;
+if (module) module.exports = scheme;

@@ -1,11 +1,12 @@
+var mongoose = require('mongoose'),
+	Schema = mongoose.Schema,
+	config = require("../config/config.js"),
+	schemeBase = require('../../client/config/schemeBase'),
+	_ = require('lodash');
+
 module.exports = function(mongoose) {
 
-	var Schema = mongoose.Schema;
-	var serverConfig = require("../config/config.js")
-	var _ = require('lodash');
-	var schemeSchema = mongoose.Schema({
-		//	Metadata to be used while creating the scheme. 
-		//	These fields collectively identify a scheme uniquely
+	var schemeSchema = Schema({
 		metadata: {
 			name: {
 				type: String,
@@ -60,9 +61,6 @@ module.exports = function(mongoose) {
 				default: "REGULAR"
 			}
 		},
-
-		//	This is the specification of the Scheme. 
-		//	A scheme's behavior can not be altered once published
 		behavior: {
 			maximumUsages: {
 				type: Number
@@ -235,11 +233,6 @@ module.exports = function(mongoose) {
 				type: Date
 			}
 		}
-
-		//	This is a record of all the usages
-		//	Somethings are provided by businesses, 
-		//	some we will have to note for our analysis
-
 	});
 
 
@@ -406,3 +399,5 @@ module.exports = function(mongoose) {
 	return Scheme;
 
 }
+
+console.log(schemeBase, schemeBase.metadata);
