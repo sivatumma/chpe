@@ -63,8 +63,8 @@ module.exports = function(mongoose) {
 		},
 
 		//	This is the specification of the Scheme. 
-		//	A scheme's behaviour can not be altered once published
-		behaviour: {
+		//	A scheme's behavior can not be altered once published
+		behavior: {
 			maximumUsages: {
 				type: Number
 			},
@@ -242,24 +242,24 @@ module.exports = function(mongoose) {
 
 	schemeSchema.couponValidate(next) {
 		if (this.metadata.defaultLife !== undefined) {
-			var startDate = new Date(this.behaviour.startDate);
+			var startDate = new Date(this.behavior.startDate);
 			var daysCount = {
 				"DAY": 1,
 				"WEEK": 7,
 				"MONTH": 30
 			};
-			this.behaviour.endDate = startDate;
-			this.behaviour.endDate.setDate(startDate.getDate() + daysCount[this.metadata.defaultLife]);
+			this.behavior.endDate = startDate;
+			this.behavior.endDate.setDate(startDate.getDate() + daysCount[this.metadata.defaultLife]);
 		}
 
-		if (this.behaviour && !this.behaviour.startDate) {
-			this.behaviour.startDate = this.behaviour.endDate = new Date(),
-				this.behavior.endDate.setFullYear(this.behaviour.endDate.getFullYear() + 10);
+		if (this.behavior && !this.behavior.startDate) {
+			this.behavior.startDate = this.behavior.endDate = new Date(),
+				this.behavior.endDate.setFullYear(this.behavior.endDate.getFullYear() + 10);
 		}
 
-		this.behaviour.maximumUsages = this.behaviour.maximumUsages || 15;
-		this.behaviour.defaultDiscount = this.behaviour.defaultDiscount || 0;
-		this.behaviour.discountType = this.behaviour.discountType || '%';
+		this.behavior.maximumUsages = this.behavior.maximumUsages || 15;
+		this.behavior.defaultDiscount = this.behavior.defaultDiscount || 0;
+		this.behavior.discountType = this.behavior.discountType || '%';
 
 	}
 
@@ -268,10 +268,10 @@ module.exports = function(mongoose) {
 	schemeSchema.pre('save', function(next) {
 
 		validators[this.metadata.type]();
-		if (this.behaviour.locationOfServices[0].locations.length <= 0) {
+		if (this.behavior.locationOfServices[0].locations.length <= 0) {
 
 
-			this.behaviour.locationOfServices = [{
+			this.behavior.locationOfServices = [{
 
 					"myChips": [{
 						"_lowername": "alllocation",
@@ -290,7 +290,7 @@ module.exports = function(mongoose) {
 
 
 
-		if (this.behaviour.discountType == "%" && this.behaviour.defaultDiscount > 9) {
+		if (this.behavior.discountType == "%" && this.behavior.defaultDiscount > 9) {
 			return next(new Error("defaultDiscount should be below 9 percentage"));
 		}
 
@@ -299,7 +299,7 @@ module.exports = function(mongoose) {
 		//service Discount validate
 
 
-		var serviceDiscount = _.map(this.behaviour.serviceLevelDiscounts, function(x) {
+		var serviceDiscount = _.map(this.behavior.serviceLevelDiscounts, function(x) {
 			if (x.discountType == "%") {
 				return x.discount;
 
@@ -321,7 +321,7 @@ module.exports = function(mongoose) {
 
 		//billValueDiscount validate
 
-		var billValueDiscounts = _.map(this.behaviour.billValueDiscounts, function(x) {
+		var billValueDiscounts = _.map(this.behavior.billValueDiscounts, function(x) {
 
 			if (x.discountType == "%") {
 				return x.discount;
@@ -343,7 +343,7 @@ module.exports = function(mongoose) {
 
 		//serviceRateCategoryDiscounts validate
 
-		var serviceRateCategoryDiscounts = _.map(this.behaviour.serviceRateCategoryDiscounts, function(x) {
+		var serviceRateCategoryDiscounts = _.map(this.behavior.serviceRateCategoryDiscounts, function(x) {
 			if (x.discountType == "%") {
 				return x.discount;
 			}
@@ -362,7 +362,7 @@ module.exports = function(mongoose) {
 		//doctorLevelDiscounts
 
 
-		if ((this.behaviour.doctorLevelDiscounts.userChosenDiscount > 9 && this.behaviour.doctorLevelDiscounts.userChosenDiscountType == "%") || (this.behaviour.doctorLevelDiscounts.systemAllocationDiscount > 9 && this.behaviour.doctorLevelDiscounts.systemAllocationDiscountType == "%")) {
+		if ((this.behavior.doctorLevelDiscounts.userChosenDiscount > 9 && this.behavior.doctorLevelDiscounts.userChosenDiscountType == "%") || (this.behavior.doctorLevelDiscounts.systemAllocationDiscount > 9 && this.behavior.doctorLevelDiscounts.systemAllocationDiscountType == "%")) {
 
 			return next(new Error("doctorLevelDiscounts discount should be less than 9"));
 
@@ -374,7 +374,7 @@ module.exports = function(mongoose) {
 
 
 
-		_.each(this.behaviour.modeOfPaymentDiscounts, function(single, index) {
+		_.each(this.behavior.modeOfPaymentDiscounts, function(single, index) {
 
 			if (single.discount > config[config.loginuser].Discount && single.discountType == "%")
 

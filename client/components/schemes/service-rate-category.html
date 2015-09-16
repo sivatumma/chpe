@@ -3,7 +3,7 @@
     <style type="text/css"></style>
 
     <template>
-        <template is="dom-repeat" items="{{behaviour.serviceRateCategoryDiscounts}}">
+        <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}">
             <paper-input name="serviceRateCategoryDiscounts" multi value="{{item.srcTypes}}"  no-label-float  label="Search">
             </paper-input>
         </template>
@@ -15,10 +15,10 @@
         Polymer({
             is: 'service-rate-category',
             properties: {
-                behaviour:Object
+                behavior:Object
             },
             ready:function(){
-                this.behaviour = behaviour;
+                this.behavior = behavior;
             },
             listeners:{
                 

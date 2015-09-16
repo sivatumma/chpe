@@ -43,8 +43,8 @@
             ready:function(){
                 console.log(stateVariables);
                 this.metadata = metadata;
-                this.behaviour = behaviour;
-                this.scheme = {"metadata":metadata,"behaviour":behaviour} || editSchemeObj;
+                this.behavior = behavior;
+                this.scheme = {"metadata":metadata,"behavior":behavior} || editSchemeObj;
             },
             listeners:{
               'addon-form.iron-form-submit':'createScheme',
@@ -53,8 +53,8 @@
             createScheme:function(){
                  this.formData = document.getElementById('addon-form').serialize();
 
-                 this.scheme.behaviour.startDate = cHutils.toIsoString(this.formData.startDate);
-                 this.scheme.behaviour.endDate = cHutils.toIsoString(this.formData.endDate);
+                 this.scheme.behavior.startDate = cHutils.toIsoString(this.formData.startDate);
+                 this.scheme.behavior.endDate = cHutils.toIsoString(this.formData.endDate);
 
                  this.metadata.type = this.schemeType;
                  this.metadata.published = this.schemeStatus || this.metadata.published;

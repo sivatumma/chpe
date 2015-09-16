@@ -30,7 +30,7 @@
 
         <chpe-discount></chpe-discount>
         
-        <paper-input name="Maximum Usages" no-label-float label="Maximum Usages" type="number" value="{{behaviour.maximumUsages}}" max="10" min="0"></paper-input>
+        <paper-input name="Maximum Usages" no-label-float label="Maximum Usages" type="number" value="{{behavior.maximumUsages}}" max="10" min="0"></paper-input>
 
     </template>
     <script>
@@ -52,8 +52,8 @@
             ready: function() {
                 console.log(stateVariables);
                 this.metadata = metadata;
-                this.behaviour = behaviour;
-                this.scheme = this.scheme = {"metadata": metadata, "behaviour": behaviour};
+                this.behavior = behavior;
+                this.scheme = this.scheme = {"metadata": metadata, "behavior": behavior};
             },
             listeners: {
 
