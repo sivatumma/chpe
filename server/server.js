@@ -4,7 +4,7 @@ var config = require('config/config'),
   app = new express(),
   session = require('express-session'),
   exceptionHandlers = require('./config/exceptionHandlers.js'),
-  dbModule = require('./config/dbModule'),
+  dbModule = require('./config/dbModule.js'),
   qurey = require('./config/queryBuilder.js'),
   mongoose = require('mongoose');
 
@@ -14,9 +14,8 @@ function fetchModels(req, res) {
 
 function createModels(req, res) {
 
-  config.loginuser = "admin";
-  console.log("helo");
-  var u1 = models[req.params.modelName](qurey.createSchema(req.body));
+  loginuser = "admin";
+  var u1 = mongoose.model(req.params.modelName)(qurey.createSchema(req.body));
   u1.save().then(function(people) {
     res.send(people);
   }, function(err) {
