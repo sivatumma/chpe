@@ -60,7 +60,7 @@
                  this.scheme.operation = "create";
                  console.log(this.scheme);
                  if(this.scheme!== undefined){
-                     this.$.giftCardAjax.url = restApiUrls.scheme.basic;
+                     this.$.giftCardAjax.url = urls.apiHost+urls.selfRest;
                      this.$.giftCardAjax.method = "POST";
                      this.$.giftCardAjax.body = JSON.stringify(this.scheme);
                      this.$.giftCardAjax.generateRequest();

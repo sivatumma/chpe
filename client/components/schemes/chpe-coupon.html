@@ -97,7 +97,7 @@
                 this.scheme.operation = "create";
                 console.log(this.scheme);
                 if (this.scheme !== undefined) {
-                    this.$.couponAjax.url = restApiUrls.scheme.basic;
+                    this.$.couponAjax.url = urls.apiHost+urls.selfRest;
                     this.$.couponAjax.method = "POST";
                     this.$.couponAjax.body = JSON.stringify(this.scheme);
                     this.$.couponAjax.generateRequest();

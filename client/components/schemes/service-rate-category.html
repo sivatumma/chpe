@@ -7,27 +7,25 @@
         .searchBoxInSrc paper-input{
             margin-left: 20px;
         }
-        .discountBox{
-            margin-left: 20px;
+        
+        .row{
+            width: 100%;
+            margin-top: 10px;
         }
-        .search{
-          width: calc(100% - 340);
-        }
+
     </style>
 
     <template>
-        <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}">
-            <paper-card elevation="1" class="searchBoxInSrc" heading="Service Rate Categories">
+         <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}">
                     <paper-input name="serviceRateCategoryDiscounts" multi value="{{item.srcTypes}}"  no-label-float  label="Search">
                     </paper-input>
-                 <chpe-discount  discount-id="srcDiscount" percentage-id="srcPercentage" flat-id="srcFlat"
-                discount="{{item.discount}}">
-                </chpe-discount>
-            </paper-card>
+                <div style="margin-left:20px;">
+                    <chpe-discount  discount-id="srcDiscount" percentage-id="srcPercentage" flat-id="srcFlat"
+                    discount="{{item.discount}}">
+                    </chpe-discount>
+                </div>
         </template>
     </template>
-        <iron-ajax  id="srcAjax" content-type="application/json"  method="POST" params='{}'   
-         handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
     <script>
 
         Polymer({
@@ -37,21 +35,8 @@
             },
             ready:function(){
                 this.behavior = behavior;
-            },
-            listeners:{
-                
-            },
-            handleResponse:function(event){
-                console.log(event.detail.response);
-                
-            },
-            handleError:function(event){
-                var request=event.detail.request;
-                console.log(event.detail.response);
-            },
-            addRows:function(){
-
             }
+            
         });
        
         

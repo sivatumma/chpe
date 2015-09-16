@@ -62,7 +62,7 @@
                  this.scheme.operation = "create";
                  console.log(this.scheme);
                  if(this.scheme!== undefined){
-                     this.$.schemeAjax.url = restApiUrls.scheme.basic;
+                     this.$.schemeAjax.url = urls.apiHost+urls.selfRest;
                      this.$.schemeAjax.method = "POST";
                      this.$.schemeAjax.body = JSON.stringify(this.scheme);
                      this.$.schemeAjax.generateRequest();
