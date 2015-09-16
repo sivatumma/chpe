@@ -1,9 +1,10 @@
 var bcrypt = require("bcrypt-nodejs"),
+    config = require('../config/config.js'),
     SALT_WORK_FACTOR = 10,
     MAX_LOGIN_ATTEMPTS = 5,
     LOCK_TIME = 2 * 60 * 60 * 1000;
 
-var config = require('../config.js')(process.env.env);
+
 
 module.exports = function (mongoose) {
     var Schema = mongoose.Schema;

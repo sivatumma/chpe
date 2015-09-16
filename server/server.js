@@ -1,10 +1,12 @@
 var config = require('./config/config.js'),
+  fs = require('fs'),
+  path = require('path'),
   express = require('express'),
   cors = require('cors'),
   app = new express(),
   session = require('express-session'),
   exceptionHandlers = require('./config/exceptionHandlers.js'),
-  dbModule = require('./config/dbModule.js'),
+  dbModule = require('./config/dbModule.js')(),
   qurey = require('./config/queryBuilder.js'),
   mongoose = require('mongoose');
   var bodyParser = require('body-parser');
@@ -60,12 +62,11 @@ var server_credentials = {
     cert: fs.readFileSync(path.join(config.certificates_dir, 'server.crt'))
 };
 
-dbModule.once('open', function callback() {
+// dbModule.once('open', function callback() {
     // https.createServer(server_credentials, app).listen(config.port || 91, function() {
     //     console.log('Express HTTPS server listening on port ' + app.get('default_https_port'));
     // });
 
-    http.createServer(app).listen(config.port || 91, function() {
-        console.log('Express server listening on port ' + app.get('default_http_port'));
+    app.listen(config.port || 91, function() {
+        console.log('Express server listening on port ', config.port || 91);
     });
-});

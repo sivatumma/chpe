@@ -1,3 +1,4 @@
+(function(scheme) {
 var scheme = {};
 
 //init metadata as per schema
@@ -64,5 +65,4 @@ var behavior = {
 
 scheme.metadata = metadata;
 scheme.behavior = behavior;
-
-if (module) module.exports = scheme;
+})(typeof scheme === 'undefined' ? this.scheme = {} : scheme);
