@@ -50,10 +50,10 @@
     <template>
         <div class="discountBox"  id="discountToggle" layout horizontal>
             <div class="btn-group">
-                <paper-button type="button" class="discountButton noRightBorder active" 
+                <paper-button type="button" name="{{discountType}}" class="discountButton noRightBorder active" 
                 on-click="togleDiscount" id="{{percentageId}}" discount="%">%</paper-button>
 
-                <paper-button type="button" class="discountButton"
+                <paper-button type="button" name="{{discountType}}" class="discountButton"
                 on-click="togleDiscount" id="{{flatId}}" discount="FLAT">Flat</paper-button>
                 <div class="discountInput">
                     <paper-input name="discount" style="border:none;" no-label-float label="Discount" type="number"  id="{{discountId}}" 
@@ -72,7 +72,8 @@
                 discountId:Boolean,
                 percentageId:String,
                 flatId:String,
-                discount:String
+                discount:String,
+                discountType:String
 
             },
             ready:function(){

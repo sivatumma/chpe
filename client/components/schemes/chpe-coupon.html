@@ -10,6 +10,18 @@
         .arrows{
             background: none;
         }
+        .base-scheme-card{
+            width: 50%;
+            padding: 2%;
+        }
+        #cards {
+          @apply(--layout-vertical);
+          @apply(--center-justified);
+          max-width:500px;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 10px;
+        }
     </style>
     <template>
         <paper-material elevation="1" type="{{schemeType}}">
@@ -17,14 +29,15 @@
             <form is="iron-form" id="coupon-form" method="POST" action="#">
                 <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
+                        <paper-card  id="cards">
+                            <basic-scheme start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type "csd" end-date-type="ced" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp">
+                            </basic-scheme>
 
-                        <basic-scheme start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type "csd" end-date-type="ced" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp">
-                        </basic-scheme>
-
-                        <div align="center" class="arrows">
-                            <paper-icon-button icon="arrow-forward" on-click="_onNextClick">
-                            </paper-icon-button>
-                        </div>
+                            <div align="center" class="arrows">
+                                <paper-icon-button icon="arrow-forward" on-click="_onNextClick">
+                                </paper-icon-button>
+                            </div>
+                        </paper-card>
                     </neon-animatable>
                     <neon-animatable>
                         <div align="center" class="arrows">

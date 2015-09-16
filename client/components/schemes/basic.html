@@ -18,6 +18,7 @@
         }
         paper-input {
             margin-top: 0px !important;
+            padding-left:20px;
         }
     </style>
     <template>
@@ -29,7 +30,7 @@
         <date-time-picker date-type="{{endDateType}}" date-modal="{{endDateModal}}" date-time-value="{{schemeEnds}}" date-label="End Date" date-id="{{edDp}}" time-id="{{edTp}}"></date-time-picker>
 
         <chpe-discount  discount-id="basicDiscount" percentage-id="basicPercentage" flat-id="basicFlatId"
-        discount="{{defaultDiscount}}">
+        discount="{{defaultDiscount}}" discount-type="{{discountType}}">
         </chpe-discount>
         
         <paper-input name="Maximum Usages" no-label-float label="Maximum Usages" type="number" value="{{behavior.maximumUsages}}" max="10" min="0"></paper-input>
@@ -57,6 +58,7 @@
                 this.behavior = behavior;
                 this.scheme = scheme;
                 this.defaultDiscount = behavior.defaultDiscount;
+                this.discountType = behavior.discountType;
             },
             listeners: {
 
