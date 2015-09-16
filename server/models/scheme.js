@@ -61,6 +61,7 @@ module.exports = function(mongoose) {
 				default: "REGULAR"
 			}
 		},
+
 		behavior: {
 			maximumUsages: {
 				type: Number
@@ -234,6 +235,8 @@ module.exports = function(mongoose) {
 			}
 		}
 	});
+
+	console.log(schemeBase);
 
 
 

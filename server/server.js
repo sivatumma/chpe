@@ -62,7 +62,7 @@ var server_credentials = {
     cert: fs.readFileSync(path.join(config.certificates_dir, 'server.crt'))
 };
 
-// dbModule.once('open', function callback() {
+dbModule.once('open', function callback() {
     // https.createServer(server_credentials, app).listen(config.port || 91, function() {
     //     console.log('Express HTTPS server listening on port ' + app.get('default_https_port'));
     // });
@@ -70,3 +70,4 @@ var server_credentials = {
     app.listen(config.port || 91, function() {
         console.log('Express server listening on port ', config.port || 91);
     });
+});
