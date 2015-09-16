@@ -1,21 +1,22 @@
 var path = require("path"),
 	config = require("./config.js")
 mongoose = require('mongoose');
-/*var models = [
+var models = [
 	"associate",
 	"consumer",
 	"product",
 	"roles",
-	"user",
-	"scheme",
+	// "user",
+	"Scheme",
 	"order",
 	"diagnostic"
 ];
-*/
 
-var models = [
-	"scheme"
-];
+
+// var models = [
+// "scheme"
+// ];
+
 exports.setupMongoDB = setupMongoDB;
 exports.dbConnection = dbConnection;
 function dbConnection() {
@@ -29,7 +30,7 @@ function setupMongoDB() {
 function initializeMongoModels() {
 	var l = models.length;
 	for (var i = 0; i < l; i++) {
-		return require(path.join(config.modelsFolder, models[i] + ".js"))(mongoose);
+		require(path.join(config.modelsFolder, models[i]))(mongoose);
 	}
 }
 setupMongoDB();
