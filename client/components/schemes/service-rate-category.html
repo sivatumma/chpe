@@ -1,11 +1,29 @@
 
 <dom-module id="service-rate-category">
-    <style type="text/css"></style>
+    <style type="text/css">
+        .searchBoxInSrc{
+            width: 100%;
+        }
+        .searchBoxInSrc paper-input{
+            margin-left: 20px;
+        }
+        .discountBox{
+            margin-left: 20px;
+        }
+        .search{
+          width: calc(100% - 340);
+        }
+    </style>
 
     <template>
         <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}">
-            <paper-input name="serviceRateCategoryDiscounts" multi value="{{item.srcTypes}}"  no-label-float  label="Search">
-            </paper-input>
+            <paper-card elevation="1" class="searchBoxInSrc" heading="Service Rate Categories">
+                    <paper-input name="serviceRateCategoryDiscounts" multi value="{{item.srcTypes}}"  no-label-float  label="Search">
+                    </paper-input>
+                 <chpe-discount  discount-id="srcDiscount" percentage-id="srcPercentage" flat-id="srcFlat"
+                discount="{{item.discount}}">
+                </chpe-discount>
+            </paper-card>
         </template>
     </template>
         <iron-ajax  id="srcAjax" content-type="application/json"  method="POST" params='{}'   
