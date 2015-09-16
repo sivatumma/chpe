@@ -28,7 +28,7 @@ module.exports = function(env) {
        configVariable : {
             user  : {Discount:9},
             admin : {Discount : 30},
-            loginuser : "user"
+            loginUser : "user"
         },
 
         modelsFolder: '../models',

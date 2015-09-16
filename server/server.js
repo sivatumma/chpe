@@ -7,6 +7,7 @@ var config = require('./config/config.js'),
   dbModule = require('./config/dbModule.js'),
   qurey = require('./config/queryBuilder.js'),
   mongoose = require('mongoose');
+  var bodyParser = require('body-parser');
 
 function fetchModels(req, res) {
   res.status(200).end("Fetch is executed " + req.params.modelName);
@@ -14,7 +15,8 @@ function fetchModels(req, res) {
 
 function createModels(req, res) {
 
-  loginuser = "admin";
+  config.configVariable.loginUser = "user";
+  
   var u1 = mongoose.model(req.params.modelName)(qurey.createSchema(req.body));
   u1.save().then(function(people) {
     res.send(people);
@@ -35,6 +37,8 @@ function deleteModels(req, res) {
 
 
 app.use(session({secret: 'Welcome2C@llHealth'}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use('lib', express.static('../lib'));
 app.use('dist', express.static('../dist'));

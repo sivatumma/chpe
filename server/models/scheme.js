@@ -239,6 +239,7 @@ module.exports = function(mongoose) {
 
 	schemeSchema.pre('save', function(next) {
 
+
 		// If metadata type is COUPON here we validate
 
 
@@ -281,7 +282,6 @@ module.exports = function(mongoose) {
 		}
 
 
-
 		// If locationOfServices empty here we adding Default Locations
 
 
@@ -298,7 +298,6 @@ module.exports = function(mongoose) {
 		if (this.behavior.discountType == "%" && this.behavior.defaultDiscount > 9) {
 			return next(new Error("defaultDiscount should be below 9 percentage"));
 		}
-
 
 
 		//service Discount validate
@@ -381,10 +380,9 @@ module.exports = function(mongoose) {
 
 		_.each(this.behavior.modeOfPaymentDiscounts, function(single, index) {
 
-			if (single.discount > config[config.loginuser].Discount && single.discountType == "%")
+			if (single.discount > config.configVariable[config.configVariable.loginUser].Discount && single.discountType == "%")
 
 			{
-
 
 				return next(new Error(single.mop + "- NOT ALLOW DISCOUNT MORE THAN 9"))
 
@@ -394,7 +392,7 @@ module.exports = function(mongoose) {
 	});
 
 
-	var Scheme = mongoose.model('scheme', schemeSchema);
+	var Scheme = mongoose.model('Scheme', schemeSchema);
 
 	return Scheme;
 
