@@ -15,7 +15,8 @@ module.exports = function(env) {
         application:{
             addPrefixes: process.argv[2],
             logFilenamePrefix:"",
-            modelNamePrefix:""
+            modelNamePrefix:"".
+            port:90
         },
         logFiles:{
             databaseLogFile:"db.log",

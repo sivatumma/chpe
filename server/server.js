@@ -1,6 +1,8 @@
-var express = require('express'),
+var config = require('config/config'),
+  express = require('express'),
   cors = require('cors'),
   app = new express(),
+  session = require('express-session'),
   exceptionHandlers = require('./config/exceptionHandlers.js'),
   dbModule = require('./config/dbModule'),
   qurey = require('./config/queryBuilder.js'),
@@ -32,6 +34,7 @@ function deleteModels(req, res) {
   res.status(200).end("Executed delete method on model : " + req.params.modelName);
 }
 
+app.use(session({secret: 'Welcome2C@llHealth'}));
 app.use(cors());
 app.use('lib', express.static('../lib'));
 app.use('dist', express.static('../dist'));
@@ -49,6 +52,7 @@ app.route('/:modelName')
 
 // app.close();
 
-app.listen(3002, function() {
-  console.log("listening on 3002");
+app.listen(config.port || 91, function() {
+  console.log("listening on ", config.port || 90);
 });
+
