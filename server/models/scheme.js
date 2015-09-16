@@ -277,6 +277,7 @@ module.exports = function(mongoose) {
 
 		}
 
+
 		if (!this.behavior.maximumUsages) {
 			this.behavior.maximumUsages = 15;
 		}
@@ -291,22 +292,10 @@ module.exports = function(mongoose) {
 		// If locationOfServices empty here we adding Default Locations
 
 
-		if (this.behavior.locationOfServices[0].locations.length <= 0) {
+		if (this.behavior.locationOfServices.length <= 0) {
 
 
-			this.behavior.locationOfServices = [{
-
-					"myChips": [{
-						"_lowername": "alllocation",
-						"name": "AllLocation"
-					}],
-
-					"locations": [
-						"AllLocation"
-					]
-				}
-
-			]
+			this.behavior.locationOfServices = ["AllLocation"];
 
 
 		}
@@ -408,7 +397,6 @@ module.exports = function(mongoose) {
 
 			}
 		})
-
 		next();
 	});
 

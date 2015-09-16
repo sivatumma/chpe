@@ -1,5 +1,5 @@
 var path = require("path"),
-	serverConfig = require("./serverConfig.js")
+	serverConfig = require("../config/serverConfig.js")
 	mongoose = require('mongoose');
 
 /*var models = [
@@ -29,7 +29,6 @@ function dbConnection()
 	    var path = serverConfig.database;
           
           var db = mongoose.connect(path);
-	console.log("This is _db", db);
 
  return   db;
 }
