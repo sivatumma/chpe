@@ -1,45 +1,38 @@
 var path = require("path"),
-	serverConfig = require("./serverConfig.js")
+	config = require("./config.js"),
 	mongoose = require('mongoose');
 
-var models = [
-	"associate",
-	"consumer",
-	"product",
-	"roles",
-	"user",
-	"scheme",
-	"order",
-	"diagnostic"
-];
 
-exports.setupMongoDB = setupMongoDB; 
-exports.dbConnection = dbConnection;
-function dbConnection()
-{
-	console.log("in dbConnection()");
-	    var path = serverConfig.database;
-          
-          var db = mongoose.connect(path);
-	console.log("This is _db", db);
+module.exports = function(props) {
+	var models = [
+		"associate",
+		"consumer",
+		"product",
+		"roles",
+		"user",
+		"scheme",
+		"order",
+		"diagnostic"
+	];
 
- return   db;
-}
+	function dbConnection() {
+		var path = config.database;
+		var db = mongoose.connect(path);
 
-function setupMongoDB (){
-	console.log("in setupMongoDB()");
+		db.on('error', console.error.bind(console, 'connection error:'));
+		db.on('error', function(err) {
+			console.log(err.stack);
+		});
+
+		return db;
+	}
+
+	function initializeMongoModels() {
+		var l = models.length;
+		for (var i = 0; i < l; i++) {
+			return require(path.join(config.modelsFolder, models[i] + ".js"))(mongoose);
+		}
+	}
 	initializeMongoModels();
-	    
+	return dbConnection();
 }
-
-function initializeMongoModels() {
-    var l = models.length;
-    for (var i = 0; i < l; i++) {
-        
-        //return  require(path.join(serverConfig.modelsFolder,models[i]+".js"))(mongoose);
-    }
-}
-
-console.log("hei");
-setupMongoDB();
-dbConnection();

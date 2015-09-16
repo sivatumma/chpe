@@ -1,9 +1,37 @@
+/**
+ * Set the environment variables 
+ * 
+ *
+ * NODE_ENV to “production” to run the app in production mode.
+ * 
+ *
+ */
 var path = require('path'),
     root_path = path.normalize(__dirname),
     _ = require('lodash');
 
 module.exports = function(env) {
     var main = {
+        application:{
+            addPrefixes: process.argv[2],
+            logFilenamePrefix:"",
+            modelNamePrefix:"",
+            port:90
+        },
+        logFiles:{
+            databaseLogFile:"db.log",
+            webserverLogFile:"web.log",
+            exceptionLogFile:"exceptions.log",
+            plainLogFile:"pricingEngine.log"
+        },
+
+       configVariable : {
+            user  : {Discount:9},
+            admin : {Discount : 30},
+            loginuser : "user"
+        },
+
+        modelsFolder: '../models',
         database: 'mongodb://localhost/pricingEngine',
         memcache_host: 'http://172.16.2.113:8081/AutoSuggestion/rest',
         app_name: 'Pricing Engine',
@@ -42,6 +70,7 @@ module.exports = function(env) {
         services_json_path: path.join('C:', 'work', 'chpe', 'src-ui', 'services.json')
     };
     var prod = {
+        database: 'mongodb://localhost/pricingEngine',
         temp: path.join('/', 'tmp'),
         env: 'production',
         certificates_dir: path.join('/', 'etc', 'ssl', 'self-signed'),
@@ -50,7 +79,7 @@ module.exports = function(env) {
         // mobile_app_debug_root:path.join('/','opt','cisco-pricing_engine-mobile-app-Debug'),
         // pricing_engine_app_root: path.join('/', 'root', 'siva', 'PricingEngine', 'baseUI'),
         pricing_engine_app_root: path.join('/', 'root', 'siva', 'chpe', 'src-ui'),
-        services_json_path: path.join('/', 'root', 'siva', 'PricingEngine', 'baseUI', 'services.json')
+        services_json_path: path.join('/', 'root', 'siva', 'PricingEngine', 'baseUI', 'services.json'),
     }
     return _.extend(main, (env == 'dev') ? dev : prod);
-}
+}()
