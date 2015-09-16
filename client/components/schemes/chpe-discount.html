@@ -9,7 +9,7 @@
         background: #f4f4f4;
         border:1px solid #ccc;
     }
-    .discountButton.active{
+    .active{
         color:#000 !important;
         background: lightgreen !important;
         box-shadow: none;
@@ -44,16 +44,16 @@
         <div class="discountBox"  id="discountToggle" layout horizontal>
             <div class="btn-group">
                 <label>Discount Type</label>
-                <paper-button type="button" class="discountButton noRightBorder active" value="{{dataModal.discountType}}"
+                <paper-button type="button" class="discountButton noRightBorder active" 
                 on-click="toogleDiscount" id="{{percentageId}}" discount="%">%</paper-button>
 
-                <paper-button type="button" class="discountButton" value="{{dataModal.discountType}}"
+                <paper-button type="button" class="discountButton"
                 on-click="toogleDiscount" id="{{flatId}}" discount="FLAT">Flat</paper-button>
             </div>
             <div class="discountInput">
-                <paper-input no-label-float type="number" max="{{discountLength}}" min="0" required auto-validate pattern="{{discountPattern}}" error-message="Max 999 if Flat ; 10 if %" id="{{discountId}}" 
-                value="{{dataModal.discount}}" step="any">
-                </paper-input>
+                <paper-input name="discount" no-label-float label="Discount" type="number"  id="{{discountId}}" 
+                max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
+                 error-message="Max 999 if Flat ; 10 if %" value="{{discount}}"></paper-input>
             </div>
         </div>
       		
@@ -62,39 +62,37 @@
         Polymer({
             is: 'chpe-discount',
             properties: {
-                dataModal: Object,
                 discountId:Boolean,
-                discountTypeId:String,
                 percentageId:String,
-                flatId:String
+                flatId:String,
+                discount:String
 
             },
             ready:function(){
-                this.behaviour = behaviour;
-                console.log(this.discountTypeId);
-                this.dataModal.discountType = behaviour.discountType;
                 this.discountLength  = 10;
                 this.discountPattern = "^([0-10])$";
-                this.dataModal.discount = behaviour.defaultDiscount;
             },
             listeners:{
               'discountToggle.onClick':'toogleDiscount'
             },
             toogleDiscount:function(e){
-                    console.log(e.target.innerText, this.percentageId.discount);
-                    /*var discountType = this.dataModal.discountType;
-                    document.querySelector("#"+this.discountTypeId).chUtils.removeClass("active");
-                    document.querySelector("#"+this.percentageId).chUtils.removeClass("active");
+                var discountType = e.target.innerText;
 
-                if (this.behaviour.discountType == "%") {
+                //first removing all classes and setting clicked element to active
+                chUtils.removeClass(document.querySelector("#"+this.percentageId),"active");
+                chUtils.removeClass(document.querySelector("#"+this.flatId),"active");
+
+                if (discountType == "%") {
                     this.discountLength = 10;
                     this.discountPattern = "^([0-10])$";
-                    document.querySelector("#"+this.discountTypeId).chUtils.addClass("active");
+                    chUtils.addClass(document.querySelector("#"+this.percentageId),"active");
+                    console.log(document.querySelector("#"+this.percentageId));
                 } else {
-                    document.querySelector("#"+this.percentageId).chUtils.addClass("active");
+                    chUtils.addClass(document.querySelector("#"+this.flatId),"active");
                     this.discountLength = 999;
                     this.discountPattern = "^([0-999])$";
-                }*/
+                    console.log(document.querySelector("#"+this.flatId));
+                }
             }
           
         });

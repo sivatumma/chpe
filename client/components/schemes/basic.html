@@ -28,7 +28,8 @@
 
         <date-time-picker date-type="{{endDateType}}" date-modal="{{endDateModal}}" date-time-value="{{schemeEnds}}" date-label="End Date" date-id="{{edDp}}" time-id="{{edTp}}"></date-time-picker>
 
-        <chpe-discount discount-type-id="basicDiscountType" percentage-id="basicPercentage" flat-id="basicFlatId" discount-id="defaultDiscountVal" data-modal="{discountType:behaviour.discountType,discount:behaviour.defaultDiscount}">
+        <chpe-discount  discount-id="basicDiscount" percentage-id="basicPercentage" flat-id="basicFlatId"
+        discount="{{defaultDiscount}}">
         </chpe-discount>
         
         <paper-input name="Maximum Usages" no-label-float label="Maximum Usages" type="number" value="{{behaviour.maximumUsages}}" max="10" min="0"></paper-input>
@@ -55,6 +56,7 @@
                 this.metadata = metadata;
                 this.behaviour = behaviour;
                 this.scheme = this.scheme = {"metadata": metadata, "behaviour": behaviour};
+                this.defaultDiscount = behaviour.defaultDiscount;
             },
             listeners: {
 
