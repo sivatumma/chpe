@@ -178,14 +178,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 <p>View where we create <span>{{params.create}}</span></p>
                             </paper-material>
                         </section> -->
-                    <section data-route="createScheme">
+                    <section data-route="createScheme" hidden>
                         <chpe-addon scheme-type="{{params.create}}"></chpe-addon>
                     </section>
+                    
                     <section data-route="createCoupon">
                         <chpe-coupon scheme-type="{{params.create}}"></chpe-coupon>
                     </section>
 
-                    <section data-route="createGiftCard">
+                    <section data-route="createGiftCard" hidden>
                         <chpe-gift-card scheme-type="{{params.create}}"></chpe-gift-card>
                     </section>
                     <section data-route="specialEffects">

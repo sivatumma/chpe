@@ -23,6 +23,13 @@ module.exports = function(env) {
             exceptionLogFile:"exceptions.log",
             plainLogFile:"pricingEngine.log"
         },
+
+       configVariable : {
+            user  : {Discount:9},
+            admin : {Discount : 30},
+            loginuser : "user"
+        },
+
         modelsFolder: '../models',
         database: 'mongodb://localhost/pricingEngine',
         memcache_host: 'http://172.16.2.113:8081/AutoSuggestion/rest',
@@ -62,7 +69,7 @@ module.exports = function(env) {
         services_json_path: path.join('C:', 'work', 'chpe', 'src-ui', 'services.json')
     };
     var prod = {
-        database:"prod-database",
+        database: 'mongodb://localhost/pricingEngine',
         temp: path.join('/', 'tmp'),
         env: 'production',
         certificates_dir: path.join('/', 'etc', 'ssl', 'self-signed'),

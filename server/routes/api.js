@@ -247,10 +247,10 @@
 
 
          models["newscheme"].find({
-                 "behaviour.startDate": {
+                 "behavior.startDate": {
                      $lte: new Date()
                  },
-                 "behaviour.endDate": {
+                 "behavior.endDate": {
                      $lte: new Date(new Date().setDate(new Date().getDate() + 7))
                  }
              },
@@ -350,7 +350,7 @@
              });
 
          } else if (req.body.operation == "create") {
-            console.log(JSON.stringify(req.body.behaviour.serviceLevelDiscounts));
+            console.log(JSON.stringify(req.body.behavior.serviceLevelDiscounts));
 
              if (req.body.on === "diagnosticsMaster") {
                  console.log("Saving  diagnosticsMaster...");
@@ -372,27 +372,27 @@
              var user = req.user || {};
              user.username = user.username || req.query.API_KEY;
 
-             if (req.body.behaviour && !req.body.behaviour.startDate) {
-                 req.body.behaviour.startDate = new Date();
+             if (req.body.behavior && !req.body.behavior.startDate) {
+                 req.body.behavior.startDate = new Date();
 
                  var d = new Date();
 
                  d.setFullYear(d.getFullYear() + 10);
 
-                 req.body.behaviour.endDate = d;
+                 req.body.behavior.endDate = d;
 
              }
-             if (!req.body.behaviour.maximumUsages) {
-                 req.body.behaviour.maximumUsages = 15;
+             if (!req.body.behavior.maximumUsages) {
+                 req.body.behavior.maximumUsages = 15;
              }
-             if (!req.body.behaviour.defaultDiscount) {
+             if (!req.body.behavior.defaultDiscount) {
 
-                 req.body.behaviour.defaultDiscount = 0;
-                 req.body.behaviour.discountType = '%';
+                 req.body.behavior.defaultDiscount = 0;
+                 req.body.behavior.discountType = '%';
              }
-             if (req.body.behaviour.locationOfServices[0].locations.length <= 0) {
+             if (req.body.behavior.locationOfServices[0].locations.length <= 0) {
 
-                 req.body.behaviour.locationOfServices = [{
+                 req.body.behavior.locationOfServices = [{
 
                          "myChips": [{
                              "_lowername": "alllocation",
@@ -412,15 +412,15 @@
 
              if (req.body.metadata.type == "COUPON" && req.body.metadata.defaultLife !== undefined) {
                  if(req.body.metadata.defaultLife!=="") {
-                     var startDate = new Date(req.body.behaviour.startDate);
+                     var startDate = new Date(req.body.behavior.startDate);
                      var daysCount = {
                          "DAY": 1,
                          "WEEK": 7,
                          "MONTH": 30
                      };
-                     req.body.behaviour.endDate = startDate;
+                     req.body.behavior.endDate = startDate;
 
-                     req.body.behaviour.endDate.setDate(startDate.getDate() + daysCount[req.body.metadata.defaultLife]);
+                     req.body.behavior.endDate.setDate(startDate.getDate() + daysCount[req.body.metadata.defaultLife]);
 
                  }
              }
@@ -430,7 +430,7 @@
                  res.header("user", user.tokens[user.tokens.length - 1]);
              // Store the whole data in NewScheme model too
              var m1 = models['newscheme'](req.body);
-             m1.behaviour.locationOfServices = m1.behaviour.locationOfServices || ["Hyderabad"];
+             m1.behavior.locationOfServices = m1.behavior.locationOfServices || ["Hyderabad"];
              m1.save(function(err, data) {
                  if (err) {
                      logger.log('error', err.stack);
@@ -487,13 +487,13 @@
          models["newscheme"].find({
              "metadata.name": req.body.name,
 
-             "behaviour.locationOfServices.locations": {
+             "behavior.locationOfServices.locations": {
                  $in: [req.body.locationOfService, "AllLocation"]
              },
-             "behaviour.startDate": {
+             "behavior.startDate": {
                  $lte: new Date(req.body.orderDate)
              },
-             "behaviour.endDate": {
+             "behavior.endDate": {
                  $gte: new Date(req.body.orderDate)
              },
              "metadata.toIds.to":req.body.userId,
@@ -537,8 +537,8 @@
                              } else {
                                  var display = function(orderData, callback) {
 
-                                     if (data[0].behaviour.maximumUsages >= orderData + 1) {
-                                         var discount = data[0].behaviour.defaultDiscount;
+                                     if (data[0].behavior.maximumUsages >= orderData + 1) {
+                                         var discount = data[0].behavior.defaultDiscount;
                                          var ObjectId = mongoose.Types.ObjectId;
                                          var orderData = {
                                              schemeName: req.body.name,
@@ -562,7 +562,7 @@
                                              } else {
                                                  var finalAmount;
                                                  if (discount) {
-                                                     finalAmount = callDiscount(req.body.billAmount, data[0].behaviour.defaultDiscount, data[0].behaviour.discountType);
+                                                     finalAmount = callDiscount(req.body.billAmount, data[0].behavior.defaultDiscount, data[0].behavior.discountType);
                                                  } else {
                                                      finalAmount = req.body.billAmount;
                                                  }
@@ -574,7 +574,7 @@
                                                      "name": req.body.name,
                                                      "billAmount": req.body.billAmount,
                                                      "discount": discount,
-                                                     "discountType": data[0].behaviour.discountType,
+                                                     "discountType": data[0].behavior.discountType,
                                                      "finalAmount": finalAmount,
                                                      "status": "success"
 
@@ -625,9 +625,9 @@
                                  } else {
 
 
-                                     if (data[0].behaviour.maximumUsages >= orderData.length + 1) {
+                                     if (data[0].behavior.maximumUsages >= orderData.length + 1) {
 
-                                         var serverArray = data[0].behaviour.serviceLevelDiscounts[0].services;
+                                         var serverArray = data[0].behavior.serviceLevelDiscounts[0].services;
                                          var databaseArray = req.body.services;
                                          var status = serverArray.equals(databaseArray);
                                          var dataAfterDiscount = [];
@@ -670,7 +670,7 @@
 
 
 
-                                         async.map(data[0].behaviour.serviceLevelDiscounts.sort(), display, function(err, result) {
+                                         async.map(data[0].behavior.serviceLevelDiscounts.sort(), display, function(err, result) {
                                            if(result=="Service Not Added")
                                            {
 
@@ -711,11 +711,11 @@
                                                      finalResult.locationOfService = req.body.locationOfService;
                                                      if (req.body.doctorAmount != undefined) {
                                                          if (req.body.doctorChoiceType == "system") {
-                                                             doctorDiscount = data[0].behaviour.doctorLevelDiscounts.systemAllocationDiscount;
+                                                             doctorDiscount = data[0].behavior.doctorLevelDiscounts.systemAllocationDiscount;
 
 
                                                              if (doctorDiscount > 0 && req.body.doctorAmount > 0) {
-                                                                 doctorDiscountAmount = callDiscount(req.body.doctorAmount, data[0].behaviour.doctorLevelDiscounts.systemAllocationDiscount, data[0].behaviour.doctorLevelDiscounts.systemDiscountType);
+                                                                 doctorDiscountAmount = callDiscount(req.body.doctorAmount, data[0].behavior.doctorLevelDiscounts.systemAllocationDiscount, data[0].behavior.doctorLevelDiscounts.systemDiscountType);
 
 
                                                              } else {
@@ -724,10 +724,10 @@
                                                              }
                                                          }
                                                          if (req.body.doctorChoiceType == "user") {
-                                                             doctorDiscount = data[0].behaviour.doctorLevelDiscounts.userChosenDiscount;
+                                                             doctorDiscount = data[0].behavior.doctorLevelDiscounts.userChosenDiscount;
 
                                                              if (doctorDiscount > 0 && req.body.doctorAmount > 0) {
-                                                                 doctorDiscountAmount = callDiscount(req.body.doctorAmount, data[0].behaviour.doctorLevelDiscounts.userChosenDiscount, data[0].behaviour.doctorLevelDiscounts.userChosenDiscountType);
+                                                                 doctorDiscountAmount = callDiscount(req.body.doctorAmount, data[0].behavior.doctorLevelDiscounts.userChosenDiscount, data[0].behavior.doctorLevelDiscounts.userChosenDiscountType);
 
                                                              } else {
                                                                  doctorDiscountAmount = req.body.doctorAmount;
@@ -735,7 +735,7 @@
                                                          }
                                                          finalResult.doctorActualAmount = req.body.doctorAmount;
                                                          finalResult.doctorDiscount = doctorDiscount;
-                                                         finalResult.doctorDiscountType = data[0].behaviour.doctorLevelDiscounts.systemAllocationDiscountType;
+                                                         finalResult.doctorDiscountType = data[0].behavior.doctorLevelDiscounts.systemAllocationDiscountType;
                                                          finalResult.doctorAfterDiscountAmount = doctorDiscountAmount;
 
                                                      }
@@ -746,17 +746,17 @@
                                                          if (req.body.modeOfPayment == 'cod')
 
                                                          {
-                                                             finalAmount = callDiscount(discountAmount + doctorDiscountAmount, data[0].behaviour.modeOfPaymentDiscounts.cod.discount, data[0].behaviour.modeOfPaymentDiscounts.cod.discountType);
+                                                             finalAmount = callDiscount(discountAmount + doctorDiscountAmount, data[0].behavior.modeOfPaymentDiscounts.cod.discount, data[0].behavior.modeOfPaymentDiscounts.cod.discountType);
 
                                                          } else if (req.body.modeOfPayment == 'epay')
 
                                                          {
-                                                             finalAmount = callDiscount(discountAmount + doctorDiscountAmount, data[0].behaviour.modeOfPaymentDiscounts.epay.discount, data[0].behaviour.modeOfPaymentDiscounts.epay.discountType);
+                                                             finalAmount = callDiscount(discountAmount + doctorDiscountAmount, data[0].behavior.modeOfPaymentDiscounts.epay.discount, data[0].behavior.modeOfPaymentDiscounts.epay.discountType);
 
                                                          } else if (req.body.modeOfPayment == 'cheque')
 
                                                          {
-                                                             finalAmount = callDiscount(discountAmount + doctorDiscountAmount, data[0].behaviour.modeOfPaymentDiscounts.cheque.discount, data[0].behaviour.modeOfPaymentDiscounts.cheque.discountType);
+                                                             finalAmount = callDiscount(discountAmount + doctorDiscountAmount, data[0].behavior.modeOfPaymentDiscounts.cheque.discount, data[0].behavior.modeOfPaymentDiscounts.cheque.discountType);
 
                                                          } else {
                                                              finalAmount = discountAmount + doctorDiscountAmount;
@@ -767,10 +767,10 @@
                                                          finalAmount = discountAmount + doctorDiscountAmount;
                                                      }
 
-                                                     if (data[0].behaviour && data[0].behaviour.billValueDiscounts[0] && data[0].behaviour.billValueDiscounts[0].billRange.from) {
+                                                     if (data[0].behavior && data[0].behavior.billValueDiscounts[0] && data[0].behavior.billValueDiscounts[0].billRange.from) {
 
-                                                         if (finalAmount > data[0].behaviour.billValueDiscounts[0].billRange.from && finalAmount < data[0].behaviour.billValueDiscounts[0].billRange.to) {
-                                                             finalResult.finalAmount = callDiscount(finalAmount, data[0].behaviour.billValueDiscounts[0].discount, data[0].behaviour.billValueDiscounts[0].discountType);
+                                                         if (finalAmount > data[0].behavior.billValueDiscounts[0].billRange.from && finalAmount < data[0].behavior.billValueDiscounts[0].billRange.to) {
+                                                             finalResult.finalAmount = callDiscount(finalAmount, data[0].behavior.billValueDiscounts[0].discount, data[0].behavior.billValueDiscounts[0].discountType);
                                                          } else {
                                                              finalResult.finalAmount = finalAmount;
                                                          }
@@ -868,7 +868,7 @@
                          } else {
                              if (orderData.length > 0) {
 
-                                 if (data[0].behaviour.maximumUsages >= orderData.length) {
+                                 if (data[0].behavior.maximumUsages >= orderData.length) {
 
 
 
@@ -974,7 +974,7 @@
                  if (data.length > 0)
 
                  {
-                     var locations = _.pluck(data[0].behaviour.locationOfServices, 'locations');
+                     var locations = _.pluck(data[0].behavior.locationOfServices, 'locations');
 
                      models["order"].find({
                          schemeName: req.query.name
@@ -988,8 +988,8 @@
                          } else {
                              var finalData = {};
                              finalData.name = data[0].metadata.name;
-                             finalData.startDate = data[0].behaviour.startDate;
-                             finalData.endDate = data[0].behaviour.endDate;
+                             finalData.startDate = data[0].behavior.startDate;
+                             finalData.endDate = data[0].behavior.endDate;
 
 
                              var orderIdData = _.countBy(orderData, function(obj) {
