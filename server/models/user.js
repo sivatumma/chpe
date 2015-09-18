@@ -206,6 +206,8 @@ module.exports = function(mongoose) {
 
     usersSchema.statics.authorize = function(req, res, next) {
 
+        console.log(req.session);
+
         if (config.approvedAuthorizedAPIKeys.indexOf(req.query.API_KEY) >= 0) {
             return next();
         }

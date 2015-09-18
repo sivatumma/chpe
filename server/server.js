@@ -67,7 +67,7 @@ app.use('/build', express.static(config.application.root_path + '/build', {
 app.use(express.static(config.application.root_path + '/client'));
 
 console.log(config.application.root_path + '/client');
-app.all('/', function(req, res) {
+app.all('/', User.authorize, function(req, res) {
   res.sendfile('client/index.html');
 });
 
