@@ -1,6 +1,5 @@
-module.exports = function(scheme) {
-    //init metadata as per schema
-    scheme = scheme || {
+function schemeBase(scheme){    //init metadata as per schema
+    if (scheme == undefined || scheme == null) scheme = {
         "metadata": {},
         "behavior": {}
     };
@@ -69,7 +68,8 @@ module.exports = function(scheme) {
     scheme.metadata = metadata;
     scheme.behavior = behavior;
 
-    console.log(scheme);
     return scheme;
 
 }
+var module = module || {};
+if (typeof module != undefined && module != null && module.exports) module.exports = schemeBase();

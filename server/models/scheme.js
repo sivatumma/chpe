@@ -1,14 +1,8 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	config = require("../config/config.js"),
-	schemeBase = require('../../client/config/schemeBase'),
+	schemeBase = require('../../client/config/schemeBase.js'),
 	_ = require('lodash');
-
-
-	// console.log(_.extend(this,schemeBase));
-	// console.log(this);
-	console.log(schemeBase(undefined).metadata);
-
 
 module.exports = function(mongoose) {
 

@@ -1,5 +1,6 @@
 var config = require('./config/config.js'),
   fs = require('fs'),
+  uuid = require('node-uuid'),
   path = require('path'),
   express = require('express'),
   cors = require('cors'),
@@ -24,10 +25,10 @@ function createModels(req, res) {
   u1.save().then(function(people) {
     res.send(people);
   }, function(err) {
-    res.send(JSON.stringify({
+    res.send({
       "status": "fail",
       "message": err.message
-    }));
+    } + '');
   });
 
 }
@@ -39,23 +40,38 @@ function deleteModels(req, res) {
 }
 
 
+app.use(cors());
 app.use(session({
-  secret: 'Welcome2C@llHealth'
+  genid: function(req) {
+    return uuid.v4();
+  },
+  resave: true,
+  saveUninitialized: true,
+  secret: 'Welcome2C@llHe@lth'
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(cors());
-app.use('lib', express.static('../lib'));
-app.use('dist', express.static('../dist'));
-app.use('build', express.static('../build'));
-app.all('/', User.authorize, function(req, res) {
-  console.log(req.method);
-  res.status(200).send('GET REQUEST : HEH, NO MODEL' + new Date());
+
+app.use('/lib', express.static(config.application.root_path + '/lib', {
+  maxAge: '30d'
+}));
+app.use('/dist', express.static(config.application.root_path + '/dist', {
+  maxAge: '30d'
+}));
+app.use('/build', express.static(config.application.root_path + '/build', {
+  maxAge: '30d'
+}));
+
+app.use(express.static(config.application.root_path + '/client'));
+
+console.log(config.application.root_path + '/client');
+app.all('/', function(req, res) {
+  res.sendfile('client/index.html');
 });
 
-app.route('/:modelName')
+app.route('/mdb/:modelName')
   .get(fetchModels)
   .post(createModels)
   .put(updateModels)

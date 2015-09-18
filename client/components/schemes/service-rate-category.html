@@ -1,3 +1,5 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
 
 <dom-module id="service-rate-category">
     <style type="text/css">
@@ -36,7 +38,7 @@
                 behavior:Object
             },
             ready:function(){
-                this.behavior = behavior;
+                this.behavior = schemeBase.behavior;
             },
             listeners:{
                 

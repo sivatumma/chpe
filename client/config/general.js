@@ -1,17 +1,17 @@
-var restApiUrls = {};
-var constants = {};
-var stateVariables = {};
+function generalConfig() {
+	var urls = {
+		apiHost: 'http://localhost:90/api/pricingengine',
+		rest: '?API_KEY=MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9',
+		memcache: '/memcache'
+	};
 
-//setting constants
-
-urls = {
-    apiHost: '/api/pricingengine',
-    selfRest: '?API_KEY=MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9',
-    memcache: '/memcache'
-};
-
-//declaring state variables
-stateVariables = {
-    isLoggedIn: false,
-    schemeType: ""
+	//declaring state variables
+	var stateVariables = {
+		isLoggedIn: false,
+		schemeType: ""
+	};
+	return {
+		urls: urls,
+		stateVariables: stateVariables
+	};
 };
