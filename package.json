@@ -51,7 +51,8 @@
 		"express-ipfilter": "^0.0.20",
 		"body-parser": "^1.7.0",
 		"ejs": "^1.0.0",
-		"express-session": "^1.7.6"
+		"express-session": "^1.7.6",
+		"ws": "0.7.2"
 	},
 	"scripts": {
 		"test": "gulp test:local",
