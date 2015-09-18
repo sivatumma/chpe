@@ -1,9 +1,10 @@
 var bcrypt = require("bcrypt-nodejs"),
+    config = require('../config/config.js'),
     SALT_WORK_FACTOR = 10,
     MAX_LOGIN_ATTEMPTS = 5,
     LOCK_TIME = 2 * 60 * 60 * 1000;
 
-var config = require('../config.js')(process.env.env);
+
 
 module.exports = function (mongoose) {
     var Schema = mongoose.Schema;
@@ -135,14 +136,14 @@ module.exports = function (mongoose) {
         //  var app=(req.headers['app'])?req.headers['app']:'mobile';    // Put 'pricingengine' to enforce authentication & authorization;
         // if(app == 'mobile') return next();
         if (!req.headers['token'])
-            res.send(401, {message: 'Authentication token required.'});
+            res.status(401).end({message: 'Authentication token required.'});
 
 
         //var uModel = (app == 'portal' )?mongoose.model('User'):mongoose.model('mUser');
         var uModel = mongoose.model('User');
         uModel.findOne({'tokens.token': req.headers['token']}, function (err, user) {
-            if (err) return res.send(500, {message: err});
-            if (!user) return res.send(403, {message: 'Authorization required.'});
+            if (err) return res.status(500).end({message: err});
+            if (!user) return res.end(403).end({message: 'Authorization required.'});
 
 
             if (user && user.tokens && user.tokens[user.tokens.length - 1]) {
