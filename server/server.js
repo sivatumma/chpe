@@ -1,12 +1,17 @@
 var config = require('./config/config.js'),
+  fs = require('fs'),
+  uuid = require('node-uuid'),
+  path = require('path'),
   express = require('express'),
   cors = require('cors'),
   app = new express(),
   session = require('express-session'),
   exceptionHandlers = require('./config/exceptionHandlers.js'),
-  dbModule = require('./config/dbModule.js'),
+  dbModule = require('./config/dbModule.js')(),
   qurey = require('./config/queryBuilder.js'),
-  mongoose = require('mongoose');
+  mongoose = require('mongoose'),
+  User = mongoose.model('User'),
+  bodyParser = require('body-parser');
 
 function fetchModels(req, res) {
   res.status(200).end("Fetch is executed " + req.params.modelName);
@@ -14,15 +19,16 @@ function fetchModels(req, res) {
 
 function createModels(req, res) {
 
-  loginuser = "admin";
+  config.configVariable.loginUser = "user";
+
   var u1 = mongoose.model(req.params.modelName)(qurey.createSchema(req.body));
   u1.save().then(function(people) {
     res.send(people);
   }, function(err) {
-    res.send(JSON.stringify({
+    res.send({
       "status": "fail",
       "message": err.message
-    }));
+    } + '');
   });
 
 }
@@ -34,34 +40,55 @@ function deleteModels(req, res) {
 }
 
 
-app.use(session({secret: 'Welcome2C@llHealth'}));
 app.use(cors());
-app.use('lib', express.static('../lib'));
-app.use('dist', express.static('../dist'));
-app.use('build', express.static('../build'));
+app.use(session({
+  genid: function(req) {
+    return uuid.v4();
+  },
+  resave: true,
+  saveUninitialized: true,
+  secret: 'Welcome2C@llHe@lth'
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.use('/lib', express.static(config.application.root_path + '/lib', {
+  maxAge: '30d'
+}));
+app.use('/dist', express.static(config.application.root_path + '/dist', {
+  maxAge: '30d'
+}));
+app.use('/build', express.static(config.application.root_path + '/build', {
+  maxAge: '30d'
+}));
+
+app.use(express.static(config.application.root_path + '/client'));
+
+console.log(config.application.root_path + '/client');
 app.all('/', function(req, res) {
-  console.log(req.method);
-  res.status(200).send('GET REQUEST : HEH, NO MODEL' + new Date());
+  res.sendfile('client/index.html');
 });
 
-app.route('/:modelName')
+app.route('/mdb/:modelName')
   .get(fetchModels)
   .post(createModels)
   .put(updateModels)
   .delete(deleteModels);
 
 var server_credentials = {
-    key: fs.readFileSync(path.join(config.certificates_dir, 'server.key')),
-    ca: fs.readFileSync(path.join(config.certificates_dir, 'server.csr')),
-    cert: fs.readFileSync(path.join(config.certificates_dir, 'server.crt'))
+  key: fs.readFileSync(path.join(config.certificates_dir, 'server.key')),
+  ca: fs.readFileSync(path.join(config.certificates_dir, 'server.csr')),
+  cert: fs.readFileSync(path.join(config.certificates_dir, 'server.crt'))
 };
 
 dbModule.once('open', function callback() {
-    // https.createServer(server_credentials, app).listen(config.port || 91, function() {
-    //     console.log('Express HTTPS server listening on port ' + app.get('default_https_port'));
-    // });
+  // https.createServer(server_credentials, app).listen(config.port || 91, function() {
+  //     console.log('Express HTTPS server listening on port ' + app.get('default_https_port'));
+  // });
 
-    http.createServer(app).listen(config.port || 91, function() {
-        console.log('Express server listening on port ' + app.get('default_http_port'));
-    });
+  app.listen(config.port || 91, function() {
+    console.log('Express server listening on port ', config.port || 91);
+  });
 });

@@ -1,3 +1,5 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
 
 <dom-module id="basic-scheme">
     <style type="text/css">
@@ -53,12 +55,11 @@
                 edDp:String,
             },
             ready: function() {
-                console.log(stateVariables);
-                this.metadata = metadata;
-                this.behavior = behavior;
-                this.scheme = scheme;
-                this.defaultDiscount = behavior.defaultDiscount;
-                this.discountType = behavior.discountType;
+                console.log(generalConfig().stateVariables);
+                this.metadata = schemeBase.metadata;
+                this.behavior = schemeBase.behavior;
+                this.scheme = schemeBase;
+                this.defaultDiscount = schemeBase().behavior.defaultDiscount;
             },
             listeners: {
 

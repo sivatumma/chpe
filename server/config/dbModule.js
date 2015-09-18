@@ -2,7 +2,6 @@ var path = require("path"),
 	config = require("./config.js"),
 	mongoose = require('mongoose');
 
-
 module.exports = function(props) {
 	var models = [
 		"associate",
@@ -16,8 +15,8 @@ module.exports = function(props) {
 	];
 
 	function dbConnection() {
-		var path = config.database;
-		var db = mongoose.connect(path);
+		mongoose.connect(config.database);
+		var db = mongoose.connection;
 
 		db.on('error', console.error.bind(console, 'connection error:'));
 		db.on('error', function(err) {
@@ -30,7 +29,7 @@ module.exports = function(props) {
 	function initializeMongoModels() {
 		var l = models.length;
 		for (var i = 0; i < l; i++) {
-			return require(path.join(config.modelsFolder, models[i] + ".js"))(mongoose);
+			require(path.join(config.modelsFolder, models[i] + ".js"))(mongoose);
 		}
 	}
 	initializeMongoModels();

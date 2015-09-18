@@ -13,6 +13,7 @@ var path = require('path'),
 module.exports = function(env) {
     var main = {
         application:{
+            root_path: path.join('/home','siva','Downloads','chpe-polymer-1.0.3'),
             addPrefixes: process.argv[2],
             logFilenamePrefix:"",
             modelNamePrefix:"",
@@ -28,7 +29,7 @@ module.exports = function(env) {
        configVariable : {
             user  : {Discount:9},
             admin : {Discount : 30},
-            loginuser : "user"
+            loginUser : "user"
         },
 
         modelsFolder: '../models',
