@@ -16,23 +16,23 @@ query.push(data);
 },
 suggestDiscount : function(req)
 {
-	
 		var query = {
 			"metadata.name": req.body.name,
 
-			"behaviour.locationOfServices": {
+			"behavior.locationOfServices": {
 				$in: [req.body.locationOfService, "AllLocation"]
 			},
-			"behaviour.startDate": {
+			"behavior.startDate": {
 				$lte: new Date(req.body.orderDate)
 			},
-			"behaviour.endDate": {
+			"behavior.endDate": {
 				$gte: new Date(req.body.orderDate)
 			},
-			"metadata.toIds.to": req.body.userId,
+			"metadata.toIds.id": req.body.userId,
 			"metadata.published": true
 
 		}
+		console.log(query);
 		return query;
 },
 
