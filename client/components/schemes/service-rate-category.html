@@ -1,3 +1,5 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
 
 <dom-module id="service-rate-category">
     <style type="text/css">
@@ -7,27 +9,25 @@
         .searchBoxInSrc paper-input{
             margin-left: 20px;
         }
-        .discountBox{
-            margin-left: 20px;
+        
+        .row{
+            width: 100%;
+            margin-top: 10px;
         }
-        .search{
-          width: calc(100% - 340);
-        }
+
     </style>
 
     <template>
-        <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}">
-            <paper-card elevation="1" class="searchBoxInSrc" heading="Service Rate Categories">
+         <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}">
                     <paper-input name="serviceRateCategoryDiscounts" multi value="{{item.srcTypes}}"  no-label-float  label="Search">
                     </paper-input>
-                 <chpe-discount  discount-id="srcDiscount" percentage-id="srcPercentage" flat-id="srcFlat"
-                discount="{{item.discount}}">
-                </chpe-discount>
-            </paper-card>
+                <div style="margin-left:20px;">
+                    <chpe-discount  discount-id="srcDiscount" percentage-id="srcPercentage" flat-id="srcFlat"
+                    discount="{{item.discount}}">
+                    </chpe-discount>
+                </div>
         </template>
     </template>
-        <iron-ajax  id="srcAjax" content-type="application/json"  method="POST" params='{}'   
-         handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
     <script>
 
         Polymer({
@@ -36,7 +36,7 @@
                 behavior:Object
             },
             ready:function(){
-                this.behavior = behavior;
+                this.behavior = schemeBase.behavior;
             },
             listeners:{
                 
@@ -52,6 +52,7 @@
             addRows:function(){
 
             }
+            
         });
        
         

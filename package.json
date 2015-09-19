@@ -53,7 +53,8 @@
 		"ejs": "^1.0.0",
 		"express-session": "^1.7.6",
 		"bcrypt-nodejs": "0.0.3",
-		"ws": "0.7.2"
+		"ws": "0.7.2",
+		"node-uuid": "1.4.1"
 	},
 	"scripts": {
 		"test": "gulp test:local",

@@ -5,7 +5,6 @@
         display: block;
     }
     .discountBox{
-        width: 320px;
         display: inline-block;
     }
    .discountButton{
@@ -39,25 +38,29 @@
 
     }
     .discountInput{
-        width:35%;
         display: inline-block;
         margin: 0;
+        line-height: 28px;
+        border-right:1px solid #ccc;
+        border-top:1px solid #ccc;
+        height: 36px;
     }
+    
 </style>
     <template>
         <div class="discountBox"  id="discountToggle" layout horizontal>
             <div class="btn-group">
-                <label>Discount Type</label>
-                <paper-button type="button" class="discountButton noRightBorder active" 
-                on-click="toogleDiscount" id="{{percentageId}}" discount="%">%</paper-button>
+                <paper-button type="button" name="{{discountType}}" class="discountButton noRightBorder active" 
+                on-click="togleDiscount" id="{{percentageId}}" discount="%">%</paper-button>
 
-                <paper-button type="button" class="discountButton"
-                on-click="toogleDiscount" id="{{flatId}}" discount="FLAT">Flat</paper-button>
-            </div>
-            <div class="discountInput">
-                <paper-input name="discount" no-label-float label="Discount" type="number"  id="{{discountId}}" 
-                max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
-                 error-message="Max 999 if Flat ; 10 if %" value="{{discount}}"></paper-input>
+                <paper-button type="button" name="{{discountType}}" class="discountButton"
+                on-click="togleDiscount" id="{{flatId}}" discount="FLAT">Flat</paper-button>
+                <div class="discountInput">
+                    <paper-input name="discount" style="border:none;" no-label-float label="Discount" type="number"  id="{{discountId}}" 
+                    max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
+                     error-message="Max 999 if Flat ; 10 if %" value="{{discount}}"></paper-input>
+                </div>
+
             </div>
         </div>
       		
@@ -69,7 +72,8 @@
                 discountId:Boolean,
                 percentageId:String,
                 flatId:String,
-                discount:String
+                discount:String,
+                discountType:String
 
             },
             ready:function(){
@@ -77,9 +81,9 @@
                 this.discountPattern = "^([0-10])$";
             },
             listeners:{
-              'discountToggle.onClick':'toogleDiscount'
+              'discountToggle.onClick':'togleDiscount'
             },
-            toogleDiscount:function(e){
+            togleDiscount:function(e){
                 var discountType = e.target.innerText;
 
                 //first removing all classes and setting clicked element to active

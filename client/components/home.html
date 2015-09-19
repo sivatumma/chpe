@@ -1,3 +1,5 @@
+<script src="../config/general.js"></script>
+
 <dom-module id="schemes-as-cards">
 <style type="text/css">
 	.cards {
@@ -77,7 +79,7 @@
 		ready:function(){
 			console.log("Hi Schemes as cards loaded....!");
 			this.scheme = {"on":"newscheme","operation":"find"};
-			this.$.fetchSchemes.url = restApiUrls.scheme.basic;
+			this.$.fetchSchemes.url = generalConfig().urls.apiHost + generalConfig().urls.rest;
 	        this.$.fetchSchemes.method = "POST";
 	        this.$.fetchSchemes.body = JSON.stringify(this.scheme);
 	        this.$.fetchSchemes.generateRequest();

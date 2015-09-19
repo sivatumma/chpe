@@ -1,3 +1,5 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
 
 <dom-module id="basic-scheme">
     <style type="text/css">
@@ -18,6 +20,7 @@
         }
         paper-input {
             margin-top: 0px !important;
+            padding-left:20px;
         }
     </style>
     <template>
@@ -29,7 +32,7 @@
         <date-time-picker date-type="{{endDateType}}" date-modal="{{endDateModal}}" date-time-value="{{schemeEnds}}" date-label="End Date" date-id="{{edDp}}" time-id="{{edTp}}"></date-time-picker>
 
         <chpe-discount  discount-id="basicDiscount" percentage-id="basicPercentage" flat-id="basicFlatId"
-        discount="{{defaultDiscount}}">
+        discount="{{defaultDiscount}}" discount-type="{{discountType}}">
         </chpe-discount>
         
         <paper-input name="Maximum Usages" no-label-float label="Maximum Usages" type="number" value="{{behavior.maximumUsages}}" max="10" min="0"></paper-input>
@@ -52,11 +55,11 @@
                 edDp:String,
             },
             ready: function() {
-                console.log(stateVariables);
-                this.metadata = metadata;
-                this.behavior = behavior;
-                this.scheme = scheme;
-                this.defaultDiscount = behavior.defaultDiscount;
+                console.log(generalConfig().stateVariables);
+                this.metadata = schemeBase.metadata;
+                this.behavior = schemeBase.behavior;
+                this.scheme = schemeBase;
+                this.defaultDiscount = schemeBase().behavior.defaultDiscount;
             },
             listeners: {
 
