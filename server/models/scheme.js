@@ -13,7 +13,6 @@ var mongoose = require('mongoose'),
 module.exports = function(mongoose) {
 
 	var schemeSchema = Schema({
->>>>>>> 1f8639c7884dbd0edf9cf21503ddef97b3ce0396
 		metadata: {
 			name: {
 				type: String,
@@ -26,17 +25,7 @@ module.exports = function(mongoose) {
 				id: {
 					type: Number
 				},
-<<<<<<< HEAD
-=======
-	var Schema = mongoose.Schema,
-		config = require("../config/config.js"),
-		schemeBase = require('../client/config/schemeBase'),
-		require('lodash'),
-		schemeSchema = Schema({
-			metadata: {
->>>>>>> 9084429365c6f21ed0bc18ea918d12a1b155bded
-=======
->>>>>>> 1f8639c7884dbd0edf9cf21503ddef97b3ce0396
+
 				name: {
 					type: String
 				}

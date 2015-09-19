@@ -32,7 +32,20 @@ function createModels(req, res) {
 
 }
 
-function updateModels(req, res) {}
+function updateModels(req, res) {
+
+console.log(req.body);
+  var data = mongoose.model("scheme").find(qurey.suggestDiscount(req)).exec();
+
+data.then(function(schemadata){
+  console.log(schemadata);
+  res.send(schemadata);
+
+
+})
+
+
+}
 
 function deleteModels(req, res) {
   res.status(200).end("Executed delete method on model : " + req.params.modelName);
@@ -55,11 +68,14 @@ app.all('/', User.authorize, function(req, res) {
   res.status(200).send('GET REQUEST : HEH, NO MODEL' + new Date());
 });
 
-app.route('/:modelName')
+app.route('/mdb/:modelName')
   .get(fetchModels)
   .post(createModels)
   .put(updateModels)
   .delete(deleteModels);
+
+  app.route('/operation/:filter').put(updateModels);
+
 
 var server_credentials = {
   key: fs.readFileSync(path.join(config.certificates_dir, 'server.key')),
