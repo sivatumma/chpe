@@ -8,3 +8,4 @@ x.js
 .idea/
 **/*.log
 *.log
+primes.js
