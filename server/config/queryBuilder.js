@@ -32,8 +32,22 @@ suggestDiscount : function(req)
 			"metadata.published": true
 
 		}
-		console.log(query);
+	
 		return query;
+},
+
+
+findOrderQuery : function(req)
+{
+	var query ={
+     schemeName: req.body.name,
+     userId: req.body.userId
+
+	}
+
+return query;
+
+
 },
 
 shcemaFindQuery : function(query)

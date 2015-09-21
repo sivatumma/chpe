@@ -10,6 +10,7 @@ module.exports = function(mongoose) {
 		metadata: {
 			name: {
 				type: String,
+				ref:'order',
 				//required: true,
 				index: {
 					unique: true

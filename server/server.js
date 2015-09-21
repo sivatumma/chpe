@@ -35,12 +35,11 @@ function createModels(req, res) {
 function updateModels(req, res) {
 
 
-  var data = mongoose.model("scheme").find(qurey.suggestDiscount(req)).exec();
-
+  var data = mongoose.model("scheme").find(qurey.suggestDiscount(req)).populate('metadata.name').exec();
+//var order = mongoose.model("order").find(query.findOrderQuery(req)).exec();
 data.then(function(schemadata){
-  console.log(schemadata);
+  console.log(schemadata[0].metadata);
   res.send(schemadata);
-
 
 })
 
