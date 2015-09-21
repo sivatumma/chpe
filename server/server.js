@@ -13,6 +13,8 @@ var config = require('./config/config.js'),
   User = mongoose.model('User'),
   bodyParser = require('body-parser');
 
+require('./config/logModule')(app);
+
 function fetchModels(req, res) {
   res.status(200).end("Fetch is executed " + req.params.modelName);
 }

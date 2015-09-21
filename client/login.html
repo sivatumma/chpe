@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family:arial;
+    }
+
+    table{margin:30px auto; width:70%;}
+    table tr{ vertical-align:top;}
+
+    .right-vline{width:55%;border-right:1px solid silver; padding-right:30px;margin-right:30px;}
+
+    .background-image {
+      background-image: url('kb5.png');
+      background-size: cover;
+      display: block;
+      -webkit-filter: blur(35px);
+      filter: blur(35px);
+      height: 100%;
+      left: 0;
+      position: fixed;
+      right: 0;
+      z-index: -1;
+      text-align:center;
+    }
+
+    .content {
+      background: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 1px 15px rgba(0, 0, 0, 0.25);
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      width:300px;
+      height:300px;
+      position: relative;
+      z-index: 1;
+      margin:10% auto;
+      padding: 15px;
+      text-align:center;
+      border-radius:40px;
+    }
+
+    .content p.heading{  font-size:30px; font-weight:normal; margin:30px 0px;}
+
+    .content input{outline:none;}
+    .content > input:nth-child(3){border-top-left-radius:16px; border-top-right-radius:16px; border:1px solid silver; width:220px;padding:9px; }
+    .content input:last-child{border-bottom-right-radius:16px; border-bottom-left-radius:16px; width:220px;border:1px solid silver;padding:9px;}
+  </style>
+
+
+</head>
+<body>
+
+  <div class="background-image"></div>
+
+  <table>
+    <tr>
+      <td class="right-vline">
+        <h1>Schemes Dashboard</h1>
+        <p><h3>Coupons</h3>Published to Callhealth consumers, not tied with any pre-rule.
+<strong>e.g.,</strong> you can create <strong><em>Women-Care</em></strong> to offer 25% discount on Women's day
+</p>
+        <p><h3>Gift Cards</h3>CCOs often find a need to resolve Consumer grievances.
+With a gift card, they have resolutions in hand
+</p>
+        <p><h3>Schemes, <em>or Add-Ons</em></h3>A long time, Complex healthcare market product that covers every choice possible.
+</p>
+      </td>
+      <td>
+        <div class="content">
+          <img src="ch-logo.png"/>
+          <p class="heading">Schemes</p>
+          <input type="text" placeholder="Username">
+          <input type="password" placeholder="Password">
+        </div>
+      </td></tr></table>
+
+
+    </body>
+    <html>

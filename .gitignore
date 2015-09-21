@@ -6,3 +6,5 @@ C:\\nppdf32Log\\debuglog.txt
 client/external
 x.js
 .idea/
+**/*.log
+*.log

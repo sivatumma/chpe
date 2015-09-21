@@ -54,7 +54,8 @@
 		"express-session": "^1.7.6",
 		"bcrypt-nodejs": "0.0.3",
 		"ws": "0.7.2",
-		"node-uuid": "1.4.1"
+		"node-uuid": "1.4.1",
+		"morgan": "1.6.1"
 	},
 	"scripts": {
 		"test": "gulp test:local",
