@@ -157,6 +157,10 @@ iron-pages{
   font-size:24px !important;
 }
 
+#mainContainer{
+  background: white;
+}
+
 .hide{
   display: none;
 }
@@ -171,3 +175,4 @@ iron-pages{
    -ms-animation: slide 2s ease 3.5s forwards;
     animation: slide 2s ease 3.5s forwards;
 }
+

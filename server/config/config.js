@@ -13,7 +13,8 @@ var path = require('path'),
 module.exports = function(env) {
     var main = {
         application:{
-            root_path: path.join('/home','siva','Downloads','chpe-polymer-1.0.3'),
+            // root_path: path.join('/home','siva','Downloads','chpe-polymer-1.0.3'),
+            root_path: path.join('C:','Work','chpe-1.0'),
             addPrefixes: process.argv[2],
             logFilenamePrefix:"",
             modelNamePrefix:"",
@@ -33,7 +34,7 @@ module.exports = function(env) {
         },
 
         modelsFolder: '../models',
-        database: 'mongodb://localhost/pricingEngine',
+        database: 'mongodb://172.19.4.162/pricingEngine',
         memcache_host: 'http://172.16.2.113:8081/AutoSuggestion/rest',
         app_name: 'Pricing Engine',
         app_root: root_path,
@@ -64,7 +65,7 @@ module.exports = function(env) {
         ]
     };
     var dev = {
-        database: 'mongodb://localhost/pricingEngine',
+        database: 'mongodb://172.19.4.162/pricingEngine',
         env: 'development',
         old_pricing_engine_app_root: path.join('C:', 'work', 'PricingEngine', 'baseUI'),
         pricing_engine_app_root: path.join('C:', 'work', 'chpe', 'src-ui', 'html'),

@@ -20,10 +20,39 @@
         #cards {
           @apply(--layout-vertical);
           @apply(--center-justified);
-          max-width:500px;
+          max-width:780px;
           margin-left: auto;
           margin-right: auto;
           padding: 10px;
+        }
+        paper-fab {
+          display: block;
+          margin-bottom:24px;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 50%;
+        }
+        paper-fab.blue {
+          --paper-fab-background: var(--paper-light-blue-300);
+          --paper-fab-keyboard-focus-background: var(--paper-light-blue-200);
+        }
+        paper-fab.red {
+          --paper-fab-background: var(--paper-red-500);
+          --paper-fab-keyboard-focus-background: var(--paper-red-900);
+        }
+        paper-fab.green {
+          --paper-fab-background: var(--paper-green-500);
+          --paper-fab-keyboard-focus-background: var(--paper-green-900);
+        }
+        paper-fab.orange {
+          --paper-fab-background: var(--paper-orange-500);
+          --paper-fab-keyboard-focus-background: var(--paper-orange-900);
+        }
+        .coupon-base-card{
+            margin: 0px;
+            max-width: 720px;
+            @apply(--layout-vertical);
+            @apply(--center-justified);
         }
     </style>
     <template>
@@ -32,15 +61,11 @@
             <form is="iron-form" id="coupon-form" method="POST" action="#">
                 <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
-                        <paper-card  id="cards">
-                            <basic-scheme start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type "csd" end-date-type="ced" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp">
-                            </basic-scheme>
-
+                                <basic-scheme start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type "csd" end-date-type="ced" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp">
+                                </basic-scheme>
                             <div align="center" class="arrows">
-                                <paper-icon-button icon="arrow-forward" on-click="_onNextClick">
-                                </paper-icon-button>
+                                <paper-fab icon="arrow-forward"  class="blue" on-click="_onNextClick"></paper-fab>
                             </div>
-                        </paper-card>
                     </neon-animatable>
                     <neon-animatable>
                         <div align="center" class="arrows">

@@ -21,6 +21,7 @@ module.exports = function(props) {
 		db.on('error', console.error.bind(console, 'connection error:'));
 		db.on('error', function(err) {
 			console.log(err.stack);
+			console.log(err);
 		});
 
 		return db;

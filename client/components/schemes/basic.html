@@ -20,8 +20,8 @@
         }
         paper-input {
             margin-top: 0px !important;
-            padding-left:20px;
         }
+
     </style>
     <template>
         <paper-input name="name" autocapitalize="on" value="{{metadata.name}}" required auto-validate pattern="^[a-zA-Z,-,0-9]{3,}[a-zA-Z]*$" no-label-float error-message="Scheme Name must starts with character, Minimum 3 characters required,Cannot contains special characters except -" label="Scheme Name">
