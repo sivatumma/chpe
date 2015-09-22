@@ -44,19 +44,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="stylesheet" href="/assets/styles/main.css">
     <!-- endbuild-->
 
-    <script src="external/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="./external/webcomponentsjs/webcomponents-lite.js"></script>
     <!-- endbuild -->
 
     <!-- will be replaced with elements/elements.vulcanized.html -->
-    <link rel="import" href="/components/elements.html">
+    <link rel="import" href="components/elements.html">
     <!-- endreplace-->
-    <script src="../config/schemeBase.js"></script>
-    <script src="../config/general.js"></script>
-    <script src="/lib/chUtils.js"></script>
+    <script src="config/schemeBase.js"></script>
+    <script src="config/general.js"></script>
+    <script src="../lib/chUtils.js"></script>
 </head>
 
 
-<body unresolved class="fullbleed layout vertical">
+<body unresolved class="fullbleed layout vertical"> 
 
     <span id="browser-sync-binding"></span>
 
@@ -98,6 +98,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <iron-icon icon="star-half"></iron-icon>
                         <span>Create Gift Card</span>
                     </a>
+
+                    <paper-autocomplete></paper-autocomplete>
 
                 </paper-menu>
             </paper-scroll-header-panel>
