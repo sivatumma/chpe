@@ -1,3 +1,6 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
+
 <dom-module id="chpe-coupon">
     <style type="text/css">
         .submitButtons {
@@ -98,13 +101,10 @@
                 console.log(this.schemeType);
             },
             ready: function() {
-                console.log(stateVariables);
-                this.metadata = metadata;
-                this.behavior = behavior;
-                this.scheme = this.scheme = {
-                    "metadata": metadata,
-                    "behavior": behavior
-                } || editSchemeObj;
+                console.log(schemeBase.stateVariables);
+                this.metadata = schemeBase.metadata;
+                this.behavior = schemeBase.behavior;
+                this.scheme = schemeBase || editSchemeObj;
                 this.selected = 0;
             },
             listeners: {

@@ -58,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Close drawer after menu item is selected if drawerPanel is narrow
   app.onMenuSelect = function() {
     var drawerPanel = document.querySelector('#paperDrawerPanel');
-    if (drawerPanel.narrow) {
+    if (drawerPanel && drawerPanel.narrow) {
       drawerPanel.closeDrawer();
     }
   };

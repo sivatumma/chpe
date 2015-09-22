@@ -1,243 +1,244 @@
+var mongoose = require('mongoose'),
+	Schema = mongoose.Schema,
+	config = require("../config/config.js"),
+	schemeBase = require('../../client/config/schemeBase.js'),
+	_ = require('lodash');
+
 module.exports = function(mongoose) {
 
-	var Schema = mongoose.Schema,
-		config = require("../config/config.js"),
-		schemeBase = require('../client/config/schemeBase'),
-		require('lodash'),
-		schemeSchema = Schema({
-			metadata: {
-				name: {
-					type: String,
-					//required: true,
-					index: {
-						unique: true
-					}
-				},
-				toIds: [{
-					id: {
-						type: Number
-					},
-					name: {
-						type: String
-					}
-				}],
-				userID: {
-					//  MCID
-					type: String /* This should be unique across all the businesses that request our services    */
-				},
-				locations: [{
-					type: String
-				}],
-				createdBy: {
-					type: String
-				},
-				creationTime: {
-					type: Date,
-					default: Date.now()
-				},
-				lastUpdated: {
-					type: Date,
-				},
-				lastUpdatedBy: {
-					type: String
-				},
-				createdLatlng: {
-
-				},
-				published: {
-					type: Boolean
-				},
-				type: {
-					type: String,
-					enum: "ADD_ON,COUPON,GIFT_CARD".split(","),
-					//required: true
-				},
-				defaultLife: {
-					//required: false,
-					type: String,
-					enum: ",REGULAR,DAY,WEEK,MONTH".split(","),
-					default: "REGULAR"
+	var schemeSchema = Schema({
+		metadata: {
+			name: {
+				type: String,
+				//required: true,
+				index: {
+					unique: true
 				}
 			},
-			behavior: {
-				maximumUsages: {
+			toIds: [{
+				id: {
 					type: Number
 				},
+				name: {
+					type: String
+				}
+			}],
+			userID: {
+				//  MCID
+				type: String /* This should be unique across all the businesses that request our services    */
+			},
+			locations: [{
+				type: String
+			}],
+			createdBy: {
+				type: String
+			},
+			creationTime: {
+				type: Date,
+				default: Date.now()
+			},
+			lastUpdated: {
+				type: Date,
+			},
+			lastUpdatedBy: {
+				type: String
+			},
+			createdLatlng: {
 
-				startDate: {
-					type: Date
-				},
+			},
+			published: {
+				type: Boolean
+			},
+			type: {
+				type: String,
+				enum: "ADD_ON,COUPON,GIFT_CARD".split(","),
+				//required: true
+			},
+			defaultLife: {
+				//required: false,
+				type: String,
+				enum: ",REGULAR,DAY,WEEK,MONTH".split(","),
+				default: "REGULAR"
+			}
+		},
 
-				endDate: {
-					type: Date
-				},
+		behavior: {
+			maximumUsages: {
+				type: Number
+			},
 
-				discountType: {
-					type: String,
-					enum: "%,FLAT".split(","),
-					default: "%"
-				},
+			startDate: {
+				type: Date
+			},
 
-				defaultDiscount: {
-					type: Number
-				},
+			endDate: {
+				type: Date
+			},
 
-				// validityPeriod: [{
-				// 	startDate: {
-				// 		type: Date
-				// 	},
-				// 	endDate: {
-				// 		type: Date
-				// 	}
-				// }],
-				startDate: {
-					type: Date
-				},
+			discountType: {
+				type: String,
+				enum: "%,FLAT".split(","),
+				default: "%"
+			},
 
-				endDate: {
-					type: Date
-				},
+			defaultDiscount: {
+				type: Number
+			},
 
-				// Service Rate Categories (SRC imply High Margin, low margin kind 
-				// of products categorized, grouped already)
-				serviceRateCategoryDiscounts: [{
-					srcTypes: [{
-						type: String
-					}],
-					discount: {
-						type: Number
-					},
-					discountType: {
-						type: String
-					},
-					discountLength: {
-						type: Number,
-					},
-					maxLength: {
-						type: Number
-					}
-				}],
+			// validityPeriod: [{
+			// 	startDate: {
+			// 		type: Date
+			// 	},
+			// 	endDate: {
+			// 		type: Date
+			// 	}
+			// }],
+			startDate: {
+				type: Date
+			},
 
-				advancePaidPoints: [{
-					amount: {
-						type: Number
-					},
-					points: {
-						type: Number
-					}
-				}],
+			endDate: {
+				type: Date
+			},
 
-				doctorLevelDiscounts: {
-					systemAllocationDiscount: {
-						type: Number
-					},
-					systemAllocationDiscountType: {
-						type: String,
-						enum: "Flat,%".split(",")
-					},
-					userChosenDiscount: {
-						type: Number
-					},
-					userChosenDiscountType: {
-						type: String,
-						enum: "Flat,%".split(",")
-					},
-					userChosenDiscountMaxLength: {
-						type: Number,
-					},
-					systemChosenDiscountMaxLength: {
-						type: Number,
-					},
-				},
-
-				modeOfPaymentDiscounts: [{
-
-					mop: {
-						type: String,
-						enum: "ePay,cod,cheque".split(",")
-
-
-					},
-					discount: {
-						type: Number
-					},
-					discountType: {
-						type: String
-					},
-					discountLength: {
-						type: Number,
-						default: 1
-					}
-
-
-				}],
-
-				billValueDiscounts: [{
-					billRange: {
-						from: {
-							type: Number
-						},
-						to: {
-							type: Number
-						}
-					},
-					discount: {
-						type: Number
-					},
-					discountType: {
-						type: String
-					},
-					discountLength: {
-						type: Number,
-						default: 1
-					}
-				}],
-
-				cumulativeAmountPoints: [{
-					amount: {
-						type: Number
-					},
-					points: {
-						type: Number
-					}
-				}],
-
-				locationOfServices: [{
+			// Service Rate Categories (SRC imply High Margin, low margin kind 
+			// of products categorized, grouped already)
+			serviceRateCategoryDiscounts: [{
+				srcTypes: [{
 					type: String
 				}],
+				discount: {
+					type: Number
+				},
+				discountType: {
+					type: String
+				},
+				discountLength: {
+					type: Number,
+				},
+				maxLength: {
+					type: Number
+				}
+			}],
 
-				serviceLevelDiscounts: [{
-					services: [{
-						type: String
-					}],
-					discount: {
+			advancePaidPoints: [{
+				amount: {
+					type: Number
+				},
+				points: {
+					type: Number
+				}
+			}],
+
+			doctorLevelDiscounts: {
+				systemAllocationDiscount: {
+					type: Number
+				},
+				systemAllocationDiscountType: {
+					type: String,
+					enum: "Flat,%".split(",")
+				},
+				userChosenDiscount: {
+					type: Number
+				},
+				userChosenDiscountType: {
+					type: String,
+					enum: "Flat,%".split(",")
+				},
+				userChosenDiscountMaxLength: {
+					type: Number,
+				},
+				systemChosenDiscountMaxLength: {
+					type: Number,
+				},
+			},
+
+			modeOfPaymentDiscounts: [{
+
+				mop: {
+					type: String,
+					enum: "ePay,cod,cheque".split(",")
+
+
+				},
+				discount: {
+					type: Number
+				},
+				discountType: {
+					type: String
+				},
+				discountLength: {
+					type: Number,
+					default: 1
+				}
+
+
+			}],
+
+			billValueDiscounts: [{
+				billRange: {
+					from: {
 						type: Number
 					},
-					discountLength: {
-						type: Number,
-						default: 1
-					},
-					discountType: {
-						type: String
+					to: {
+						type: Number
 					}
-				}],
-
-				createdAt: {
-					type: Date
 				},
-
-				updateAt: {
-
-					type: Date
+				discount: {
+					type: Number
+				},
+				discountType: {
+					type: String
+				},
+				discountLength: {
+					type: Number,
+					default: 1
 				}
+			}],
+
+			cumulativeAmountPoints: [{
+				amount: {
+					type: Number
+				},
+				points: {
+					type: Number
+				}
+			}],
+
+			locationOfServices: [{
+				type: String
+			}],
+
+			serviceLevelDiscounts: [{
+				services: [{
+					type: String
+				}],
+				discount: {
+					type: Number
+				},
+				discountLength: {
+					type: Number,
+					default: 1
+				},
+				discountType: {
+					type: String
+				}
+			}],
+
+			createdAt: {
+				type: Date
+			},
+
+			updateAt: {
+
+				type: Date
 			}
-		});
-
-	console.log(schemeBase);
-
+		}
+	});
 
 
 	schemeSchema.pre('save', function(next) {
+
 
 		// If metadata type is COUPON here we validate
 
@@ -281,7 +282,6 @@ module.exports = function(mongoose) {
 		}
 
 
-
 		// If locationOfServices empty here we adding Default Locations
 
 
@@ -298,7 +298,6 @@ module.exports = function(mongoose) {
 		if (this.behavior.discountType == "%" && this.behavior.defaultDiscount > 9) {
 			return next(new Error("defaultDiscount should be below 9 percentage"));
 		}
-
 
 
 		//service Discount validate
@@ -381,10 +380,9 @@ module.exports = function(mongoose) {
 
 		_.each(this.behavior.modeOfPaymentDiscounts, function(single, index) {
 
-			if (single.discount > config[config.loginuser].Discount && single.discountType == "%")
+			if (single.discount > config.configVariable[config.configVariable.loginUser].Discount && single.discountType == "%")
 
 			{
-
 
 				return next(new Error(single.mop + "- NOT ALLOW DISCOUNT MORE THAN 9"))
 
@@ -394,8 +392,10 @@ module.exports = function(mongoose) {
 	});
 
 
-	var Scheme = mongoose.model('scheme', schemeSchema);
+	var Scheme = mongoose.model('Scheme', schemeSchema);
 
 	return Scheme;
 
 }
+
+

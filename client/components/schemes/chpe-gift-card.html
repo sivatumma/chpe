@@ -1,3 +1,5 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
 
 <dom-module id="chpe-gift-card">
 <style type="text/css">
@@ -39,10 +41,10 @@
                 console.log(this.schemeType);
             },
             ready:function(){
-                console.log(stateVariables);
-                this.metadata = metadata;
-                this.behavior = behavior;
-                this.scheme = {"metadata":metadata,"behavior":behavior} || editSchemeObj;
+                console.log(schemeBase.stateVariables);
+                this.metadata = schemeBase.metadata;
+                this.behavior = schemeBase.behavior;
+                this.scheme = schemeBase || editSchemeObj;
             },
             listeners:{
               'gift-card-form.iron-form-submit':'createScheme',

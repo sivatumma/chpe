@@ -1,13 +1,17 @@
-var serverConfig = require('./serverConfig'),
+var config = require('./config'),
 	path = require('path'),
 	fs = require('fs'),
 	morgan = require('morgan');
 
-exports.initialize = function() {
-	fs.createWriteStream(process.cwd() + serverConfig.logFiles.plainLogFile, {
+
+module.exports = function(app) {
+	var accessLogs = fs.createWriteStream(path.join(config.application.root_path, config.logFiles.plainLogFile), {
 		flags: 'a'
 	});
-}
+	app.use(require('morgan')('combined', {
+		stream: accessLogs
+	}));
 
-console.log("Plain Logs are written into : ", process.cwd() + serverConfig.logFiles.plainLogFile);
-console.log(serverConfig.application.addPrefixes);
+	console.log("Plain Logs are written into : ", path.join(config.application.root_path, config.logFiles.plainLogFile));
+	console.log(config.application.addPrefixes);
+}
