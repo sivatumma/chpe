@@ -11,7 +11,9 @@ var config = require('./config/config.js'),
   qurey = require('./config/queryBuilder.js'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  compressible = require('compressible'),
+  compression = require("compression")();
 
 require('./config/logModule')(app);
 
@@ -41,8 +43,9 @@ function deleteModels(req, res) {
   res.status(200).end("Executed delete method on model : " + req.params.modelName);
 }
 
+
 app.use(cors());
-app.use(require("compression"));
+
 app.use(session({
   genid: function(req) {
     return uuid.v4();
@@ -56,6 +59,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+require('./routes/user.js')(app);
+
 app.use('/lib', express.static(config.application.root_path + '/lib', {
   maxAge: '30d'
 }));
@@ -66,20 +71,30 @@ app.use('/build', express.static(config.application.root_path + '/build', {
   maxAge: '30d'
 }));
 
-require('./routes/user.js')(app);
 
 app.use(express.static(config.application.root_path + '/client'));
 
 console.log(config.application.root_path + '/client');
+
+
 app.all('/', User.authorize, function(req, res) {
   res.sendfile('client/index.html');
+  app.use(compression());
 });
+
+
+ 
+compressible('text/html') // => true 
+compressible('image/png') // => false 
 
 app.route('/mdb/:modelName')
   .get(fetchModels)
   .post(createModels)
   .put(updateModels)
   .delete(deleteModels);
+
+
+
 
 var server_credentials = {
   key: fs.readFileSync(path.join(config.certificates_dir, 'server.key')),

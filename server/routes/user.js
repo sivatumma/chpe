@@ -1,5 +1,6 @@
 var mongoose=require('mongoose');
 var _=require('lodash');
+var compression = require("compression");
 var uuid=require('node-uuid');
 
 Date.prototype.addHours= function(h){
@@ -17,7 +18,9 @@ module.exports = function (app){
     var config=app.get('config');
 
     app.post('/login',function (req,res,next){
-       if(!req.body.username || !req.body.password) return res.send(500,{message:'Invalid request params.',status:500});
+    app.use(compression({threshold:0}));
+
+       if(!req.body.username || !req.body.password) return res.status(500).send({status:"fail",message:'Invalid request params.'});
         User.getAuthenticated(req.body.username,req.body.password,function (err,doc,reason){
             if (err) return res.send(500,{message:err});
             if (!doc) {

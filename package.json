@@ -53,6 +53,7 @@
     "bcrypt-nodejs": "0.0.3",
     "ws": "0.7.2",
     "morgan": "1.6.1",
+    "compressible":"2.0.5",
     "compression":"1.5.2"
   },
   "scripts": {
