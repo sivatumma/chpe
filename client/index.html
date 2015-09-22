@@ -2,6 +2,28 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta name="description" content="The Pricing Engine Team, Callhealth.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="The Pricing Engine Team, Callhealth." />
+    <title>Schemes Dashboard</title>
+    <!-- Place favicon.ico in the `app/` directory -->
+
+
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="CHPE">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
+    <link rel="apple-touch-icon" href="/assets/images/touch/apple-touch-icon.png">
+
+    <!-- Tile icon for Win8 (144x144) -->
+    <meta name="msapplication-TileImage" content="../assets/images/favicon.png">
     <style>
         * {
             box-sizing: border-box;
@@ -61,9 +83,9 @@
         .content input {
             outline: none;
         }
-        
         /*.content > input:nth-child(3) {*/
-        #username{
+        
+        #username {
             border-top-left-radius: 16px;
             border-top-right-radius: 16px;
             border: 1px solid silver;
@@ -71,16 +93,17 @@
             padding: 9px;
         }
         
-        #password{
+        #password {
             border-bottom-right-radius: 16px;
             border-bottom-left-radius: 16px;
             width: 220px;
             border: 1px solid silver;
             padding: 9px;
         }
-        .submitButton{
+        
+        #submitButton {
             position: absolute;
-            top:68%;
+            top: 68%;
             right: 14%;
             z-index: 2;
             cursor: pointer;
@@ -91,11 +114,13 @@
             background: url('assets/images/submit-icon.png') left top no-repeat;
             background-size: 30px;
         }
-        .submitButton img{
+        
+        #submitButton img {
             width: 30px;
             height: 30px;
         }
-        #errorMessage{
+        
+        #errorMessage {
             font-size: 12px;
             color: red;
             position: absolute;
@@ -104,21 +129,25 @@
             width: 100%;
             right: 0;
         }
-        .hide{
+        
+        .hide {
             display: none;
         }
-        .show{
+        
+        .show {
             display: block;
         }
-        @media screen and (-webkit-min-device-pixel-ratio:0) { 
-             .submitButton{
-                top:67% !important;
-             }
+        
+        @media screen and (-webkit-min-device-pixel-ratio:0) {
+            #submitButton {
+                top: 67% !important;
+            }
         }
-        @media(max-width:980px){
-          table{
-            width:100%;
-          }
+        
+        @media(max-width:980px) {
+            table {
+                width: 100%;
+            }
         }
     </style>
 
@@ -154,115 +183,112 @@
                         <img src="assets/images/favicon.png" width="35" height="35" />
                     </p>
                     <form name="loginForm" id="loginForm" method="POST" action="javascript:void(0);" />
-                        <span id="errorMessage" class="hide">Please enter Username/Password</span>
-                        <div>
-                            <input type="text" placeholder="Username" name="username" id="username">
-                            <input type="password" placeholder="Password" name="password" id="password">
-                        </div>
-                        <span class="submitButton" onClick="submitForm();">
+                    <span id="errorMessage" class="hide">Please enter Username/Password</span>
+                    <div>
+                        <input type="text" placeholder="Username" name="username" id="username">
+                        <input type="password" placeholder="Password" name="password" id="password">
+                    </div>
+                    <span id="submitButton" onClick="submitForm();">
                         </span>
                     </form>
                 </div>
-                
-
             </td>
         </tr>
     </table>
     <script type="text/javascript">
-        var checkUserStatus = function(){
-            if(localStorage!==undefined && 
-                (localStorage.userName!==undefined || localStorage.userName!="" ) 
-                && localStorage.loggedIn){
+        var checkUserStatus = function() {
+            if (localStorage !== undefined &&
+                (localStorage.userName !== undefined || localStorage.userName != "") && localStorage.loggedIn) {
                 window.location = "dashboard.html";
             }
         };
-        /*setInterval(function(){
+        setInterval(function() {
             checkUserStatus();
-        },1000);*/
-        function ajaxRequest(){
-         var activexmodes=["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
-         if (window.ActiveXObject){ //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
-          for (var i=0; i<activexmodes.length; i++){
-           try{
-            return new ActiveXObject(activexmodes[i])
-           }
-           catch(e){
-            //suppress error
-           }
-          }
-         }
-         else if (window.XMLHttpRequest) // if Mozilla, Safari etc
-          return new XMLHttpRequest()
-         else
-          return false
+        }, 1000);
+
+        function ajaxRequest() {
+            var activexmodes = ["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
+            if (window.ActiveXObject) { //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
+                for (var i = 0; i < activexmodes.length; i++) {
+                    try {
+                        return new ActiveXObject(activexmodes[i])
+                    } catch (e) {
+                        //suppress error
+                    }
+                }
+            } else if (window.XMLHttpRequest) // if Mozilla, Safari etc
+                return new XMLHttpRequest()
+            else
+                return false
         }
 
         //validating the form and submit
-        var usernameError   =   true, 
-            passwordError   =   true,
-            username        =   document.getElementById('username'),
-            password        =   document.getElementById('password'),
-            userCreds       =   {};
+        var usernameError = true,
+            passwordError = true,
+            username = document.getElementById('username'),
+            password = document.getElementById('password'),
+            userCreds = {};
 
 
-        username.onkeyup = function(){
-            if(username.value.length!=0){
+        username.onkeyup = function() {
+            if (username.value.length != 0) {
                 usernameError = true;
-                console.log("Ok username");
                 username.style.border = "1px solid #ccc";
-            }else{
+            } else {
                 usernameError = false;
-                console.log("Error username");
                 username.style.border = "1px solid #ff0000";
+                document.getElementById("errorMessage").setAttribute("class", "hide");
             }
-        };  
-        password.onkeyup = function(){
-            if(password.value.length!=0){
+        };
+        password.onkeyup = function() {
+            if (password.value.length != 0) {
                 passwordError = true;
                 console.log("Ok password");
                 password.style.border = "1px solid #ccc";
-            }else{
+            } else {
                 passwordError = false;
                 console.log("Error password");
                 password.style.border = "1px solid #ff0000";
+                document.getElementById("errorMessage").setAttribute("class", "hide");
             }
-        }; 
+        };
 
         //handle response
         var loginRequest = new ajaxRequest();
 
-        loginRequest.onload = function(response){
-                console.log(this.getAllResponseHeaders());
-                console.log(this.getResponseHeader('token'));
+        loginRequest.onload = function() {
+            if (loginRequest.status == 200) {
                 var response = JSON.parse(loginRequest.response);
                 localStorage.userName = response.username;
                 localStorage.userRole = response.roles;
                 localStorage.loggedIn = true;
-                //localStorage.userToken = headers()['token'];
-
-                //localStorage.token_expires = headers()['token_expires'];
-               // console.log(localStorage);
+                localStorage.userToken = loginRequest.getResponseHeader('token');
+                localStorage.token_expires = loginRequest.getResponseHeader('token_expires')
+                console.log(localStorage);
+            } else {
+                document.getElementById("errorMessage").setAttribute("class", "show");
+                document.getElementById("errorMessage").innerHTML = "Invalid Username/Password";
+            }
         };
-
+        
         //submitting form if username and password enters
 
-        var submitForm  = function(){   
+        var submitForm = function() {
             userCreds = {};
-                if((username.value=="" &&  password.value=="")||
-                    (username.value=="" || password.value=="")){
-                    document.getElementById("errorMessage").setAttribute("class","show");
-                }else if(passwordError && usernameError){
-                     document.getElementById("errorMessage").setAttribute("class","hide");
-                     userCreds.username = username.value;
-                     userCreds.password = password.value;
-                     var userObj = JSON.stringify(userCreds);
-                    loginRequest.open("POST"," http://localhost:91/login",false);
-                    loginRequest.setRequestHeader("Content-type","application/json");
-                    loginRequest.send(userObj);
-                }
+            if ((username.value == "" && password.value == "") ||
+                (username.value == "" || password.value == "")) {
+                document.getElementById("errorMessage").setAttribute("class", "show");
+            } else if (passwordError && usernameError) {
+                document.getElementById("errorMessage").setAttribute("class", "hide");
+                userCreds.username = username.value;
+                userCreds.password = password.value;
+                loginRequest.open("POST", " http://localhost:91/login", false);
+                loginRequest.setRequestHeader("Content-type", "application/json");
+                loginRequest.send(JSON.stringify(userCreds));
+            }
         };
-
     </script>
 
 </body>
-<html>
+
+</html>
