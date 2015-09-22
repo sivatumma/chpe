@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 <head>
     <style>
         * {
@@ -163,8 +162,6 @@
                         </span>
                     </form>
                 </div>
-                
-
             </td>
         </tr>
     </table>
@@ -176,9 +173,9 @@
                 window.location = "dashboard.html";
             }
         };
-        /*setInterval(function(){
+        setInterval(function(){
             checkUserStatus();
-        },1000);*/
+        },1000);
         function ajaxRequest(){
          var activexmodes=["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
          if (window.ActiveXObject){ //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
@@ -231,25 +228,22 @@
         //handle response
         var loginRequest = new ajaxRequest();
 
-        loginRequest.onreadystatechange = function(){
-         if (loginRequest.readyState==4){
-          if (loginRequest.status==200 || window.location.href.indexOf("http")==-1){
-                console.log(loginRequest.getResponseHeader('token_expires'));
+        loginRequest.onload = function(){
+          if (loginRequest.status==200){
                 var response = JSON.parse(loginRequest.response);
                 console.log(response);
                 localStorage.userName = response.username;
                 localStorage.userRole = response.roles;
                 localStorage.loggedIn = true;
-                //localStorage.userToken = headers()['token'];
+                localStorage.userToken = loginRequest.getResponseHeader('token');
 
-                //localStorage.token_expires = headers()['token_expires'];
-               // console.log(localStorage);
+                localStorage.token_expires = loginRequest.getResponseHeader('token_expires')
+                console.log(localStorage);
           }
           else{
             console.log("error while sending");
             console.log(loginRequest.response);
           }
-         }
         };
 
         //submitting form if username and password enters
@@ -263,14 +257,13 @@
                      document.getElementById("errorMessage").setAttribute("class","hide");
                      userCreds.username = username.value;
                      userCreds.password = password.value;
-                     var userObj = JSON.stringify(userCreds);
-                    loginRequest.open("POST"," http://localhost:90/login",true);
+                    loginRequest.open("POST"," http://localhost:91/login",true);
                     loginRequest.setRequestHeader("Content-type","application/json");
-                    loginRequest.send(userObj);
+                    loginRequest.send(JSON.stringify(userCreds));
                 }
         };
 
     </script>
 
 </body>
-<html>
+</html>
