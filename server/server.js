@@ -41,8 +41,8 @@ function deleteModels(req, res) {
   res.status(200).end("Executed delete method on model : " + req.params.modelName);
 }
 
-
 app.use(cors());
+app.use(require("compression"));
 app.use(session({
   genid: function(req) {
     return uuid.v4();
