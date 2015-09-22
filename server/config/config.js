@@ -34,7 +34,7 @@ module.exports = function(env) {
         },
 
         modelsFolder: '../models',
-        database: 'mongodb://localhost/pricingEngine',
+        database: 'mongodb://172.19.4.162/pricingEngine',
         memcache_host: 'http://172.16.2.113:8081/AutoSuggestion/rest',
         app_name: 'Pricing Engine',
         app_root: root_path,

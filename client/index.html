@@ -169,6 +169,16 @@
         </tr>
     </table>
     <script type="text/javascript">
+        var checkUserStatus = function(){
+            if(localStorage!==undefined && 
+                (localStorage.userName!==undefined || localStorage.userName!="" ) 
+                && localStorage.loggedIn){
+                window.location = "dashboard.html";
+            }
+        };
+        /*setInterval(function(){
+            checkUserStatus();
+        },1000);*/
         function ajaxRequest(){
          var activexmodes=["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
          if (window.ActiveXObject){ //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
@@ -224,11 +234,20 @@
         loginRequest.onreadystatechange = function(){
          if (loginRequest.readyState==4){
           if (loginRequest.status==200 || window.location.href.indexOf("http")==-1){
-                console.log(loginRequest.responseText)
+                console.log(loginRequest.getResponseHeader('token_expires'));
+                var response = JSON.parse(loginRequest.response);
+                console.log(response);
+                localStorage.userName = response.username;
+                localStorage.userRole = response.roles;
+                localStorage.loggedIn = true;
+                //localStorage.userToken = headers()['token'];
+
+                //localStorage.token_expires = headers()['token_expires'];
+               // console.log(localStorage);
           }
           else{
             console.log("error while sending");
-            console.log(loginRequest);
+            console.log(loginRequest.response);
           }
          }
         };
@@ -237,14 +256,15 @@
 
         var submitForm  = function(){   
             userCreds = {};
-                if(username.value =="" && password.value =="" ){
+                if((username.value=="" &&  password.value=="")||
+                    (username.value=="" || password.value=="")){
                     document.getElementById("errorMessage").setAttribute("class","show");
                 }else if(passwordError && usernameError){
                      document.getElementById("errorMessage").setAttribute("class","hide");
                      userCreds.username = username.value;
                      userCreds.password = password.value;
                      var userObj = JSON.stringify(userCreds);
-                    loginRequest.open("POST"," http:localhost:90/login",true);
+                    loginRequest.open("POST"," http://localhost:90/login",true);
                     loginRequest.setRequestHeader("Content-type","application/json");
                     loginRequest.send(userObj);
                 }
