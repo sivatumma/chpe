@@ -1,228 +1,256 @@
 <!doctype html>
-<!--@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt-->
-
-<html lang="">
+<html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="description" content="The Pricing Engine Team, Callhealth.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="The Pricing Engine Team, Callhealth." />
-    <title>Schemes Dashboard</title>
-    <!-- Place favicon.ico in the `app/` directory -->
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: arial;
+        }
+        
+        table {
+            margin: 30px auto;
+            width: 70%;
+        }
+        
+        table tr {
+            vertical-align: top;
+        }
+        
+        .right-vline {
+            width: 55%;
+            border-right: 1px solid silver;
+            padding-right: 30px;
+            margin-right: 30px;
+        }
+        
+        .background-image {
+            background-image: url('kb5.png');
+            background-size: cover;
+            display: block;
+            -webkit-filter: blur(12px);
+            filter: blur(35px);
+            height: 100%;
+            left: 0;
+            position: fixed;
+            right: 0;
+            z-index: -1;
+            text-align: center;
+        }
+        
+        .content {
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 1px 15px rgba(0, 0, 0, 0.25);
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            width: 300px;
+            height: 300px;
+            position: relative;
+            z-index: 1;
+            margin: 10% auto;
+            padding: 15px;
+            text-align: center;
+            border-radius: 40px;
+        }
+        
+        .content p.heading {
+            font-size: 30px;
+            font-weight: normal;
+            margin: 30px 0px;
+        }
+        
+        .content input {
+            outline: none;
+        }
+        
+        /*.content > input:nth-child(3) {*/
+        #username{
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            border: 1px solid silver;
+            width: 220px;
+            padding: 9px;
+        }
+        
+        #password{
+            border-bottom-right-radius: 16px;
+            border-bottom-left-radius: 16px;
+            width: 220px;
+            border: 1px solid silver;
+            padding: 9px;
+        }
+        .submitButton{
+            position: absolute;
+            top:68%;
+            right: 14%;
+            z-index: 2;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: none;
+            background: url('assets/images/submit-icon.png') left top no-repeat;
+            background-size: 30px;
+        }
+        .submitButton img{
+            width: 30px;
+            height: 30px;
+        }
+        #errorMessage{
+            font-size: 12px;
+            color: red;
+            position: absolute;
+            top: 49%;
+            float: left;
+            width: 100%;
+            right: 0;
+        }
+        .hide{
+            display: none;
+        }
+        .show{
+            display: block;
+        }
+        @media screen and (-webkit-min-device-pixel-ratio:0) { 
+             .submitButton{
+                top:67% !important;
+             }
+        }
+        @media(max-width:980px){
+          table{
+            width:100%;
+          }
+        }
+    </style>
 
-    <!-- Chrome for Android theme color -->
-    <meta name="theme-color" content="#303F9F">
 
-    <!-- Web Application Manifest -->
-    <link rel="manifest" href="/manifest.json">
-
-    <!-- Tile color for Win8 -->
-    <meta name="msapplication-TileColor" content="#3372DF">
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="CHPE">
-    <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon.png">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
-    <link rel="apple-touch-icon" href="/assets/images/touch/apple-touch-icon.png">
-
-    <!-- Tile icon for Win8 (144x144) -->
-    <meta name="msapplication-TileImage" content="../assets/images/favicon.png">
-
-    <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="/assets/styles/main.css">
-    <!-- endbuild-->
-
-    <script src="external/webcomponentsjs/webcomponents-lite.js"></script>
-    <!-- endbuild -->
-
-    <!-- will be replaced with elements/elements.vulcanized.html -->
-    <link rel="import" href="/components/elements.html">
-    <!-- endreplace-->
-    <script src="../config/schemeBase.js"></script>
-    <script src="../config/general.js"></script>
-    <script src="/lib/chUtils.js"></script>
 </head>
 
+<body>
 
-<body unresolved class="fullbleed layout vertical">
+    <div class="background-image"></div>
 
-    <span id="browser-sync-binding"></span>
-
-    <template is="dom-bind" id="app">
-
-        <paper-drawer-panel id="paperDrawerPanel">
-            <!-- Drawer Scroll Header Panel -->
-            <paper-scroll-header-panel drawer fixed>
-
-                <!-- Drawer Toolbar -->
-                <paper-toolbar id="drawerToolbar">
-                    <span class="paper-font-title"><img src="assets/images/ch-logo.png"/></span>
-                </paper-toolbar>
-
-
-                <!-- Drawer Content -->
-                <paper-menu class="pad" id="chepeMenu" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
-                    <a data-route="home" href="//">
-                        <iron-icon icon="home"></iron-icon>
-                        <span>Home</span>
-                    </a>
-
-                    <a data-route="schemes" href="#/schemes">
-                        <iron-icon icon="social:pages"></iron-icon>
-                        <span>View Scheme</span>
-                    </a>
-
-                    <a data-route="createScheme" href="#/schemes/ADD_ON">
-                        <iron-icon icon="star-half"></iron-icon>
-                        <span>Create Scheme</span>
-                    </a>
-
-                    <a data-route="createCoupon" href="#/schemes/COUPON">
-                        <iron-icon icon="star-half"></iron-icon>
-                        <span>Create Coupon</span>
-                    </a>
-
-                    <a data-route="createGiftCard" href="#/schemes/GIFT_CARD">
-                        <iron-icon icon="star-half"></iron-icon>
-                        <span>Create Gift Card</span>
-                    </a>
-
-                </paper-menu>
-            </paper-scroll-header-panel>
-
-
-            <!-- Main Area -->
-            <paper-scroll-header-panel main condenses keep-condensed-header>
-
-                <!-- Main Toolbar -->
-                <paper-toolbar id="mainToolbar" class="tall">
-                    <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
-                    <span class="flex"></span>
-
-                    <!-- Toolbar icons -->
-                    <paper-icon-button icon="refresh"></paper-icon-button>
-                    <paper-icon-button icon="search"></paper-icon-button>
-
-                    <!-- Application name -->
-                    <div class="middle middle-container center horizontal layout">
-                        <div class="app-name">Schemes Dashboard</div>
-                    </div>
-
-                    <!-- Application sub title -->
-                    <div class="bottom bottom-container center horizontal layout">
-                        <div class="bottom-title paper-font-subhead">The Guts of Healthcare Industry</div>
-                    </div>
-
-                </paper-toolbar>
-
-                <paper-toolbar id="iconToolBar" class="fixed">
-                    <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                    <link-icon icon-type="social:share"></link-icon>
-                    <link-icon icon-type="visibility"></link-icon>
-                    <link-icon icon-type="list"></link-icon>
-                    <link-icon icon-type="settings"></link-icon>
-                    <link-icon icon-type="face"></link-icon>
-                    <link-icon icon-type="apps"></link-icon>
-                </paper-toolbar>
-
-                <paper-dialog heading="Title for dialog" transition="paper-transition-center">
-                </paper-dialog>
-                <iron-pages attr-for-selected="data-route" selected="{{route}}">
-
-                    <section data-route="home" selected>
-                        <schemes-as-cards></schemes-as-cards>
-                    </section>
-
-                    <section data-route="users">
-                        <paper-material elevation="1">
-                            <h2 class="paper-font-display2">Users</h2>
-                            <p>This is the users section</p>
-                            <a href="//users/Siva">Siva</a>
-                        </paper-material>
-                    </section>
-
-                    <section data-route="user-info">
-                        <paper-material elevation="1">
-                            <div>This is <span>{{params.operation}}</span>'s section</div>
-                        </paper-material>
-                    </section>
-
-                    <section data-route="contact">
-                        <paper-material elevation="1">
-                            <h2 class="paper-font-display2">Contact</h2>
-                            <p>This is the contact section</p>
-                        </paper-material>
-                    </section>
-
-                    <section data-route="schemes">
-                        <paper-material elevation="1">
-                            <h2 class="paper-font-display2">View Schemes</h2>
-                            <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
-                        </paper-material>
-                    </section>
-
-                    <!-- <section data-route="createScheme">
-                            <paper-material elevation="1">
-                                <h2 class="paper-font-display2">Create Scheme - <span>{{params.create}}</span></h2>
-                                <p>View where we create <span>{{params.create}}</span></p>
-                            </paper-material>
-                        </section> -->
-                    <section data-route="createScheme">
-                        <chpe-addon scheme-type="{{params.create}}"></chpe-addon>
-                    </section>
-                    
-                    <section data-route="createCoupon">
-                        <chpe-coupon scheme-type="{{params.create}}"></chpe-coupon>
-                    </section>
-
-                    <section data-route="createGiftCard">
-                        <chpe-gift-card scheme-type="{{params.create}}"></chpe-gift-card>
-                    </section>
-                    <section data-route="specialEffects">
-                        <paper-material elevation="1">
-
-                        </paper-material>
-                    </section>
-
-                </iron-pages>
+    <table class="loginContainer">
+        <tr>
+            <td class="right-vline">
+                <h1>Schemes</h1>
+                <p>
+                    <h3><img src="assets/images/coupon-icon.png" width="25" height="25" 
+                      style="vertical-align:bottom;"/>  Coupons </h3>Published to Callhealth consumers, not tied with any pre-rule.
+                    <strong>e.g., <em>Women-Care</em></strong> to offer substantial discount on Women's day
+                </p>
+                <p>
+                    <h3> <img src="assets/images/giftcard-icon.png" width="35" height="35" 
+                      style="vertical-align:bottom;"/>  Gift Cards</h3>CCOs often find a need to resolve Consumer grievances. With a gift card, they have resolutions in hand
+                </p>
+                <p>
+                    <h3><img src="assets/images/addon-icon.png" width="25" height="25" 
+                      style="vertical-align:bottom;"/>  Schemes, <em>or Add-Ons </em></h3>A long time, Complex healthcare product that covers every choice possible.
+                </p>
+            </td>
+            <td>
+                <div class="content">
+                    <img src="ch-logo.png" />
+                    <p class="heading">
+                        <img src="assets/images/favicon.png" width="35" height="35" />
+                    </p>
+                    <form name="loginForm" id="loginForm" method="POST" action="javascript:void(0);" />
+                        <span id="errorMessage" class="hide">Please enter Username/Password</span>
+                        <div>
+                            <input type="text" placeholder="Username" name="username" id="username">
+                            <input type="password" placeholder="Password" name="password" id="password">
+                        </div>
+                        <span class="submitButton" onClick="submitForm();">
+                        </span>
+                    </form>
                 </div>
-            </paper-scroll-header-panel>
-        </paper-drawer-panel>
+                
 
-        <!-- Uncomment next block to enable Service Worker support (1/2) -->
-        
- <!--<paper-toast id="caching-complete"
-                 duration="6000"
-                 text="Caching complete! This app will work offline.">
-    </paper-toast>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        function ajaxRequest(){
+         var activexmodes=["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
+         if (window.ActiveXObject){ //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
+          for (var i=0; i<activexmodes.length; i++){
+           try{
+            return new ActiveXObject(activexmodes[i])
+           }
+           catch(e){
+            //suppress error
+           }
+          }
+         }
+         else if (window.XMLHttpRequest) // if Mozilla, Safari etc
+          return new XMLHttpRequest()
+         else
+          return false
+        }
 
-    <platinum-sw-register auto-register
-                          clients-claim
-                          skip-waiting
-                          on-service-worker-installed="displayInstalledToast">
-      <platinum-sw-cache default-cache-strategy="networkFirst"
-                         precache-file="precache.json">
-      </platinum-sw-cache>
-    </platinum-sw-register>-->
+        //validating the form and submit
+        var usernameError   =   true, 
+            passwordError   =   true,
+            username        =   document.getElementById('username'),
+            password        =   document.getElementById('password'),
+            userCreds       =   {};
 
-        <paper-toast id="schemeSuccErrMessageToast" text="Scheme Created Successfully"></paper-toast>
-    </template>
 
-    <!-- build:js scripts/app.js -->
-    <script src="assets/scripts/app.js"></script>
-    <!-- endbuild-->
+        username.onkeyup = function(){
+            if(username.value.length!=0){
+                usernameError = true;
+                console.log("Ok username");
+                username.style.border = "1px solid #ccc";
+            }else{
+                usernameError = false;
+                console.log("Error username");
+                username.style.border = "1px solid #ff0000";
+            }
+        };  
+        password.onkeyup = function(){
+            if(password.value.length!=0){
+                passwordError = true;
+                console.log("Ok password");
+                password.style.border = "1px solid #ccc";
+            }else{
+                passwordError = false;
+                console.log("Error password");
+                password.style.border = "1px solid #ff0000";
+            }
+        }; 
+
+        //handle response
+        var loginRequest = new ajaxRequest();
+
+        loginRequest.onreadystatechange = function(){
+         if (loginRequest.readyState==4){
+          if (loginRequest.status==200 || window.location.href.indexOf("http")==-1){
+                console.log(loginRequest.responseText)
+          }
+          else{
+            console.log("error while sending");
+            console.log(loginRequest);
+          }
+         }
+        };
+
+        //submitting form if username and password enters
+
+        var submitForm  = function(){   
+            userCreds = {};
+                if(username.value =="" && password.value =="" ){
+                    document.getElementById("errorMessage").setAttribute("class","show");
+                }else if(passwordError && usernameError){
+                     document.getElementById("errorMessage").setAttribute("class","hide");
+                     userCreds.username = username.value;
+                     userCreds.password = password.value;
+                     var userObj = JSON.stringify(userCreds);
+                    loginRequest.open("POST"," http:localhost:90/login",true);
+                    loginRequest.setRequestHeader("Content-type","application/json");
+                    loginRequest.send(userObj);
+                }
+        };
+
+    </script>
+
 </body>
-
-</html>
+<html>
