@@ -66,6 +66,8 @@ app.use('/build', express.static(config.application.root_path + '/build', {
   maxAge: '30d'
 }));
 
+require('./routes/user.js')(app);
+
 app.use(express.static(config.application.root_path + '/client'));
 
 console.log(config.application.root_path + '/client');

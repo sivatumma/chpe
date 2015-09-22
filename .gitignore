@@ -9,3 +9,4 @@ x.js
 **/*.log
 *.log
 primes.js
+client/build.html

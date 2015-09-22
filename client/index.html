@@ -231,12 +231,10 @@
         //handle response
         var loginRequest = new ajaxRequest();
 
-        loginRequest.onreadystatechange = function(){
-         if (loginRequest.readyState==4){
-          if (loginRequest.status==200 || window.location.href.indexOf("http")==-1){
-                console.log(loginRequest.getResponseHeader('token_expires'));
+        loginRequest.onload = function(response){
+                console.log(this.getAllResponseHeaders());
+                console.log(this.getResponseHeader('token'));
                 var response = JSON.parse(loginRequest.response);
-                console.log(response);
                 localStorage.userName = response.username;
                 localStorage.userRole = response.roles;
                 localStorage.loggedIn = true;
@@ -244,12 +242,6 @@
 
                 //localStorage.token_expires = headers()['token_expires'];
                // console.log(localStorage);
-          }
-          else{
-            console.log("error while sending");
-            console.log(loginRequest.response);
-          }
-         }
         };
 
         //submitting form if username and password enters
@@ -264,7 +256,7 @@
                      userCreds.username = username.value;
                      userCreds.password = password.value;
                      var userObj = JSON.stringify(userCreds);
-                    loginRequest.open("POST"," http://localhost:90/login",true);
+                    loginRequest.open("POST"," http://localhost:91/login",false);
                     loginRequest.setRequestHeader("Content-type","application/json");
                     loginRequest.send(userObj);
                 }
