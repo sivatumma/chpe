@@ -77,9 +77,9 @@ app.use(express.static(config.application.root_path + '/client'));
 console.log(config.application.root_path + '/client');
 
 
-app.all('/', User.authorize, function(req, res) {
-  res.sendfile('client/index.html');
-  app.use(compression());
+app.all('/',function(req, res) {
+  res.sendfile('client/login.html');
+  console.log('client/login.html served');
 });
 
 
