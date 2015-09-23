@@ -10,6 +10,7 @@ module.exports = function(mongoose) {
 		metadata: {
 			name: {
 				type: String,
+				ref:'order',
 				//required: true,
 				index: {
 					unique: true
@@ -19,6 +20,7 @@ module.exports = function(mongoose) {
 				id: {
 					type: Number
 				},
+
 				name: {
 					type: String
 				}
@@ -392,7 +394,7 @@ module.exports = function(mongoose) {
 	});
 
 
-	var Scheme = mongoose.model('Scheme', schemeSchema);
+	var Scheme = mongoose.model('scheme', schemeSchema);
 
 	return Scheme;
 

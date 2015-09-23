@@ -22,7 +22,6 @@ function fetchModels(req, res) {
 }
 
 function createModels(req, res) {
-
   config.configVariable.loginUser = "user";
 
   var u1 = mongoose.model(req.params.modelName)(qurey.createSchema(req.body));
@@ -37,7 +36,19 @@ function createModels(req, res) {
 
 }
 
-function updateModels(req, res) {}
+function updateModels(req, res) {
+
+
+  var data = mongoose.model("scheme").find(qurey.suggestDiscount(req)).populate('metadata.name').exec();
+//var order = mongoose.model("order").find(query.findOrderQuery(req)).exec();
+data.then(function(schemadata){
+  console.log(schemadata[0].metadata);
+  res.send(schemadata);
+
+})
+
+
+}
 
 function deleteModels(req, res) {
   res.status(200).end("Executed delete method on model : " + req.params.modelName);
@@ -74,9 +85,6 @@ app.use('/build', express.static(config.application.root_path + '/build', {
 
 app.use(express.static(config.application.root_path + '/client'));
 
-console.log(config.application.root_path + '/client');
-
-
 app.all('/',function(req, res) {
   res.sendfile('client/login.html');
   console.log('client/login.html served');
@@ -93,7 +101,7 @@ app.route('/mdb/:modelName')
   .put(updateModels)
   .delete(deleteModels);
 
-
+  app.route('/operation/:filter').put(updateModels);
 
 
 var server_credentials = {

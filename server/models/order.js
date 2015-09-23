@@ -85,7 +85,7 @@ module.exports = function(mongoose) {
 	});
 
 
-	var Order = mongoose.model('Order', orderSchema);
+	var Order = mongoose.model('order', orderSchema);
 
 	return Order;
 }
