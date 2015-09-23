@@ -14,7 +14,7 @@ query.push(data);
 
 
 },
-suggestDiscount : function(req)
+suggestDiscount : function(req,res)
 {
 		var query = {
 			"metadata.name": req.body.name,

@@ -36,7 +36,8 @@ function createModels(req, res) {
 
 }
 
-function updateModels(req, res) {
+function updateModels(err, req, res) {
+  if(err) console.log("ERROR: ", err.stack);
 
 
   var data = mongoose.model("scheme").find(qurey.suggestDiscount(req)).populate('metadata.name').exec();
