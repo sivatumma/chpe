@@ -27,10 +27,11 @@
         }
         paper-fab {
           display: block;
-          margin-bottom:24px;
           margin-left: auto;
           margin-right: auto;
           border-radius: 50%;
+          height: 40px;
+          width: 40px;
         }
         paper-fab.blue {
           --paper-fab-background: var(--paper-light-blue-300);
@@ -49,27 +50,33 @@
           --paper-fab-keyboard-focus-background: var(--paper-orange-900);
         }
         .coupon-base-card{
-            margin: 0px;
+            margin: 0px auto;
             max-width: 720px;
             @apply(--layout-vertical);
             @apply(--center-justified);
         }
+        .arrows paper-icon-button{
+            margin-bottom: 0px !important;
+        }
     </style>
     <template>
         <paper-material elevation="1" type="{{schemeType}}">
-            <h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4>
+            <!-- <h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4> -->
             <form is="iron-form" id="coupon-form" method="POST" action="#">
                 <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
-                                <basic-scheme start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type "csd" end-date-type="ced" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp">
+                            <paper-card elevation="1" class="coupon-base-card">
+                                <basic-scheme start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type "csd" end-date-type="ced" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon">
                                 </basic-scheme>
+                            </paper-card>
                             <div align="center" class="arrows">
                                 <paper-fab icon="arrow-forward"  class="blue" on-click="_onNextClick"></paper-fab>
                             </div>
                     </neon-animatable>
                     <neon-animatable>
                         <div align="center" class="arrows">
-                            <paper-icon-button icon="arrow-back" on-click="_onPrevClick"></paper-icon-button>
+                            <paper-fab icon="arrow-back" on-click="_onPrevClick">
+                            </paper-fab>
                         </div>
 
                         <service-rate-category></service-rate-category>

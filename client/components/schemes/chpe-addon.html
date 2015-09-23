@@ -9,23 +9,83 @@
     .submitButtons span{
         display: inline-block;
      }
+    .arrows{
+            background: none;
+    }
+    .base-scheme-card{
+        width: 50%;
+        padding: 2%;
+    }
+    #cards {
+      @apply(--layout-vertical);
+      @apply(--center-justified);
+      max-width:780px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 10px;
+    }
+    paper-fab {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 50%;
+      height: 40px;
+      width: 40px;
+    }
+    paper-fab.blue {
+      --paper-fab-background: var(--paper-light-blue-300);
+      --paper-fab-keyboard-focus-background: var(--paper-light-blue-200);
+    }
+    paper-fab.red {
+      --paper-fab-background: var(--paper-red-500);
+      --paper-fab-keyboard-focus-background: var(--paper-red-900);
+    }
+    paper-fab.green {
+      --paper-fab-background: var(--paper-green-500);
+      --paper-fab-keyboard-focus-background: var(--paper-green-900);
+    }
+    paper-fab.orange {
+      --paper-fab-background: var(--paper-orange-500);
+      --paper-fab-keyboard-focus-background: var(--paper-orange-900);
+    }
+    .addon-base-card{
+        margin: 0px auto;
+        max-width: 720px;
+        @apply(--layout-vertical);
+        @apply(--center-justified);
+    }
+    .arrows paper-icon-button{
+        margin-bottom: 0px !important;
+    }
 </style>
     <template>
         <paper-material elevation="1" type="{{schemeType}}">
-      		<h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4>
+      		<!-- <h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4> -->
              <form is="iron-form" id="addon-form" method="POST" action="#">
-
-	               <basic-scheme start-date-modal="addOnStartDate" end-date-modal="addOnEndDate" scheme-starts="addOnStart" scheme-ends="addOnEnds" start-date-type"addOnsd" end-date-type="addOned" sd-dp="staddOnDp" sd-tp="staddOnTp" ed-dp="eDaddOnDp"  ed-tp="eDaddOnTp"></basic-scheme>
-
-                 <div class="submitButtons">
-                    <span>
-                        <paper-button name="createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
-                    </span>
-                    <span>
-                        <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
-                    </span>
-                </div>
-                
+                <neon-animated-pages id="addonPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
+                    <neon-animatable>
+                            <paper-card elevation="1" class="addon-base-card">
+	                           <basic-scheme start-date-modal="addOnStartDate" end-date-modal="addOnEndDate" scheme-starts="addOnStart" scheme-ends="addOnEnds" start-date-type"addOnsd" end-date-type="addOned" sd-dp="staddOnDp" sd-tp="staddOnTp" ed-dp="eDaddOnDp"  ed-tp="eDaddOnTp" flat-id="basicFlatInAddon" percentage-id="basicPerecentageInAddon"></basic-scheme>
+                            </paper-card>
+                            <div align="center" class="arrows">
+                                <paper-fab icon="arrow-forward"  class="blue" on-click="_onNextClick"></paper-fab>
+                            </div>
+                    </neon-animatable>
+                    <neon-animatable>
+                        <div align="center" class="arrows">
+                            <paper-fab icon="arrow-back" class="blue" on-click="_onPrevClick">
+                            </paper-fab>
+                        </div>    
+                         <div class="submitButtons">
+                            <span>
+                                <paper-button name="createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
+                            </span>
+                            <span>
+                                <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
+                            </span>
+                        </div>
+                    </neon-animatable>
+                </neon-animated-pages>
 			</form>
         </paper-material>
          <iron-ajax  id="schemeAjax" content-type="application/json"  method="POST" params='{}'   
@@ -47,10 +107,21 @@
                 this.metadata = schemeBase.metadata;
                 this.behavior = schemeBase.behavior;
                 this.scheme = schemeBase || editSchemeObj;
+                this.selected = 0;
             },
             listeners:{
               'addon-form.iron-form-submit':'createScheme',
               'saveBtn.onClick':'submitForm',
+            },
+            _onPrevClick: function() {
+                this.entryAnimation = 'slide-from-left-animation';
+                this.exitAnimation = 'slide-right-animation';
+                this.selected = this.selected === 0 ? 4 : (this.selected - 1);
+            },
+            _onNextClick: function() {
+                this.entryAnimation = 'slide-from-right-animation';
+                this.exitAnimation = 'slide-left-animation';
+                this.selected = this.selected === 4 ? 0 : (this.selected + 1);
             },
             createScheme:function(){
                  this.formData = document.getElementById('addon-form').serialize();

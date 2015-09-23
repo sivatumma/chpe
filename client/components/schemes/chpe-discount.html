@@ -6,6 +6,8 @@
     }
     .discountBox{
         display: inline-block;
+        margin-left: 10px;
+        padding: 0px 0px 5px 0px;
     }
    .discountButton{
         min-width:30px;
@@ -45,18 +47,18 @@
         border-top:1px solid #ccc;
         height: 36px;
     }
-    
+
 </style>
     <template>
-        <div class="discountBox"  id="discountToggle" layout horizontal>
+        <div class="discountBox"  id="discountToggle" layout horizontal modal="{{discountModal}}">
             <div class="btn-group">
-                <paper-button type="button" name="{{discountType}}" class="discountButton noRightBorder active" 
+                <paper-button type="button" name="discount" class="discountButton noRightBorder active" 
                 on-click="togleDiscount" id="{{percentageId}}" discount="%">%</paper-button>
 
-                <paper-button type="button" name="{{discountType}}" class="discountButton"
+                <paper-button type="button" name="{{flatType}}" class="discountButton"
                 on-click="togleDiscount" id="{{flatId}}" discount="FLAT">Flat</paper-button>
                 <div class="discountInput">
-                    <paper-input name="discount" style="border:none;" no-label-float label="Discount" type="number"  id="{{discountId}}" 
+                    <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  id="{{discountId}}" 
                     max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
                      error-message="Max 999 if Flat ; 10 if %" value="{{discount}}"></paper-input>
                 </div>
@@ -73,12 +75,15 @@
                 percentageId:String,
                 flatId:String,
                 discount:String,
-                discountType:String
+                discountType:String,
+                flatType:String,
+                discountModal:String
 
             },
             ready:function(){
                 this.discountLength  = 10;
                 this.discountPattern = "^([0-10])$";
+                this.behavior = schemeBase.behavior;
             },
             listeners:{
               'discountToggle.onClick':'togleDiscount'
@@ -95,6 +100,7 @@
                     this.discountPattern = "^([0-10])$";
                     chUtils.addClass(document.querySelector("#"+this.percentageId),"active");
                     console.log(document.querySelector("#"+this.percentageId));
+                    console.log(this.discountModal);
                 } else {
                     chUtils.addClass(document.querySelector("#"+this.flatId),"active");
                     this.discountLength = 999;

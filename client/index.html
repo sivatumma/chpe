@@ -197,14 +197,9 @@
     </table>
     <script type="text/javascript">
         var config = generalConfig() || {};
-        var checkUserStatus = function() {
-            if (localStorage !== undefined &&
-                (localStorage.userName !== undefined || localStorage.userName != "") && localStorage.loggedIn) {
-                window.location = "dashboard.html";
-            }
-        };
-        
-        checkUserStatus();
+
+        //check user logged in status
+        config.user();
 
         function ajaxRequest() {
             var activexmodes = ["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
@@ -263,13 +258,8 @@
                 localStorage.userRole = response.roles;
                 localStorage.loggedIn = true;
                 localStorage.userToken = loginRequest.getResponseHeader('token');
-                localStorage.token_expires = loginRequest.getResponseHeader('token_expires')
-                console.log(localStorage);
-                if (localStorage !== undefined &&
-                    (localStorage.userName !== undefined || localStorage.userName != "") && 
-                    localStorage.loggedIn) {
-                    window.location = "dashboard.html";
-                }
+                localStorage.token_expires = loginRequest.getResponseHeader('token_expires');
+                config.user();
             } else {
                 document.getElementById("errorMessage").setAttribute("class", "show");
                 document.getElementById("errorMessage").innerHTML = "Invalid Username/Password";
