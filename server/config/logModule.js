@@ -13,5 +13,4 @@ module.exports = function(app) {
 	}));
 
 	console.log("Plain Logs are written into : ", path.join(config.application.root_path, config.logFiles.plainLogFile));
-	console.log(config.application.addPrefixes);
 }

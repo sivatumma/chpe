@@ -13,9 +13,40 @@ var config = require('./config/config.js'),
   User = mongoose.model('User'),
   bodyParser = require('body-parser'),
   compressible = require('compressible'),
-  compression = require("compression")();
+  compression = require("compression")(),
+  logModule = require('./config/logModule')(app),
+  https = require('https');
 
-require('./config/logModule')(app);
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.use('/lib', express.static(config.application.root_path + '/lib', {
+  maxAge: '30d'
+}));
+app.use('/dist', express.static(config.application.root_path + '/dist', {
+  maxAge: '30d'
+}));
+app.use('/build', express.static(config.application.root_path + '/build', {
+  maxAge: '30d'
+}));
+
+
+app.use(express.static(config.application.root_path + '/client'));
+
+compressible('text/html') // => true 
+compressible('image/png') // => false 
+
+app.use(session({
+  genid: function(req) {
+    return uuid.v4();
+  },
+  resave: true,
+  saveUninitialized: true,
+  secret: 'Welcome2C@llHe@lth'
+}));
 
 function fetchModels(req, res) {
   res.status(200).end("Fetch is executed " + req.params.modelName);
@@ -36,65 +67,30 @@ function createModels(req, res) {
 
 }
 
-function updateModels(err, req, res) {
-  if(err) console.log("ERROR: ", err.message || "no error message for updateModels function");
-
-  console.log(req.body);
-  var data = mongoose.model("scheme").find(quryBuilder.suggestDiscount(req)).populate('metadata.name');
-//var order = mongoose.model("order").find(query.findOrderQuery(req)).exec();
-data.exec().then(function(schemadata){
-  console.log(schemadata[0].metadata);
-  res.send(schemadata);
-
-})
-
-
+function updateModels(req, res) {
+  console.log(quryBuilder.suggestDiscount(req));
+  var data = mongoose.model("scheme").find(quryBuilder.suggestDiscount(req)).populate('orders');
+  //var order = mongoose.model("order").find(query.findOrderQuery(req)).exec();
+  data.exec().then(function(schemadata) {
+    res.status(200).send(schemadata);
+  }, function(reason){
+    res.status(500).send(reason);
+  });
 }
 
 function deleteModels(req, res) {
   res.status(200).end("Executed delete method on model : " + req.params.modelName);
 }
 
-
-app.use(cors());
-
-app.use(session({
-  genid: function(req) {
-    return uuid.v4();
-  },
-  resave: true,
-  saveUninitialized: true,
-  secret: 'Welcome2C@llHe@lth'
-}));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
 require('./routes/user.js')(app);
 
-app.use('/lib', express.static(config.application.root_path + '/lib', {
-  maxAge: '30d'
-}));
-app.use('/dist', express.static(config.application.root_path + '/dist', {
-  maxAge: '30d'
-}));
-app.use('/build', express.static(config.application.root_path + '/build', {
-  maxAge: '30d'
-}));
-
-
-app.use(express.static(config.application.root_path + '/client'));
-
-app.all('/',function(req, res) {
+app.all('/', function(req, res) {
   res.sendfile('client/login.html');
   console.log('client/login.html served');
 });
 
+app.all('/test', updateModels)
 
- 
-compressible('text/html') // => true 
-compressible('image/png') // => false 
 
 app.route('/mdb/:modelName')
   .get(fetchModels)
@@ -102,7 +98,7 @@ app.route('/mdb/:modelName')
   .put(updateModels)
   .delete(deleteModels);
 
-  app.route('/operation/:filter').put(updateModels).post(updateModels);
+app.route('/operation/:filter').put(updateModels).post(updateModels);
 
 
 var server_credentials = {
@@ -112,11 +108,18 @@ var server_credentials = {
 };
 
 dbModule.once('open', function callback() {
-  // https.createServer(server_credentials, app).listen(config.port || 91, function() {
-  //     console.log('Express HTTPS server listening on port ' + app.get('default_https_port'));
-  // });
+  var httpsServer = https.createServer(server_credentials, app)
+  httpsServer.on('error', function(err) {
+    console.log("HTTPS could not be started as the port is in use. Trying to serve only HTTP");
+    console.log("...");
+  });
+  httpsServer.listen(config.https_port || 443, function(err) {
+    if (err) {} else
+      console.log('Express HTTPS server listening on port ' + config.http_port || 443);
+  });
 
   app.listen(config.port || 91, function() {
-    console.log('Express server listening on port ', config.port || 91);
+    console.log('Express server (HTTP) listening on port ', config.port || 91);
   });
+
 });

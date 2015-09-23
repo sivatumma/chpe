@@ -9,9 +9,7 @@ module.exports = {
 		return query;
 
 	},
-	suggestDiscount: function(err, req, res) {
-		if(err){console.log("ERR: ", err.message || "no error message", " & ", err.stack || "no error stack");}
-		console.log("This : ", req.body);
+	suggestDiscount: function(req, res) {
 		var query = {
 			"metadata.name": req.body.name,
 			"behavior.locationOfServices": {
@@ -37,8 +35,7 @@ module.exports = {
 		return query;
 
 	},
-	shcemaFindQuery: function(query)
-	{
+	shcemaFindQuery: function(query) {
 
 		return query;
 	}
