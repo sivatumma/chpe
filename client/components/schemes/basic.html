@@ -20,6 +20,7 @@
         }
         paper-input {
             margin-top: 0px !important;
+            margin-left: 10px;
         }
 
     </style>
@@ -31,8 +32,8 @@
 
         <date-time-picker date-type="{{endDateType}}" date-modal="{{endDateModal}}" date-time-value="{{schemeEnds}}" date-label="End Date" date-id="{{edDp}}" time-id="{{edTp}}"></date-time-picker>
 
-        <chpe-discount  discount-id="basicDiscount" percentage-id="basicPercentage" flat-id="basicFlatId"
-        discount="{{defaultDiscount}}" discount-type="{{discountType}}">
+        <chpe-discount discount-modal="{{discountModal}}"  discount-id="{{basicDiscount}}" percentage-id="{{percentageId}}" flat-id="{{flatId}}"
+        discount="{{defaultDiscount}}">
         </chpe-discount>
         
         <paper-input name="Maximum Usages" no-label-float label="Maximum Usages" type="number" value="{{behavior.maximumUsages}}" max="10" min="0"></paper-input>
@@ -53,6 +54,9 @@
                 sdDp:String,
                 edTp:String,
                 edDp:String,
+                percentageId:String,
+                flatId:String,
+                discountModal:String
             },
             ready: function() {
                 console.log(generalConfig().stateVariables);
@@ -60,6 +64,7 @@
                 this.behavior = schemeBase.behavior;
                 this.scheme = schemeBase;
                 this.defaultDiscount = schemeBase().behavior.defaultDiscount;
+                this.discountModal = "behavior.discountType";
             },
             listeners: {
 

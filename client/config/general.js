@@ -9,8 +9,15 @@ function generalConfig() {
 		isLoggedIn: false,
 		schemeType: ""
 	};
+	var userStatus = function() {
+            if (localStorage !== undefined &&
+                (localStorage.userName !== undefined || localStorage.userName != "") && localStorage.loggedIn) {
+                window.location = "dashboard.html";
+            }
+    };
 	return {
 		urls: urls,
-		stateVariables: stateVariables
+		stateVariables: stateVariables,
+		user:userStatus
 	};
 }
