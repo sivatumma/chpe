@@ -53,16 +53,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../config/schemeBase.js"></script>
     <script src="../config/general.js"></script>
     <script src="../lib/chUtils.js"></script>
+    <script type="text/javascript">
+        function chpeLoader(){ 
+            document.getElementById("pageLoading").style.display = "none";
+            document.getElementById("paperDrawerPanel").style.display = "block";
+        }
+    </script>
 </head>
 
 
-<body unresolved class="fullbleed layout vertical">
 
+<body unresolved class="fullbleed layout vertical" onload="chpeLoader();">
     <span id="browser-sync-binding"></span>
 
     <template is="dom-bind" id="app">
 
-        <paper-drawer-panel id="paperDrawerPanel">
+        <paper-drawer-panel id="paperDrawerPanel" hidden>
             <!-- Drawer Scroll Header Panel -->
             <paper-scroll-header-panel drawer fixed>
 
@@ -216,7 +222,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                          precache-file="precache.json">
       </platinum-sw-cache>
     </platinum-sw-register>-->
-
+     <div align="center" style="margin:18% auto;" id="pageLoading">
+          <paper-spinner class="blue" active></paper-spinner>
+    </div>
         <paper-toast id="schemeSuccErrMessageToast" text="Scheme Created Successfully"></paper-toast>
     </template>
 
