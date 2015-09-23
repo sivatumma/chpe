@@ -24,6 +24,7 @@
 
     <!-- Tile icon for Win8 (144x144) -->
     <meta name="msapplication-TileImage" content="../assets/images/favicon.png">
+    <script type="text/javascript" src="config/general.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -151,7 +152,6 @@
         }
     </style>
 
-
 </head>
 
 <body>
@@ -196,15 +196,15 @@
         </tr>
     </table>
     <script type="text/javascript">
+        var config = generalConfig() || {};
         var checkUserStatus = function() {
             if (localStorage !== undefined &&
                 (localStorage.userName !== undefined || localStorage.userName != "") && localStorage.loggedIn) {
                 window.location = "dashboard.html";
             }
         };
-        setInterval(function() {
-            checkUserStatus();
-        }, 1000);
+        
+        checkUserStatus();
 
         function ajaxRequest() {
             var activexmodes = ["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
@@ -265,6 +265,11 @@
                 localStorage.userToken = loginRequest.getResponseHeader('token');
                 localStorage.token_expires = loginRequest.getResponseHeader('token_expires')
                 console.log(localStorage);
+                if (localStorage !== undefined &&
+                    (localStorage.userName !== undefined || localStorage.userName != "") && 
+                    localStorage.loggedIn) {
+                    window.location = "dashboard.html";
+                }
             } else {
                 document.getElementById("errorMessage").setAttribute("class", "show");
                 document.getElementById("errorMessage").innerHTML = "Invalid Username/Password";
@@ -282,7 +287,7 @@
                 document.getElementById("errorMessage").setAttribute("class", "hide");
                 userCreds.username = username.value;
                 userCreds.password = password.value;
-                loginRequest.open("POST", " http://localhost:91/login", false);
+                loginRequest.open("POST", config.urls.apiHost+"/login", false);
                 loginRequest.setRequestHeader("Content-type", "application/json");
                 loginRequest.send(JSON.stringify(userCreds));
             }
