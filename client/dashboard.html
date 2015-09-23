@@ -56,13 +56,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </head>
 
 
-<body unresolved class="fullbleed layout vertical">
 
+<body unresolved class="fullbleed layout vertical">
     <span id="browser-sync-binding"></span>
 
     <template is="dom-bind" id="app">
 
-        <paper-drawer-panel id="paperDrawerPanel">
+        <paper-drawer-panel id="paperDrawerPanel" hidden>
             <!-- Drawer Scroll Header Panel -->
             <paper-scroll-header-panel drawer fixed>
 
@@ -216,7 +216,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                          precache-file="precache.json">
       </platinum-sw-cache>
     </platinum-sw-register>-->
-
+          <paper-spinner class="blue" active></paper-spinner id="pageLoading">
         <paper-toast id="schemeSuccErrMessageToast" text="Scheme Created Successfully"></paper-toast>
     </template>
 
@@ -226,3 +226,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </body>
 
 </html>
+    <script type="text/javascript">
+        window.addEventListener('WebComponentsReady', function(e) {
+            alert("hye");
+            console.log(window.document);
+            console.log(window.document.getElementById('spinnerContainer'));
+            console.log(window.document == document);
+            window.document.getElementById('spinnerContainer').style.display = 'none';
+        }); 
+    </script>
