@@ -10,7 +10,7 @@ module.exports = function(mongoose) {
 		metadata: {
 			name: {
 				type: String,
-				ref:'order',
+				orders : [{ type: Schema.Types.ObjectId, ref: 'Orders' }],
 				//required: true,
 				index: {
 					unique: true
