@@ -1,24 +1,19 @@
 module.exports = {
 	createSchema: function(data) {
 
-		
 		return data;
 	},
-	findSchema : function(data)
-{
+	findSchema: function(data) {
+		var query = {};
+		query.push(data);
+		return query;
 
-var query ={};
-
-query.push(data);
-        return query;
-
-
-},
-suggestDiscount : function(req,res)
-{
+	},
+	suggestDiscount: function(err, req, res) {
+		if(err){console.log("ERR: ", err.message || "no error message", " & ", err.stack || "no error stack");}
+		console.log("This : ", req.body);
 		var query = {
 			"metadata.name": req.body.name,
-
 			"behavior.locationOfServices": {
 				$in: [req.body.locationOfService, "AllLocation"]
 			},
@@ -30,33 +25,22 @@ suggestDiscount : function(req,res)
 			},
 			"metadata.toIds.id": req.body.userId,
 			"metadata.published": true
-
 		}
-	
 		return query;
-},
+	},
 
+	findOrderQuery: function(req) {
+		var query = {
+			schemeName: req.body.name,
+			userId: req.body.userId
+		}
+		return query;
 
-findOrderQuery : function(req)
-{
-	var query ={
-     schemeName: req.body.name,
-     userId: req.body.userId
+	},
+	shcemaFindQuery: function(query)
+	{
 
+		return query;
 	}
-
-return query;
-
-
-},
-
-shcemaFindQuery : function(query)
-
-{
-
-
-             return query;
-}
-
 
 };

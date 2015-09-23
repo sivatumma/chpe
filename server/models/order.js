@@ -18,6 +18,7 @@ module.exports = function(mongoose) {
 	var Schema = mongoose.Schema;
 	var orderSchema = Schema({
 		_id:{ type: String},
+		scheme : { type: Schema.Types.ObjectId, ref: 'scheme' },
 		schemeName: {
 			type: String
 		},

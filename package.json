@@ -47,7 +47,7 @@
     "lodash": "3.10.1",
     "express": "^4.8.7",
     "express-ipfilter": "^0.0.20",
-    "body-parser": "^1.7.0",
+    "body-parser": "1.13.3",
     "ejs": "^1.0.0",
     "express-session": "^1.7.6",
     "bcrypt-nodejs": "0.0.3",

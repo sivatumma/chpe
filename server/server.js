@@ -8,7 +8,7 @@ var config = require('./config/config.js'),
   session = require('express-session'),
   exceptionHandlers = require('./config/exceptionHandlers.js'),
   dbModule = require('./config/dbModule.js')(),
-  qurey = require('./config/queryBuilder.js'),
+  quryBuilder = require('./config/queryBuilder.js'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
   bodyParser = require('body-parser'),
@@ -24,7 +24,7 @@ function fetchModels(req, res) {
 function createModels(req, res) {
   config.configVariable.loginUser = "user";
 
-  var u1 = mongoose.model(req.params.modelName)(qurey.createSchema(req.body));
+  var u1 = mongoose.model(req.params.modelName)(quryBuilder.createSchema(req));
   u1.save().then(function(people) {
     res.send(people);
   }, function(err) {
@@ -37,12 +37,12 @@ function createModels(req, res) {
 }
 
 function updateModels(err, req, res) {
-  if(err) console.log("ERROR: ", err.stack);
+  if(err) console.log("ERROR: ", err.message || "no error message for updateModels function");
 
-
-  var data = mongoose.model("scheme").find(qurey.suggestDiscount(req)).populate('metadata.name').exec();
+  console.log(req.body);
+  var data = mongoose.model("scheme").find(quryBuilder.suggestDiscount(req)).populate('metadata.name');
 //var order = mongoose.model("order").find(query.findOrderQuery(req)).exec();
-data.then(function(schemadata){
+data.exec().then(function(schemadata){
   console.log(schemadata[0].metadata);
   res.send(schemadata);
 
@@ -102,7 +102,7 @@ app.route('/mdb/:modelName')
   .put(updateModels)
   .delete(deleteModels);
 
-  app.route('/operation/:filter').put(updateModels);
+  app.route('/operation/:filter').put(updateModels).post(updateModels);
 
 
 var server_credentials = {
