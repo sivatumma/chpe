@@ -55,13 +55,16 @@
             @apply(--layout-vertical);
             @apply(--center-justified);
         }
-        .arrows paper-icon-button{
-            margin-bottom: 0px !important;
-        }
+        
     </style>
     <template>
         <paper-material elevation="1" type="{{schemeType}}">
-            <!-- <h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4> -->
+            <div class="col-4">
+            <h4 class="paper-font-display2" type="{{schemeType}}">
+                Create Scheme <span>{{schemeType}}</span>
+                <paper-slider id="ratings" pin snaps max="2" step="1" value="0" class="orange"></paper-slider>
+            </h4>
+            </div>
             <form is="iron-form" id="coupon-form" method="POST" action="#">
                 <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
@@ -75,7 +78,7 @@
                     </neon-animatable>
                     <neon-animatable>
                         <div align="center" class="arrows">
-                            <paper-fab icon="arrow-back" on-click="_onPrevClick">
+                            <paper-fab icon="arrow-back" class="blue" on-click="_onPrevClick">
                             </paper-fab>
                         </div>
 
@@ -83,11 +86,11 @@
 
                         <div class="submitButtons">
                             <span>
-                        <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
-                        </span>
+                                <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
+                            </span>
                             <span>
-                        <paper-button name="coupon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
-                    </span>
+                                <paper-button name="coupon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
+                            </span>
                         </div>
                     </neon-animatable>
                 </neon-animated-pages>

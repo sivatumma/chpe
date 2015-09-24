@@ -179,6 +179,8 @@ iron-pages{
     background: none;
     margin: 0px auto
   }
+
+/*paper spinner custom styles*/
   paper-spinner{
     width: 40px;
     height: 40px;
@@ -212,4 +214,74 @@ iron-pages{
     --paper-spinner-layer-2-color: var(--paper-green-500);
     --paper-spinner-layer-3-color: var(--paper-green-500);
     --paper-spinner-layer-4-color: var(--paper-green-500);
+  }
+
+  /*custom paper slider styles*/
+    paper-slider.blue {
+      --paper-slider-knob-color: var(--paper-light-blue-500);
+      --paper-slider-active-color: var(--paper-light-blue-500);
+    }
+    paper-slider.red {
+      --paper-slider-knob-color: var(--paper-red-500);
+      --paper-slider-active-color: var(--paper-red-500);
+    }
+    paper-slider.green {
+      --paper-slider-knob-color: var(--paper-green-500);
+      --paper-slider-active-color: var(--paper-green-500);
+    }
+    paper-slider.orange {
+      --paper-slider-knob-color: var(--paper-orange-500);
+      --paper-slider-active-color: var(--paper-orange-500);
+      --paper-slider-pin-color: var(--paper-orange-500);
+    }
+    #ratingsLabel {
+      padding-left: 12px;
+      color: #a0a0a0;
+    }
+
+/*pricing custom grids*/
+  .row{
+    padding:0px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+  }
+  .col-1,.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-9,.col-10,.col-11,.col-12{
+    float: left;
+  }
+  .col-12{
+    width: 100%;
+  }
+  .col-11{
+    width: 91.66666667%;
+  }
+  .col-10{
+    width: 83.33333333%;
+  }
+  .col-9{
+    width: 75%;
+  }
+  .col-8{
+    width: 66.66666667%;
+  }
+  .col-7{
+    width: 58.33333333%;
+  }
+  .col-6{
+    width: 50%;
+  }
+  .col-5{
+    width: 41.66666667%;
+  }
+  .col-4{
+    width: 33.33333333%;
+  }
+  .col-3{
+    width: 25%;
+  }
+  .col-2{
+    width: 16.66666667%;
+  }
+  .col-1{
+    width: 8.33333333%;
   }
