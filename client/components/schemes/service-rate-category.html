@@ -1,5 +1,4 @@
-<script src="../../config/general.js"></script>
-<script src="../../config/schemeBase.js"></script>
+
 
 <dom-module id="service-rate-category">
     <style type="text/css">
@@ -14,20 +13,30 @@
             width: 100%;
             margin-top: 10px;
         }
+        .discountBox.chpe-discount{
+            width: 320px !important;
+        }
+         paper-input {
+            margin-top: 0px !important;
+            margin-left: 10px;
+        }
 
     </style>
 
     <template>
-         <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}">
+      <template is="dom-repeat" items="{{scheme.behavior.serviceRateCategoryDiscounts}}">
+            <div class="col-12">
+                <div class="col-6">
                     <paper-input name="serviceRateCategoryDiscounts" multi value="{{item.srcTypes}}"  
                     no-label-float  label="Search">
                     </paper-input>
-                <div style="margin-left:20px;">
+                </div>
+                <div class="col-6" >
                     <chpe-discount  discount-id="srcDiscount" percentage-id="srcPercentage" 
-                    flat-id="srcFlat"
-                    discount="{{item.discount}}">
+                    flat-id="srcFlat" discount="{{item.discount}}" style="width:340px;">
                     </chpe-discount>
                 </div>
+            </div>
         </template>
     </template>
     <script>
@@ -35,10 +44,13 @@
         Polymer({
             is: 'service-rate-category',
             properties: {
-                behavior:Object
+                serviceRateCategories:Object,
+                behavior:Object,
+                scheme:Object
             },
             ready:function(){
-                this.behavior = schemeBase.behavior;
+                 this.scheme = schemeBase() || {};
+                 console.log();
             },
             listeners:{
                 

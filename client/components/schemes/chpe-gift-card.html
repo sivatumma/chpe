@@ -1,5 +1,3 @@
-<script src="../../config/general.js"></script>
-<script src="../../config/schemeBase.js"></script>
 
 <dom-module id="chpe-gift-card">
 <style type="text/css">
@@ -104,10 +102,10 @@
                 console.log(this.schemeType);
             },
             ready:function(){
-                console.log(schemeBase.stateVariables);
-                this.metadata = schemeBase.metadata;
-                this.behavior = schemeBase.behavior;
-                this.scheme = schemeBase || editSchemeObj;
+                this.config = generalConfig() || {};
+                this.metadata = schemeBase().metadata;
+                this.behavior = schemeBase().behavior;
+                this.scheme =  schemeBase() || editSchemeObj;
                 this.selected = 0;
             },
             listeners:{
@@ -130,13 +128,13 @@
                  this.scheme.behavior.startDate = chUtils.toIsoString(this.formData.startDate);
                  this.scheme.behavior.endDate = chUtils.toIsoString(this.formData.endDate);
 
-                 this.metadata.type = this.schemeType;
+                 this.metadata.type = "GIFT_CARD";
                  this.metadata.published = this.schemeStatus || this.metadata.published;
                  this.scheme.on  = "newscheme";
                  this.scheme.operation = "create";
                  console.log(this.scheme);
                  if(this.scheme!== undefined){
-                     this.$.giftCardAjax.url = urls.apiHost+urls.selfRest;
+                     this.config.urls.apiHost+'/api/pricingengine'+this.config.urls.rest;
                      this.$.giftCardAjax.method = "POST";
                      this.$.giftCardAjax.body = JSON.stringify(this.scheme);
                      this.$.giftCardAjax.generateRequest();
