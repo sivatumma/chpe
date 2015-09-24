@@ -11,7 +11,7 @@ module.exports = {
 	},
 	suggestDiscount: function(req, res) {
 		var query = {
-			"metadata.name": req.body.name,
+		/*	"metadata.name": req.body.name,*/
 			"behavior.locationOfServices": {
 				$in: [req.body.locationOfService, "AllLocation"]
 			},

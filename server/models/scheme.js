@@ -10,7 +10,6 @@ module.exports = function(mongoose) {
 		metadata: {
 			name: {
 				type: String,
-				orders : [{ type: Schema.Types.ObjectId, ref: 'order' }],
 				//required: true,
 				index: {
 					unique: true
@@ -241,10 +240,9 @@ module.exports = function(mongoose) {
 
 	schemeSchema.pre('save', function(next) {
 
-
 		// If metadata type is COUPON here we validate
 
-
+console.log(this)
 		if (this.metadata.type == "COUPON" && this.metadata.defaultLife !== undefined) {
 
 
