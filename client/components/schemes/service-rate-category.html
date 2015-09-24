@@ -19,10 +19,12 @@
 
     <template>
          <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}">
-                    <paper-input name="serviceRateCategoryDiscounts" multi value="{{item.srcTypes}}"  no-label-float  label="Search">
+                    <paper-input name="serviceRateCategoryDiscounts" multi value="{{item.srcTypes}}"  
+                    no-label-float  label="Search">
                     </paper-input>
                 <div style="margin-left:20px;">
-                    <chpe-discount  discount-id="srcDiscount" percentage-id="srcPercentage" flat-id="srcFlat"
+                    <chpe-discount  discount-id="srcDiscount" percentage-id="srcPercentage" 
+                    flat-id="srcFlat"
                     discount="{{item.discount}}">
                     </chpe-discount>
                 </div>

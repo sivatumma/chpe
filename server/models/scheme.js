@@ -7,10 +7,10 @@ var mongoose = require('mongoose'),
 module.exports = function(mongoose) {
 
 	var schemeSchema = Schema({
+		orders : [{ type: Schema.Types.ObjectId, ref: 'order' }],
 		metadata: {
 			name: {
 				type: String,
-				orders : [{ type: Schema.Types.ObjectId, ref: 'order' }],
 				//required: true,
 				index: {
 					unique: true

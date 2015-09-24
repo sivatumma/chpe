@@ -59,10 +59,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <body unresolved class="fullbleed layout vertical">
     <span id="browser-sync-binding"></span>
-
+    <div id="dashboardContainer" hidden>
     <template is="dom-bind" id="app">
 
-        <paper-drawer-panel id="paperDrawerPanel" hidden>
+        <paper-drawer-panel id="paperDrawerPanel">
             <!-- Drawer Scroll Header Panel -->
             <paper-scroll-header-panel drawer fixed>
 
@@ -216,22 +216,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                          precache-file="precache.json">
       </platinum-sw-cache>
     </platinum-sw-register>-->
-          <paper-spinner class="blue" active></paper-spinner id="pageLoading">
         <paper-toast id="schemeSuccErrMessageToast" text="Scheme Created Successfully"></paper-toast>
     </template>
+    </div>
 
     <!-- build:js scripts/app.js -->
     <script src="assets/scripts/app.js"></script>
     <!-- endbuild-->
 </body>
+<div align="center" style="margin:18% auto;" id="pageLoading"> 
+    <paper-spinner class="blue" active ></paper-spinner>
+</div>
 
 </html>
     <script type="text/javascript">
-        window.addEventListener('WebComponentsReady', function(e) {
-            alert("hye");
+    window.onload = function(){
+        window.document.getElementById('pageLoading').style.display = 'none';
+        window.document.getElementById("dashboardContainer").hidden = false;
+    };
+        /*window.addEventListener('WebComponentsReady', function(e) {
             console.log(window.document);
-            console.log(window.document.getElementById('spinnerContainer'));
+            console.log(window.document.getElementById('dashboardContainer'));
             console.log(window.document == document);
             window.document.getElementById('spinnerContainer').style.display = 'none';
-        }); 
+            window.document.getElementById("dashboardContainer").hidden = false;
+        }); */
     </script>

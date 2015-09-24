@@ -54,15 +54,19 @@ function fetchModels(req, res) {
 
 function createModels(req, res) {
   config.configVariable.loginUser = "user";
+  console.log("This is the body ", req.body);
+  var u1 = mongoose.model(req.params.modelName)(quryBuilder.createSchema(req.body));
+  console.log("Type of u1 is: ",typeof u1);
 
-  var u1 = mongoose.model(req.params.modelName)(quryBuilder.createSchema(req));
-  u1.save().then(function(people) {
-    res.send(people);
+  u1.save().then(function(data) {
+    console.log("DATA: ",data);
+    res.status(200).send(data);
   }, function(err) {
-    res.send({
+    console.log(err.message);
+    res.status(500).send({
       "status": "fail",
       "message": err.message
-    } + '');
+    });
   });
 
 }
