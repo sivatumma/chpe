@@ -217,6 +217,9 @@ iron-pages{
   }
 
   /*custom paper slider styles*/
+   #stepIndicator{
+      margin: 10px !important;
+   }
     paper-slider.blue {
       --paper-slider-knob-color: var(--paper-light-blue-500);
       --paper-slider-active-color: var(--paper-light-blue-500);
@@ -285,3 +288,9 @@ iron-pages{
   .col-1{
     width: 8.33333333%;
   }
+ .pull-left{
+  float: left;
+ }
+ .pull-right{
+  float: right;
+ }
