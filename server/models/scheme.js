@@ -241,10 +241,9 @@ module.exports = function(mongoose) {
 
 	schemeSchema.pre('save', function(next) {
 
-
 		// If metadata type is COUPON here we validate
 
-
+console.log(this)
 		if (this.metadata.type == "COUPON" && this.metadata.defaultLife !== undefined) {
 
 

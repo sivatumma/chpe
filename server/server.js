@@ -61,6 +61,7 @@ function createModels(req, res) {
   u1.save().then(function(data) {
     console.log("DATA: ",data);
     res.status(200).send(data);
+
   }, function(err) {
     console.log(err.message);
     res.status(500).send({
@@ -72,10 +73,19 @@ function createModels(req, res) {
 }
 
 function updateModels(req, res) {
-  console.log(quryBuilder.suggestDiscount(req));
-  var data = mongoose.model("scheme").find(quryBuilder.suggestDiscount(req)).populate('orders');
+
+
+ mongoose.model("scheme").findOne().populate('name').exec(function(err, c) {
+    if (err) { return console.log(err); }
+
+    console.log(c.metadata.name);
+});
+
+
+  var data = mongoose.model("scheme").find(quryBuilder.suggestDiscount(req)).populate('name');
   //var order = mongoose.model("order").find(query.findOrderQuery(req)).exec();
   data.exec().then(function(schemadata) {
+    console.log(schemadata[0].metadata.name);
     res.status(200).send(schemadata);
   }, function(reason){
     res.status(500).send(reason);
