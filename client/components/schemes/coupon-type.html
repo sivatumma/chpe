@@ -1,4 +1,5 @@
-
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
 <dom-module id="coupon-type">
 <style type="text/css">
     :host{
@@ -64,7 +65,7 @@
                 couponTypeModal:String,
             },
             ready:function(){
-                this.scheme =  schemeBase() || editSchemeObj;
+
             },
             listeners:{
               'couponTypeToggle.onClick':'togleType'
@@ -79,13 +80,13 @@
 
                 if (couponType == "DAY") {
                     chUtils.addClass(document.querySelector("#couponDay"),"active");
-                    this.scheme.metadata.defaultLife = couponType;
+                    this.metadata.defaultLife = couponType;
                 } else if(couponType == "WEEK"){
                     chUtils.addClass(document.querySelector("#couponWeek"),"active");
-                    this.scheme.metadata.defaultLife = couponType;
+                    this.metadata.defaultLife = couponType;
                 }else if(couponType == "MONTH"){
                     chUtils.addClass(document.querySelector("#couponMonth"),"active");
-                    this.scheme.metadata.defaultLife = couponType;
+                    this.metadata.defaultLife = couponType;
                 }
             }
           

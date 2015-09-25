@@ -6,41 +6,43 @@ function schemeBase(scheme){    //init metadata as per schema
 
     var metadata = {
         name: "",
-        type: "",
         createdBy: "",
+        toIds: [{id:1,name:""}],
+        userID:"",
+        location:{longitude:0, latitude:0,ip:""},
         published: false,
+        type: "",
         defaultLife: "",
-        toIds: []
     };
 
     //init behavior as per schema
     var behavior = {
-        defaultDiscount: 0,
         maximumUsages: 0,
         startDate: "",
         endDate: "",
         discountType: "%",
-        locationOfServices: [{
-            locations: []
-        }],
+        discount: 0,
+        locationOfServices:[],
         serviceRateCategoryDiscounts: [{
             discount: 0,
             discountType: "%",
-            srcTypes: []
+            srcTypes: [],
+            maxLength:9
         }],
         serviceLevelDiscounts: [{
             discount: 0,
             discountType: "%",
-            services: []
+            services: [],
+            maxLength:9
         }],
         cumulativeAmountPoints: [{
             amount: 0,
             points: 0
         }],
-        doctorLevelDiscounts: {
-            userChosenDiscountType: "%",
-            doctorChosenDiscountType: "%"
-        },
+        doctorLevelDiscounts: [{
+            user:{discount:0,discountType:"%",maxLength:9},
+            system:{discount:0,discountType:"%",maxLength:9}
+        }],
         advancePaidDiscounts: [{
             points: 0,
             amount: 0
@@ -51,18 +53,17 @@ function schemeBase(scheme){    //init metadata as per schema
                 to: 0
             },
             discount: 0,
-            discountType: "%"
+            discountType: "%",
+            maxLength:9
         }],
-        modeOfPaymentDiscounts: [{
-            epay: {
-                discount: 0,
-                discountType: "%"
-            },
-            cod: {
-                discount: 0,
-                discountType: "%"
-            }
-        }]
+      modeOfPaymentDiscounts: [{
+         mop: {
+          type: ""
+         },
+         discount: 0,
+         discountType:"%",
+         maxLength:9
+        }],
     };
 
     scheme.metadata = metadata;

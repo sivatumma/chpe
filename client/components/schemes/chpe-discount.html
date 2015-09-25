@@ -60,7 +60,7 @@
 </style>
     <template>
         <div class="col-6 margin-bottom15">
-            <div class="discountBox"  id="discountToggle" layout horizontal data="{{discountModal}}">
+            <div class="discountBox"  id="discountToggle" layout horizontal>
                 <div class="btn-group">
                     <paper-button type="button" name="discount" 
                     class="discountButton noRightBorder active" 
@@ -72,7 +72,7 @@
                     <div class="discountInput">
                         <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  id="{{discountId}}" 
                         max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
-                         error-message="Max 999 if Flat ; 10 if %" value="{{behavior.defaultDiscount}}"></paper-input>
+                         error-message="Max 999 if Flat ; 10 if %" value="{{discountModal.discount}}"></paper-input>
                     </div>
             </div>
          </div>
@@ -94,6 +94,7 @@
         
             },
             ready:function(){
+                console.log(this.discountModal);
                 this.discountLength  = 10;
                 this.discountPattern = "^([0-10])$";
             },
@@ -108,14 +109,24 @@
                 chUtils.removeClass(document.querySelector("#"+this.flatId),"active");
 
                 if (discountType == "%") {
-                    this.discountLength = 10;
+                    if(this.discountModal.maxLength!==undefined){
+                        this.discountModal.maxLength = this.discountLength = 10;
+                    }else{
+                        this.discountLength = 10;
+                    }
+
                     this.discountPattern = "^([0-10])$";
                     chUtils.addClass(document.querySelector("#"+this.percentageId),"active");
                     console.log(document.querySelector("#"+this.percentageId));
                     this.discountModal.discountType = discountType; 
                 } else {
                     chUtils.addClass(document.querySelector("#"+this.flatId),"active");
-                    this.discountLength = 999;
+
+                     if(this.discountModal.maxLength!==undefined){
+                        this.discountModal.maxLength = this.discountLength = 999;
+                    }else{
+                        this.discountLength = 999;
+                    }
                     this.discountPattern = "^([0-999])$";
                     console.log(document.querySelector("#"+this.flatId));
                     this.discountModal.discountType = discountType; 

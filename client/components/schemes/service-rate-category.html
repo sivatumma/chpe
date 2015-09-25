@@ -1,5 +1,5 @@
-
-
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
 <dom-module id="service-rate-category">
     <style type="text/css">
         .searchBoxInSrc{
@@ -22,53 +22,41 @@
         }
 
     </style>
-
     <template>
-      <template is="dom-repeat" items="{{scheme.behavior.serviceRateCategoryDiscounts}}">
-            <div class="col-12">
+      <paper-card heading= "Service Rate Categories" class="col-12">
+        <div class="card-content">
+          <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}" as="src">
+            <div class="horizontal layout">
                 <div class="col-6">
-                    <paper-input name="serviceRateCategoryDiscounts" multi value="{{item.srcTypes}}"  
-                    no-label-float  label="Search">
+                    <paper-input name="src" multi  value="{{src.srcTypes}}"  
+                        no-label-float  label="Search" >
                     </paper-input>
                 </div>
-                <div class="col-6" >
-                    <chpe-discount  discount-id="srcDiscount" percentage-id="srcPercentage" 
-                    flat-id="srcFlat" discount="{{item.discount}}" style="width:340px;">
-                    </chpe-discount>
+                <chpe-discount id="srcDiscount" discount-modal="{{src}}"  discount-id="srcDiscountId" percentage-id="srcPercentage" flat-id="srcFlat">
+                </chpe-discount>
+              <paper-icon-button icon="icons:delete" on-click="deleteSrc"></paper-icon-button>
+            </div>      
+          </template> 
+        </div>
+            <div class="card-actions">
+                <div class="horizontal layout" >
+                    <paper-button on-click="addSrc">Add</paper-button>
+                    
                 </div>
             </div>
-        </template>
+            </paper-card>
     </template>
     <script>
-
         Polymer({
-            is: 'service-rate-category',
-            properties: {
-                serviceRateCategories:Object,
-                behavior:Object,
-                scheme:Object
+            'is':'service-rate-category',
+             properties:{
+
             },
             ready:function(){
-                 this.scheme = schemeBase() || {};
-                 console.log();
             },
             listeners:{
-                
-            },
-            handleResponse:function(event){
-                console.log(event.detail.response);
-                
-            },
-            handleError:function(event){
-                var request=event.detail.request;
-                console.log(event.detail.response);
-            },
-            addRows:function(){
 
             }
-            
         });
-       
-        
     </script>
 </dom-module>

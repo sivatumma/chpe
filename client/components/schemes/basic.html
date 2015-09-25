@@ -41,8 +41,8 @@
             </div>
         </div>
         <div class="col-12">
-            <chpe-discount id="basicSchemeDiscount" discount-modal="{{discountModal}}"  discount-id="{{basicDiscount}}" percentage-id="{{percentageId}}" flat-id="{{flatId}}"
-            discount="{{defaultDiscount}}" discount-modal="{{discountModal}}">
+            <chpe-discount id="basicSchemeDiscount"   discount-id="{{basicDiscount}}" percentage-id="{{percentageId}}" flat-id="{{flatId}}"
+            discount="{{defaultDiscount}}" discount-modal="{{behavior}}">
             </chpe-discount>
         </div>
     </template>
@@ -63,26 +63,16 @@
                 edDp:String,
                 percentageId:String,
                 flatId:String,
-                discountModal:Object,
+                discountModal:String,
                 metadata:Object,
-                behaviour:Object
+                behavior:Object
             },
             ready: function() {
-                console.log(generalConfig().stateVariables);
-                console.log(this.behavior);
-             
-                this.discountModal = {"discount":"%","value":2};
-                /*this.scheme = schemeBase();
-                this.metadata = this.scheme.metadata;
-                this.behavior = this.scheme.behavior;
-*/
-                //this.defaultDiscount = this.behavior.defaultDiscount;
-                //this.discountModal = "behavior.discountType";
+                //this.$.basicSchemeDiscount.behavior = this.behavior; 
             },
             listeners: {
 
             }
-            
         });
     </script>
 </dom-module>
