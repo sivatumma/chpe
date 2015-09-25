@@ -1,8 +1,8 @@
 function generalConfig() {
 	var urls = {
 		toUseApiHost:false,
-		apiHost: '/',
-		rest: '?API_KEY=MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9',
+		apiHost: '',
+		rest: '/mdb/scheme?API_KEY=MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9',
 		memcache: '/memcache'
 	};
 

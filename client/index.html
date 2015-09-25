@@ -1,5 +1,13 @@
 <!doctype html>
-<html>
+<!--@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt-->
+
+<html lang="">
 
 <head>
     <meta charset="utf-8">
@@ -9,7 +17,14 @@
     <title>Schemes Dashboard</title>
     <!-- Place favicon.ico in the `app/` directory -->
 
+    <!-- Chrome for Android theme color -->
+    <meta name="theme-color" content="#303F9F">
 
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Tile color for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -24,266 +39,213 @@
 
     <!-- Tile icon for Win8 (144x144) -->
     <meta name="msapplication-TileImage" content="../assets/images/favicon.png">
-    <script type="text/javascript" src="config/general.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: arial;
-        }
-        
-        table {
-            margin: 30px auto;
-            width: 70%;
-        }
-        
-        table tr {
-            vertical-align: top;
-        }
-        
-        .right-vline {
-            width: 55%;
-            border-right: 1px solid silver;
-            padding-right: 30px;
-            margin-right: 30px;
-        }
-        
-        .background-image {
-            background-image: url('kb5.png');
-            background-size: cover;
-            display: block;
-            -webkit-filter: blur(12px);
-            filter: blur(35px);
-            height: 100%;
-            left: 0;
-            position: fixed;
-            right: 0;
-            z-index: -1;
-            text-align: center;
-        }
-        
-        .content {
-            background: rgba(255, 255, 255, 0.35);
-            box-shadow: 0 1px 15px rgba(0, 0, 0, 0.25);
-            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-            width: 300px;
-            height: 300px;
-            position: relative;
-            z-index: 1;
-            margin: 10% auto;
-            padding: 15px;
-            text-align: center;
-            border-radius: 40px;
-        }
-        
-        .content p.heading {
-            font-size: 30px;
-            font-weight: normal;
-            margin: 30px 0px;
-        }
-        
-        .content input {
-            outline: none;
-        }
-        /*.content > input:nth-child(3) {*/
-        
-        #username {
-            border-top-left-radius: 16px;
-            border-top-right-radius: 16px;
-            border: 1px solid silver;
-            width: 220px;
-            padding: 9px;
-        }
-        
-        #password {
-            border-bottom-right-radius: 16px;
-            border-bottom-left-radius: 16px;
-            width: 220px;
-            border: 1px solid silver;
-            padding: 9px;
-        }
-        
-        #submitButton {
-            position: absolute;
-            top: 68%;
-            right: 14%;
-            z-index: 2;
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            border: none;
-            background: none;
-            background: url('assets/images/submit-icon.png') left top no-repeat;
-            background-size: 30px;
-        }
-        
-        #submitButton img {
-            width: 30px;
-            height: 30px;
-        }
-        
-        #errorMessage {
-            font-size: 12px;
-            color: red;
-            position: absolute;
-            top: 49%;
-            float: left;
-            width: 100%;
-            right: 0;
-        }
-        
-        .hide {
-            display: none;
-        }
-        
-        .show {
-            display: block;
-        }
-        
-        @media screen and (-webkit-min-device-pixel-ratio:0) {
-            #submitButton {
-                top: 67% !important;
-            }
-        }
-        
-        @media(max-width:980px) {
-            table {
-                width: 100%;
-            }
-        }
-    </style>
 
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="/assets/styles/main.css">
+    <!-- endbuild-->
+
+    <script src="external/webcomponentsjs/webcomponents-lite.js"></script>
+    <!-- endbuild -->
+
+
+    <!-- will be replaced with elements/elements.vulcanized.html -->
+    <link rel="import" href="/components/elements.html">
+    <!-- endreplace-->
+    <script src="../config/schemeBase.js"></script>
+    <script src="../config/general.js"></script>
+    <script src="../lib/chUtils.js"></script>
 </head>
 
-<body>
 
-    <div class="background-image"></div>
 
-    <table class="loginContainer">
-        <tr>
-            <td class="right-vline">
-                <h1>Schemes</h1>
-                <p>
-                    <h3><img src="assets/images/coupon-icon.png" width="25" height="25" 
-                      style="vertical-align:bottom;"/>  Coupons </h3>Published to Callhealth consumers, not tied with any pre-rule.
-                    <strong>e.g., <em>Women-Care</em></strong> to offer substantial discount on Women's day
-                </p>
-                <p>
-                    <h3> <img src="assets/images/giftcard-icon.png" width="35" height="35" 
-                      style="vertical-align:bottom;"/>  Gift Cards</h3>CCOs often find a need to resolve Consumer grievances. With a gift card, they have resolutions in hand
-                </p>
-                <p>
-                    <h3><img src="assets/images/addon-icon.png" width="25" height="25" 
-                      style="vertical-align:bottom;"/>  Schemes, <em>or Add-Ons </em></h3>A long time, Complex healthcare product that covers every choice possible.
-                </p>
-            </td>
-            <td>
-                <div class="content">
-                    <img src="ch-logo.png" />
-                    <p class="heading">
-                        <img src="assets/images/favicon.png" width="35" height="35" />
-                    </p>
-                    <form name="loginForm" id="loginForm" method="POST" action="javascript:void(0);" />
-                    <span id="errorMessage" class="hide">Please enter Username/Password</span>
-                    <div>
-                        <input type="text" placeholder="Username" name="username" id="username">
-                        <input type="password" placeholder="Password" name="password" id="password">
+<body unresolved class="fullbleed layout vertical">
+    <span id="browser-sync-binding"></span>
+    <div id="dashboardContainer" hidden>
+    <template is="dom-bind" id="app">
+
+        <more-routing-config driver="hash"></more-routing-config>
+
+        <paper-drawer-panel id="paperDrawerPanel">
+            <!-- Drawer Scroll Header Panel -->
+            <paper-scroll-header-panel drawer fixed>
+
+                <!-- Drawer Toolbar -->
+                <paper-toolbar id="drawerToolbar">
+                    <span class="paper-font-title"><img src="assets/images/ch-logo.png"/></span>
+                </paper-toolbar>
+
+
+                <!-- Drawer Content -->
+                <paper-menu class="pad" id="chepeMenu" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
+                    <a route="home" href="home">
+                        <iron-icon icon="home"></iron-icon>
+                        <span>Home</span>
+                    </a>
+
+                    <a route="schemes" href="/schemes">
+                        <iron-icon icon="social:pages"></iron-icon>
+                        <span>View Scheme</span>
+                    </a>
+
+                    <a route="createScheme" href="/schemes/ADD_ON">
+                        <iron-icon icon="star-half"></iron-icon>
+                        <span>Create Scheme</span>
+                    </a>
+
+                    <a route="createCoupon" href="/schemes/COUPON">
+                        <iron-icon icon="star-half"></iron-icon>
+                        <span>Create Coupon</span>
+                    </a>
+
+                    <a route="createGiftCard" href="/schemes/GIFT_CARD">
+                        <iron-icon icon="star-half"></iron-icon>
+                        <span>Create Gift Card</span>
+                    </a>
+
+                </paper-menu>
+            </paper-scroll-header-panel>
+
+
+            <!-- Main Area -->
+            <paper-scroll-header-panel main condenses keep-condensed-header>
+
+                <!-- Main Toolbar -->
+                <paper-toolbar id="mainToolbar" class="tall">
+                    <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+                    <span class="flex"></span>
+
+                    <!-- Toolbar icons -->
+                    <paper-icon-button icon="refresh"></paper-icon-button>
+                    <paper-icon-button icon="search"></paper-icon-button>
+
+                    <!-- Application name -->
+                    <div class="middle middle-container center horizontal layout">
+                        <div class="app-name">Schemes Dashboard</div>
                     </div>
-                    <span id="submitButton" onClick="submitForm();">
-                        </span>
-                    </form>
+
+                    <!-- Application sub title -->
+                    <div class="bottom bottom-container center horizontal layout">
+                        <div class="bottom-title paper-font-subhead">The Guts of Healthcare Industry</div>
+                    </div>
+
+                </paper-toolbar>
+
+                <paper-toolbar id="iconToolBar" class="fixed">
+                    <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                    <link-icon icon-type="social:share"></link-icon>
+                    <link-icon icon-type="visibility"></link-icon>
+                    <link-icon icon-type="list"></link-icon>
+                    <link-icon icon-type="settings"></link-icon>
+                    <link-icon icon-type="face"></link-icon>
+                    <link-icon icon-type="apps"></link-icon>
+                </paper-toolbar>
+
+                <paper-dialog heading="Title for dialog" transition="paper-transition-center">
+                </paper-dialog>
+
+            <more-route-selector selectedParams="{{params}}">
+                <iron-pages attr-for-selected="route" selected="{{route}}">
+
+                    <section route="home">
+                        <schemes-as-cards></schemes-as-cards>
+                    </section>
+
+                    <section route="users">
+                        <paper-material elevation="1">
+                            <h2 class="paper-font-display2">Users</h2>
+                            <p>This is the users section</p>
+                            <a href="//users/Siva">Siva</a>
+                        </paper-material>
+                    </section>
+
+                    <section route="user-info">
+                        <paper-material elevation="1">
+                            <div>This is <span>{{params.operation}}</span>'s section</div>
+                        </paper-material>
+                    </section>
+
+                    <section route="contact">
+                        <paper-material elevation="1">
+                            <h2 class="paper-font-display2">Contact</h2>
+                            <p>This is the contact section</p>
+                        </paper-material>
+                    </section>
+
+                    <section route="schemes">
+                        <paper-material elevation="1">
+                            <h2 class="paper-font-display2">View Schemes</h2>
+                            <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
+                        </paper-material>
+                    </section>
+
+                    <!-- <section data-route="createScheme">
+                            <paper-material elevation="1">
+                                <h2 class="paper-font-display2">Create Scheme - <span>{{params.create}}</span></h2>
+                                <p>View where we create <span>{{params.create}}</span></p>
+                            </paper-material>
+                        </section> -->
+                    <section route="createScheme">
+                        <chpe-addon scheme-type="{{params.create}}"></chpe-addon>
+                    </section>
+                    
+                    <section route="createCoupon">
+                        <chpe-coupon scheme-type="{{params.create}}"></chpe-coupon>
+                    </section>
+
+                    <section route="createGiftCard">
+                        <chpe-gift-card scheme-type="{{params.create}}"></chpe-gift-card>
+                    </section>
+                    <section route="specialEffects">
+                        <paper-material elevation="1">
+
+                        </paper-material>
+                    </section>
+
+                </iron-pages>
+            </more-route-selector>
+
                 </div>
-            </td>
-        </tr>
-    </table>
-    <script type="text/javascript">
-        var config = generalConfig() || {};
+            </paper-scroll-header-panel>
+        </paper-drawer-panel>
 
-        //check user logged in status
-        config.user();
-
-        function ajaxRequest() {
-            var activexmodes = ["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
-            if (window.ActiveXObject) { //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
-                for (var i = 0; i < activexmodes.length; i++) {
-                    try {
-                        return new ActiveXObject(activexmodes[i])
-                    } catch (e) {
-                        //suppress error
-                    }
-                }
-            } else if (window.XMLHttpRequest) // if Mozilla, Safari etc
-                return new XMLHttpRequest()
-            else
-                return false
-        }
-
-        //validating the form and submit
-        var usernameError = true,
-            passwordError = true,
-            username = document.getElementById('username'),
-            password = document.getElementById('password'),
-            userCreds = {};
-
-
-        username.onkeyup = function() {
-            if (username.value.length != 0) {
-                usernameError = true;
-                username.style.border = "1px solid #ccc";
-            } else {
-                usernameError = false;
-                username.style.border = "1px solid #ff0000";
-                document.getElementById("errorMessage").setAttribute("class", "hide");
-            }
-        };
-        password.onkeyup = function() {
-            if (password.value.length != 0) {
-                passwordError = true;
-                console.log("Ok password");
-                password.style.border = "1px solid #ccc";
-            } else {
-                passwordError = false;
-                console.log("Error password");
-                password.style.border = "1px solid #ff0000";
-                document.getElementById("errorMessage").setAttribute("class", "hide");
-            }
-        };
-
-        //handle response
-        var loginRequest = new ajaxRequest();
-
-        loginRequest.onload = function() {
-            if (loginRequest.status == 200) {
-                var response = JSON.parse(loginRequest.response);
-                localStorage.userName = response.username;
-                localStorage.userRole = response.roles;
-                localStorage.loggedIn = true;
-                localStorage.userToken = loginRequest.getResponseHeader('token');
-                localStorage.token_expires = loginRequest.getResponseHeader('token_expires');
-                config.user();
-            } else {
-                document.getElementById("errorMessage").setAttribute("class", "show");
-                document.getElementById("errorMessage").innerHTML = "Invalid Username/Password";
-            }
-        };
+        <!-- Uncomment next block to enable Service Worker support (1/2) -->
         
-        //submitting form if username and password enters
+ <!--<paper-toast id="caching-complete"
+                 duration="6000"
+                 text="Caching complete! This app will work offline.">
+    </paper-toast>
 
-        var submitForm = function() {
-            userCreds = {};
-            if ((username.value == "" && password.value == "") ||
-                (username.value == "" || password.value == "")) {
-                document.getElementById("errorMessage").setAttribute("class", "show");
-            } else if (passwordError && usernameError) {
-                document.getElementById("errorMessage").setAttribute("class", "hide");
-                userCreds.username = username.value;
-                userCreds.password = password.value;
-                loginRequest.open("POST", config.urls.apiHost+"/login", false);
-                loginRequest.setRequestHeader("Content-type", "application/json");
-                loginRequest.send(JSON.stringify(userCreds));
-            }
-        };
-    </script>
+    <platinum-sw-register auto-register
+                          clients-claim
+                          skip-waiting
+                          on-service-worker-installed="displayInstalledToast">
+      <platinum-sw-cache default-cache-strategy="networkFirst"
+                         precache-file="precache.json">
+      </platinum-sw-cache>
+    </platinum-sw-register>-->
+        <paper-toast id="schemeSuccErrMessageToast" text="Scheme Created Successfully"></paper-toast>
+    </template>
+    </div>
 
+    <!-- build:js scripts/app.js -->
+    <script src="assets/scripts/app.js"></script>
+    <!-- endbuild-->
 </body>
+<div align="center" style="margin:18% auto;" id="pageLoading"> 
+    <paper-spinner class="blue" active ></paper-spinner>
+</div>
 
 </html>
+    <script type="text/javascript">
+    window.onload = function(){
+        window.document.getElementById('pageLoading').style.display = 'none';
+        window.document.getElementById("dashboardContainer").hidden = false;
+    };
+        /*window.addEventListener('WebComponentsReady', function(e) {
+            console.log(window.document);
+            console.log(window.document.getElementById('dashboardContainer'));
+            console.log(window.document == document);
+            window.document.getElementById('spinnerContainer').style.display = 'none';
+            window.document.getElementById("dashboardContainer").hidden = false;
+        }); */
+    </script>

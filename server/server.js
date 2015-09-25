@@ -17,7 +17,7 @@ var config = require('./config/config.js'),
   compression = require("compression")(),
   logModule = require('./config/logModule')(app),
   https = require('https')
-  _id_count = 0;
+_id_count = 0;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -51,7 +51,11 @@ app.use(session({
 }));
 
 function fetchModels(req, res) {
-  res.status(200).end("Fetch is executed " + req.params.modelName);
+  var u1 = mongoose.model(req.params.modelName);
+  u1.find(function(err, data) {
+    if (err) res.status(500).send({status:"fail",message:err.message});
+    res.status(200).send(data);
+  });
 }
 
 function createModels(req, res) {
@@ -61,7 +65,7 @@ function createModels(req, res) {
     u1.scheme = 0;
     u1.save().then(function(data) {
       res.status(200).send(data);
-    },function(reason){
+    }, function(reason) {
       res.status(500).send(reason);
     });
   } else {

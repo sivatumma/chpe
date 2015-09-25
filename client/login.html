@@ -277,7 +277,7 @@
                 document.getElementById("errorMessage").setAttribute("class", "hide");
                 userCreds.username = username.value;
                 userCreds.password = password.value;
-                loginRequest.open("POST", "/login", false);
+                loginRequest.open("POST", config.urls.apiHost+"/login", false);
                 loginRequest.setRequestHeader("Content-type", "application/json");
                 loginRequest.send(JSON.stringify(userCreds));
             }
