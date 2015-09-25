@@ -39,10 +39,10 @@ function schemeBase(scheme){    //init metadata as per schema
             amount: 0,
             points: 0
         }],
-        doctorLevelDiscounts: [{
-            user:{discount:0,discountType:"%",maxLength:9},
-            system:{discount:0,discountType:"%",maxLength:9}
-        }],
+        doctorLevelDiscounts: [
+            {type:"user",discount:0,discountType:"%",maxLength:9},
+            {type:"system",discount:0,discountType:"%",maxLength:9}
+        ],
         advancePaidDiscounts: [{
             points: 0,
             amount: 0
@@ -57,13 +57,11 @@ function schemeBase(scheme){    //init metadata as per schema
             maxLength:9
         }],
       modeOfPaymentDiscounts: [{
-         mop: {
-          type: ""
-         },
+         mop:"",
          discount: 0,
          discountType:"%",
          maxLength:9
-        }],
+        }]
     };
 
     scheme.metadata = metadata;
