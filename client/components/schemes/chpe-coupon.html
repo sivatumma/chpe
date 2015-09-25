@@ -55,6 +55,16 @@
             @apply(--layout-vertical);
             @apply(--center-justified);
         }
+        paper-input {
+            margin-top: 0px !important;
+            margin-left: 10px;
+        }
+        .coupon-extend-card{
+            margin: 0px auto;
+            max-width: 760px;
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+        }
         
     </style>
     <template>
@@ -62,28 +72,38 @@
             <h4 class="paper-font-display2" type="{{schemeType}}">
                 Create Scheme <span>{{schemeType}}</span>
                 <span>
-                    <paper-slider id="stepIndicator" pin snaps max="1" step="1" value="0" class="pull-right orange col-8"></paper-slider>
+                   <!-- <chpe-progress-bar></chpe-progress-bar>  -->
+                    <!-- <paper-slider id="stepIndicator" pin snaps max="1" step="1" value="0" class="pull-right orange col-8"></paper-slider> -->
                 </span>
             </h4>
             <form is="iron-form" id="coupon-form" method="POST" action="#">
                 <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
                             <paper-card elevation="1" class="coupon-base-card">
-                                <basic-scheme start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type "csd" end-date-type="ced" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon">
+                                <basic-scheme id="basicScheme" start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="{{behavior.startDate}}" end-date-type="{{behavior.endDate}}" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
                                 </basic-scheme>
                             </paper-card>
-                            <div align="center" class="arrows">
+                            <div align="center" class="arrows" id="firstStep">
                                 <paper-fab icon="arrow-forward"  class="blue" on-click="_onNextClick"></paper-fab>
                             </div>
                     </neon-animatable>
+
+                    <!-- step2 -->
                     <neon-animatable>
                         <div align="center" class="arrows">
                             <paper-fab icon="arrow-back" class="blue" on-click="_onPrevClick">
                             </paper-fab>
                         </div>
+                    <paper-card elevation="1" class="coupon-extend-card">
+                        <div class="col-12">
+                            <coupon-type id="selectCouponType"></coupon-type>
+                            <div class="col-6 margin0">
+                                <paper-input name="locations" autocapitalize="on" value="{{behavior.locations}}" no-label-float label="Locations">
+                            </div>
+                        </div>
+                        <service-rate-category id="srcCat"></service-rate-category>
 
-                        <service-rate-category></service-rate-category>
-
+                    </paper-card>
                         <div class="submitButtons">
                             <span>
                                 <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
@@ -100,7 +120,6 @@
         <iron-ajax id="couponAjax" content-type="application/json" method="POST" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
     <script>
-        
         Polymer({
             is: 'chpe-coupon',
             properties: {
@@ -112,77 +131,72 @@
                 console.log(this.schemeType);
             },
             ready: function() {
-                var this.schemeBase = schemeBase();
-                console.log(schemeBase.stateVariables);
-                this.metadata = schemeBase.metadata;
-                this.behavior = schemeBase.behavior;
-                this.scheme = schemeBase || editSchemeObj;
                 this.selected = 0;
+                this.config = generalConfig() || {};
+                this.scheme = schemeBase();
+                this.$.basicScheme.metadata = this.scheme.metadata;
+                this.$.basicScheme.behavior = this.scheme.behavior;
+                this.$.srcCat.behavior = this.scheme.behavior;
+                this.$.selectCouponType.metadata = this.scheme.metadata;
             },
             listeners: {
                 'coupon-form.iron-form-submit': 'createScheme',
                 'coupon-form.saveBtn.onClick': 'submitForm',
                 'value-change':'getCurrentStep',
-                'value-changed':'setStep'
             },
 
-            //step indictaor
-           
+
+            //enable disable buttons
+
             getCurrentStep :function(){
                 var setps = document.querySelector('#stepIndicator');
-                console.log(setps.value);
+                //console.log(setps.value);
             },
-            setStep:function(e){
-                 console.log(e);
-            },
-
+            
             //neon animations for coupon
             _onPrevClick: function() {
                 this.entryAnimation = 'slide-from-left-animation';
                 this.exitAnimation = 'slide-right-animation';
                 this.selected = this.selected === 0 ? 4 : (this.selected - 1);
-                var setps = document.querySelector('#stepIndicator');
-                setps.value  = this.selected;
+               // var setps = document.querySelector('#stepIndicator');
+                //setps.value  = this.selected;
             },
             _onNextClick: function() {
                 this.entryAnimation = 'slide-from-right-animation';
                 this.exitAnimation = 'slide-left-animation';
                 this.selected = this.selected === 4 ? 0 : (this.selected + 1);
-                var setps = document.querySelector('#stepIndicator');
-                setps.value  = this.selected;
+                //var setps = document.querySelector('#stepIndicator');
+                //setps.value  = this.selected;
             },
             createScheme: function() {
                 this.formData = document.getElementById('coupon-form').serialize();
+                this.scheme.behavior.startDate = chUtils.toIsoString(this.formData.couponStart);
+                this.scheme.behavior.endDate = chUtils.toIsoString(this.formData.couponEnd);
 
-                this.scheme.behavior.startDate = chUtils.toIsoString(this.formData.startDate);
-                this.scheme.behavior.endDate = chUtils.toIsoString(this.formData.endDate);
-
-                this.metadata.type = this.schemeType;
-                this.metadata.published = this.schemeStatus || this.metadata.published;
+                this.scheme.metadata.type = "COUPON";
+                this.scheme.metadata.published = false;
                 this.scheme.on = "newscheme";
                 this.scheme.operation = "create";
-                console.log(this.scheme);
                 if (this.scheme !== undefined) {
-                    this.$.couponAjax.url = urls.apiHost+urls.selfRest;
+                    this.$.couponAjax.url='http://172.19.4.162:91/mdb/scheme'+this.config.urls.rest;
                     this.$.couponAjax.method = "POST";
                     this.$.couponAjax.body = JSON.stringify(this.scheme);
                     this.$.couponAjax.generateRequest();
                 }
             },
             handleResponse: function(event) {
-                console.log(event.detail.response);
                 document.querySelector("#schemeSuccErrMessageToast").show();
-                console.log("Received response: " + JSON.stringify(response.detail.response));
+                console.log("Received response: " + JSON.stringify(event.detail.response));
                 setTimeout(function() {
-
-                }, 3000);
+                    windoe.reload();
+                },2000);
             },
             handleError: function(event) {
                 var request = event.detail.request;
-                console.log(event);
                 var error = event.detail.error;
+                console.log(error);
                 var toast = document.querySelector("#schemeSuccErrMessageToast");
-                toast.text = "Error while creating " + this.scheme.metadata.type + " Please try again.. ";
+                toast.text = "Error while creating " + this.scheme.metadata.type+" Please try again.. ";
                 toast.show();
             },
             submitForm: function(evt, details, sender) {

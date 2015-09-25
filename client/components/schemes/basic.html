@@ -23,11 +23,11 @@
     </style>
     <template>
         <div class="col-12">
-            <div class="col-9">
+            <div class="col-6">
                 <paper-input name="name" autocapitalize="on" value="{{metadata.name}}" required auto-validate pattern="^[a-zA-Z,-,0-9]{3,}[a-zA-Z]*$" no-label-float error-message="Scheme Name must starts with character, Minimum 3 characters required,Cannot contains special characters except -" label="Scheme Name">
                 </paper-input>
             </div>
-            <div class="col-3">
+            <div class="col-6">
                 <paper-input name="Maximum Usages" no-label-float label="Maximum Usages" type="number" value="{{behavior.maximumUsages}}" max="10" min="0"></paper-input>
             </div>
         </div>
@@ -41,8 +41,8 @@
             </div>
         </div>
         <div class="col-12">
-            <chpe-discount discount-modal="{{discountModal}}"  discount-id="{{basicDiscount}}" percentage-id="{{percentageId}}" flat-id="{{flatId}}"
-            discount="{{defaultDiscount}}">
+            <chpe-discount id="basicSchemeDiscount"   discount-id="{{basicDiscount}}" percentage-id="{{percentageId}}" flat-id="{{flatId}}"
+            discount="{{defaultDiscount}}" discount-modal="{{behavior}}">
             </chpe-discount>
         </div>
     </template>
@@ -63,20 +63,16 @@
                 edDp:String,
                 percentageId:String,
                 flatId:String,
-                discountModal:String
+                discountModal:String,
+                metadata:Object,
+                behavior:Object
             },
             ready: function() {
-                console.log(generalConfig().stateVariables);
-                this.metadata = schemeBase.metadata;
-                this.behavior = schemeBase.behavior;
-                this.scheme = schemeBase;
-                this.defaultDiscount = schemeBase().behavior.defaultDiscount;
-                this.discountModal = "behavior.discountType";
+                //this.$.basicSchemeDiscount.behavior = this.behavior; 
             },
             listeners: {
 
             }
-            
         });
     </script>
 </dom-module>

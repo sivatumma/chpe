@@ -179,6 +179,37 @@ iron-pages{
     background: none;
     margin: 0px auto
   }
+/*  custom paper fab styles*/
+        paper-fab {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 50%;
+          height: 40px;
+          width: 40px;
+        }
+        paper-fab.blue {
+          --paper-fab-background: var(--paper-light-blue-300);
+          --paper-fab-keyboard-focus-background: var(--paper-light-blue-200);
+        }
+        paper-fab.red {
+          --paper-fab-background: var(--paper-red-500);
+          --paper-fab-keyboard-focus-background: var(--paper-red-900);
+        }
+        paper-fab.green {
+          --paper-fab-background: var(--paper-green-500);
+          --paper-fab-keyboard-focus-background: var(--paper-green-900);
+        }
+        paper-fab.orange {
+          --paper-fab-background: var(--paper-orange-500);
+          --paper-fab-keyboard-focus-background: var(--paper-orange-900);
+        }
+        .coupon-base-card{
+            margin: 0px auto;
+            max-width: 720px;
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+        }
 
 /*paper spinner custom styles*/
   paper-spinner{
@@ -243,6 +274,12 @@ iron-pages{
     }
 
 /*pricing custom grids*/
+  .margin0{
+    margin:0px;
+  }
+  .padding0{
+    padding: 0px;
+  }
   .row{
     padding:0px;
     margin-right: auto;

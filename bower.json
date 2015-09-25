@@ -2,6 +2,7 @@
   "name": "polymer-starter-kit",
   "private": true,
   "dependencies": {
+    "am-step-progress": "https://github.com/MasterAM/am-step-progress.git#~0.0.1",
     "iron-dropdown": "PolymerElements/iron-dropdown#1.0.1",
     "iron-elements": "PolymerElements/iron-elements#1.0.0",
     "iron-selector": "PolymerElements/iron-selector#1.0.1",

@@ -1,6 +1,5 @@
 <script src="../../config/general.js"></script>
 <script src="../../config/schemeBase.js"></script>
-
 <dom-module id="service-rate-category">
     <style type="text/css">
         .searchBoxInSrc{
@@ -14,49 +13,50 @@
             width: 100%;
             margin-top: 10px;
         }
+        .discountBox.chpe-discount{
+            width: 320px !important;
+        }
+         paper-input {
+            margin-top: 0px !important;
+            margin-left: 10px;
+        }
 
     </style>
-
     <template>
-         <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}">
-                    <paper-input name="serviceRateCategoryDiscounts" multi value="{{item.srcTypes}}"  
-                    no-label-float  label="Search">
+      <paper-card heading= "Service Rate Categories" class="col-12">
+        <div class="card-content">
+          <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}" as="src">
+            <div class="horizontal layout">
+                <div class="col-6">
+                    <paper-input name="src" multi  value="{{src.srcTypes}}"  
+                        no-label-float  label="Search" >
                     </paper-input>
-                <div style="margin-left:20px;">
-                    <chpe-discount  discount-id="srcDiscount" percentage-id="srcPercentage" 
-                    flat-id="srcFlat"
-                    discount="{{item.discount}}">
-                    </chpe-discount>
                 </div>
-        </template>
+                <chpe-discount id="srcDiscount" discount-modal="{{src}}"  discount-id="srcDiscountId" percentage-id="srcPercentage" flat-id="srcFlat">
+                </chpe-discount>
+              <paper-icon-button icon="icons:delete" on-click="deleteSrc"></paper-icon-button>
+            </div>      
+          </template> 
+        </div>
+            <div class="card-actions">
+                <div class="horizontal layout" >
+                    <paper-button on-click="addSrc">Add</paper-button>
+                    
+                </div>
+            </div>
+            </paper-card>
     </template>
     <script>
-
         Polymer({
-            is: 'service-rate-category',
-            properties: {
-                behavior:Object
+            'is':'service-rate-category',
+             properties:{
+
             },
             ready:function(){
-                this.behavior = schemeBase.behavior;
             },
             listeners:{
-                
-            },
-            handleResponse:function(event){
-                console.log(event.detail.response);
-                
-            },
-            handleError:function(event){
-                var request=event.detail.request;
-                console.log(event.detail.response);
-            },
-            addRows:function(){
 
             }
-            
         });
-       
-        
     </script>
 </dom-module>

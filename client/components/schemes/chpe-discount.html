@@ -3,12 +3,14 @@
 <style type="text/css">
     :host{
         display: block;
+        margin-bottom: 15px;
     }
     .discountBox{
         display: inline-block;
         margin-left: 10px;
         padding: 0px 0px 5px 0px;
         margin-top: 10px;
+        width:356px;
     }
    .discountButton{
         min-width:30px;
@@ -32,12 +34,14 @@
       display: inline-block;
       vertical-align: middle;
       float: left;
-      margin:0px 20px 0px 0px;
+      margin:0px;
+      width: 30%;
     }
     .btn-group > paper-button {
       float: left;
       margin: 0px;
      border-radius: 0px !important;
+     width:50%;
 
     }
     .discountInput{
@@ -47,25 +51,31 @@
         border-right:1px solid #ccc;
         border-top:1px solid #ccc;
         height: 36px;
+        width:68%;
+    }
+    .margin-bottom15{
+        margin-bottom: 15px;
     }
 
 </style>
     <template>
-        <div class="discountBox"  id="discountToggle" layout horizontal modal="{{discountModal}}">
-            <div class="btn-group">
-                <paper-button type="button" name="discount" class="discountButton noRightBorder active" 
-                on-click="togleDiscount" id="{{percentageId}}" discount="%">%</paper-button>
+        <div class="col-6 margin-bottom15">
+            <div class="discountBox"  id="discountToggle" layout horizontal>
+                <div class="btn-group">
+                    <paper-button type="button" name="discount" 
+                    class="discountButton noRightBorder active" 
+                    on-click="togleDiscount" id="{{percentageId}}">%</paper-button>
 
-                <paper-button type="button" name="{{flatType}}" class="discountButton"
-                on-click="togleDiscount" id="{{flatId}}" discount="FLAT">Flat</paper-button>
-                <div class="discountInput">
-                    <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  id="{{discountId}}" 
-                    max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
-                     error-message="Max 999 if Flat ; 10 if %" value="{{discount}}"></paper-input>
-                </div>
-
+                    <paper-button type="button" name="{{flatType}}" class="discountButton"
+                    on-click="togleDiscount" id="{{flatId}}">Flat</paper-button>
+                    </div>
+                    <div class="discountInput">
+                        <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  id="{{discountId}}" 
+                        max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
+                         error-message="Max 999 if Flat ; 10 if %" value="{{discountModal.discount}}"></paper-input>
+                    </div>
             </div>
-        </div>
+         </div>
       		
     </template>
     <script>
@@ -78,13 +88,15 @@
                 discount:String,
                 discountType:String,
                 flatType:String,
-                discountModal:String
-
+                discountModal:String,
+                discountValue:String,
+                scheme:Object,
+        
             },
             ready:function(){
+                console.log(this.discountModal);
                 this.discountLength  = 10;
                 this.discountPattern = "^([0-10])$";
-                this.behavior = schemeBase.behavior;
             },
             listeners:{
               'discountToggle.onClick':'togleDiscount'
@@ -97,16 +109,27 @@
                 chUtils.removeClass(document.querySelector("#"+this.flatId),"active");
 
                 if (discountType == "%") {
-                    this.discountLength = 10;
+                    if(this.discountModal.maxLength!==undefined){
+                        this.discountModal.maxLength = this.discountLength = 10;
+                    }else{
+                        this.discountLength = 10;
+                    }
+
                     this.discountPattern = "^([0-10])$";
                     chUtils.addClass(document.querySelector("#"+this.percentageId),"active");
                     console.log(document.querySelector("#"+this.percentageId));
-                    console.log(this.discountModal);
+                    this.discountModal.discountType = discountType; 
                 } else {
                     chUtils.addClass(document.querySelector("#"+this.flatId),"active");
-                    this.discountLength = 999;
+
+                     if(this.discountModal.maxLength!==undefined){
+                        this.discountModal.maxLength = this.discountLength = 999;
+                    }else{
+                        this.discountLength = 999;
+                    }
                     this.discountPattern = "^([0-999])$";
                     console.log(document.querySelector("#"+this.flatId));
+                    this.discountModal.discountType = discountType; 
                 }
             }
           
