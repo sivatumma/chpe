@@ -17,8 +17,7 @@
 module.exports = function(mongoose) {
 	var Schema = mongoose.Schema;
 	var orderSchema = Schema({
-	
-		scheme : { type: Schema.Types.ObjectId, ref: 'scheme' },
+		scheme : { type: Number, ref: 'scheme' },
 		schemeName: {
 			type: String
 		},
@@ -86,7 +85,7 @@ module.exports = function(mongoose) {
 	});
 
 
-	var Order = mongoose.model('order', orderSchema,'orders');
+	var Order = mongoose.model('order', orderSchema);
 
 	return Order;
 }

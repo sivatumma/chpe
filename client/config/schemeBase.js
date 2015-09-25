@@ -73,3 +73,6 @@ function schemeBase(scheme){    //init metadata as per schema
 }
 var module = module || {};
 if (typeof module != undefined && module != null && module.exports) module.exports = schemeBase();
+
+
+console.log(schemeBase().metadata, schemeBase().behavior);

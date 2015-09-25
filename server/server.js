@@ -10,12 +10,14 @@ var config = require('./config/config.js'),
   dbModule = require('./config/dbModule.js')(),
   quryBuilder = require('./config/queryBuilder.js'),
   mongoose = require('mongoose'),
+  Schema = mongoose.Schema,
   User = mongoose.model('User'),
   bodyParser = require('body-parser'),
   compressible = require('compressible'),
   compression = require("compression")(),
   logModule = require('./config/logModule')(app),
-  https = require('https');
+  https = require('https')
+  _id_count = 0;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -53,42 +55,46 @@ function fetchModels(req, res) {
 }
 
 function createModels(req, res) {
-  config.configVariable.loginUser = "user";
-  console.log("This is the body ", req.body);
-  var u1 = mongoose.model(req.params.modelName)(quryBuilder.createSchema(req.body));
-  console.log("Type of u1 is: ",typeof u1);
 
-  u1.save().then(function(data) {
-    console.log("DATA: ",data);
-    res.status(200).send(data);
-
-  }, function(err) {
-    console.log(err.message);
-    res.status(500).send({
-      "status": "fail",
-      "message": err.message
+  if (req.params.modelName == 'order') {
+    var u1 = mongoose.model(req.params.modelName)(quryBuilder.createSchema(req.body));
+    u1.scheme = 0;
+    u1.save().then(function(data) {
+      res.status(200).send(data);
+    },function(reason){
+      res.status(500).send(reason);
     });
-  });
+  } else {
+    config.configVariable.loginUser = "user";
+    var u1 = mongoose.model(req.params.modelName)(quryBuilder.createSchema(req.body));
+    u1._id = _id_count++;
 
+    u1.save().then(function(data) {
+      console.log("DATA: ", data);
+      res.status(200).send(data);
+
+    }, function(err) {
+      console.log(err.message);
+      res.status(500).send({
+        "status": "fail",
+        "message": err.message
+      });
+      console.log(err);
+    });
+
+
+  }
 }
 
 function updateModels(req, res) {
 
 
- mongoose.model("scheme").findOne().populate('name').exec(function(err, c) {
-    if (err) { return console.log(err); }
-
-    console.log(c.metadata.name);
-});
-
-
-  var data = mongoose.model("scheme").find(quryBuilder.suggestDiscount(req)).populate('name');
-  //var order = mongoose.model("order").find(query.findOrderQuery(req)).exec();
-  data.exec().then(function(schemadata) {
-    console.log(schemadata[0].metadata.name);
-    res.status(200).send(schemadata);
-  }, function(reason){
-    res.status(500).send(reason);
+  mongoose.model("order").findOne().populate('scheme').exec(function(err, c) {
+    if (err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
+    res.status(200).send(c);
   });
 }
 
@@ -132,8 +138,9 @@ dbModule.once('open', function callback() {
       console.log('Express HTTPS server listening on port ' + config.http_port || 443);
   });
 
-  app.listen(config.port || 91, function() {
-    console.log('Express server (HTTP) listening on port ', config.port || 91);
+  app.listen(process.argv[2] || 91, function() {
+    console.log('Express server (HTTP) listening on port ', process.argv[2] || 91);
+    console.log("port: ",process.argv[3]);
   });
 
 });

@@ -12,30 +12,33 @@ var path = require('path'),
 
 module.exports = function(env) {
     var main = {
-        application:{
-          //  root_path: path.join('/home','siva','Downloads','chpe-polymer-1.0.3'),
+        application: {
+            root_path: path.join('/home', 'siva', 'Downloads', 'chpe-polymer-1.0.3'),
             // root_path: path.join('C:','Work','chpe-1.0'),
             // root_path: path.join('/home','siva','Downloads','chpe-polymer-1.0.3'),
-             root_path: "C:\\Users\\inthiyaz.karamala.CHSPLDC\\WebstormProjects\\chpe-1.0",
-            //root_path: path.join('/home','siva','Downloads','chpe-polymer-1.0.3'),
+            // root_path: "C:\\Users\\inthiyaz.karamala.CHSPLDC\\WebstormProjects\\chpe-1.0",
             // root_path: path.join('C:','Work','chpe-1.0'),
             addPrefixes: process.argv[2],
-            logFilenamePrefix:"",
-            modelNamePrefix:"",
-            http_port:90,
-            https_port:443
+            logFilenamePrefix: "",
+            modelNamePrefix: "",
+            http_port: 90,
+            https_port: 443
         },
-        logFiles:{
-            databaseLogFile:"db.log",
-            webserverLogFile:"web.log",
-            exceptionLogFile:"exceptions.log",
-            plainLogFile:"pricingEngine.log"
+        logFiles: {
+            databaseLogFile: "db.log",
+            webserverLogFile: "web.log",
+            exceptionLogFile: "exceptions.log",
+            plainLogFile: "pricingEngine.log"
         },
 
-       configVariable : {
-            user  : {Discount:9},
-            admin : {Discount : 30},
-            loginUser : "user"
+        configVariable: {
+            user: {
+                Discount: 9
+            },
+            admin: {
+                Discount: 30
+            },
+            loginUser: "user"
         },
 
         modelsFolder: '../models',

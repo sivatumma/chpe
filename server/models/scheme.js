@@ -3,15 +3,17 @@ var mongoose = require('mongoose'),
 	config = require("../config/config.js"),
 	schemeBase = require('../../client/config/schemeBase.js'),
 	_ = require('lodash');
-
 module.exports = function(mongoose) {
-
 	var schemeSchema = Schema({
-		orders : [{ type: Schema.Types.ObjectId, ref: 'order' }],
+		_id: Number,
+		orders: [{
+			type: Schema.Types.ObjectId,
+			ref: 'order'
+		}],
 		metadata: {
 			name: {
 				type: String,
-				//required: true,
+				required: true,
 				index: {
 					unique: true
 				}
@@ -20,7 +22,6 @@ module.exports = function(mongoose) {
 				id: {
 					type: Number
 				},
-
 				name: {
 					type: String
 				}
@@ -29,9 +30,6 @@ module.exports = function(mongoose) {
 				//  MCID
 				type: String /* This should be unique across all the businesses that request our services    */
 			},
-			locations: [{
-				type: String
-			}],
 			createdBy: {
 				type: String
 			},
@@ -45,16 +43,14 @@ module.exports = function(mongoose) {
 			lastUpdatedBy: {
 				type: String
 			},
-			createdLatlng: {
-
-			},
+			location: {},
 			published: {
 				type: Boolean
 			},
 			type: {
 				type: String,
 				enum: "ADD_ON,COUPON,GIFT_CARD".split(","),
-				//required: true
+				required: true
 			},
 			defaultLife: {
 				//required: false,
@@ -63,30 +59,24 @@ module.exports = function(mongoose) {
 				default: "REGULAR"
 			}
 		},
-
 		behavior: {
 			maximumUsages: {
 				type: Number
 			},
-
 			startDate: {
 				type: Date
 			},
-
 			endDate: {
 				type: Date
 			},
-
 			discountType: {
 				type: String,
 				enum: "%,FLAT".split(","),
 				default: "%"
 			},
-
-			defaultDiscount: {
+			discount: {
 				type: Number
 			},
-
 			// validityPeriod: [{
 			// 	startDate: {
 			// 		type: Date
@@ -95,14 +85,6 @@ module.exports = function(mongoose) {
 			// 		type: Date
 			// 	}
 			// }],
-			startDate: {
-				type: Date
-			},
-
-			endDate: {
-				type: Date
-			},
-
 			// Service Rate Categories (SRC imply High Margin, low margin kind 
 			// of products categorized, grouped already)
 			serviceRateCategoryDiscounts: [{
@@ -115,14 +97,10 @@ module.exports = function(mongoose) {
 				discountType: {
 					type: String
 				},
-				discountLength: {
-					type: Number,
-				},
 				maxLength: {
 					type: Number
 				}
 			}],
-
 			advancePaidPoints: [{
 				amount: {
 					type: Number
@@ -131,37 +109,15 @@ module.exports = function(mongoose) {
 					type: Number
 				}
 			}],
-
-			doctorLevelDiscounts: {
-				systemAllocationDiscount: {
-					type: Number
-				},
-				systemAllocationDiscountType: {
-					type: String,
-					enum: "Flat,%".split(",")
-				},
-				userChosenDiscount: {
-					type: Number
-				},
-				userChosenDiscountType: {
-					type: String,
-					enum: "Flat,%".split(",")
-				},
-				userChosenDiscountMaxLength: {
-					type: Number,
-				},
-				systemChosenDiscountMaxLength: {
-					type: Number,
-				},
-			},
-
+			doctorLevelDiscounts: [{
+				type: String,
+				discount: Number,
+				discountType: String
+			}],
 			modeOfPaymentDiscounts: [{
-
 				mop: {
 					type: String,
-					enum: "ePay,cod,cheque".split(",")
-
-
+					enum: "EPAY,COD,CHEQUE".split(",")
 				},
 				discount: {
 					type: Number
@@ -169,14 +125,11 @@ module.exports = function(mongoose) {
 				discountType: {
 					type: String
 				},
-				discountLength: {
+				maxLength: {
 					type: Number,
-					default: 1
+					default: 9
 				}
-
-
 			}],
-
 			billValueDiscounts: [{
 				billRange: {
 					from: {
@@ -192,12 +145,11 @@ module.exports = function(mongoose) {
 				discountType: {
 					type: String
 				},
-				discountLength: {
+				maxLength: {
 					type: Number,
 					default: 1
 				}
 			}],
-
 			cumulativeAmountPoints: [{
 				amount: {
 					type: Number
@@ -206,11 +158,9 @@ module.exports = function(mongoose) {
 					type: Number
 				}
 			}],
-
 			locationOfServices: [{
 				type: String
 			}],
-
 			serviceLevelDiscounts: [{
 				services: [{
 					type: String
@@ -218,35 +168,46 @@ module.exports = function(mongoose) {
 				discount: {
 					type: Number
 				},
-				discountLength: {
+				maxLength: {
 					type: Number,
-					default: 1
+					default: 9
 				},
 				discountType: {
 					type: String
 				}
 			}],
-
 			createdAt: {
 				type: Date
 			},
-
 			updateAt: {
-
 				type: Date
 			}
 		}
 	});
-
-
-	schemeSchema.pre('save', function(next) {
-
-		// If metadata type is COUPON here we validate
-
-console.log(this)
+	schemeSchema.methods.beforeSaveDefaultValidation = function() {
+		if (this.behavior && !this.behavior.startDate) {
+			this.behavior.startDate = new Date();
+			var d = new Date();
+			d.setFullYear(d.getFullYear() + 10);
+			this.behavior.endDate = d;
+		}
+		if (!this.behavior.maximumUsages) {
+			this.behavior.maximumUsages = 15;
+		}
+		if (!this.behavior.defaultDiscount) {
+			this.behavior.defaultDiscount = 0;
+			this.behavior.discountType = '%';
+		}
+		// If locationOfServices empty here we adding Default Locations
+		if (this.behavior.locationOfServices.length <= 0) {
+			this.behavior.locationOfServices = ["AllLocation"];
+		}
+		if (this.behavior.discountType == "%" && this.behavior.defaultDiscount > 9) {
+			return next(new Error("defaultDiscount should be below 9 percentage"));
+		}
+	};
+	schemeSchema.methods.beforeSaveCouponValidation = function() {
 		if (this.metadata.type == "COUPON" && this.metadata.defaultLife !== undefined) {
-
-
 			var startDate = new Date(this.behavior.startDate);
 			var daysCount = {
 				"DAY": 1,
@@ -254,149 +215,72 @@ console.log(this)
 				"MONTH": 30
 			};
 			this.behavior.endDate = startDate;
-
 			this.behavior.endDate.setDate(startDate.getDate() + daysCount[this.metadata.defaultLife]);
 		}
-
-
-
-		if (this.behavior && !this.behavior.startDate) {
-			this.behavior.startDate = new Date();
-
-			var d = new Date();
-
-			d.setFullYear(d.getFullYear() + 10);
-
-			this.behavior.endDate = d;
-
-
-		}
-
-
-		if (!this.behavior.maximumUsages) {
-			this.behavior.maximumUsages = 15;
-		}
-		if (!this.behavior.defaultDiscount) {
-
-			this.behavior.defaultDiscount = 0;
-			this.behavior.discountType = '%';
-		}
-
-
-		// If locationOfServices empty here we adding Default Locations
-
-
-		if (this.behavior.locationOfServices.length <= 0) {
-
-
-			this.behavior.locationOfServices = ["AllLocation"];
-
-
-		}
-
-
-
-		if (this.behavior.discountType == "%" && this.behavior.defaultDiscount > 9) {
-			return next(new Error("defaultDiscount should be below 9 percentage"));
-		}
-
-
+	};
+	schemeSchema.methods.beforeSaveGiftCardValidation = function() {};
+	schemeSchema.methods.beforeSaveAddOnValidation = function() {
 		//service Discount validate
-
-
 		var serviceDiscount = _.map(this.behavior.serviceLevelDiscounts, function(x) {
 			if (x.discountType == "%") {
 				return x.discount;
-
 			}
 		});
-
-
 		var serviceMaxval = _.max(serviceDiscount, function(serviceDiscount) {
 			return serviceDiscount;
 		});
-
-
 		if (serviceMaxval > 9) {
-
 			return next(new Error("serviceLevelDiscount should be below 9"));
 		}
-
-
-
 		//billValueDiscount validate
-
 		var billValueDiscounts = _.map(this.behavior.billValueDiscounts, function(x) {
-
 			if (x.discountType == "%") {
 				return x.discount;
-
 			}
 		});
-
 		var billMaxval = _.max(billValueDiscounts, function(billValueDiscounts) {
-
 			return billValueDiscounts;
-
 		});
 		if (billMaxval > 9) {
-
 			return next(new Error("billValueDiscounts should be below 9"));
 		}
-
-
-
 		//serviceRateCategoryDiscounts validate
-
 		var serviceRateCategoryDiscounts = _.map(this.behavior.serviceRateCategoryDiscounts, function(x) {
 			if (x.discountType == "%") {
 				return x.discount;
 			}
 		});
 		var serviceRateMaxVal = _.max(serviceRateCategoryDiscounts, function(serviceRateCategoryDiscounts) {
-
 			return serviceRateCategoryDiscounts;
 		});
-
 		if (serviceRateMaxVal > 9) {
 			return next(new Error("serviceRateCategoryDiscounts should be below 9"));
 		}
-
-
-
 		//doctorLevelDiscounts
-
-
 		if ((this.behavior.doctorLevelDiscounts.userChosenDiscount > 9 && this.behavior.doctorLevelDiscounts.userChosenDiscountType == "%") || (this.behavior.doctorLevelDiscounts.systemAllocationDiscount > 9 && this.behavior.doctorLevelDiscounts.systemAllocationDiscountType == "%")) {
-
 			return next(new Error("doctorLevelDiscounts discount should be less than 9"));
-
 		}
-
 		//modeOfPaymentDiscounts validate
-
 		var discountPayment = null;
-
-
-
 		_.each(this.behavior.modeOfPaymentDiscounts, function(single, index) {
-
 			if (single.discount > config.configVariable[config.configVariable.loginUser].Discount && single.discountType == "%")
-
 			{
-
 				return next(new Error(single.mop + "- NOT ALLOW DISCOUNT MORE THAN 9"))
-
 			}
-		})
+		});
+	};
+
+
+	var validators = {
+		"COUPON": this.beforeSaveCouponValidation,
+		"GIFT_CARD": this.beforeSaveGiftCardValidation,
+		"ADD_ON": this.beforeSaveAddOnValidation
+	};
+	schemeSchema.pre('save', function(next) {
+		beforeSaveDefaultValidation();
+
 		next();
 	});
-
-
 	var Scheme = mongoose.model('scheme', schemeSchema);
-
 	return Scheme;
-
 }
-
-

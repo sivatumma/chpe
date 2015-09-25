@@ -11,3 +11,5 @@ x.js
 primes.js
 client/build.html
 tmp_*.js
+*.*~
+*.out
