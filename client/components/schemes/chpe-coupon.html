@@ -138,16 +138,14 @@
                 this.$.basicScheme.behavior = this.scheme.behavior;
                 this.$.srcCat.behavior = this.scheme.behavior;
                 this.$.selectCouponType.metadata = this.scheme.metadata;
+
             },
             listeners: {
                 'coupon-form.iron-form-submit': 'createScheme',
                 'coupon-form.saveBtn.onClick': 'submitForm',
                 'value-change':'getCurrentStep',
             },
-
-
-            //enable disable buttons
-
+            //add or remove src categories
             getCurrentStep :function(){
                 var setps = document.querySelector('#stepIndicator');
                 //console.log(setps.value);
