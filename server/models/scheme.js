@@ -110,14 +110,16 @@ module.exports = function(mongoose) {
 				}
 			}],
 			doctorLevelDiscounts: [{
-				type: String,
-				discount: Number,
-				discountType: String
+				type: {type:String},
+				discount: {type:Number},
+				discountType: {type:String},
+				maxLength:{type:Number}
 			}],
 			modeOfPaymentDiscounts: [{
 				mop: {
 					type: String,
-					enum: "EPAY,COD,CHEQUE".split(",")
+					enum: ",EPAY,COD,CHEQUE".split(","),
+					default:"EPAY"
 				},
 				discount: {
 					type: Number
@@ -276,11 +278,11 @@ module.exports = function(mongoose) {
 		"GIFT_CARD": this.beforeSaveGiftCardValidation,
 		"ADD_ON": this.beforeSaveAddOnValidation
 	};
-	schemeSchema.pre('save', function(next) {
-		beforeSaveDefaultValidation();
+	// schemeSchema.pre('save', function(next) {
+	// 	beforeSaveDefaultValidation();
 
-		next();
-	});
+	// 	next();
+	// });
 	var Scheme = mongoose.model('scheme', schemeSchema);
 	return Scheme;
 }

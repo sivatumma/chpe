@@ -140,7 +140,6 @@ dbModule.once('open', function callback() {
 
   app.listen(process.argv[2] || 91, function() {
     console.log('Express server (HTTP) listening on port ', process.argv[2] || 91);
-    console.log("port: ",process.argv[3]);
   });
 
 });
