@@ -83,7 +83,7 @@
                                 <basic-scheme id="basicScheme" start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="{{behavior.startDate}}" end-date-type="{{behavior.endDate}}" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
                                 </basic-scheme>
                             </paper-card>
-                            <div align="center" class="arrows" id="firstStep">
+                            <div align="center" class="arrows" id="firstStep" hidden>
                                 <paper-fab icon="arrow-forward"  class="blue" on-click="_onNextClick"></paper-fab>
                             </div>
                     </neon-animatable>
@@ -143,14 +143,21 @@
                 'coupon-form.iron-form-submit': 'createScheme',
                 'coupon-form.saveBtn.onClick': 'submitForm',
                 'value-change':'getCurrentStep',
+                'coupon-form.iron-input-validate':'enableButtons'
             },
-
-
-            //enable disable buttons
-
+            //add or remove src categories
             getCurrentStep :function(){
                 var setps = document.querySelector('#stepIndicator');
                 //console.log(setps.value);
+            },
+
+            enableButtons:function(e){
+                if(e.target.invalid){
+                    document.querySelector("#firstStep").hidden = true;
+                }else{
+                    document.querySelector("#firstStep").hidden = false;
+                }
+                console.log(e.target.invalid);
             },
             
             //neon animations for coupon
@@ -187,8 +194,11 @@
             handleResponse: function(event) {
                 document.querySelector("#schemeSuccErrMessageToast").show();
                 console.log("Received response: " + JSON.stringify(event.detail.response));
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
+                toast.text =  this.scheme.metadata.type+" created successfully!...";
+                toast.show();
                 setTimeout(function() {
-                    windoe.reload();
+                    //this.formData.clear();
                 },2000);
             },
             handleError: function(event) {

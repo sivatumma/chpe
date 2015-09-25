@@ -24,7 +24,7 @@
     <template>
         <div class="col-12">
             <div class="col-6">
-                <paper-input name="name" autocapitalize="on" value="{{metadata.name}}" required auto-validate pattern="^[a-zA-Z,-,0-9]{3,}[a-zA-Z]*$" no-label-float error-message="Scheme Name must starts with character, Minimum 3 characters required,Cannot contains special characters except -" label="Scheme Name">
+                <paper-input name="name" autocapitalize="on" value="{{metadata.name}}" required auto-validate pattern="^[a-zA-Z,-,0-9]{3,}[a-zA-Z]*$" no-label-float error-message="Scheme Name must starts with character, Minimum 3 characters required,Cannot contains special characters" label="Scheme Name">
                 </paper-input>
             </div>
             <div class="col-6">
@@ -70,9 +70,8 @@
             ready: function() {
                 //this.$.basicSchemeDiscount.behavior = this.behavior; 
             },
-            listeners: {
 
-            }
+            
         });
     </script>
 </dom-module>
