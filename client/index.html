@@ -63,8 +63,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div id="dashboardContainer" hidden>
     <template is="dom-bind" id="app">
 
-        <more-routing-config driver="hash"></more-routing-config>
-
         <paper-drawer-panel id="paperDrawerPanel">
             <!-- Drawer Scroll Header Panel -->
             <paper-scroll-header-panel drawer fixed>
@@ -74,35 +72,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <span class="paper-font-title"><img src="assets/images/ch-logo.png"/></span>
                 </paper-toolbar>
 
-
                 <!-- Drawer Content -->
-                <paper-menu class="pad" id="chepeMenu" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
-                    <a route="home" href="home">
-                        <iron-icon icon="home"></iron-icon>
-                        <span>Home</span>
-                    </a>
+                <more-route-selector>
+                    <paper-menu class="pad" id="chepeMenu" attr-for-selected="route" selected="{{route}}" on-iron-select="onMenuSelect">
+                            <iron-selector label="home" route="home">
+                                <a  href="{{urlFor('home')}}">
+                                    <iron-icon icon="home"></iron-icon>
+                                    <span>Home</span>
+                                </a>
+                            </iron-selector>
 
-                    <a route="schemes" href="/schemes">
-                        <iron-icon icon="social:pages"></iron-icon>
-                        <span>View Scheme</span>
-                    </a>
+                            <iron-selector route="schemes">
+                              <a  href="{{urlFor('schemes')}}">
+                                <iron-icon icon="social:pages"></iron-icon>
+                                <span>View Scheme</span>
+                             </a>
+                            </iron-selector>
 
-                    <a route="createScheme" href="/schemes/ADD_ON">
-                        <iron-icon icon="star-half"></iron-icon>
-                        <span>Create Scheme</span>
-                    </a>
+                            <iron-selector route="schemes">
+                              <a  href="{{urlFor('create-scheme',{type:'Coupon'})}}">
+                                <iron-icon icon="star-half"></iron-icon>
+                                <span>Create Coupon</span>
+                             </a>
+                            </iron-selector>
 
-                    <a route="createCoupon" href="/schemes/COUPON">
-                        <iron-icon icon="star-half"></iron-icon>
-                        <span>Create Coupon</span>
-                    </a>
+                              
+                        <!-- <a route="schemes" href="/schemes">
+                            <iron-icon icon="social:pages"></iron-icon>
+                            <span>View Scheme</span>
+                        </a>
 
-                    <a route="createGiftCard" href="/schemes/GIFT_CARD">
-                        <iron-icon icon="star-half"></iron-icon>
-                        <span>Create Gift Card</span>
-                    </a>
+                        <a route="createScheme" href="/schemes/ADD_ON">
+                            <iron-icon icon="star-half"></iron-icon>
+                            <span>Create Scheme</span>
+                        </a>
 
-                </paper-menu>
+                        <a route="createCoupon" href="/schemes/COUPON">
+                            <iron-icon icon="star-half"></iron-icon>
+                            <span>Create Coupon</span>
+                        </a>
+
+                        <a route="createGiftCard" href="/schemes/GIFT_CARD">
+                            <iron-icon icon="star-half"></iron-icon>
+                            <span>Create Gift Card</span>
+                        </a> -->
+
+                    </paper-menu>
+                </more-route-selector>
             </paper-scroll-header-panel>
 
 
@@ -143,70 +159,77 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-dialog heading="Title for dialog" transition="paper-transition-center">
                 </paper-dialog>
 
-            <more-route-selector selectedParams="{{params}}">
-                <iron-pages attr-for-selected="route" selected="{{route}}">
+                <more-route-selector selectedParams="{{params}}">  
 
-                    <section route="home">
-                        <schemes-as-cards></schemes-as-cards>
-                    </section>
+                    <iron-pages attr-for-selected="route" selected="{{route}}">
+                        <section route="home">
+                           <schemes-as-cards></schemes-as-cards>
+                        </section>
 
-                    <section route="users">
-                        <paper-material elevation="1">
-                            <h2 class="paper-font-display2">Users</h2>
-                            <p>This is the users section</p>
-                            <a href="//users/Siva">Siva</a>
-                        </paper-material>
-                    </section>
-
-                    <section route="user-info">
-                        <paper-material elevation="1">
-                            <div>This is <span>{{params.operation}}</span>'s section</div>
-                        </paper-material>
-                    </section>
-
-                    <section route="contact">
-                        <paper-material elevation="1">
-                            <h2 class="paper-font-display2">Contact</h2>
-                            <p>This is the contact section</p>
-                        </paper-material>
-                    </section>
-
-                    <section route="schemes">
-                        <paper-material elevation="1">
-                            <h2 class="paper-font-display2">View Schemes</h2>
-                            <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
-                        </paper-material>
-                    </section>
-
-                    <!-- <section data-route="createScheme">
+                        <section route="schemes">
                             <paper-material elevation="1">
-                                <h2 class="paper-font-display2">Create Scheme - <span>{{params.create}}</span></h2>
-                                <p>View where we create <span>{{params.create}}</span></p>
+                                <h2 class="paper-font-display2">View Schemes</h2>
+                                <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
+                            </paper-material>
+                            <template if="{{ route('create-scheme').active }}">
+                                <chpe-coupon scheme-type="{{params.type}}"></chpe-coupon>
+                            </template>
+                        </section>
+
+                       
+
+                        <!-- <section route="users">
+                            <paper-material elevation="1">
+                                <h2 class="paper-font-display2">Users</h2>
+                                <p>This is the users section</p>
+                                <a href="//users/Siva">Siva</a>
+                            </paper-material>
+                        </section>
+
+                        <section route="user-info">
+                            <paper-material elevation="1">
+                                <div>This is <span>{{params.operation}}</span>'s section</div>
+                            </paper-material>
+                        </section>
+
+                        <section route="contact">
+                            <paper-material elevation="1">
+                                <h2 class="paper-font-display2">Contact</h2>
+                                <p>This is the contact section</p>
+                            </paper-material>
+                        </section>
+
+                        <section route="schemes">
+                            <paper-material elevation="1">
+                                <h2 class="paper-font-display2">View Schemes</h2>
+                                <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
+                            </paper-material>
+                        </section>
+                       
+                        <section route="createScheme">
+                            <chpe-addon scheme-type="{{params.create}}"></chpe-addon>
+                        </section>
+                        
+                        <section route="createCoupon">
+                            <chpe-coupon scheme-type="{{params.create}}"></chpe-coupon>
+                        </section>
+
+                        <section route="createGiftCard">
+                            <chpe-gift-card scheme-type="{{params.create}}"></chpe-gift-card>
+                        </section>
+                        <section route="specialEffects">
+                            <paper-material elevation="1">
+
                             </paper-material>
                         </section> -->
-                    <section route="createScheme">
-                        <chpe-addon scheme-type="{{params.create}}"></chpe-addon>
-                    </section>
-                    
-                    <section route="createCoupon">
-                        <chpe-coupon scheme-type="{{params.create}}"></chpe-coupon>
-                    </section>
 
-                    <section route="createGiftCard">
-                        <chpe-gift-card scheme-type="{{params.create}}"></chpe-gift-card>
-                    </section>
-                    <section route="specialEffects">
-                        <paper-material elevation="1">
+                    </iron-pages>
 
-                        </paper-material>
-                    </section>
-
-                </iron-pages>
-            </more-route-selector>
-
+                </more-route-selector>
                 </div>
             </paper-scroll-header-panel>
         </paper-drawer-panel>
+
 
         <!-- Uncomment next block to enable Service Worker support (1/2) -->
         
