@@ -63,7 +63,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div id="dashboardContainer" hidden>
     <template is="dom-bind" id="app">
 
-        <more-routing-config driver="hash"></more-routing-config>
 
         <paper-drawer-panel id="paperDrawerPanel">
             <!-- Drawer Scroll Header Panel -->
@@ -77,17 +76,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 <!-- Drawer Content -->
                 <paper-menu class="pad" id="chepeMenu" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
-                    <a route="home" href="home">
+                    <a route="home" href="#home">
                         <iron-icon icon="home"></iron-icon>
                         <span>Home</span>
                     </a>
 
-                    <a route="schemes" href="/schemes">
+                    <a route="schemes" href="#schemes">
                         <iron-icon icon="social:pages"></iron-icon>
                         <span>View Scheme</span>
                     </a>
 
-                    <a route="createScheme" href="/schemes/ADD_ON">
+                    <a route="createScheme" href="#schemes/ADD_ON">
                         <iron-icon icon="star-half"></iron-icon>
                         <span>Create Scheme</span>
                     </a>
@@ -146,7 +145,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <more-route-selector selectedParams="{{params}}">
                 <iron-pages attr-for-selected="route" selected="{{route}}">
 
-                    <section route="home">
+                    <section route="/home">
                         <schemes-as-cards></schemes-as-cards>
                     </section>
 
@@ -171,7 +170,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-material>
                     </section>
 
-                    <section route="schemes">
+                    <section route="/schemes">
                         <paper-material elevation="1">
                             <h2 class="paper-font-display2">View Schemes</h2>
                             <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
@@ -184,15 +183,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 <p>View where we create <span>{{params.create}}</span></p>
                             </paper-material>
                         </section> -->
-                    <section route="createScheme">
+                    <section route="/createScheme">
                         <chpe-addon scheme-type="{{params.create}}"></chpe-addon>
                     </section>
                     
-                    <section route="createCoupon">
+                    <section route="/createCoupon">
                         <chpe-coupon scheme-type="{{params.create}}"></chpe-coupon>
                     </section>
 
-                    <section route="createGiftCard">
+                    <section route="/createGiftCard">
                         <chpe-gift-card scheme-type="{{params.create}}"></chpe-gift-card>
                     </section>
                     <section route="specialEffects">

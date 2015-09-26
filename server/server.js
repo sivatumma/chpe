@@ -109,7 +109,8 @@ function deleteModels(req, res) {
 require('./routes/user.js')(app);
 
 app.all('/', function(req, res) {
-  res.sendfile('client/login.html');
+  // res.sendfile('client/login.html');
+  res.redirect('/');
   console.log('client/login.html served');
 });
 
