@@ -56,7 +56,12 @@
             },
             listeners:{
 
-            }
+            },
+            //add or remove src categories
+            addSrc :function(){
+               this.behavior.serviceRateCategoryDiscounts.push({discount:0,discountType:"%",maxLenght:9,srcTypes:[]});
+                console.log(this.behavior.serviceRateCategoryDiscounts);
+            },
         });
     </script>
 </dom-module>

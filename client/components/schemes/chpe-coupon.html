@@ -67,7 +67,7 @@
         }
         
     </style>
-    <template>
+    <template is="dom-bind">
         <paper-material elevation="1" type="{{schemeType}}">
             <h4 class="paper-font-display2" type="{{schemeType}}">
                 Create Scheme <span>{{schemeType}}</span>
@@ -80,7 +80,7 @@
                 <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
                             <paper-card elevation="1" class="coupon-base-card">
-                                <basic-scheme id="basicScheme" start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="{{behavior.startDate}}" end-date-type="{{behavior.endDate}}" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
+                                <basic-scheme id="basicScheme" start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="couponStart" end-date-type="couponEnds" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
                                 </basic-scheme>
                             </paper-card>
                             <div align="center" class="arrows" id="firstStep" hidden>
@@ -101,6 +101,7 @@
                                 <paper-input name="locations" autocapitalize="on" value="{{behavior.locations}}" no-label-float label="Locations">
                             </div>
                         </div>
+
                         <service-rate-category id="srcCat"></service-rate-category>
 
                     </paper-card>
@@ -145,11 +146,7 @@
                 'value-change':'getCurrentStep',
                 'coupon-form.iron-input-validate':'enableButtons'
             },
-            //add or remove src categories
-            getCurrentStep :function(){
-                var setps = document.querySelector('#stepIndicator');
-                //console.log(setps.value);
-            },
+            
 
             enableButtons:function(e){
                 if(e.target.invalid){
@@ -178,7 +175,7 @@
             createScheme: function() {
                 this.formData = document.getElementById('coupon-form').serialize();
                 this.scheme.behavior.startDate = chUtils.toIsoString(this.formData.couponStart);
-                this.scheme.behavior.endDate = chUtils.toIsoString(this.formData.couponEnd);
+                this.scheme.behavior.endDate = chUtils.toIsoString(this.formData.couponEnds);
 
                 this.scheme.metadata.type = "COUPON";
                 this.scheme.metadata.published = false;
@@ -192,11 +189,18 @@
                 }
             },
             handleResponse: function(event) {
-                document.querySelector("#schemeSuccErrMessageToast").show();
-                console.log("Received response: " + JSON.stringify(event.detail.response));
-                var toast = document.querySelector("#schemeSuccErrMessageToast");
-                toast.text =  this.scheme.metadata.type+" created successfully!...";
-                toast.show();
+                if(event.detail.response!=null && event.detail.response!==undefined){
+                    document.querySelector("#schemeSuccErrMessageToast").show();
+                    console.log("Received response: " + JSON.stringify(event.detail.response));
+                    var toast = document.querySelector("#schemeSuccErrMessageToast");
+                    toast.text =  this.scheme.metadata.type+" created successfully!...";
+                    toast.show();
+                }else{
+                    console.log(this.scheme);
+                    document.querySelector("#schemeSuccErrMessageToast").show();
+                    var toast = document.querySelector("#schemeSuccErrMessageToast");
+                    toast.text =  "Error while creating" + this.scheme.metadata.type;
+                }
                 setTimeout(function() {
                     //this.formData.clear();
                 },2000);

@@ -72,6 +72,7 @@
             },
             togleType:function(e){
                 var couponType = e.target.innerText;
+                console.log(e);
 
                 //first removing all classes and setting clicked element to active
                 chUtils.removeClass(document.querySelector("#couponWeek"),"active");
