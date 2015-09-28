@@ -63,4 +63,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
 
+  app.params = {};
+  //more routuing alternative method
+  var template = document.querySelector('template');
+  template.makeUrl = function(route, name) {
+    app.params = name;
+    console.log(app.params);
+    return MoreRouting.urlFor(route, {name:name});
+  };
+
 })(document);
