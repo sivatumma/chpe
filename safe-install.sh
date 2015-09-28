@@ -10,6 +10,9 @@ unset MANPATH # delete if you already modified MANPATH elsewhere in your config
 MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 source ~/.bashrc
 
+npm update
+bower update
+
 sudo nohup node server/server.js 91 &
 sudo nohup node server/server.js 92 &
 sudo nohup node server/server.js 93 &
