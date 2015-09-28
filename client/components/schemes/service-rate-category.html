@@ -22,15 +22,16 @@
         }
 
     </style>
-    <template>
+    <template id="srcCategory">
       <paper-card heading= "Service Rate Categories" class="col-12">
         <div class="card-content">
           <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}" as="src">
             <div class="horizontal layout">
                 <div class="col-6">
                     <paper-input name="src" multi  value="{{src.srcTypes}}"  
-                        no-label-float  label="Search" >
+                        no-label-float  label="Search">
                     </paper-input>
+                        <span>{{src.discount}}</span>
                 </div>
                 <chpe-discount id="srcDiscount" discount-modal="{{src}}"  discount-id="srcDiscountId" percentage-id="srcPercentage" flat-id="srcFlat">
                 </chpe-discount>
@@ -40,8 +41,7 @@
         </div>
             <div class="card-actions">
                 <div class="horizontal layout" >
-                    <paper-button on-click="addSrc">Add</paper-button>
-                    
+                    <paper-button on-click="addSrc" on-click="addSrc">Add</paper-button>
                 </div>
             </div>
             </paper-card>
@@ -50,18 +50,28 @@
         Polymer({
             'is':'service-rate-category',
              properties:{
-
+                "foodArray":{
+                    type:Array,
+                    notify:true
+                }
             },
             ready:function(){
+                   // console.log(this.behavior.serviceRateCategoryDiscounts);
             },
             listeners:{
-
+                "onClick":"addSrc",
+                "onTap":"addSrc",
+                "foodArrayChange":"doChange"
             },
             //add or remove src categories
-            addSrc :function(){
-               this.behavior.serviceRateCategoryDiscounts.push({discount:0,discountType:"%",maxLenght:9,srcTypes:[]});
-                console.log(this.behavior.serviceRateCategoryDiscounts);
+            addSrc :function(e){
+                this.behavior.serviceRateCategoryDiscounts.push({discount:10,discountType:"%",maxLenght:9,srcTypes:[]});
+                console.log("Clicked..", this.behavior.serviceRateCategoryDiscounts);
             },
+            doChange:function(){
+                console.log(this);
+                this.fire('render');
+            }
         });
     </script>
 </dom-module>
