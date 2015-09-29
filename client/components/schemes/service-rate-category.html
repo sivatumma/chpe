@@ -31,7 +31,6 @@
                     <paper-input name="src" multi  value="{{src.srcTypes}}"  
                         no-label-float  label="Search">
                     </paper-input>
-                        <span>{{src.discount}}</span>
                 </div>
                 <chpe-discount id="srcDiscount" discount-modal="{{src}}"  discount-id="srcDiscountId" percentage-id="srcPercentage" flat-id="srcFlat">
                 </chpe-discount>
@@ -41,7 +40,7 @@
         </div>
             <div class="card-actions">
                 <div class="horizontal layout" >
-                    <paper-button on-click="addSrc" on-click="addSrc">Add</paper-button>
+                    <paper-button on-click="addSrc">Add</paper-button>
                 </div>
             </div>
             </paper-card>
@@ -61,17 +60,17 @@
             listeners:{
                 "onClick":"addSrc",
                 "onTap":"addSrc",
-                "foodArrayChange":"doChange"
+                "food-array-change":"doChange"
             },
             //add or remove src categories
             addSrc :function(e){
-                this.behavior.serviceRateCategoryDiscounts.push(
-                    {discount:10,discountType:"%",maxLenght:9,srcTypes:[]});
-                console.log("Clicked..", this.behavior.serviceRateCategoryDiscounts);
+                this.push('behavior.serviceRateCategoryDiscounts', {discount:0,discountType:"%",maxLenght:9,srcTypes:[]});
+           ;
             },
             deleteSrc:function(e){
-                console.log(e.model.index);
-                this.splice(this.behavior.serviceRateCategoryDiscounts,e.model.index,1);
+                if(e.model.index!=0){
+                    this.splice('behavior.serviceRateCategoryDiscounts',e.model.index,1);
+                }
             },
             doChange:function(){
                 console.log(this);
