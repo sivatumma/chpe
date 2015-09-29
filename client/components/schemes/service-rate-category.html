@@ -65,8 +65,13 @@
             },
             //add or remove src categories
             addSrc :function(e){
-                this.behavior.serviceRateCategoryDiscounts.push({discount:10,discountType:"%",maxLenght:9,srcTypes:[]});
+                this.behavior.serviceRateCategoryDiscounts.push(
+                    {discount:10,discountType:"%",maxLenght:9,srcTypes:[]});
                 console.log("Clicked..", this.behavior.serviceRateCategoryDiscounts);
+            },
+            deleteSrc:function(e){
+                console.log(e.model.index);
+                this.splice(this.behavior.serviceRateCategoryDiscounts,e.model.index,1);
             },
             doChange:function(){
                 console.log(this);
