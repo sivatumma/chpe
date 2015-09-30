@@ -1,0 +1,17 @@
+<script>
+'use strict';
+class NeonAnimation extends HTMLElement {
+  saySomething() {
+    console.log("I can say something");
+  }
+
+  createdCallback() {
+    var host = this.createShadowRoot()
+    host.innerHTML = "Hello";
+    this.addEventListener('click', this.saySomething);
+  }
+
+}
+
+document.registerElement('neon-anim', NeonAnimation);
+</script>

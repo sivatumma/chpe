@@ -1,0 +1,76 @@
+
+<!--
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="external/polymer/polymer.html">
+<link rel="import" href="external/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="external/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="external/neon-animation/animations/fade-in-animation.html">
+
+<dom-module id="my-animatable">
+
+  <style>
+
+    :host {
+      display: inline-block;
+      border-radius: 50%;
+      width: 300px;
+      height: 300px;
+      background: green;
+    }
+
+  </style>
+
+  <template>
+
+    <content></content>
+
+  </template>
+
+</dom-module>
+
+<script>
+'use strict';
+
+  Polymer({
+
+    is: 'my-animatable',
+
+    behaviors: [
+      Polymer.NeonAnimationRunnerBehavior
+    ],
+
+    properties: {
+
+      animationConfig: {
+        type: Object,
+        value: function() {
+          return {
+            name: 'fade-in-animation',
+            node: this
+          }
+        }
+      }
+
+    },
+
+    listeners: {
+      'neon-animation-finish': '_onNeonAnimationFinish'
+    },
+
+    _onNeonAnimationFinish: function() {
+      console.log('animation finish!');
+      this.animationConfig.name = this.animationConfig.name == 'fade-in-animation' ? 'fade-out-animation' : 'fade-in-animation';
+      this.playAnimation();
+    }
+
+  });
+
+
+</script>
+

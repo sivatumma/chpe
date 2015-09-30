@@ -89,7 +89,8 @@ module.exports = function(mongoose) {
 			// of products categorized, grouped already)
 			serviceRateCategoryDiscounts: [{
 				srcTypes: [{
-					type: String
+					id:{type:Number},
+					name:{type: String}
 				}],
 				discount: {
 					type: Number
@@ -161,11 +162,13 @@ module.exports = function(mongoose) {
 				}
 			}],
 			locationOfServices: [{
-				type: String
+				id:{type:Number},
+				name:{type: String}
 			}],
 			serviceLevelDiscounts: [{
 				services: [{
-					type: String
+					id:{type:Number},
+					name:{type: String}
 				}],
 				discount: {
 					type: Number

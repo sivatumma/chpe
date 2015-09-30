@@ -28,9 +28,12 @@
           <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}" as="src">
             <div class="horizontal layout">
                 <div class="col-6">
-                    <paper-input name="src" multi  value="{{src.srcTypes}}"  
-                        no-label-float  label="Search">
-                    </paper-input>
+                        <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceRateCategories/"
+                                    options='{
+                                        "allow_space": false,
+                                        "allow_nonmatching": false
+                                    }' selected-items="{{scheme.behavior.serviceRateCategoryDiscounts.srcTypes}}">
+                            </multi-value-suggestbox>
                 </div>
                 <chpe-discount id="srcDiscount" discount-modal="{{src}}"  discount-id="srcDiscountId" percentage-id="srcPercentage" flat-id="srcFlat">
                 </chpe-discount>
