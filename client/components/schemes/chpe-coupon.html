@@ -80,7 +80,7 @@
                                 <basic-scheme id="basicScheme" start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="couponStart" end-date-type="couponEnds" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
                                 </basic-scheme>
                             </paper-card>
-                            <div align="center" class="arrows" id="firstStep" hidden>
+                            <div align="center" class="arrows" id="firstStep">
                                 <paper-fab icon="arrow-forward"  class="blue" on-click="_onNextClick"></paper-fab>
                             </div>
                     </neon-animatable>
@@ -136,7 +136,7 @@
                 succErrMsg: String
             },
             attached: function() {
-                console.log(this.schemeType);
+               // console.log(this.schemeType);
             },
             ready: function() {
                 this.selected = 0;
@@ -154,7 +154,6 @@
                 'coupon-form.iron-input-validate':'enableButtons'
             },
             
-
             enableButtons:function(e){
                 if(e.target.invalid){
                     document.querySelector("#firstStep").hidden = true;
@@ -163,7 +162,6 @@
                 }
                 console.log(e.target.invalid);
             },
-            
             //neon animations for coupon
             _onPrevClick: function() {
                 this.entryAnimation = 'slide-from-left-animation';

@@ -20,9 +20,12 @@ function generalConfig() {
                 window.location = "dashboard.html";
             }
     };
+    var serviceLevelDiscounts=["E-Consultation","Drugs@Home","Diagnostics@Home","Care@Home","Facilitation@Home"] ;
+
 	return {
 		urls: urls,
 		stateVariables: stateVariables,
-		user:userStatus
+		user:userStatus,
+		staticServices:serviceLevelDiscounts
 	};
 }
