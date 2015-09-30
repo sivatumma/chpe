@@ -93,12 +93,17 @@
                                     options='{
                                         "allow_space": false,
                                         "allow_nonmatching": false
-                                    }' chips-ajax="locationsGc" suggest-menu="suggestMenuGc" item-list="suggestionsGc" item-entry="chipsGcSpan" item-input="giftcardGc"  >
+                                    }' selected-items="{{scheme.behavior.locationOfServices}}">
                             </multi-value-suggestbox>
-                               <!--  <paper-input name="toIds" autocapitalize="on" value="{{metadata.toIds}}" no-label-float label="Benficiary"> -->
+                               
                             </div>
                             <div class="col-6 margin0">
-                                <paper-input name="locations" autocapitalize="on" value="{{behavior.locations}}" no-label-float label="Locations">
+                                <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names/"
+                                    options='{
+                                        "allow_space": false,
+                                        "allow_nonmatching": false
+                                    }' selected-items="{{scheme.metadata.toIds}}">
+                            </multi-value-suggestbox>
                             </div>
                         </div>
                       </paper-card>
