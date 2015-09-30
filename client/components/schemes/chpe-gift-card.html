@@ -63,7 +63,7 @@
             @apply(--center-justified);
         }
 </style>
-    <template is="dom-bind">
+    <template>
         <paper-material elevation="1" type="{{schemeType}}">
       		<h4 class="paper-font-display2" type="{{schemeType}}">
                 Create Scheme <span>GIFt CARD</span>
@@ -87,17 +87,25 @@
                             </paper-fab>
                         </div>    
                       <paper-card elevation="1" class="gift-card-extend-card">
-                        <div class="col-12">
-                          <div class="col-6 margin0">
-                            <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/"
+                        <div class="col-12 margin0 ">
+                          <div class="col-2 text-right" style="margin:25px 0px 0px 0px;font-weight:bold;">
+                            <label >Locations : </label>
+                         </div>
+                         <div class="col-10 margin0">
+                             <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/"
                                     options='{
                                         "allow_space": false,
                                         "allow_nonmatching": false
                                     }' selected-items="{{scheme.behavior.locationOfServices}}">
                             </multi-value-suggestbox>
-                               
+                         </div>
+                        </div>
+
+                        <div class="col-12 margin0">   
+                            <div class="col-2 text-right" style="margin:25px 0px 0px 0px;font-weight:bold;">
+                                <label>Benficiary :</label>   
                             </div>
-                            <div class="col-6 margin0">
+                            <div class="col-10 margin0">
                                 <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names/"
                                     options='{
                                         "allow_space": false,

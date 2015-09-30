@@ -51,20 +51,16 @@
            
             #item_entry > div {
                 display: inline;
-                padding: 3px 5px;
+                padding: 0px;
                 box-sizing: border-box;
-                line-height: 50px;
             }
             #item_entry > div > span {
                 min-width: 60px;
                 display: inline-block;
                 font-size: 14px;
-                line-height: 150%;
                 vertical-align: middle;
             }
-            #item_entry > div > span:before{
-                position: absolute;
-            }
+
             #item_entry > div > span:focus {
                 outline-style: none;
             }
@@ -276,8 +272,8 @@
                         var topSuggestion = this.$.item_list.querySelector('#suggest_menu li');
                         if (activeSuggestion) {
 
-                            console.log(this.selectedItems);
-                            this.push('selectedItems',{id:event.target.id,name:activeSuggestion.innerText});
+                            console.log(activeSuggestion.id);
+                            this.push('selectedItems',{id:activeSuggestion.id,name:activeSuggestion.innerText});
                             this.$.item_input.innerText = '';
                             this.resetSuggestions();
                         } else if ((this.options.allow_nonmatching === true && this.$.item_input.innerText.length > 0) ||
