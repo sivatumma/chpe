@@ -1,0 +1,99 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
+<dom-module id="bill-range-discounts">
+    <style type="text/css">
+        .searchBoxInSrc{
+            width: 100%;
+        }
+        .searchBoxInSrc paper-input{
+            margin-left: 20px;
+        }
+        
+        .row{
+            width: 100%;
+            margin-top: 10px;
+        }
+        .discountBox.chpe-discount{
+            width: 320px !important;
+        }
+         paper-input {
+            margin-top: 0px !important;
+            margin-left: 10px;
+        }
+
+    </style>
+    <template id="srcCategory">
+      <paper-card heading= "Bill Slabs - Discounts on bill ranges" class="col-12">
+        <div class="card-content">
+          <template is="dom-repeat" items="{{behavior.billValueDiscounts}}" as="bsd">
+            <div class="horizontal layout">
+                <div class="col-5">
+                       <div class="col-6">
+                            <paper-input name="from" no-label-float label="From" 
+                       value="{{bsd.billRange.from}}"></paper-input>
+                       </div>
+                       <div class="col-6">
+                            <paper-input name="to" no-label-float label="To" 
+                       value="{{bsd.billRange.to}}"></paper-input>
+                       </div>
+                </div>
+                 <div class="col-6">
+                    <chpe-discount id="{{bsd.type}}" discount-modal="{{bsd}}"  
+                        discount-id="bsdDiscount{{index}}" percentage-id="bsdpercent{{index}}" 
+                        flat-id="bsdflat{{index}}">
+                     </chpe-discount> 
+                </div>
+                <div class="col-1">
+                    <paper-icon-button icon="icons:delete" on-click="deleteBsd"></paper-icon-button>
+                </div>
+            </div>
+            </div>      
+          </template> 
+        </div>
+            <div class="card-actions">
+                <div class="horizontal layout" >
+                    <paper-button on-click="addBsd">Add</paper-button>
+                </div>
+            </div>
+            </paper-card>
+    </template>
+    <script>
+        Polymer({
+            'is':'bill-range-discounts',
+             properties:{
+                "foodArray":{
+                    type:Array,
+                    notify:true
+                }
+            },
+            ready:function(){
+                   // console.log(this.behavior.serviceRateCategoryDiscounts);
+            },
+            listeners:{
+                "onClick":"addBsd",
+            },
+            //add or remove src categories
+            addBsd :function(e){
+                var obj = {
+                        billRange: {
+                            from: "",
+                            to: ""
+                        },
+                        discount: 0,
+                        discountType: "%",
+                        maxLength:9
+                    };
+                this.push('behavior.billValueDiscounts',obj);
+            },
+            deleteBsd:function(e){
+                if(e.model.index!=0){
+                    this.splice('behavior.billValueDiscounts',e.model.index,1);
+                }
+            },
+            doChange:function(){
+                console.log(this);
+                this.fire('render');
+            }
+        });
+    </script>
+</dom-module>

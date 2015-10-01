@@ -1,6 +1,6 @@
 <script src="../../config/general.js"></script>
 <script src="../../config/schemeBase.js"></script>
-<dom-module id="service-rate-category">
+<dom-module id="advance-paid-points">
     <style type="text/css">
         .searchBoxInSrc{
             width: 100%;
@@ -23,34 +23,34 @@
 
     </style>
     <template id="srcCategory">
-      <paper-card heading= "Service Rate Categories" class="col-12">
+      <paper-card heading= "Points on Advance Paid" class="col-12">
         <div class="card-content">
-          <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}" as="src">
+          <template is="dom-repeat" items="{{behavior.advancePaidDiscounts}}" as="apd">
             <div class="horizontal layout">
-                <div class="col-6">
-                        <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceRateCategories/"
-                                    options='{
-                                        "allow_space": false,
-                                        "allow_nonmatching": false
-                                    }' selected-items="{{src.srcTypes}}">
-                            </multi-value-suggestbox>
+                <div class="col-5">
+                       <paper-input name="amount" no-label-float label="Amount" 
+                       value="{{apd.amount}}"></paper-input>
                 </div>
-                <chpe-discount id="srcDiscount" discount-modal="{{src}}"  discount-id="srcDiscountId" percentage-id="srcPercentage" flat-id="srcFlat">
-                </chpe-discount>
-              <paper-icon-button icon="icons:delete" on-click="deleteSrc"></paper-icon-button>
+                 <div class="col-5">
+                        <paper-input name="points" no-label-float label="Points" 
+                       value="{{apd.points}}"></paper-input>
+                </div>
+                <div class="col-2">
+                    <paper-icon-button icon="icons:delete" on-click="deleteApd"></paper-icon-button>
+                </div>
             </div>      
           </template> 
         </div>
             <div class="card-actions">
                 <div class="horizontal layout" >
-                    <paper-button on-click="addSrc">Add</paper-button>
+                    <paper-button on-click="addApd">Add</paper-button>
                 </div>
             </div>
             </paper-card>
     </template>
     <script>
         Polymer({
-            'is':'service-rate-category',
+            'is':'advance-paid-points',
              properties:{
                 "foodArray":{
                     type:Array,
@@ -61,18 +61,16 @@
                    // console.log(this.behavior.serviceRateCategoryDiscounts);
             },
             listeners:{
-                "onClick":"addSrc",
-                "onTap":"addSrc",
-                "food-array-change":"doChange"
+                "onClick":"addApd",
             },
             //add or remove src categories
-            addSrc :function(e){
-                this.push('behavior.serviceRateCategoryDiscounts', {discount:0,discountType:"%",maxLength:9,srcTypes:[]});
+            addApd :function(e){
+                this.push('behavior.advancePaidDiscounts', {amount:"",points:""});
            ;
             },
-            deleteSrc:function(e){
+            deleteApd:function(e){
                 if(e.model.index!=0){
-                    this.splice('behavior.serviceRateCategoryDiscounts',e.model.index,1);
+                    this.splice('behavior.advancePaidDiscounts',e.model.index,1);
                 }
             },
             doChange:function(){
