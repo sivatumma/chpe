@@ -2,6 +2,14 @@
 
 <dom-module id="schemes-as-cards">
 <style type="text/css">
+
+  :host{
+    float:left;
+    padding:10px;
+    text-align:center;
+    width:99%;
+}
+
 	.cards {
       @apply(--layout-vertical);
       @apply(--center-justified);
@@ -10,13 +18,14 @@
     }
     paper-card {
       display: block;
-	    width: calc(33% - 20px);
-	    margin: 10px;
+	    /*width: calc(33% - 90px);*/
+      width:230px;
+      height:200px;
+	    margin: 10px 5px 10px 10px;
 	    cursor: pointer;
 	    transition: box-shadow 0.1s;
 	    float: left;
     }
-    .clicked{background: #03613E;}
     .avatar {
       display: inline-block;
       height: 64px;
@@ -54,9 +63,9 @@
     }
 </style>
 <template>
-	<paper-material elevation="1">
+	<paper-material>
 		<template is="dom-repeat" items="{{allSchemes}}"> 
-			<paper-card heading="{{item.metadata.type}}" class="cards" id="r_{{index}}" on-click="toggleStyle">
+			<paper-card  elevation="2" heading="{{item.metadata.type}}" class="cards" id="r_{{index}}" on-click="toggleStyle">
 				<div class="card-content">{{item.metadata.name}}</div>
 				<div class="card-actions">
         <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>

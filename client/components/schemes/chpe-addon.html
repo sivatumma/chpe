@@ -71,19 +71,41 @@
             @apply(--layout-vertical);
             @apply(--center-justified);
         }
+        .leftnav {
+            position: absolute;
+            top: 280px;
+            left: 0px;
+            z-index: 11;
+            min-height: 160px;
+        }
+        
+        .leftnav paper-item {
+            cursor: pointer;
+        }
+        
+        .leftnav .iron-selected {
+            background: #4fc3f7 !important;
+            border-radius: 0px;
+        }
     </style>
     <template>
+      <paper-material class="leftnav" elevation="5"> 
+            <paper-menu selected="{{selected}}" style="padding:0px;">
+                <paper-item>1</paper-item>
+                <paper-item>2</paper-item>
+                <paper-item>3</paper-item>
+            </paper-menu>
+        </paper-material>
         <paper-material elevation="1" type="{{schemeType}}">
-            <h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme  Addon</span>
              <!--  <paper-slider id="stepIndicator" pin snaps max="7" step="1" value="0" class="pull-right orange col-8"></paper-slider> -->
             </h4>
             <form is="iron-form" id="addon-form" method="POST" action="#">
                 <neon-animated-pages id="addonPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
                         <div class="col-12 margin0">
-                            <div class="col-2"></div>
+                            <div class="col-1"></div>
                             <div class="col-8">
-                                <paper-card elevation="1" class="addon-base-card">
+                                <paper-card elevation="5" class="addon-base-card">
                                     <basic-scheme id="basicAddonScheme" start-date-modal="addOnStartDate" end-date-modal="addOnEndDate" scheme-starts="addOnStart" scheme-ends="addOnEnds" start-date-type "addOnstart" end-date-type="addOnend" sd-dp="staddOnDp" sd-tp="staddOnTp" ed-dp="eDaddOnDp" ed-tp="eDaddOnTp" flat-id="basicFlatInAddon" percentage-id="basicPerecentageInAddon"></basic-scheme>
                                     <div class="col-12">
                                         <div class="col-2" style="margin:10px 0px 0px 0px;font-weight:bold;">
@@ -186,7 +208,7 @@
                           </div>
                           <div class="col-8">
                             <paper-card eleveation="1" heading= "Discounts on Doctor Allocation"  class="addon-extend-card">
-                              <div class="col-12">
+                              <div class="col-12" id="doctrosDiscountBlock">
                               <template is="dom-repeat"  
                               items="{{scheme.behavior.doctorLevelDiscounts}}" as="dda">
                                   <templte>
@@ -263,7 +285,7 @@
                           </div>
                           <div class="col-8">
                             <paper-card eleveation="1" class="addon-extend-card" 
-                              heading="Discounts on Mode of Payments">
+                              heading="Discounts on Mode of Payments" id="mopDiscounts">
                                 <template id="addonMop" is="dom-repeat" items="{{scheme.behavior.modeOfPaymentDiscounts}}" as="mopDiscounts">
                                    <templte>
                                    <div class="col-6">
@@ -277,7 +299,7 @@
                             </paper-card>
                           </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-10">
                            <div class="submitButtons">
                             <span>
                                 <paper-button name="addon-form.createSchemeBtn" raised  on-click="submitForm" data-args="false" id="addonSave"  value="{{schemeStatus}}">Save</paper-input>

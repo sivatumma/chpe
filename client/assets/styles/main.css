@@ -147,6 +147,9 @@ iron-pages{
 }
 
 /*scheme styles*/
+section schemes-as-cards{
+  background: #F7F6E3;
+}
 .chpe-coupon,.chpe-gift-card,.chpe-addon{
     border-radius: 2px;
     margin:15px 0px;
@@ -343,4 +346,25 @@ iron-pages{
  }
  .upperCase{
   text-transform: capitalize;
+ } 
+ #doctrosDiscountBlock label,#mopDiscounts label{
+  font-weight: bold;
+  margin-left: 15px;
  }
+ .text-bold{
+  font-weight: bold;
+ }
+ /* flexchildt styles*/
+
+.flexContainer{
+  @apply(--layout-horizontal);
+}
+.flexchild1{
+  @apply(--layout-flex);
+}
+.flexchild2{
+  @apply(--layout-flex-2);
+}
+.flexchild3{
+  @apply(--layout-flex-3);
+}

@@ -1,5 +1,5 @@
 <dom-module id="chpe-gift-card">
-<style type="text/css">
+    <style type="text/css">
         .submitButtons {
             text-align: right;
         }
@@ -7,133 +7,180 @@
         .submitButtons span {
             display: inline-block;
         }
-        .arrows{
+        
+        .arrows {
             background: none;
         }
-        .base-scheme-card{
+        
+        .base-scheme-card {
             width: 50%;
             padding: 2%;
         }
+        
         #cards {
-          @apply(--layout-vertical);
-          @apply(--center-justified);
-          max-width:780px;
-          margin-left: auto;
-          margin-right: auto;
-          padding: 10px;
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+            max-width: 780px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px;
         }
+        
         paper-fab {
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
-          border-radius: 50%;
-          height: 40px;
-          width: 40px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 50%;
+            height: 40px;
+            width: 40px;
         }
+        
         paper-fab.blue {
-          --paper-fab-background: var(--paper-light-blue-300);
-          --paper-fab-keyboard-focus-background: var(--paper-light-blue-200);
+            --paper-fab-background: var(--paper-light-blue-300);
+            --paper-fab-keyboard-focus-background: var(--paper-light-blue-200);
         }
+        
         paper-fab.red {
-          --paper-fab-background: var(--paper-red-500);
-          --paper-fab-keyboard-focus-background: var(--paper-red-900);
+            --paper-fab-background: var(--paper-red-500);
+            --paper-fab-keyboard-focus-background: var(--paper-red-900);
         }
+        
         paper-fab.green {
-          --paper-fab-background: var(--paper-green-500);
-          --paper-fab-keyboard-focus-background: var(--paper-green-900);
+            --paper-fab-background: var(--paper-green-500);
+            --paper-fab-keyboard-focus-background: var(--paper-green-900);
         }
+        
         paper-fab.orange {
-          --paper-fab-background: var(--paper-orange-500);
-          --paper-fab-keyboard-focus-background: var(--paper-orange-900);
+            --paper-fab-background: var(--paper-orange-500);
+            --paper-fab-keyboard-focus-background: var(--paper-orange-900);
         }
-        .gift-card-base-card{
+        
+        .gift-card-base-card {
             margin: 0px auto;
             max-width: 720px;
             @apply(--layout-vertical);
             @apply(--center-justified);
         }
+        
         paper-input {
             margin-top: 0px !important;
             margin-left: 10px;
         }
-        .gift-card-extend-card{
+        
+        .gift-card-extend-card {
             margin: 0px auto;
             max-width: 760px;
             @apply(--layout-vertical);
             @apply(--center-justified);
         }
-</style>
+        
+        paper-menu > paper-item {
+            cursor: pointer;
+        }
+        
+        .leftnav {
+            position: absolute;
+            top: 345px;
+            left: 20px;
+            z-index: 11;
+            min-height: 160px;
+        }
+        
+        .leftnav paper-item {
+            cursor: pointer;
+        }
+        
+        .leftnav .iron-selected {
+            background: #4fc3f7 !important;
+            border-radius: 0px;
+        }
+    </style>
     <template>
+        <paper-material class="leftnav">
+            <paper-menu selected="{{selected}}" style="padding:0px;">
+                <paper-item>1</paper-item>
+                <paper-item>2</paper-item>
+            </paper-menu>
+        </paper-material>
         <paper-material elevation="1" type="{{schemeType}}">
-      		<h4 class="paper-font-display2" type="{{schemeType}}">
-                Create Scheme <span>GIFt CARD</span>
+            <h4 class="paper-font-display2" type="{{schemeType}}">
+                Create Scheme <span>GIFT CARD</span>
                 <span>
           </h4>
             <form is="iron-form" id="gift-card-form" method="POST" action="#">
                 <neon-animated-pages id="giftCardPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
-                        <paper-card elevation="1" class="gift-card-base-card">    
-                           <basic-scheme id="basicSchemeGiftCard" start-date-modal="giftCardStartDate" end-date-modal="giftCardEndDate" scheme-starts="giftCardStart" 
-                           scheme-ends="giftCardEnds" start-date-type="giftCardStart" end-date-type="giftCardEnds" sd-dp="stgcDp" sd-tp="stgcTp" ed-dp="eDgcDp" ed-tp="eDgcTp" flat-id="basicFlatInGiftCard" percentage-id="basicPerecentageInGift" discount-value="{{defaultDiscount}}" >
-                          </basic-scheme>
-                        </paper-card>
-                        <div align="center" class="arrows">
-                            <paper-fab icon="arrow-forward"  class="blue" id="firstStepInGc" on-click="_onNextClick"></paper-fab>
+                        <div class="col-1"></div>
+                        <div class="col-8">
+                            <paper-card elevation="1" class="gift-card-base-card">
+                                <basic-scheme id="basicSchemeGiftCard" start-date-modal="giftCardStartDate" end-date-modal="giftCardEndDate" scheme-starts="giftCardStart" scheme-ends="giftCardEnds" start-date-type="giftCardStart" end-date-type="giftCardEnds" sd-dp="stgcDp" sd-tp="stgcTp" ed-dp="eDgcDp" ed-tp="eDgcTp" flat-id="basicFlatInGiftCard" percentage-id="basicPerecentageInGift" basic-discount="basicDiscId" discount-value="{{defaultDiscount}}">
+                                </basic-scheme>
+                            </paper-card>
+                        </div>
+                        <div class="col-2">
+                            <div class="arrows arrowPosition" style="top:30px;">
+                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                            </div>
                         </div>
                     </neon-animatable>
                     <neon-animatable>
-                        <div align="center" class="arrows">
-                            <paper-fab icon="arrow-back" class="blue" on-click="_onPrevClick">
-                            </paper-fab>
-                        </div>    
-                      <paper-card elevation="1" class="gift-card-extend-card">
-                        <div class="col-12 margin0 ">
-                          <div class="col-2 text-right" style="margin:25px 0px 0px 0px;font-weight:bold;">
-                            <label >Locations : </label>
-                         </div>
-                         <div class="col-10 margin0">
-                             <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/"
-                                    options='{
+                        <div class="col-12">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-8">
+                                <paper-card elevation="1" class="gift-card-extend-card">
+                                    <div class="col-12 margin0 ">
+                                        <div class="col-2 text-right">
+                                            <label class="text-bold">Locations : </label>
+                                        </div>
+                                        <div class="col-10 margin0" style="margin-top:10px;padding-bottom:25px;">
+                                            <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/" options='{
                                         "allow_space": false,
                                         "allow_nonmatching": false
                                     }' selected-items="{{scheme.behavior.locationOfServices}}">
-                            </multi-value-suggestbox>
-                         </div>
-                        </div>
-
-                        <div class="col-12 margin0">   
-                            <div class="col-2 text-right" style="margin:25px 0px 0px 0px;font-weight:bold;">
-                                <label>Benficiary :</label>   
-                            </div>
-                            <div class="col-10 margin0">
-                                <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names/"
-                                    options='{
+                                            </multi-value-suggestbox>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 margin0">
+                                        <div class="col-2 text-right">
+                                            <label class="text-bold">Benficiary :</label>
+                                        </div>
+                                        <div class="col-10 margin0" style="margin-top:10px;padding-bottom:25px;">
+                                            <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names/" options='{
                                         "allow_space": false,
                                         "allow_nonmatching": false
                                     }' selected-items="{{scheme.metadata.toIds}}">
-                            </multi-value-suggestbox>
+                                            </multi-value-suggestbox>
+                                        </div>
+                                    </div>
+                                </paper-card>
+                            </div>
+                            <div class="col-2">
+                                <div class="arrows arrowPosition" style="top:30px;">
+                                    <paper-fab icon="arrow-back" class="blue active" on-click="_onPrevClick">
+                                    </paper-fab>
+                                </div>
                             </div>
                         </div>
-                      </paper-card>
-                        <div class="submitButtons">
+                        <div class="submitButtons col-9">
                             <span>
-                                <paper-button name="createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
-                            </span>
+                            <paper-button name="createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
+                        </span>
                             <span>
-                                <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
-                            </span>
+                            <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
+                        </span>
                         </div>
                     </neon-animatable>
-                </neon-animated-pages>   
-			</form>
+                </neon-animated-pages>
+            </form>
         </paper-material>
-         <iron-ajax  id="giftCardAjax" content-type="application/json"  method="POST" params='{}'   
-         handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
+        <iron-ajax id="giftCardAjax" content-type="application/json" method="POST" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
     <script>
         Polymer({
             is: 'chpe-gift-card',
-           properties: {
+            properties: {
                 schemeType: String,
                 schemeStatus: Boolean,
                 succErrMsg: String
@@ -146,35 +193,35 @@
                 this.config = generalConfig() || {};
                 this.scheme = schemeBase();
                 this.$.basicSchemeGiftCard.metadata = this.scheme.metadata;
-                this.$.basicSchemeGiftCard.behavior =  this.scheme.behavior;
+                this.$.basicSchemeGiftCard.behavior = this.scheme.behavior;
             },
             listeners: {
                 'gift-card-form.iron-form-submit': 'createScheme',
                 'gift-card-form.saveBtn.onClick': 'submitForm',
-                'gift-card-form.iron-input-validate':'enableButtons'
+                'gift-card-form.iron-input-validate': 'enableButtons'
             },
-            
-            enableButtons:function(e){
-                if(e.target.invalid){
-                    document.querySelector("#firstStepInGc").hidden = true;
-                }else{
-                    document.querySelector("#firstStepInGc").hidden = false;
-                }
-                console.log(e.target.invalid);
+
+            enableButtons: function(e) {
+                /* if(e.target.invalid){
+                     document.querySelector("#firstStepInGc").hidden = true;
+                 }else{
+                     document.querySelector("#firstStepInGc").hidden = false;
+                 }
+                 console.log(e.target.invalid);*/
             },
-            
+
             //neon animations for coupon
             _onPrevClick: function() {
                 this.entryAnimation = 'slide-from-left-animation';
                 this.exitAnimation = 'slide-right-animation';
                 this.selected = this.selected === 0 ? 4 : (this.selected - 1);
-               
+
             },
             _onNextClick: function() {
                 this.entryAnimation = 'slide-from-right-animation';
                 this.exitAnimation = 'slide-left-animation';
                 this.selected = this.selected === 4 ? 0 : (this.selected + 1);
-               
+
             },
             createScheme: function() {
                 this.formData = document.getElementById('gift-card-form').serialize();
@@ -187,42 +234,40 @@
                 this.scheme.on = "newscheme";
                 this.scheme.operation = "create";
                 if (this.scheme !== undefined) {
-                    this.$.giftCardAjax.url='http://172.19.4.162:91'+this.config.urls.rest;
+                    this.$.giftCardAjax.url = 'http://172.19.4.162:91' + this.config.urls.rest;
                     this.$.giftCardAjax.method = "POST";
                     this.$.giftCardAjax.body = JSON.stringify(this.scheme);
                     this.$.giftCardAjax.generateRequest();
                 }
             },
             handleResponse: function(event) {
-                if(event.detail.response!=null && event.detail.response!==undefined){
+                if (event.detail.response != null && event.detail.response !== undefined) {
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     console.log("Received response: " + JSON.stringify(event.detail.response));
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text =  this.scheme.metadata.type+" created successfully!...";
+                    toast.text = this.scheme.metadata.type + " created successfully!...";
                     toast.show();
-                }else{
+                } else {
                     console.log(this.scheme);
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text =  "Error while creating" + this.scheme.metadata.type;
+                    toast.text = "Error while creating" + this.scheme.metadata.type;
                 }
                 setTimeout(function() {
                     //this.formData.clear();
-                },2000);
+                }, 2000);
             },
             handleError: function(event) {
                 var request = event.detail.request;
                 var error = event.detail.error;
                 console.log(error);
                 var toast = document.querySelector("#schemeSuccErrMessageToast");
-                toast.text = "Error while creating " + this.scheme.metadata.type+" Please try again.. ";
+                toast.text = "Error while creating " + this.scheme.metadata.type + " Please try again.. ";
                 toast.show();
             },
             submitForm: function(evt, details, sender) {
                 document.getElementById('gift-card-form').submit();
             }
         });
-       
-        
     </script>
 </dom-module>
