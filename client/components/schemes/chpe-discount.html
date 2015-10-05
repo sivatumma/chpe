@@ -64,10 +64,10 @@
                 <div class="btn-group">
                     <paper-button type="button" name="discount" 
                     class="discountButton noRightBorder active" 
-                    on-click="togleDiscount" id="{{percentageId}}" type="%">%</paper-button>
+                    on-click="togleDiscount" id="{{percentageId}}" discount="%" title="1a">%</paper-button>
 
                     <paper-button type="button" name="{{flatType}}" class="discountButton"
-                    on-click="togleDiscount" id="{{flatId}}" type="Flat" >Flat</paper-button>
+                    on-click="togleDiscount" id="{{flatId}}" discount="Flat" title="2b" >Flat</paper-button>
                     </div>
                     <div class="discountInput">
                         <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  id="{{discountId}}" 
@@ -103,7 +103,7 @@
             },
             togleDiscount:function(e){
                 var discountType = e.target.innerText;
-                console.log(discountType);
+                console.log(e);
                 //first removing all classes and setting clicked element to active
                 chUtils.removeClass(document.querySelector("#"+this.percentageId),"active");
                 chUtils.removeClass(document.querySelector("#"+this.flatId),"active");

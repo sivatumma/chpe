@@ -343,4 +343,11 @@ iron-pages{
  }
  .upperCase{
   text-transform: capitalize;
+ } 
+ #doctrosDiscountBlock label{
+  font-weight: bold;
+  margin-left: 15px;
+ }
+ .text-bold{
+  font-weight: bold;
  }

@@ -76,42 +76,54 @@
             <form is="iron-form" id="coupon-form" method="POST" action="#">
                 <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
+                        <div class="col-12 margin0">
+                            <div class="col-2"></div>
+                            <div class="col-8">
                             <paper-card elevation="1" class="coupon-base-card">
                                 <basic-scheme id="basicScheme" start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="couponStart" end-date-type="couponEnds" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
                                 </basic-scheme>
-                            </paper-card>
-                            <div align="center" class="arrows" id="firstStep">
-                                <paper-fab icon="arrow-forward"  class="blue" on-click="_onNextClick"></paper-fab>
-                            </div>
-                    </neon-animatable>
-
-                    <!-- step2 -->
-                    <neon-animatable>
-                        <div align="center" class="arrows">
-                            <paper-fab icon="arrow-back" class="blue" on-click="_onPrevClick">
-                            </paper-fab>
-                        </div>
-                    <paper-card elevation="1" class="coupon-extend-card">
-                        <div class="col-12">
-                            <coupon-type id="selectCouponType"></coupon-type>
-                        </div>
-                         <div class="col-12 margin0">   
-                            <div class="col-2 text-right" style="margin:25px 0px 0px 0px;font-weight:bold;">
-                                <label>Locations :</label>   
-                            </div>
-                            <div class="col-10 margin0">
-                                <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/"
-                                    options='{
+                            <div class="col-6">
+                                        <div class="col-12" style="margin:10px 0px 0px 0px;font-weight:bold;">
+                                            <label style="margin-left:10px;">Locations :</label>
+                                        </div>
+                                        <div class="col-12margin0">
+                                        <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/"
+                                        options='{
                                         "allow_space": false,
                                         "allow_nonmatching": false
                                     }' selected-items="{{scheme.behavior.locationOfServices}}">
                             </multi-value-suggestbox>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <coupon-type id="selectCouponType"></coupon-type>
+
+                                    </div>
+                             </div>
+                        </paper-card>
+                            <div class="col-1">
+                                <div class="arrows arrowPosition">
+                                    <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                                </div>
                             </div>
                         </div>
+                    </neon-animatable>
 
-                        <service-rate-category id="srcCat"></service-rate-category>
-
-                    </paper-card>
+                    <!-- step2 -->
+                    <neon-animatable>
+                          <div class="col-12 margin0">
+                        <div class="col-2">
+                          <div align="center" class="arrows margin0 arrowPosition">
+                              <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
+                              </paper-fab>
+                          </div>
+                        </div>
+                        <div class="col-8">
+                            <paper-card elevation="1" class="coupon-extend-card">
+                                <service-rate-category id="srcCat"></service-rate-category>
+                            </paper-card>
+                        </div>
+                    </div>
                         <div class="submitButtons">
                             <span>
                                 <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
@@ -155,12 +167,12 @@
             },
             
             enableButtons:function(e){
-                if(e.target.invalid){
+                /*if(e.target.invalid){
                     document.querySelector("#firstStep").hidden = true;
                 }else{
                     document.querySelector("#firstStep").hidden = false;
                 }
-                console.log(e.target.invalid);
+                console.log(e.target.invalid);*/
             },
             //neon animations for coupon
             _onPrevClick: function() {

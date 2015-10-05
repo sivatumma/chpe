@@ -22,6 +22,11 @@
           margin-right: auto;
           padding: 10px;
         }
+        #stepNavigation{
+         @apply(--layout-vertical);
+          max-width:180px;
+          padding: 10px;
+        }
         paper-fab {
           display: block;
           margin-left: auto;
@@ -64,34 +69,46 @@
         }
 </style>
     <template>
+     
         <paper-material elevation="1" type="{{schemeType}}">
       		<h4 class="paper-font-display2" type="{{schemeType}}">
-                Create Scheme <span>GIFt CARD</span>
+                Create Scheme <span>GIFT CARD</span>
                 <span>
           </h4>
             <form is="iron-form" id="gift-card-form" method="POST" action="#">
                 <neon-animated-pages id="giftCardPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
+                        <div class="col-12">
+                        <div class="col-2"></div>
+                        <div class="col-8">
                         <paper-card elevation="1" class="gift-card-base-card">    
                            <basic-scheme id="basicSchemeGiftCard" start-date-modal="giftCardStartDate" end-date-modal="giftCardEndDate" scheme-starts="giftCardStart" 
                            scheme-ends="giftCardEnds" start-date-type="giftCardStart" end-date-type="giftCardEnds" sd-dp="stgcDp" sd-tp="stgcTp" ed-dp="eDgcDp" ed-tp="eDgcTp" flat-id="basicFlatInGiftCard" percentage-id="basicPerecentageInGift" discount-value="{{defaultDiscount}}" >
                           </basic-scheme>
                         </paper-card>
-                        <div align="center" class="arrows">
-                            <paper-fab icon="arrow-forward"  class="blue" id="firstStepInGc" on-click="_onNextClick"></paper-fab>
                         </div>
+                        <div class="col-2">
+                            <div class="arrows arrowPosition">
+                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                            </div>
+                        </div>
+                    </div>
                     </neon-animatable>
                     <neon-animatable>
-                        <div align="center" class="arrows">
-                            <paper-fab icon="arrow-back" class="blue" on-click="_onPrevClick">
-                            </paper-fab>
-                        </div>    
+                        <div class="col-12">
+                        <div class="col-2">
+                            <div class="arrows arrowPosition">
+                            <paper-fab icon="arrow-back" class="blue active" on-click="_onPrevClick">
+                                </paper-fab>
+                            </div>
+                        </div>
+                        <div class="col-8">    
                       <paper-card elevation="1" class="gift-card-extend-card">
                         <div class="col-12 margin0 ">
-                          <div class="col-2 text-right" style="margin:25px 0px 0px 0px;font-weight:bold;">
-                            <label >Locations : </label>
+                          <div class="col-2 text-right">
+                            <label class="text-bold">Locations : </label>
                          </div>
-                         <div class="col-10 margin0">
+                         <div class="col-10 margin0" style="margin-top:10px;padding-bottom:25px;">
                              <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/"
                                     options='{
                                         "allow_space": false,
@@ -100,12 +117,11 @@
                             </multi-value-suggestbox>
                          </div>
                         </div>
-
                         <div class="col-12 margin0">   
-                            <div class="col-2 text-right" style="margin:25px 0px 0px 0px;font-weight:bold;">
-                                <label>Benficiary :</label>   
+                            <div class="col-2 text-right">
+                                <label class="text-bold">Benficiary :</label>   
                             </div>
-                            <div class="col-10 margin0">
+                            <div class="col-10 margin0" style="margin-top:10px;padding-bottom:25px;">
                                 <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names/"
                                     options='{
                                         "allow_space": false,
@@ -115,6 +131,9 @@
                             </div>
                         </div>
                       </paper-card>
+                  </div>
+                  <div class="col-2"></div>
+              </div>
                         <div class="submitButtons">
                             <span>
                                 <paper-button name="createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
@@ -155,12 +174,12 @@
             },
             
             enableButtons:function(e){
-                if(e.target.invalid){
+               /* if(e.target.invalid){
                     document.querySelector("#firstStepInGc").hidden = true;
                 }else{
                     document.querySelector("#firstStepInGc").hidden = false;
                 }
-                console.log(e.target.invalid);
+                console.log(e.target.invalid);*/
             },
             
             //neon animations for coupon
