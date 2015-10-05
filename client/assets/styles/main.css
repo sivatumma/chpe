@@ -344,10 +344,24 @@ iron-pages{
  .upperCase{
   text-transform: capitalize;
  } 
- #doctrosDiscountBlock label{
+ #doctrosDiscountBlock label,#mopDiscounts label{
   font-weight: bold;
   margin-left: 15px;
  }
  .text-bold{
   font-weight: bold;
  }
+ /* flexchildt styles*/
+
+.flexContainer{
+  @apply(--layout-horizontal);
+}
+.flexchild1{
+  @apply(--layout-flex);
+}
+.flexchild2{
+  @apply(--layout-flex-2);
+}
+.flexchild3{
+  @apply(--layout-flex-3);
+}

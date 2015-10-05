@@ -62,12 +62,34 @@
             @apply(--layout-vertical);
             @apply(--center-justified);
         }
+        .leftnav {
+            position: absolute;
+            top: 345px;
+            left: 20px;
+            z-index: 11;
+            min-height: 160px;
+        }
+        
+        .leftnav paper-item {
+            cursor: pointer;
+        }
+        
+        .leftnav .iron-selected {
+            background: #4fc3f7 !important;
+            border-radius: 0px;
+        }
         
     </style>
     <template>
+       <paper-material class="leftnav">
+            <paper-menu selected="{{selected}}" style="padding:0px;">
+                <paper-item>1</paper-item>
+                <paper-item>2</paper-item>
+            </paper-menu>
+        </paper-material>
         <paper-material elevation="1" type="{{schemeType}}">
             <h4 class="paper-font-display2" type="{{schemeType}}">
-                Create Scheme <span>{{schemeType}}</span>
+                Create Scheme <span>COUPON</span>
                 <span>
                    <!-- <chpe-progress-bar></chpe-progress-bar>  -->
                     <!-- <paper-slider id="stepIndicator" pin snaps max="1" step="1" value="0" class="pull-right orange col-8"></paper-slider> -->
@@ -77,7 +99,7 @@
                 <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
                         <div class="col-12 margin0">
-                            <div class="col-2"></div>
+                            <div class="col-1"></div>
                             <div class="col-8">
                             <paper-card elevation="1" class="coupon-base-card">
                                 <basic-scheme id="basicScheme" start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="couponStart" end-date-type="couponEnds" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
@@ -112,19 +134,21 @@
                     <!-- step2 -->
                     <neon-animatable>
                           <div class="col-12 margin0">
-                        <div class="col-2">
-                          <div align="center" class="arrows margin0 arrowPosition">
-                              <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
-                              </paper-fab>
-                          </div>
+                        <div class="col-1">
+                          
                         </div>
                         <div class="col-8">
                             <paper-card elevation="1" class="coupon-extend-card">
                                 <service-rate-category id="srcCat"></service-rate-category>
                             </paper-card>
                         </div>
-                    </div>
-                        <div class="submitButtons">
+                        <div class="col-2">
+                            <div align="center" class="arrows margin0 arrowPosition">
+                              <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
+                              </paper-fab>
+                          </div>
+                        </div>
+                        <div class="submitButtons col-9">
                             <span>
                                 <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
                             </span>
@@ -132,6 +156,8 @@
                                 <paper-button name="coupon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
                             </span>
                         </div>
+                    </div>
+                        
                     </neon-animatable>
                 </neon-animated-pages>
 

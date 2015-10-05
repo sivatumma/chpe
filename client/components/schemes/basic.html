@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="col-12">
-            <chpe-discount id="basicSchemeDiscount"   discount-id="{{basicDiscount}}" percentage-id="{{percentageId}}" flat-id="{{flatId}}"
+            <chpe-discount id="basicSchemeDiscount"   discount-type-id="{{basicDiscount}}" percentage-id="{{percentageId}}" flat-id="{{flatId}}"
             discount="{{defaultDiscount}}" discount-modal="{{behavior}}">
             </chpe-discount>
         </div>
@@ -65,7 +65,8 @@
                 flatId:String,
                 discountModal:String,
                 metadata:Object,
-                behavior:Object
+                behavior:Object,
+                basicDiscount:String
             },
             ready: function() {
                 //this.$.basicSchemeDiscount.behavior = this.behavior; 
