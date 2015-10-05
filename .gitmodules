@@ -1,0 +1,3 @@
+[submodule "javaapi"]
+	path = javaapi
+	url = http://172.19.4.162/callhealth/javaapi.git
