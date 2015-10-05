@@ -55,6 +55,7 @@
     "node-uuid": "1.4.1",
     "nodemailer": "1.4.0",
     "nodemailer-smtp-transport": "*",
+    "request": "2.40.0",
     "ws": "0.7.2"
   },
   "scripts": {

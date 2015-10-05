@@ -1,0 +1,77 @@
+<script Slc="../../config/general.js"></script>
+<script Slc="../../config/schemeBase.js"></script>
+<dom-module id="service-level-discounts">
+    <style type="text/css">
+        .searchBoxInSlc{
+            width: 100%;
+        }
+        .searchBoxInSlc paper-input{
+            margin-left: 20px;
+        }
+        
+        .row{
+            width: 100%;
+            margin-top: 10px;
+        }
+        .discountBox.chpe-discount{
+            width: 320px !important;
+        }
+         paper-input {
+            margin-top: 0px !important;
+            margin-left: 10px;
+        }
+
+    </style>
+    <template>
+      <paper-card heading= "Service Level Discounts" class="col-12">
+        <div class="card-content">
+          <template is="dom-repeat" items="{{behavior.serviceLevelDiscounts}}" as="slc">
+            <div class="horizontal layout">
+                <div class="col-6">
+                        <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceLevelDiscounts/"
+                                    options='{
+                                        "allow_space": false,
+                                        "allow_nonmatching": false
+                                    }' selected-items="{{slc.services}}">
+                            </multi-value-suggestbox>
+                </div>
+                <chpe-discount id="slcDiscount" discount-modal="{{slc}}"  discount-id="slcDiscountId" percentage-id="slcPercentage" flat-id="slcFlat">
+                </chpe-discount>
+              <paper-icon-button icon="icons:delete" on-click="deleteSlc"></paper-icon-button>
+            </div>      
+          </template> 
+        </div>
+            <div class="card-actions">
+                <div class="horizontal layout" >
+                    <paper-button on-click="addSlc">Add</paper-button>
+                </div>
+            </div>
+            </paper-card>
+    </template>
+    <script>
+        Polymer({
+            'is':'service-level-discounts',
+             properties:{
+                "foodArray":{
+                    type:Array,
+                    notify:true
+                }
+            },
+            ready:function(){
+                // console.log(this.behavior.serviceLevelDiscounts);
+            },
+            listeners:{
+                "onClick":"addSlc",
+            },
+            //add or remove Slc categories
+            addSlc :function(e){
+                this.push('behavior.serviceLevelDiscounts', {discount:0,discountType:"%",maxLength:9,services:[]});
+            },
+            deleteSlc:function(e){
+                if(e.model.index!=0){
+                    this.splice('behavior.serviceLevelDiscounts',e.model.index,1);
+                }
+            }
+        });
+    </script>
+</dom-module>

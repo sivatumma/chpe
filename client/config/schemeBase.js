@@ -7,7 +7,7 @@ function schemeBase(scheme){    //init metadata as per schema
     var metadata = {
         name: "",
         createdBy: "",
-        toIds: [{id:1,name:""}],
+        toIds: [],
         userID:"",
         location:{longitude:0, latitude:0,ip:""},
         published: false,
@@ -36,28 +36,32 @@ function schemeBase(scheme){    //init metadata as per schema
             maxLength:9
         }],
         cumulativeAmountPoints: [{
-            amount: 0,
-            points: 0
+            amount: "",
+            points: ""
         }],
         doctorLevelDiscounts: [
             {type:"user",discount:0,discountType:"%",maxLength:9},
             {type:"system",discount:0,discountType:"%",maxLength:9}
         ],
         advancePaidDiscounts: [{
-            points: 0,
-            amount: 0
+            points: "",
+            amount: ""
         }],
         billValueDiscounts: [{
             billRange: {
-                from: 0,
-                to: 0
+                from: "",
+                to: ""
             },
             discount: 0,
             discountType: "%",
             maxLength:9
         }],
       modeOfPaymentDiscounts: [{
-         mop:"",
+         mop:"EPAY",
+         discount: 0,
+         discountType:"%",
+         maxLength:9
+        },{mop:"COD",
          discount: 0,
          discountType:"%",
          maxLength:9

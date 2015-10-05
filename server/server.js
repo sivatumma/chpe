@@ -38,6 +38,7 @@ app.use('/build', express.static(config.application.root_path + '/build', {
 
 app.use(express.static(config.application.root_path + '/client'));
 
+
 compressible('text/html') // => true 
 compressible('image/png') // => false 
 
@@ -107,7 +108,7 @@ function deleteModels(req, res) {
 }
 
 require('./routes/user.js')(app);
-
+require('./routes/proxy.js')(app);
 app.all('/', function(req, res) {
   // res.sendfile('client/login.html');
   res.redirect('/');

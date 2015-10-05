@@ -1,0 +1,77 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
+<dom-module id="cumulative-bill-amounts">
+    <style type="text/css">
+        .searchBoxInSrc{
+            width: 100%;
+        }
+        .searchBoxInSrc paper-input{
+            margin-left: 20px;
+        }
+        
+        .row{
+            width: 100%;
+            margin-top: 10px;
+        }
+        .discountBox.chpe-discount{
+            width: 320px !important;
+        }
+         paper-input {
+            margin-top: 0px !important;
+            margin-left: 10px;
+        }
+
+    </style>
+    <template id="capBox">
+      <paper-card heading="Points on Cumulative Bill Amounts" class="col-12">
+        <div class="card-content">
+          <template is="dom-repeat" items="{{behavior.cumulativeAmountPoints}}" as="cap">
+            <div class="horizontal layout">
+                <div class="col-5">
+                       <paper-input name="amount" no-label-float label="Amount" 
+                       value="{{cap.amount}}"></paper-input>
+                </div>
+                 <div class="col-5">
+                        <paper-input name="points" no-label-float label="Points" 
+                       value="{{cap.points}}"></paper-input>
+                </div>
+                <div class="col-2">
+                    <paper-icon-button icon="icons:delete" on-click="deletecap"></paper-icon-button>
+                </div>
+            </div>      
+          </template> 
+        </div>
+            <div class="card-actions">
+                <div class="horizontal layout" >
+                    <paper-button on-click="addcap">Add</paper-button>
+                </div>
+            </div>
+            </paper-card>
+    </template>
+    <script>
+        Polymer({
+            'is':'cumulative-bill-amounts',
+             properties:{
+                "foodArray":{
+                    type:Array,
+                    notify:true
+                }
+            },
+            ready:function(){
+                   // console.log(this.behavior.serviceRateCategoryDiscounts);
+            },
+            listeners:{
+                "onClick":"addcap",
+            },
+            //add or remove src categories
+            addcap :function(e){
+                this.push('behavior.cumulativeAmountPoints', {amount:"", points: ""});
+            },
+            deletecap:function(e){
+                if(e.model.index!=0){
+                    this.splice('behavior.cumulativeAmountPoints',e.model.index,1);
+                }
+            }
+        });
+    </script>
+</dom-module>

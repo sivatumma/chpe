@@ -1,164 +1,397 @@
 <dom-module id="chpe-addon">
-<style type="text/css">
-    .submitButtons{
-        text-align: right;
-    }
-    .submitButtons span{
-        display: inline-block;
-     }
-    .arrows{
+    <style type="text/css">
+        .submitButtons {
+            text-align: right;
+        }
+        
+        .submitButtons span {
+            display: inline-block;
+        }
+        
+        .arrows {
             background: none;
-    }
-    .base-scheme-card{
-        width: 50%;
-        padding: 2%;
-    }
-    #cards {
-      @apply(--layout-vertical);
-      @apply(--center-justified);
-      max-width:780px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 10px;
-    }
-    paper-fab {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 50%;
-      height: 40px;
-      width: 40px;
-    }
-    paper-fab.blue {
-      --paper-fab-background: var(--paper-light-blue-300);
-      --paper-fab-keyboard-focus-background: var(--paper-light-blue-200);
-    }
-    paper-fab.red {
-      --paper-fab-background: var(--paper-red-500);
-      --paper-fab-keyboard-focus-background: var(--paper-red-900);
-    }
-    paper-fab.green {
-      --paper-fab-background: var(--paper-green-500);
-      --paper-fab-keyboard-focus-background: var(--paper-green-900);
-    }
-    paper-fab.orange {
-      --paper-fab-background: var(--paper-orange-500);
-      --paper-fab-keyboard-focus-background: var(--paper-orange-900);
-    }
-    .addon-base-card{
-        margin: 0px auto;
-        max-width: 720px;
-        @apply(--layout-vertical);
-        @apply(--center-justified);
-    }
-    .arrows paper-icon-button{
-        margin-bottom: 0px !important;
-    }
-</style>
+        }
+        
+        .base-scheme-card {
+            width: 50%;
+            padding: 2%;
+        }
+        
+        #cards {
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+            max-width: 780px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px;
+        }
+        
+        paper-fab {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 50%;
+        }
+        
+        paper-fab.blue {
+            --paper-fab-background: var(--paper-light-blue-300);
+            --paper-fab-keyboard-focus-background: var(--paper-light-blue-200);
+        }
+        
+        paper-fab.red {
+            --paper-fab-background: var(--paper-red-500);
+            --paper-fab-keyboard-focus-background: var(--paper-red-900);
+        }
+        
+        paper-fab.green {
+            --paper-fab-background: var(--paper-green-500);
+            --paper-fab-keyboard-focus-background: var(--paper-green-900);
+        }
+        
+        paper-fab.orange {
+            --paper-fab-background: var(--paper-orange-500);
+            --paper-fab-keyboard-focus-background: var(--paper-orange-900);
+        }
+        
+        .addon-base-card {
+            margin: 0px auto;
+            max-width: 720px;
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+        }
+        
+        paper-input {
+            margin-top: 0px !important;
+            margin-left: 10px;
+        }
+        
+        .addon-extend-card {
+            margin: 0px auto;
+            max-width: 760px;
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+        }
+    </style>
     <template>
         <paper-material elevation="1" type="{{schemeType}}">
-      		<!-- <h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme <span>{{schemeType}}</span></h4> -->
-             <form is="iron-form" id="addon-form" method="POST" action="#">
+            <h4 class="paper-font-display2" type="{{schemeType}}">Create Scheme  Addon</span>
+             <!--  <paper-slider id="stepIndicator" pin snaps max="7" step="1" value="0" class="pull-right orange col-8"></paper-slider> -->
+            </h4>
+            <form is="iron-form" id="addon-form" method="POST" action="#">
                 <neon-animated-pages id="addonPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
-                            <paper-card elevation="1" class="addon-base-card">
-	                           <basic-scheme start-date-modal="addOnStartDate" end-date-modal="addOnEndDate" scheme-starts="addOnStart" scheme-ends="addOnEnds" start-date-type"addOnsd" end-date-type="addOned" sd-dp="staddOnDp" sd-tp="staddOnTp" ed-dp="eDaddOnDp"  ed-tp="eDaddOnTp" flat-id="basicFlatInAddon" percentage-id="basicPerecentageInAddon"></basic-scheme>
-                            </paper-card>
-                            <div align="center" class="arrows">
-                                <paper-fab icon="arrow-forward"  class="blue" on-click="_onNextClick"></paper-fab>
+                        <div class="col-12 margin0">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <paper-card elevation="1" class="addon-base-card">
+                                    <basic-scheme id="basicAddonScheme" start-date-modal="addOnStartDate" end-date-modal="addOnEndDate" scheme-starts="addOnStart" scheme-ends="addOnEnds" start-date-type "addOnstart" end-date-type="addOnend" sd-dp="staddOnDp" sd-tp="staddOnTp" ed-dp="eDaddOnDp" ed-tp="eDaddOnTp" flat-id="basicFlatInAddon" percentage-id="basicPerecentageInAddon"></basic-scheme>
+                                    <div class="col-12">
+                                        <div class="col-2" style="margin:10px 0px 0px 0px;font-weight:bold;">
+                                            <label style="margin-left:10px;">Locations :</label>
+                                        </div>
+                                        <div class="col-10 margin0">
+                                            <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/" options='{
+                                        "allow_space": false,
+                                        "allow_nonmatching": false
+                                    }' selected-items="{{scheme.behavior.locationOfServices}}">
+                                            </multi-value-suggestbox>
+                                        </div>
+                                    </div>
+                                </paper-card>
                             </div>
+                            <div class="col-1">
+                                <div class="arrows arrowPosition">
+                                    <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </neon-animatable>
+
+                    <!-- second step -->
                     <neon-animatable>
-                        <div align="center" class="arrows">
-                            <paper-fab icon="arrow-back" class="blue" on-click="_onPrevClick">
-                            </paper-fab>
-                        </div>    
-                         <div class="submitButtons">
+                      <div class="col-12 margin0">
+                        <div class="col-2">
+                          <div align="center" class="arrows margin0 arrowPosition">
+                              <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
+                              </paper-fab>
+                          </div>
+                        </div>
+                        <div class="col-8">
+                            <service-rate-category id="addonSrc" class="margin0 addon-extend-card"></service-rate-category>
+                        </div>
+                        <div class="col-2">
+                          <div align="center" class="arrows arrowPosition">
+                              <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                          </div>
+                        </div>
+                      </div>
+                    </neon-animatable>
+
+                    <!-- third step -->
+                    <neon-animatable>
+                        <div class="col-12 margin0">
+                          <div class="col-2">
+                            <div align="center" class="arrows margin0 arrowPosition">
+                                <paper-fab mini icon="arrow-back" class="blue action" 
+                                  on-click="_onPrevClick">
+                                </paper-fab>
+                            </div>
+                          </div>
+                          <div class="col-8">
+                             <paper-card eleveation="1" class="addon-extend-card">
+                                <service-level-discounts id="addonSlc" 
+                                  class="margin0 addon-extend-card"></service-level-discounts>
+                            </paper-card>
+                          </div>
+                          <div class="col-2">
+                            <div align="center" class="arrows arrowPosition">
+                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                            </div>
+                          </div>
+                      </div>
+                    </neon-animatable>
+                    <!-- fourth step -->
+                    <neon-animatable>
+                        <div class="col-12 margin0">
+                          <div class="col-2">
+                            <div align="center" class="arrows margin0 arrowPosition">
+                                <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
+                                </paper-fab>
+                            </div>
+                          </div>
+                          <div class="col-8">
+                              <paper-card eleveation="1" class="addon-extend-card">
+                                <cumulative-bill-amounts id="addOnCap"></cumulative-bill-amounts>
+                              </paper-card>
+                          </div>
+                          <div class="col-2">
+                            <div align="center" class="arrows arrowPosition">
+                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                            </div>
+                          </div>
+                        </div>
+                    </neon-animatable>
+
+                    <!-- Fifth step -->
+                    <neon-animatable>
+                        <div class="col-12 margin0">
+                          <div class="col-2">
+                            <div align="center" class="arrows margin0 arrowPosition">
+                                <paper-fab mini icon="arrow-back" class="blue action" 
+                                on-click="_onPrevClick">
+                                </paper-fab>
+                            </div>
+                          </div>
+                          <div class="col-8">
+                            <paper-card eleveation="1" heading= "Discounts on Doctor Allocation"  class="addon-extend-card">
+                              <div class="col-12">
+                              <template is="dom-repeat"  
+                              items="{{scheme.behavior.doctorLevelDiscounts}}" as="dda">
+                                  <templte>
+                                   <div class="col-6">
+                                   <label><span class="upperCase">{{dda.type}}</span> Chosen:</label>
+                                    <chpe-discount id="{{dda.type}}" discount-modal="{{dda}}"  
+                                     discount-id="ddaDiscount{{index}}" percentage-id="percent{{index}}"flat-id="flat{{index}}">
+                                   </chpe-discount>
+                                   </div>
+                                   </templte>
+                              </template>
+                              </div>
+                           </paper-card>
+                          </div>
+                          <div class="col-2">
+                            <div align="center" class="arrows arrowPosition">
+                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                            </div>
+                          </div>
+                        </div>
+                    </neon-animatable>
+                    <!-- sixth step -->
+                    <neon-animatable>
+                        <div class="col-12 margin0">
+                          <div class="col-2">
+                            <div align="center" class="arrows margin0 arrowPosition">
+                                <paper-fab mini icon="arrow-back" class="blue action" 
+                                on-click="_onPrevClick">
+                                </paper-fab>
+                            </div>
+                          </div>
+                          <div class="col-8">
+                            <paper-card eleveation="1" class="addon-extend-card">
+                              <advance-paid-points id="addonApp"></advance-paid-points>
+                            </paper-card>
+                          </div>
+                          <div class="col-2">
+                            <div align="center" class="arrows arrowPosition">
+                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                            </div>
+                          </div>
+                        </div>
+                    </neon-animatable>
+                    <!-- Seventh Step -->
+                    <neon-animatable>
+                         <div class="col-12 margin0">
+                          <div class="col-2">
+                            <div align="center" class="arrows margin0 arrowPosition">
+                                <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
+                                </paper-fab>
+                            </div>
+                          </div>
+                          <div class="col-8">
+                            <paper-card eleveation="1" class="addon-extend-card">
+                                <bill-range-discounts id="addonBsd"><bill-range-discounts>
+                            </paper-card>
+                          </div>
+                          <div class="col-2">
+                            <div align="center" class="arrows arrowPosition">
+                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                            </div>
+                          </div>
+                        </div>
+                    </neon-animatable>
+                    <!-- Eigth step -->
+                    <neon-animatable>
+                         <div class="col-12 margin0">
+                          <div class="col-2">
+                            <div align="center" class="arrows margin0 arrowPosition">
+                                <paper-fab mini icon="arrow-back" class="blue action"
+                                 on-click="_onPrevClick">
+                                </paper-fab>
+                            </div>
+                          </div>
+                          <div class="col-8">
+                            <paper-card eleveation="1" class="addon-extend-card" 
+                              heading="Discounts on Mode of Payments">
+                                <template id="addonMop" is="dom-repeat" items="{{scheme.behavior.modeOfPaymentDiscounts}}" as="mopDiscounts">
+                                   <templte>
+                                   <div class="col-6">
+                                   <label><span>{{mopDiscounts.mop}}</span></label>
+                                    <chpe-discount id="{{mopDiscounts.mop}}" discount-modal="{{mopDiscounts}}" discount-id="mopDiscount{{index}}" 
+                                    percentage-id="moppercent{{index}}"flat-id="mopflat{{index}}">
+                                   </chpe-discount>
+                                   </div>
+                                   </templte>
+                                </template>
+                            </paper-card>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                           <div class="submitButtons">
                             <span>
-                                <paper-button name="createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-input>
+                                <paper-button name="addon-form.createSchemeBtn" raised  on-click="submitForm" data-args="false" id="addonSave"  value="{{schemeStatus}}">Save</paper-input>
                             </span>
                             <span>
-                                <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
+                                <paper-button name="addon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
                             </span>
+                        </div>
                         </div>
                     </neon-animatable>
                 </neon-animated-pages>
-			</form>
+            </form>
         </paper-material>
-         <iron-ajax  id="schemeAjax" content-type="application/json"  method="POST" params='{}'   
-         handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
+        <iron-ajax id="schemeAjax" content-type="application/json" method="POST" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
     <script>
         Polymer({
             is: 'chpe-addon',
             properties: {
                 schemeType: String,
-                schemeStatus:Boolean,
-                succErrMsg:String
+                schemeStatus: Boolean,
+                succErrMsg: String
             },
-            attached:function(){
-                console.log(this.schemeType);
+            attached: function() {
+                //console.log(this.schemeType);
             },
-            ready:function(){
-                console.log(schemeBase.stateVariables);
-                this.metadata = schemeBase.metadata;
-                this.behavior = schemeBase.behavior;
-                this.scheme = schemeBase || editSchemeObj;
+            ready: function() {
                 this.selected = 0;
+                this.config = generalConfig() || {};
+                this.scheme = schemeBase();
+                this.$.basicAddonScheme.metadata = this.scheme.metadata;
+                this.$.basicAddonScheme.behavior = this.scheme.behavior;
+                this.$.addonSrc.behavior = this.scheme.behavior;
+                this.$.addonSlc.behavior = this.scheme.behavior;
+                this.$.addOnCap.behavior = this.scheme.behavior;
+                this.$.addonApp.behavior = this.scheme.behavior;
+                this.$.addonBsd.behavior = this.scheme.behavior;
+               //this.$.xyz.behavior = this.scheme.behavior;
+
             },
-            listeners:{
-              'addon-form.iron-form-submit':'createScheme',
-              'saveBtn.onClick':'submitForm',
+            listeners: {
+                'addon-form.iron-form-submit': 'createScheme',
+                'addon-form.addonSave.onClick': 'submitForm',
+                'value-change': 'getCurrentStep',
+                'addon-form.iron-input-validate': 'enableButtons'
+            },
+
+            enableButtons: function(e) {
+                /*this.actionElements = document.getElementsByClassName("action");
+                if(e.target.invalid){
+                    this.actionElements.forEach(function(val,index){
+                      val.disabled = true;
+                    });
+                }else{
+                    this.actionElements.forEach(function(val,index){
+                      val.disabled = false;
+                    });
+                }*/
             },
             _onPrevClick: function() {
                 this.entryAnimation = 'slide-from-left-animation';
                 this.exitAnimation = 'slide-right-animation';
-                this.selected = this.selected === 0 ? 4 : (this.selected - 1);
+                this.selected = this.selected === 0 ? 7 : (this.selected - 1);
             },
             _onNextClick: function() {
                 this.entryAnimation = 'slide-from-right-animation';
                 this.exitAnimation = 'slide-left-animation';
-                this.selected = this.selected === 4 ? 0 : (this.selected + 1);
+                this.selected = this.selected === 7 ? 0 : (this.selected + 1);
+                
             },
-            createScheme:function(){
-                 this.formData = document.getElementById('addon-form').serialize();
+            createScheme: function() {
+                this.formData = document.getElementById('addon-form').serialize();
+                this.scheme.behavior.startDate = chUtils.toIsoString(this.formData.addOnstart);
+                this.scheme.behavior.endDate = chUtils.toIsoString(this.formData.addOnend);
 
-                 this.scheme.behavior.startDate = cHutils.toIsoString(this.formData.startDate);
-                 this.scheme.behavior.endDate = cHutils.toIsoString(this.formData.endDate);
-
-                 this.metadata.type = this.schemeType;
-                 this.metadata.published = this.schemeStatus || this.metadata.published;
-                 this.scheme.on  = "newscheme";
-                 this.scheme.operation = "create";
-                 console.log(this.scheme);
-                 if(this.scheme!== undefined){
-                     this.$.schemeAjax.url = urls.apiHost+urls.selfRest;
-                     this.$.schemeAjax.method = "POST";
-                     this.$.schemeAjax.body = JSON.stringify(this.scheme);
-                     this.$.schemeAjax.generateRequest();
-                 }
+                this.scheme.metadata.type = "ADD_ON";
+                this.scheme.metadata.published = false;
+                this.scheme.on = "newscheme";
+                this.scheme.operation = "create";
+                if (this.scheme !== undefined) {
+                    this.$.schemeAjax.url = 'http://172.19.4.162:91' + this.config.urls.rest;
+                    this.$.schemeAjax.method = "POST";
+                    this.$.schemeAjax.body = JSON.stringify(this.scheme);
+                    this.$.schemeAjax.generateRequest();
+                }
             },
-            handleResponse:function(event){
-                console.log(event.detail.response);
-                document.querySelector("#schemeSuccErrMessageToast").show();
-                console.log("Received response: " + JSON.stringify(response.detail.response));
-                setTimeout(function(){
-
-                },3000);
+            handleResponse: function(event) {
+                if (event.detail.response != null && event.detail.response !== undefined) {
+                    document.querySelector("#schemeSuccErrMessageToast").show();
+                    console.log("Received response: " + JSON.stringify(event.detail.response));
+                    var toast = document.querySelector("#schemeSuccErrMessageToast");
+                    toast.text = this.scheme.metadata.type + " created successfully!...";
+                    toast.show();
+                } else {
+                    console.log(this.scheme);
+                    document.querySelector("#schemeSuccErrMessageToast").show();
+                    var toast = document.querySelector("#schemeSuccErrMessageToast");
+                    toast.text = "Error while creating" + this.scheme.metadata.type;
+                }
+                setTimeout(function() {
+                    //this.formData.clear();
+                }, 2000);
             },
-            handleError:function(event){
-                var request=event.detail.request;
-                console.log(event);
-                var error=event.detail.error;
-                var toast=document.querySelector("#schemeSuccErrMessageToast");
-                toast.text= "Error while creating "+this.scheme.metadata.type+" Please try again.. ";
+            handleError: function(event) {
+                var request = event.detail.request;
+                var error = event.detail.error;
+                console.log(error);
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
+                toast.text = "Error while creating " + this.scheme.metadata.type + " Please try again.. ";
                 toast.show();
             },
-            submitForm:function(evt,details,sender){
+            submitForm: function(evt, details, sender) {
                 document.getElementById('addon-form').submit();
             }
         });
-       
-        
     </script>
 </dom-module>

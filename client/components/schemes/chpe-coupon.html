@@ -64,7 +64,7 @@
         }
         
     </style>
-    <template is="dom-bind">
+    <template>
         <paper-material elevation="1" type="{{schemeType}}">
             <h4 class="paper-font-display2" type="{{schemeType}}">
                 Create Scheme <span>{{schemeType}}</span>
@@ -80,7 +80,7 @@
                                 <basic-scheme id="basicScheme" start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="couponStart" end-date-type="couponEnds" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
                                 </basic-scheme>
                             </paper-card>
-                            <div align="center" class="arrows" id="firstStep" hidden>
+                            <div align="center" class="arrows" id="firstStep">
                                 <paper-fab icon="arrow-forward"  class="blue" on-click="_onNextClick"></paper-fab>
                             </div>
                     </neon-animatable>
@@ -94,8 +94,18 @@
                     <paper-card elevation="1" class="coupon-extend-card">
                         <div class="col-12">
                             <coupon-type id="selectCouponType"></coupon-type>
-                            <div class="col-6 margin0">
-                                <paper-input name="locations" autocapitalize="on" value="{{behavior.locations}}" no-label-float label="Locations">
+                        </div>
+                         <div class="col-12 margin0">   
+                            <div class="col-2 text-right" style="margin:25px 0px 0px 0px;font-weight:bold;">
+                                <label>Locations :</label>   
+                            </div>
+                            <div class="col-10 margin0">
+                                <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/"
+                                    options='{
+                                        "allow_space": false,
+                                        "allow_nonmatching": false
+                                    }' selected-items="{{scheme.behavior.locationOfServices}}">
+                            </multi-value-suggestbox>
                             </div>
                         </div>
 
@@ -126,7 +136,7 @@
                 succErrMsg: String
             },
             attached: function() {
-                console.log(this.schemeType);
+               // console.log(this.schemeType);
             },
             ready: function() {
                 this.selected = 0;
@@ -144,7 +154,6 @@
                 'coupon-form.iron-input-validate':'enableButtons'
             },
             
-
             enableButtons:function(e){
                 if(e.target.invalid){
                     document.querySelector("#firstStep").hidden = true;
@@ -153,7 +162,6 @@
                 }
                 console.log(e.target.invalid);
             },
-            
             //neon animations for coupon
             _onPrevClick: function() {
                 this.entryAnimation = 'slide-from-left-animation';
@@ -179,7 +187,7 @@
                 this.scheme.on = "newscheme";
                 this.scheme.operation = "create";
                 if (this.scheme !== undefined) {
-                    this.$.couponAjax.url='http://172.19.4.162:91/mdb/scheme'+this.config.urls.rest;
+                    this.$.couponAjax.url='http://172.19.4.162:91'+this.config.urls.rest;
                     this.$.couponAjax.method = "POST";
                     this.$.couponAjax.body = JSON.stringify(this.scheme);
                     this.$.couponAjax.generateRequest();
