@@ -358,3 +358,9 @@ section schemes-as-cards{
 .flexchild3{
   @apply(--layout-flex-3);
 }
+
+
+/* custom paper styles*/
+.chpe-addon > paper-card .card-content, .chpe-gift-card > paper-card .card-content,.chpe-coupon > paper-card .card-content{
+  min-height: 240px;
+}

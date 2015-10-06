@@ -76,7 +76,7 @@
         
         .leftnav {
             position: fixed;
-            top: 269px;
+            top:155px;
             left: 256px;
             z-index: 11;
             min-height: 160px;
@@ -112,6 +112,8 @@
             <form is="iron-form" id="addon-form" method="POST" action="#">
                 <neon-animated-pages id="addonPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
+                        <div class="col-1">&nbsp;</div>
+                        <div class="col-8">
                         <paper-card elevation="5" class="addon-extend-card">
                             <div class="card-content  margin0">
                                 <basic-scheme id="basicAddonScheme" start-date-modal="addOnStartDate" end-date-modal="addOnEndDate" scheme-starts="addOnStart" scheme-ends="addOnEnds" start-date-type "addOnstart" end-date-type="addOnend" sd-dp="staddOnDp" sd-tp="staddOnTp" ed-dp="eDaddOnDp" ed-tp="eDaddOnTp" flat-id="basicFlatInAddon" percentage-id="basicPerecentageInAddon"></basic-scheme>
@@ -136,9 +138,12 @@
                                 </div>
                             </div>
                         </paper-card>
+                        </div>
                     </neon-animatable>
                     <!-- second step -->
                     <neon-animatable>
+                        <div class="col-1">&nbsp;</div>
+                        <div class="col-8">
                         <paper-card elevation="5" class="addon-extend-card">
                             <div class="card-content">
                                 <div class="margin0">
@@ -159,10 +164,13 @@
                                 </div>
                             </div>
                         </paper-card>
+                        </div>
                     </neon-animatable>
 
                     <!-- third step -->
                     <neon-animatable>
+                        <div class="col-1">&nbsp;</div>
+                        <div class="col-8">
                         <paper-card elevation="5" class="addon-extend-card">
                             <div class="card-content">
                                 <div class="margin0">
@@ -182,9 +190,12 @@
                                 </div>
                             </div>
                         </paper-card>
+                        </div>
                     </neon-animatable>
                     <!-- fourth step -->
                     <neon-animatable>
+                        <div class="col-1">&nbsp;</div>
+                        <div class="col-8">
                         <paper-card elevation="5" class="addon-extend-card">
                             <div class="card-content">
                                 <h4 class="col-12 margin0">Discounts on Doctor Allocation</h4>
@@ -232,8 +243,6 @@
                                 </div>
                             </div>
                         </paper-card>
-                        <div class="col-10">
-
                         </div>
                     </neon-animatable>
                 </neon-animated-pages>
