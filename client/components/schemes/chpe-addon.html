@@ -255,7 +255,7 @@
             ready: function() {
                 this.selected = 0;
                 this.config = generalConfig() || {};
-                this.scheme = schemeBase();
+                this.scheme = schemeBase() || editSchemeObj;
                 this.$.basicAddonScheme.metadata = this.scheme.metadata;
                 this.$.basicAddonScheme.behavior = this.scheme.behavior;
                 this.$.addonSrc.behavior = this.scheme.behavior;
