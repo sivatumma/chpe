@@ -32,15 +32,18 @@
 	      top:30px;
 	      left:30%;
 	    }
+
+	    .toggleLayer{
+	    	position:absolute;
+	    	z-index:-1;
+	    }
 	    
 	    @media(max-width:960px){
 	   	paper-dialog.size-position{
 	   		left: 10%;
 	   	}
 	   }
-	   section{
-	   	margin-left: 5px;
-	   }
+	   
 	   paper-input{
 	   	margin-left: 10px;
 	   }
@@ -56,7 +59,8 @@
 					<paper-time-picker id="{{timeId}}" ></paper-time-picker>
 			  	</div>
 			      <div class="buttons">
-			        <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+			      	<paper-button on-click="toggleLayer">Time / Date</paper-button>
+			        <paper-button dialog-confirm autofocus pull-right>Tap me to close</paper-button>
 			      </div>
     </paper-dialog>
     </section>
@@ -104,6 +108,13 @@
             	'dismissDialog ':'getDate',
             	'on-tap':'showDialog',
             	'iron-overlay-closed':'getdateTime'
+            },
+            toggleLayer:function(){
+            	console.log("what happened");
+            	document.querySelector('#datePicker').style.zIndex = '-1';
+            	document.querySelector('#datePicker').class = 'toggleLayer';
+            	console.log(document.querySelector('paper-date-picker').class);
+            	console.log(document.querySelector('paper-date-picker'));
             },
             setDateTime:function(){
             	this.pickedDate = this.formatDate(document.querySelector("#"+this.dateId).date);

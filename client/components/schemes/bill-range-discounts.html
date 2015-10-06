@@ -21,14 +21,22 @@
             margin-top: 0px !important;
             margin-left: 10px;
         }
-
+        .bsdBox{
+            border-bottom: 1px solid #ccc;
+            margin: 10px 0px;
+        }
     </style>
-    <template id="srcCategory">
-      <paper-card heading= "Bill Slabs - Discounts on bill ranges" class="col-12">
-        <div class="card-content">
+    <template id="bsdBox">
+      <div  class="col-12 bsdBox margin0">
+        <h4 class="col-12 margin0">Bill Slabs - Discounts on bill ranges
+            <span> 
+                <paper-icon-button icon="icons:add" on-click="addBsd">
+                </paper-icon-button>
+            </span>
+        </h4>
           <template is="dom-repeat" items="{{behavior.billValueDiscounts}}" as="bsd">
-            <div class="horizontal layout">
-                <div class="col-5">
+            <div class="col-12 margin0">
+                <div class="col-6">
                        <div class="col-6">
                             <paper-input name="from" no-label-float label="From" 
                        value="{{bsd.billRange.from}}"></paper-input>
@@ -38,25 +46,18 @@
                        value="{{bsd.billRange.to}}"></paper-input>
                        </div>
                 </div>
-                 <div class="col-6">
+                 <div class="col-5">
                     <chpe-discount id="{{bsd.type}}" discount-modal="{{bsd}}"  
                         discount-id="bsdDiscount{{index}}" percentage-id="bsdpercent{{index}}" 
                         flat-id="bsdflat{{index}}">
                      </chpe-discount> 
                 </div>
                 <div class="col-1">
-                    <paper-icon-button icon="icons:delete" on-click="deleteBsd"></paper-icon-button>
+                    <paper-fab mini icon="icons:delete" class="red" on-click="deleteBsd"></paper-fab>
                 </div>
             </div>
-            </div>      
           </template> 
         </div>
-            <div class="card-actions">
-                <div class="horizontal layout" >
-                    <paper-button on-click="addBsd">Add</paper-button>
-                </div>
-            </div>
-            </paper-card>
     </template>
     <script>
         Polymer({
