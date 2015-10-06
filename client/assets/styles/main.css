@@ -148,7 +148,8 @@ iron-pages{
 
 /*scheme styles*/
 section schemes-as-cards{
-  background: #F7F6E3;
+  /*background: #F7F6E3;*/
+  background: #f4f4f4;
 }
 .chpe-coupon,.chpe-gift-card,.chpe-addon{
     border-radius: 2px;
