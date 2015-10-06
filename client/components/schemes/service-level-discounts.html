@@ -20,13 +20,17 @@
             margin-top: 0px !important;
             margin-left: 10px;
         }
-
+        .singleRow{
+            margin: 0px;
+        }
     </style>
     <template>
-      <paper-card heading= "Service Level Discounts" class="col-12">
-        <div class="card-content">
+        <div  class="col-12 slcRowSection margin0">
+        <h4 class="col-12 margin0">Service Level  Discounts
+            <paper-icon-button icon="icons:add" on-click="addSlc"></paper-icon-button>
+        </h4>
           <template is="dom-repeat" items="{{behavior.serviceLevelDiscounts}}" as="slc">
-            <div class="horizontal layout">
+            <div class="col-12 singleRow">
                 <div class="col-6">
                         <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceLevelDiscounts/"
                                     options='{
@@ -35,18 +39,21 @@
                                     }' selected-items="{{slc.services}}">
                             </multi-value-suggestbox>
                 </div>
-                <chpe-discount id="slcDiscount" discount-modal="{{slc}}"  discount-id="slcDiscountId" percentage-id="slcPercentage" flat-id="slcFlat">
-                </chpe-discount>
-              <paper-icon-button icon="icons:delete" on-click="deleteSlc"></paper-icon-button>
+                <div class="col-4">
+                    <chpe-discount id="slcDiscount" discount-modal="{{slc}}"  discount-id="slcDiscountId" percentage-id="slcPercentage" flat-id="slcFlat">
+                    </chpe-discount>
+                </div>
+
+                <div class="col-2">
+                  <span>
+                    <paper-fab mini icon="icons:delete" class="red action" on-click="deleteSlc">
+                    </paper-fab>
+                  </span>
+                </div
             </div>      
           </template> 
         </div>
-            <div class="card-actions">
-                <div class="horizontal layout" >
-                    <paper-button on-click="addSlc">Add</paper-button>
-                </div>
-            </div>
-            </paper-card>
+
     </template>
     <script>
         Polymer({

@@ -20,13 +20,17 @@
             margin-top: 0px !important;
             margin-left: 10px;
         }
-
+        .srcRowSection{
+            border-bottom: 1px solid #ccc;
+        }
     </style>
     <template id="srcCategory">
-      <paper-card heading= "Service Rate Categories" class="col-12">
-        <div class="card-content">
+        <div class="col-12 srcRowSection margin0">
+        <h4 class="col-12 margin0">Service Rate Categories
+        <paper-icon-button icon="icons:add" on-click="addSrc"></paper-icon-button>
+        </h4>
           <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}" as="src">
-            <div class="horizontal layout">
+            <div class="col-12 singleRow">
                 <div class="col-6">
                         <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceRateCategories/"
                                     options='{
@@ -35,18 +39,20 @@
                                     }' selected-items="{{src.srcTypes}}">
                             </multi-value-suggestbox>
                 </div>
+                <div class="col-4">
                 <chpe-discount id="srcDiscount" discount-modal="{{src}}"  discount-type-id="srcDiscountId" percentage-id="srcPercentage" flat-id="srcFlat">
                 </chpe-discount>
-              <paper-icon-button icon="icons:delete" on-click="deleteSrc"></paper-icon-button>
+                </div>
+                <div class="col-2">
+                  <span>
+                    <paper-fab mini icon="icons:delete" class="red" on-click="deleteSrc">
+                    </paper-fab>
+                  </span>
+                </div>
             </div>      
           </template> 
         </div>
-            <div class="card-actions">
-                <div class="horizontal layout" >
-                    <paper-button on-click="addSrc">Add</paper-button>
-                </div>
-            </div>
-            </paper-card>
+           
     </template>
     <script>
         Polymer({

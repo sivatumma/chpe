@@ -1,16 +1,20 @@
-<dom-module  id="multi-value-suggestbox">
+<link rel="import"  href="../bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 
+<dom-module id="multi-value-suggestbox">
+
+ <template >
         <style type="text/css" media="screen">
             ul {
                 margin: 0;
                 padding: 0;
                 list-style: none;
+                font-family: "Calibri";
             }
             ul#item_list {
                 display: block;
                 border-bottom: 2px solid rgb(63,81,181);
+                min-width: 50%;
                 padding-left: 10px;
-                margin: 20px 5px;
             }
             ul#item_list > li {
                 display: inline-block;
@@ -48,19 +52,19 @@
             #item_entry {
                 position: relative;
             }
-           
             #item_entry > div {
                 display: inline;
-                padding: 0px;
+                padding: 3px 5px;
                 box-sizing: border-box;
+                line-height: 50px;
             }
             #item_entry > div > span {
                 min-width: 60px;
                 display: inline-block;
                 font-size: 14px;
+                line-height: 150%;
                 vertical-align: middle;
             }
-
             #item_entry > div > span:focus {
                 outline-style: none;
             }
@@ -87,13 +91,11 @@
                 color:#fff;
             }
         </style>
-    <template>
-        <ul id="item_list"  style="width: {{options.box_width}};" on-tap="elementTapped">
-            <template id="items"  is="dom-repeat" items="{{selectedItems}}">
-                <li style="max-width: calc( {{options.box_width}} - 25px);">
-                    <span id="{{item.id}}">{{item.name}}</span>
-                    <a on-tap="removeTapped"></a>
-                </li>
+
+        <div options="{{listOptions}}" suggestions="{{listSuggestions}}">
+             <ul id="item_list" style="width: {{options.box_width}};" on-tap="elementTapped">
+            <template repeat="{{item in selectedItems}}">
+                <li style="max-width: calc( {{options.box_width}} - 25px);">{{item}}<a on-tap="removeTapped"></a></li>
             </template>
             <li id="item_entry">
                 <div style="line-height: {{options.box_height}};">
@@ -104,16 +106,19 @@
                         on-keyup="keyupHandler">
                     </span>
                 </div>
+                <template if="{{suggestions.length >= 0}}">
                     <ul id="suggest_menu">
-                        <template is="dom-repeat" items="{{suggestedItems}}">
+                        <template repeat="{{item in suggestions}}">
                             <li on-tap="suggestionTapped"
-                                on-mouseover="suggestionHovered" id="{{item.id}}">{{item.name}}</li>
+                                on-mouseover="suggestionHovered">{{item}}</li>
                         </template>
                     </ul>
+                </template>
             </li>
         </ul>
-        <iron-ajax  id="namesAsChips" content-type="application/json"  method="GET" params='{}'   
-         handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
+        </div>
+       
+        <!-- <core-xhr id="xhr"></core-xhr> -->
     </template>
 
     <script>
@@ -156,56 +161,42 @@
         };
 
         Polymer({
-            is:'multi-value-suggestbox',
-            properties: {
-                suggestedItems:{
-                    type:Array,
-                    notify: true,
-                },
-                selectedItems:{
-                    type:Array,
-                    notify: true,
-                },
-                options:{
-                    type:Object,
-                    notify: true,
-                },
-                chipsAjaxId:{
-                    type:String,
-                    notify: true,
-                },
-                dataModal:{
-                    type:Object,
-                    notify:true
-                },
-                chipsId:{
-                    type:String,
-                    notify:true
-                }
+            is:'multi-value-suggestbox', 
+            properties:{
+                listSuggestions: Array ,
+                selectedItems: Array,
+                listOptions: Object,
+            },
+            listeners: {
+                /*'tap':'elementTapped',
+                'suggest_menu.tap':'suggestionTapped',
+                'item_input.keydown':'keydownHandler',
+                'item_input.keyup':'keyupHandler',
+                'suggest_menu.mouseover':'suggestionHovered',*/
+                
             },
             // Fires when the "<multi-value-suggestbox>" has been fully prepared
             ready: function() {
                 // if not set by user, use default values
-                if (!this.options.box_width) this.options.box_width = "200px";
-                if (!this.options.box_height) this.options.box_height = "40px";
-                if (!this.options.allow_space) this.options.allow_space = false;
-                if (!this.options.allow_nonmatching) this.options.allow_nonmatching = false;
-                this.selectedItems =  this.getAttribute("selected-items") || [];
-                this.suggestedItems = [];
-            },
-            listeners:{
-                'input-changed':'addRemoveChips'
+                /*if (options.box_width) this.options.box_width = "200px";
+                if (options.box_height) this.options.box_height = "40px";
+                if (options.allow_space) this.options.allow_space = false;
+                if (options.allow_nonmatching) this.options.allow_nonmatching = false;*/
+                this.addEventListener('input-changed', function(ele) {
+                     var el = document.querySelector('#multi_suggest');
+                    el.suggestions = ["Suresh","Siva","Mahesh"];
+                  });
             },
 
-            addRemoveChips:function(ele){
-                if (ele.detail.newInput !== undefined) {
-                    this.$.namesAsChips.url=this.attributes.url.value+ele.detail.newInput;
-                    this.$.namesAsChips.method = "GET";
-                    this.$.namesAsChips.generateRequest();
-                }
-            },
+            test:function(ele) {
+                    var that = this;
+                   /* this.$.xhr.request({url:((this.attributes.url.value)+ele.detail.newInput), callback: this.handleResponse})*/
+                    var el = document.querySelector('#multi_suggest');
+                   el.suggestions = ["Suresh","Siva","Mahesh"];
+                  },
+
             loadChips:function(response){
-                var contacts = response;
+                var contacts = JSON.parse(response);
                     return contacts.map(function(c, index) {
                         var cParts = c.split(' ');
                         var contact = {
@@ -214,51 +205,55 @@
                         contact._lowername = contact.name.toLowerCase();
                         return contact;
                  });
+                console.log("This is running");
             },
 
-            handleResponse: function(event) {
-                  if(event.detail.response!=null && event.detail.response!==undefined){
+            handleResponse: function(response) {
                         var el = document.querySelector('#multi_suggest');
-                        var contacts = event.detail.response;
+                        //el.suggestions = JSON.parse(response);
+                        var contacts = JSON.parse(response);
                         var chips = [];
                        contacts.map(function(c, index) {
-                            var contact = {
-                                name: (c.name) || c,
-                                id: (c.id)||index
-                            };
-                            contact._lowername = contact.name.toLowerCase();
-                            chips.push(contact);
-                        });
-                       this.suggestedItems = chips;
-                      console.log(this.suggestedItems);
-                  }                       
+                        var contact = {
+                            name: c,
+                            id: (c.id)||index
+                        };
+                        contact._lowername = contact.name.toLowerCase();
+                        chips.push(contact);
+                    });
+                       el.suggestions = chips;
+                  //console.log(chips);
+                       
              },
+      
             elementTapped: function(event, detail, sender) {
                 this.setFocus();
             },
 
             suggestionTapped: function(event, detail, sender) {
-                this.push('selectedItems',{id:event.target.id,name:event.target.innerText});
+                this.selectedItems.push(event.target.innerText);
                 // reset input
                 this.$.item_input.innerText = '';
 
                 this.resetSuggestions();
             },
+
             suggestionHovered: function(event, detail, sender) {
                 removeClass(this.$.item_list.querySelector('#suggest_menu li.active'), 'active');
                 addClass(sender, 'active');
             },
 
             removeTapped: function(event, detail, sender) {
-                this.splice('selectedItems',calculateLiIndex(event.target.parentNode), 1);
-                console.log(this.selectedItems);
+                this.selectedItems.splice(calculateLiIndex(sender.parentNode), 1);
             },
+
             keydownHandler: function(event, detail, sender) {
+               // console.log();
                 var activeSuggestion;
                 switch(event.keyCode) {
                     case 8:  // backspace
                         if (event.target.innerText.length === 0 && this.selectedItems.length > 0) {
-                            this.pop('selectedItems');
+                            this.selectedItems.pop();
                         }
                         break;
 
@@ -271,14 +266,13 @@
                         activeSuggestion = this.$.item_list.querySelector('#suggest_menu li.active');
                         var topSuggestion = this.$.item_list.querySelector('#suggest_menu li');
                         if (activeSuggestion) {
-
-                            console.log(activeSuggestion.id);
-                            this.push('selectedItems',{id:activeSuggestion.id,name:activeSuggestion.innerText});
+                            console.log(this.selectedItems);
+                            this.selectedItems.push(activeSuggestion.innerText);
                             this.$.item_input.innerText = '';
                             this.resetSuggestions();
                         } else if ((this.options.allow_nonmatching === true && this.$.item_input.innerText.length > 0) ||
                                 this.$.item_input.innerText === topSuggestion.innerText) {
-                            this.push('selectedItems',{id:event.target.id,name:event.target.innerText});
+                            this.selectedItems.push(event.target.innerText);
                             this.$.item_input.innerText = '';
                             this.resetSuggestions();
                         }
@@ -287,7 +281,7 @@
                         break;
 
                     case 27:  // escape
-                        if (this.options.allow_nonmatching === true || this.suggestedItems.length > 0) {
+                        if (this.options.allow_nonmatching === true || this.suggestions.length > 0) {
                             this.resetSuggestions();
                             event.preventDefault();
                         }
@@ -319,6 +313,7 @@
                         break;
                 }
             },
+
             keyupHandler: function(event, detail, sender) {
                 var inputChanged = true;
                 var activeSuggestion;
@@ -342,6 +337,7 @@
                         inputChanged = false;
                         break;
                 }
+
                 if (inputChanged === true) {
                     this.fireInputChangedEvent();
                 }
@@ -352,14 +348,17 @@
             },
 
             resetSuggestions: function() {
-                while (this.suggestedItems.length > 0) {
-                    this.suggestedItems = [];
+                while (this.suggestions.length > 0) {
+                    this.suggestions.pop();
                 }
             },
+
             setFocus: function() {
                 this.$.item_input.focus();
             }
         });
+
+    
     
     </script>
 
