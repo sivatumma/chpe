@@ -82,7 +82,7 @@
         
         .leftnav {
             position: fixed;
-            top: 269px;
+            top:155px;
             left: 256px;
             z-index: 11;
             min-height: 160px;
@@ -113,6 +113,8 @@
             <form is="iron-form" id="gift-card-form" method="POST" action="#">
                 <neon-animated-pages id="giftCardPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
+                        <div class="col-1">&nbsp;</div>
+                        <div class="col-8">
                         <paper-card elevation="5" class="gift-card-extend-card">
                             <div class="margin0 card-content">
                                 <basic-scheme id="basicSchemeGiftCard" start-date-modal="giftCardStartDate" end-date-modal="giftCardEndDate" scheme-starts="giftCardStart" scheme-ends="giftCardEnds" start-date-type="giftCardStart" end-date-type="giftCardEnds" sd-dp="stgcDp" sd-tp="stgcTp" ed-dp="eDgcDp" ed-tp="eDgcTp" flat-id="basicFlatInGiftCard" percentage-id="basicPerecentageInGift" basic-discount="basicDiscId" discount-value="{{defaultDiscount}}">
@@ -127,8 +129,11 @@
                                 </div>
                             </div>
                         </paper-card>
+                        </div>
                     </neon-animatable>
                     <neon-animatable>
+                        <div class="col-1">&nbsp;</div>
+                        <div class="col-8">
                         <paper-card elevation="5" class="gift-card-extend-card">
                             <div class="card-content margn0">
                                 <div class="col-12 margin0 ">
@@ -171,6 +176,7 @@
                                 </div>
                             </div>
                         </paper-card>
+                        </div>
                     </neon-animatable>
                 </neon-animated-pages>
             </form>
