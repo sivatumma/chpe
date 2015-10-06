@@ -2,6 +2,8 @@
     <style type="text/css">
         .submitButtons {
             text-align: right;
+            margin: 0px 12px 0px 0px;
+            padding: 0px;
         }
         
         .submitButtons span {
@@ -73,9 +75,9 @@
         }
         
         .leftnav {
-            position: absolute;
-            top: 280px;
-            left: 0px;
+            position: fixed;
+            top: 269px;
+            left: 256px;
             z-index: 11;
             min-height: 160px;
         }
@@ -87,6 +89,12 @@
         .leftnav .iron-selected {
             background: #4fc3f7 !important;
             border-radius: 0px;
+        }
+        
+        .lastStepActions {
+            padding: 0px;
+            margin: 0px;
+            /*background: #4fc3f7;*/
         }
     </style>
     <template>
@@ -104,36 +112,34 @@
             <form is="iron-form" id="addon-form" method="POST" action="#">
                 <neon-animated-pages id="addonPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
-                        <div class="col-12 margin0">
-                            <div class="col-1"></div>
-                            <div class="col-8">
-                                <paper-card elevation="5" class="addon-base-card">
-                                    <basic-scheme id="basicAddonScheme" start-date-modal="addOnStartDate" end-date-modal="addOnEndDate" scheme-starts="addOnStart" scheme-ends="addOnEnds" start-date-type "addOnstart" end-date-type="addOnend" sd-dp="staddOnDp" sd-tp="staddOnTp" ed-dp="eDaddOnDp" ed-tp="eDaddOnTp" flat-id="basicFlatInAddon" percentage-id="basicPerecentageInAddon"></basic-scheme>
-                                    <div class="col-12">
-                                        <div class="col-2" style="margin:10px 0px 0px 0px;font-weight:bold;">
-                                            <label style="margin-left:10px;">Locations :</label>
-                                        </div>
-                                        <div class="col-10 margin0">
-                                            <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/" options='{
-                                        "allow_space": false,
-                                        "allow_nonmatching": false
-                                    }' selected-items="{{scheme.behavior.locationOfServices}}">
-                                            </multi-value-suggestbox>
-                                        </div>
+                        <paper-card elevation="5" class="addon-extend-card">
+                            <div class="card-content  margin0">
+                                <basic-scheme id="basicAddonScheme" start-date-modal="addOnStartDate" end-date-modal="addOnEndDate" scheme-starts="addOnStart" scheme-ends="addOnEnds" start-date-type "addOnstart" end-date-type="addOnend" sd-dp="staddOnDp" sd-tp="staddOnTp" ed-dp="eDaddOnDp" ed-tp="eDaddOnTp" flat-id="basicFlatInAddon" percentage-id="basicPerecentageInAddon"></basic-scheme>
+                                <div class="col-12 margin0 padding0">
+                                    <div class="col-2" style="margin:25px 0px 0px 0px;font-weight:bold;">
+                                        <label style="margin-left:10px;">Locations :</label>
                                     </div>
-                                </paper-card>
-                            </div>
-                            <div class="col-1">
-                                <div class="arrows arrowPosition">
-                                    <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                                    <div class="col-10 margin0">
+                                        <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/" options='{
+                              "allow_space": false,
+                              "allow_nonmatching": false
+                          }' selected-items="{{scheme.behavior.locationOfServices}}">
+                                        </multi-value-suggestbox>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="card-actions col-12" style="padding:0px;margin:0px;">
+                                <div class="col-11 margin0">&nbsp;</div>
+                                <div class="col-1 margin0">
+                                    <paper-fab mini icon="done" class="blue action" on-click="_onNextClick">
+                                    </paper-fab>
+                                </div>
+                            </div>
+                        </paper-card>
                     </neon-animatable>
-
                     <!-- second step -->
                     <neon-animatable>
-                        <paper-card elevation="3" class="addon-extend-card">
+                        <paper-card elevation="5" class="addon-extend-card">
                             <div class="card-content">
                                 <div class="margin0">
                                     <service-rate-category id="addonSrc" class="margin0 addon-extend-card"></service-rate-category>
@@ -142,11 +148,11 @@
                                 </div>
                             </div>
                             <div class="card-actions">
-                                <div class="col-10 margin0">&nbsp;</div>
                                 <div class="arrows col-1 margin0">
                                     <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
                                     </paper-fab>
                                 </div>
+                                <div class="col-10 margin0">&nbsp;</div>
                                 <div class="col-1 margin0">
                                     <paper-fab mini icon="done" class="blue action" on-click="_onNextClick">
                                     </paper-fab>
@@ -157,7 +163,7 @@
 
                     <!-- third step -->
                     <neon-animatable>
-                        <paper-card eleveation="3" class="addon-extend-card">
+                        <paper-card elevation="5" class="addon-extend-card">
                             <div class="card-content">
                                 <div class="margin0">
                                     <cumulative-bill-amounts id="addOnCap"></cumulative-bill-amounts>
@@ -165,11 +171,11 @@
                                 </div>
                             </div>
                             <div class="card-actions col-12" style="padding:0px;">
-                                <div class="col-10 margin0">&nbsp;</div>
                                 <div class="arrows col-1 margin0">
                                     <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
                                     </paper-fab>
                                 </div>
+                                <div class="col-10 margin0">&nbsp;</div>
                                 <div class="col-1 margin0">
                                     <paper-fab mini icon="done" class="blue action" on-click="_onNextClick">
                                     </paper-fab>
@@ -179,8 +185,9 @@
                     </neon-animatable>
                     <!-- fourth step -->
                     <neon-animatable>
-                        <paper-card eleveation="1" heading="Discounts on Doctor Allocation" class="addon-extend-card">
+                        <paper-card elevation="5" class="addon-extend-card">
                             <div class="card-content">
+                                <h4 class="col-12 margin0">Discounts on Doctor Allocation</h4>
                                 <div class="col-12" id="doctrosDiscountBlock">
                                     <template is="dom-repeat" items="{{scheme.behavior.doctorLevelDiscounts}}" as="dda">
                                         <templte>
@@ -194,9 +201,12 @@
                                 </div>
                                 <div class="col-12" style="margin-top:15px;">
                                     <bill-range-discounts id="addonBsd">
-                                        <bill-range-discounts>
+                                    </bill-range-discounts>
                                 </div>
                                 <div id="mopDiscounts" class="col-12 margin0">
+                                    <h4 class="col-12 margin0">
+                                      Discounts on Mode of Payments
+                                    </h4>
                                     <template id="addonMop" is="dom-repeat" items="{{scheme.behavior.modeOfPaymentDiscounts}}" as="mopDiscounts">
                                         <templte>
                                             <div class="col-6">
@@ -208,23 +218,22 @@
                                     </template>
                                 </div>
                             </div>
-                            <div class="card-actions col-12" style="padding:0px;">
-                                <div class="col-10 margin0">&nbsp;</div>
+                            <div class="card-actions col-12 lastStepActions">
                                 <div class="arrows col-1 margin0">
-                                    <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
+                                    <paper-fab mini icon="arrow-back" class="action" on-click="_onPrevClick">
                                     </paper-fab>
+                                </div>
+                                <div class="col-5 margin0">&nbsp;</div>
+                                <div class="col-6 margin0">
+                                    <div class="submitButtons">
+                                <paper-button name="addon-form.createSchemeBtn" raised  on-click="submitForm" data-args="false" id="addonSave"  value="{{schemeStatus}}">Save</paper-button>
+                                <paper-button name="addon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-button>
+                                    </div>
                                 </div>
                             </div>
                         </paper-card>
                         <div class="col-10">
-                            <div class="submitButtons">
-                                <span>
-                                <paper-button name="addon-form.createSchemeBtn" raised  on-click="submitForm" data-args="false" id="addonSave"  value="{{schemeStatus}}">Save</paper-input>
-                            </span>
-                                <span>
-                                <paper-button name="addon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
-                            </span>
-                            </div>
+
                         </div>
                     </neon-animatable>
                 </neon-animated-pages>
