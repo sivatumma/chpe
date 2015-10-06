@@ -65,7 +65,7 @@
 <template>
 	<paper-material>
 		<template is="dom-repeat" items="{{allSchemes}}"> 
-			<paper-card  elevation="2" heading="{{item.metadata.type}}" class="cards" id="r_{{index}}" on-click="toggleStyle">
+			<paper-card elevation="2" heading="{{item.metadata.type}}" class="cards" id="{{getId(index)}}" on-focus-out="toggleStyle" on-click="toggleStyle">
 				<div class="card-content">{{item.metadata.name}}</div>
 				<div class="card-actions">
         <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
@@ -86,9 +86,11 @@
     properties: {
       allSchemes: Object,
       scheme: Object,
+      previouslySelectedId:String
     },
     listeners: {
-
+      "onClick":"toggleStyle",
+      "onFocusOut":"toggleStyle"
     },
     ready: function() {
       console.log("Hi Schemes as cards loaded....!");
@@ -101,10 +103,18 @@
       this.$.fetchSchemes.body = JSON.stringify(this.scheme);
       this.$.fetchSchemes.generateRequest();
     },
+    getId: function(index){
+      return "r_" + index;
+    },
     toggleStyle: function(event) {
-      event.stopPropagation();
-      event.target._parent.style.background = 'blue';
-
+      console.log(event);
+      if(this.previouslySelectedId != null){
+        document.querySelector(this.previouslySelectedId).style.background = '#fff';
+        document.querySelector(this.previouslySelectedId).style.color = '#000';
+      }
+      document.querySelector('#r_'+event.model.index).style.background = 'lightblue';
+      document.querySelector('#r_'+event.model.index).style.color = '#000';
+      this.previouslySelectedId = '#r_'+event.model.index;
     },
     handleResponse: function(event) {
       console.log(event.detail.response);
