@@ -20,13 +20,20 @@
             margin-top: 0px !important;
             margin-left: 10px;
         }
-
+        .capRowSection{
+            border-bottom: 1px solid #ccc;
+        }
+        .singleRow{
+            margin-bottom: 20px;
+        }
     </style>
     <template id="capBox">
-      <paper-card heading="Points on Cumulative Bill Amounts" class="col-12">
-        <div class="card-content">
+        <div class="col-12 capRowSection margin0">
+          <h4 class="col-12 margin0">Points on Cumulative Bill Amounts
+            <paper-icon-button icon="icons:add" on-click="addcap"></paper-icon-button>
+          </h4>
           <template is="dom-repeat" items="{{behavior.cumulativeAmountPoints}}" as="cap">
-            <div class="horizontal layout">
+            <div class="col-12 singleRow">
                 <div class="col-5">
                        <paper-input name="amount" no-label-float label="Amount" 
                        value="{{cap.amount}}"></paper-input>
@@ -36,17 +43,12 @@
                        value="{{cap.points}}"></paper-input>
                 </div>
                 <div class="col-2">
-                    <paper-icon-button icon="icons:delete" on-click="deletecap"></paper-icon-button>
+                    <paper-fab mini icon="icons:delete" class="red" on-click="deletecap">
+                    </paper-fab>
                 </div>
             </div>      
           </template> 
         </div>
-            <div class="card-actions">
-                <div class="horizontal layout" >
-                    <paper-button on-click="addcap">Add</paper-button>
-                </div>
-            </div>
-            </paper-card>
     </template>
     <script>
         Polymer({

@@ -71,6 +71,7 @@
             @apply(--layout-vertical);
             @apply(--center-justified);
         }
+        
         .leftnav {
             position: absolute;
             top: 280px;
@@ -89,15 +90,16 @@
         }
     </style>
     <template>
-      <paper-material class="leftnav" elevation="5"> 
+        <paper-material class="leftnav" elevation="5">
             <paper-menu selected="{{selected}}" style="padding:0px;">
                 <paper-item>1</paper-item>
                 <paper-item>2</paper-item>
                 <paper-item>3</paper-item>
+                <paper-item>4</paper-item>
             </paper-menu>
         </paper-material>
         <paper-material elevation="1" type="{{schemeType}}">
-             <!--  <paper-slider id="stepIndicator" pin snaps max="7" step="1" value="0" class="pull-right orange col-8"></paper-slider> -->
+            <!--  <paper-slider id="stepIndicator" pin snaps max="7" step="1" value="0" class="pull-right orange col-8"></paper-slider> -->
             </h4>
             <form is="iron-form" id="addon-form" method="POST" action="#">
                 <neon-animated-pages id="addonPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
@@ -127,187 +129,102 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </neon-animatable>
 
                     <!-- second step -->
                     <neon-animatable>
-                      <div class="col-12 margin0">
-                        <div class="col-2">
-                          <div align="center" class="arrows margin0 arrowPosition">
-                              <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
-                              </paper-fab>
-                          </div>
-                        </div>
-                        <div class="col-8">
-                            <service-rate-category id="addonSrc" class="margin0 addon-extend-card"></service-rate-category>
-                        </div>
-                        <div class="col-2">
-                          <div align="center" class="arrows arrowPosition">
-                              <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
-                          </div>
-                        </div>
-                      </div>
+                        <paper-card elevation="3" class="addon-extend-card">
+                            <div class="card-content">
+                                <div class="margin0">
+                                    <service-rate-category id="addonSrc" class="margin0 addon-extend-card"></service-rate-category>
+                                    <service-level-discounts id="addonSlc" class="margin0 addon-extend-card">
+                                    </service-level-discounts>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <div class="col-10 margin0">&nbsp;</div>
+                                <div class="arrows col-1 margin0">
+                                    <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
+                                    </paper-fab>
+                                </div>
+                                <div class="col-1 margin0">
+                                    <paper-fab mini icon="done" class="blue action" on-click="_onNextClick">
+                                    </paper-fab>
+                                </div>
+                            </div>
+                        </paper-card>
                     </neon-animatable>
 
                     <!-- third step -->
                     <neon-animatable>
-                        <div class="col-12 margin0">
-                          <div class="col-2">
-                            <div align="center" class="arrows margin0 arrowPosition">
-                                <paper-fab mini icon="arrow-back" class="blue action" 
-                                  on-click="_onPrevClick">
-                                </paper-fab>
+                        <paper-card eleveation="3" class="addon-extend-card">
+                            <div class="card-content">
+                                <div class="margin0">
+                                    <cumulative-bill-amounts id="addOnCap"></cumulative-bill-amounts>
+                                    <advance-paid-points id="addonApp"></advance-paid-points>
+                                </div>
                             </div>
-                          </div>
-                          <div class="col-8">
-                             <paper-card eleveation="1" class="addon-extend-card">
-                                <service-level-discounts id="addonSlc" 
-                                  class="margin0 addon-extend-card"></service-level-discounts>
-                            </paper-card>
-                          </div>
-                          <div class="col-2">
-                            <div align="center" class="arrows arrowPosition">
-                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                            <div class="card-actions col-12" style="padding:0px;">
+                                <div class="col-10 margin0">&nbsp;</div>
+                                <div class="arrows col-1 margin0">
+                                    <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
+                                    </paper-fab>
+                                </div>
+                                <div class="col-1 margin0">
+                                    <paper-fab mini icon="done" class="blue action" on-click="_onNextClick">
+                                    </paper-fab>
+                                </div>
                             </div>
-                          </div>
-                      </div>
+                        </paper-card>
                     </neon-animatable>
                     <!-- fourth step -->
                     <neon-animatable>
-                        <div class="col-12 margin0">
-                          <div class="col-2">
-                            <div align="center" class="arrows margin0 arrowPosition">
-                                <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
-                                </paper-fab>
+                        <paper-card eleveation="1" heading="Discounts on Doctor Allocation" class="addon-extend-card">
+                            <div class="card-content">
+                                <div class="col-12" id="doctrosDiscountBlock">
+                                    <template is="dom-repeat" items="{{scheme.behavior.doctorLevelDiscounts}}" as="dda">
+                                        <templte>
+                                            <div class="col-6">
+                                                <label><span class="upperCase">{{dda.type}}</span> Chosen:</label>
+                                                <chpe-discount id="{{dda.type}}" discount-modal="{{dda}}" discount-id="ddaDiscount{{index}}" percentage-id="percent{{index}}" flat-id="flat{{index}}">
+                                                </chpe-discount>
+                                            </div>
+                                        </templte>
+                                    </template>
+                                </div>
+                                <div class="col-12" style="margin-top:15px;">
+                                    <bill-range-discounts id="addonBsd">
+                                        <bill-range-discounts>
+                                </div>
+                                <div id="mopDiscounts" class="col-12 margin0">
+                                    <template id="addonMop" is="dom-repeat" items="{{scheme.behavior.modeOfPaymentDiscounts}}" as="mopDiscounts">
+                                        <templte>
+                                            <div class="col-6">
+                                                <label><span>{{mopDiscounts.mop}}</span></label>
+                                                <chpe-discount id="{{mopDiscounts.mop}}" discount-modal="{{mopDiscounts}}" discount-id="mopDiscount{{index}}" percentage-id="moppercent{{index}}" flat-id="mopflat{{index}}">
+                                                </chpe-discount>
+                                            </div>
+                                        </templte>
+                                    </template>
+                                </div>
                             </div>
-                          </div>
-                          <div class="col-8">
-                              <paper-card eleveation="1" class="addon-extend-card">
-                                <cumulative-bill-amounts id="addOnCap"></cumulative-bill-amounts>
-                              </paper-card>
-                          </div>
-                          <div class="col-2">
-                            <div align="center" class="arrows arrowPosition">
-                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
+                            <div class="card-actions col-12" style="padding:0px;">
+                                <div class="col-10 margin0">&nbsp;</div>
+                                <div class="arrows col-1 margin0">
+                                    <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
+                                    </paper-fab>
+                                </div>
                             </div>
-                          </div>
-                        </div>
-                    </neon-animatable>
-
-                    <!-- Fifth step -->
-                    <neon-animatable>
-                        <div class="col-12 margin0">
-                          <div class="col-2">
-                            <div align="center" class="arrows margin0 arrowPosition">
-                                <paper-fab mini icon="arrow-back" class="blue action" 
-                                on-click="_onPrevClick">
-                                </paper-fab>
-                            </div>
-                          </div>
-                          <div class="col-8">
-                            <paper-card eleveation="1" heading= "Discounts on Doctor Allocation"  class="addon-extend-card">
-                              <div class="col-12" id="doctrosDiscountBlock">
-                              <template is="dom-repeat"  
-                              items="{{scheme.behavior.doctorLevelDiscounts}}" as="dda">
-                                  <templte>
-                                   <div class="col-6">
-                                   <label><span class="upperCase">{{dda.type}}</span> Chosen:</label>
-                                    <chpe-discount id="{{dda.type}}" discount-modal="{{dda}}"  
-                                     discount-id="ddaDiscount{{index}}" percentage-id="percent{{index}}"flat-id="flat{{index}}">
-                                   </chpe-discount>
-                                   </div>
-                                   </templte>
-                              </template>
-                              </div>
-                           </paper-card>
-                          </div>
-                          <div class="col-2">
-                            <div align="center" class="arrows arrowPosition">
-                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
-                            </div>
-                          </div>
-                        </div>
-                    </neon-animatable>
-                    <!-- sixth step -->
-                    <neon-animatable>
-                        <div class="col-12 margin0">
-                          <div class="col-2">
-                            <div align="center" class="arrows margin0 arrowPosition">
-                                <paper-fab mini icon="arrow-back" class="blue action" 
-                                on-click="_onPrevClick">
-                                </paper-fab>
-                            </div>
-                          </div>
-                          <div class="col-8">
-                            <paper-card eleveation="1" class="addon-extend-card">
-                              <advance-paid-points id="addonApp"></advance-paid-points>
-                            </paper-card>
-                          </div>
-                          <div class="col-2">
-                            <div align="center" class="arrows arrowPosition">
-                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
-                            </div>
-                          </div>
-                        </div>
-                    </neon-animatable>
-                    <!-- Seventh Step -->
-                    <neon-animatable>
-                         <div class="col-12 margin0">
-                          <div class="col-2">
-                            <div align="center" class="arrows margin0 arrowPosition">
-                                <paper-fab mini icon="arrow-back" class="blue action" on-click="_onPrevClick">
-                                </paper-fab>
-                            </div>
-                          </div>
-                          <div class="col-8">
-                            <paper-card eleveation="1" class="addon-extend-card">
-                                <bill-range-discounts id="addonBsd"><bill-range-discounts>
-                            </paper-card>
-                          </div>
-                          <div class="col-2">
-                            <div align="center" class="arrows arrowPosition">
-                                <paper-fab mini icon="done" class="blue action" on-click="_onNextClick"></paper-fab>
-                            </div>
-                          </div>
-                        </div>
-                    </neon-animatable>
-                    <!-- Eigth step -->
-                    <neon-animatable>
-                         <div class="col-12 margin0">
-                          <div class="col-2">
-                            <div align="center" class="arrows margin0 arrowPosition">
-                                <paper-fab mini icon="arrow-back" class="blue action"
-                                 on-click="_onPrevClick">
-                                </paper-fab>
-                            </div>
-                          </div>
-                          <div class="col-8">
-                            <paper-card eleveation="1" class="addon-extend-card" 
-                              heading="Discounts on Mode of Payments" id="mopDiscounts">
-                                <template id="addonMop" is="dom-repeat" items="{{scheme.behavior.modeOfPaymentDiscounts}}" as="mopDiscounts">
-                                   <templte>
-                                   <div class="col-6">
-                                   <label><span>{{mopDiscounts.mop}}</span></label>
-                                    <chpe-discount id="{{mopDiscounts.mop}}" discount-modal="{{mopDiscounts}}" discount-id="mopDiscount{{index}}" 
-                                    percentage-id="moppercent{{index}}"flat-id="mopflat{{index}}">
-                                   </chpe-discount>
-                                   </div>
-                                   </templte>
-                                </template>
-                            </paper-card>
-                          </div>
-                        </div>
+                        </paper-card>
                         <div class="col-10">
-                           <div class="submitButtons">
-                            <span>
+                            <div class="submitButtons">
+                                <span>
                                 <paper-button name="addon-form.createSchemeBtn" raised  on-click="submitForm" data-args="false" id="addonSave"  value="{{schemeStatus}}">Save</paper-input>
                             </span>
-                            <span>
+                                <span>
                                 <paper-button name="addon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-input>
                             </span>
-                        </div>
+                            </div>
                         </div>
                     </neon-animatable>
                 </neon-animated-pages>
@@ -337,7 +254,7 @@
                 this.$.addOnCap.behavior = this.scheme.behavior;
                 this.$.addonApp.behavior = this.scheme.behavior;
                 this.$.addonBsd.behavior = this.scheme.behavior;
-               //this.$.xyz.behavior = this.scheme.behavior;
+                //this.$.xyz.behavior = this.scheme.behavior;
 
             },
             listeners: {
@@ -362,13 +279,13 @@
             _onPrevClick: function() {
                 this.entryAnimation = 'slide-from-left-animation';
                 this.exitAnimation = 'slide-right-animation';
-                this.selected = this.selected === 0 ? 7 : (this.selected - 1);
+                this.selected = this.selected === 0 ? 3 : (this.selected - 1);
             },
             _onNextClick: function() {
                 this.entryAnimation = 'slide-from-right-animation';
                 this.exitAnimation = 'slide-left-animation';
-                this.selected = this.selected === 7 ? 0 : (this.selected + 1);
-                
+                this.selected = this.selected === 3 ? 0 : (this.selected + 1);
+
             },
             createScheme: function() {
                 this.formData = document.getElementById('addon-form').serialize();

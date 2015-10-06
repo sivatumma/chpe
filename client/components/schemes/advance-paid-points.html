@@ -20,13 +20,21 @@
             margin-top: 0px !important;
             margin-left: 10px;
         }
+        .adprSection{
+            margin-top: 10px;
+        }
+        .singleRow{
+            margin-bottom:20px;
+        }
 
     </style>
-    <template id="srcCategory">
-      <paper-card heading= "Points on Advance Paid" class="col-12">
-        <div class="card-content">
+    <template id="adpBox">
+        <div class="col-12 margin0 adprSection">
+          <h4 class="col-12 margin0">Points on Advance Paid
+            <paper-icon-button icon="icons:add" on-click="addApd"></paper-icon-button>
+          </h4>
           <template is="dom-repeat" items="{{behavior.advancePaidDiscounts}}" as="apd">
-            <div class="horizontal layout">
+            <div class="col-12 margin0 singleRow">
                 <div class="col-5">
                        <paper-input name="amount" no-label-float label="Amount" 
                        value="{{apd.amount}}"></paper-input>
@@ -36,17 +44,11 @@
                        value="{{apd.points}}"></paper-input>
                 </div>
                 <div class="col-2">
-                    <paper-icon-button icon="icons:delete" on-click="deleteApd"></paper-icon-button>
+                    <paper-fab mini icon="icons:delete" on-click="deleteApd"></paper-fab>
                 </div>
             </div>      
           </template> 
         </div>
-            <div class="card-actions">
-                <div class="horizontal layout" >
-                    <paper-button on-click="addApd">Add</paper-button>
-                </div>
-            </div>
-            </paper-card>
     </template>
     <script>
         Polymer({

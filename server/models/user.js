@@ -204,6 +204,18 @@ module.exports = function(mongoose) {
         });
     };
 
+    usersSchema.statics.extractSsoSessionData = function(saml) {
+        var buf = new Buffer(saml, 'base64'); // Ta-da
+        var parseString = require('xml2js').parseString;
+        var xml = buf.toString();
+        parseString(xml, function(err, result) {
+            return {
+                username:result['saml2p:Response']['saml2:Assertion'][0]['saml2:Subject'][0]['saml2:NameID'][0]._,
+                sessionIndex:result['saml2p:Response']['saml2:Assertion'][0]['saml2:AuthnStatement'][0].$.SessionIndex
+            };
+        });
+    };
+
     usersSchema.statics.authorize = function(req, res, next) {
 
         console.log(req.session);
@@ -232,9 +244,9 @@ module.exports = function(mongoose) {
             }
 
             if (!user) res.status('403').end({
-                        status:'fail',
-                        message: browserMessages.userNotAuthorized
-                    });
+                status: 'fail',
+                message: browserMessages.userNotAuthorized
+            });
 
 
             if (user && user.tokens && user.tokens[user.tokens.length - 1]) {
@@ -271,7 +283,7 @@ module.exports = function(mongoose) {
                 } else {
                     console.log("here");
                     return res.status('403').send({
-                        status:'fail',
+                        status: 'fail',
                         message: 'Authorization required.'
                     });
                 }

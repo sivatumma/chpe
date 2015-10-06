@@ -1,3 +1,4 @@
+
 /*
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -41,18 +42,6 @@ paper-material.radial-gradiant-addon {
       border-radius: 50%;
       overflow: hidden;
       background: #ccc;
-    }
-    .blue {
-      background-color: var(--paper-light-blue-300);
-    }
-    .red {
-      background-color: var(--paper-red-300);
-    }
-    .orange {
-      background-color: var(--paper-amber-300);
-    }
-    .green {
-      background-color: var(--paper-green-300);
     }
 
 /*Too bar styles*/
@@ -157,7 +146,8 @@ section schemes-as-cards{
     background: white;
 }
 .chpe-coupon h4,.chpe-gift-card h4,.chpe-addon h4{
-  font-size:24px !important;
+  font-size:18px !important;
+  font-weight: normal;
 }
 
 #mainContainer{
