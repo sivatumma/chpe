@@ -13,6 +13,8 @@ source ~/.bashrc
 npm update
 bower update
 
+sudo mongod &
+
 sudo nohup node server/server.js 91 &
 sudo nohup node server/server.js 92 &
 sudo nohup node server/server.js 93 &
