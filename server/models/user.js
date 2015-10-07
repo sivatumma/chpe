@@ -216,6 +216,11 @@ module.exports = function(mongoose) {
         });
     };
 
+    usersSchema.statics.ssoLogin = function(req, res, next){
+        req.session.user = User.extractSsoSessionData(req.body.SAMLResponse);
+        next();
+    };
+
     usersSchema.statics.authorize = function(req, res, next) {
 
         console.log(req.session);

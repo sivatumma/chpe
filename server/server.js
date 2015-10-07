@@ -16,7 +16,8 @@ var config = require('./config/config.js'),
   compressible = require('compressible'),
   compression = require("compression")(),
   logModule = require('./config/logModule')(app),
-  https = require('https')
+  https = require('https'),
+   request = require('request'),
 _id_count = 0;
 
 app.use(cors());
@@ -36,7 +37,7 @@ app.use('/build', express.static(config.application.root_path + '/build', {
 }));
 
 
-app.use(express.static(config.application.root_path + '/client'));
+//app.use(express.static(config.application.root_path + '/client'));
 
 
 compressible('text/html') // => true 
@@ -109,11 +110,57 @@ function deleteModels(req, res) {
 
 require('./routes/user.js')(app);
 require('./routes/proxy.js')(app);
-app.all('/', function(req, res) {
+
+/*app.all('/', function(req, res) {
   // res.sendfile('client/login.html');
   res.redirect('/');
   console.log('client/login.html served');
 });
+*/
+
+
+app.all('/', function(req, res) {
+
+
+
+
+// Set the headers
+var headers = {
+    'User-Agent':       'Super Agent/0.0.1',
+    'Content-Type':     'application/x-www-form-urlencoded'
+}
+ 
+// Configure the request
+var options = {
+    url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogin',
+    method: 'POST',
+    headers: headers,
+    form: {            'idProvider': 'https://172.19.4.179:9443/samlsso',
+                       'spEntityID': 'callhealth.com',
+                       'relayState': 'http://localhost:91/mypage'                                                      
+                                                 }
+}
+
+// Start the request
+request(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+
+        res.redirect(unescape(JSON.parse(body).url));
+
+    }
+});
+
+});
+
+ var User = mongoose.model('User');
+
+app.all('/mypage', User.ssoLogin, function(req,res)
+{
+
+console.log(req.body.SAMLResponse);
+res.send("i am getting data");
+
+})
 
 app.all('/test', updateModels)
 
