@@ -1,5 +1,5 @@
+<script src="../../config/general.js"></script>
 <dom-module  id="multi-value-suggestbox">
-
         <style type="text/css" media="screen">
             ul {
                 margin: 0;
@@ -73,6 +73,7 @@
                 box-shadow:  box-shadow: 12px 0 20px -4px #ccc, -12px 0 15px -4px #ccc;
                 background-color: #ffffff;
                 min-width: 200px;
+                z-index: 11;
             }
             ul#suggest_menu li {
                 min-width: 100%;
@@ -113,7 +114,7 @@
             </li>
         </ul>
         <iron-ajax  id="namesAsChips" content-type="application/json"  method="GET" params='{}'   
-         handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
+         handle-as="json" on-error="handleError" on-response="handleResponse"   ></iron-ajax>
     </template>
 
     <script>
@@ -185,6 +186,7 @@
             },
             // Fires when the "<multi-value-suggestbox>" has been fully prepared
             ready: function() {
+                this.config = generalConfig() || {};
                 // if not set by user, use default values
                 if (!this.options.box_width) this.options.box_width = "200px";
                 if (!this.options.box_height) this.options.box_height = "40px";
@@ -200,7 +202,8 @@
             addRemoveChips:function(ele){
                 if (ele.detail.newInput !== undefined) {
                     this.$.namesAsChips.url=this.attributes.url.value+ele.detail.newInput;
-                    this.$.namesAsChips.method = "GET";
+                    this.$.namesAsChips.method='GET';
+                    this.$.namesAsChips.headers={'API_KEY':this.config.urls.memcache.API_KEY};
                     this.$.namesAsChips.generateRequest();
                 }
             },
@@ -232,6 +235,9 @@
                        this.suggestedItems = chips;
                       console.log(this.suggestedItems);
                   }                       
+             },
+             handleError:function(event){
+                console.log(event);
              },
             elementTapped: function(event, detail, sender) {
                 this.setFocus();

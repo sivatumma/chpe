@@ -71,9 +71,7 @@
               'couponTypeToggle.onClick':'togleType'
             },
             togleType:function(e){
-                var couponType = e.target.innerText;
-                console.log(e);
-
+                var couponType = e.target.parentElement.innerText;
                 //first removing all classes and setting clicked element to active
                 chUtils.removeClass(document.querySelector("#couponWeek"),"active");
                 chUtils.removeClass(document.querySelector("#couponDay"),"active");
