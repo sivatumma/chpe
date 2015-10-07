@@ -157,9 +157,9 @@ request(options, function (error, response, body) {
 app.all('/mypage', User.ssoLogin, function(req,res)
 {
 
-console.log(req.body.SAMLResponse);
-res.send("i am getting data");
-
+//console.log(req.body.SAMLResponse);
+//res.send("i am getting data");
+res.sendfile('client/login.html');
 })
 
 app.all('/test', updateModels)
