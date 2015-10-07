@@ -120,47 +120,31 @@ require('./routes/proxy.js')(app);
 
 
 app.all('/', function(req, res) {
+  console.log(req.session);
 
-
-
-
-// Set the headers
-var headers = {
-    'User-Agent':       'Super Agent/0.0.1',
-    'Content-Type':     'application/x-www-form-urlencoded'
-}
- 
-// Configure the request
-var options = {
-    url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogin',
-    method: 'POST',
-    headers: headers,
-    form: {            'idProvider': 'https://172.19.4.179:9443/samlsso',
-                       'spEntityID': 'callhealth.com',
-                       'relayState': 'http://localhost:91/mypage'                                                      
-                                                 }
+if(req.session.user)
+{
+ res.redirect('/');
 }
 
-// Start the request
-request(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+else
+{
+res.redirect('/ssoLogin');
 
-        res.redirect(unescape(JSON.parse(body).url));
+}
 
-    }
+
+
 });
+
+
+app.all('/ssoLogin',User.ssoLogin, function(req,res)
+{
+  res.redirect('/');
 
 });
 
  var User = mongoose.model('User');
-
-app.all('/mypage', User.ssoLogin, function(req,res)
-{
-
-console.log(req.body.SAMLResponse);
-res.send("i am getting data");
-
-})
 
 app.all('/test', updateModels)
 

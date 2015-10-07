@@ -1,6 +1,7 @@
 var bcrypt = require("bcrypt-nodejs"),
     uuid = require('node-uuid'),
     config = require('../config/config.js'),
+    request = require('request'),
     browserMessages = require('../config/messages'),
     SALT_WORK_FACTOR = 10,
     MAX_LOGIN_ATTEMPTS = 5,
@@ -210,20 +211,55 @@ module.exports = function(mongoose) {
         var xml = buf.toString();
         parseString(xml, function(err, result) {
             return {
-                username:result['saml2p:Response']['saml2:Assertion'][0]['saml2:Subject'][0]['saml2:NameID'][0]._,
-                sessionIndex:result['saml2p:Response']['saml2:Assertion'][0]['saml2:AuthnStatement'][0].$.SessionIndex
+                username: result['saml2p:Response']['saml2:Assertion'][0]['saml2:Subject'][0]['saml2:NameID'][0]._,
+                sessionIndex: result['saml2p:Response']['saml2:Assertion'][0]['saml2:AuthnStatement'][0].$.SessionIndex
             };
         });
     };
 
-    usersSchema.statics.ssoLogin = function(req, res, next){
-        req.session.user = User.extractSsoSessionData(req.body.SAMLResponse);
-        next();
+    usersSchema.statics.ssoLogin = function(req, res, next) {
+
+        console.log("222 line ", req.body, req.body.SAMLResponse);
+        if(req.body && req.body.SAMLResponse != null){
+            console.log(req.body.SAMLResponse);
+            req.session.user = User.extractSsoSessionData(req.body.SAMLResponse);
+            next();
+        }
+        console.log(req.session, req.session.user);
+        if (req.session.user)
+            res.redirect('/');
+        else {
+            // Set the headers
+            var headers = {
+                'User-Agent': 'Super Agent/0.0.1',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+
+            // Configure the request
+            var options = {
+                url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogin',
+                method: 'POST',
+                headers: headers,
+                form: {
+                    'idProvider': 'https://172.19.4.179:9443/samlsso',
+                    'spEntityID': 'callhealth.com',
+                    'relayState': 'http://172.19.5.25:91/ssoLogin'
+                }
+            }
+
+            // Start the request
+            request(options, function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+
+                    res.redirect(unescape(JSON.parse(body).url));
+
+                }
+            });
+        }
     };
 
     usersSchema.statics.authorize = function(req, res, next) {
 
-        console.log(req.session);
 
         if (config.approvedAuthorizedAPIKeys.indexOf(req.query.API_KEY) >= 0) {
             return next();
