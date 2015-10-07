@@ -67,7 +67,7 @@
         }
         .leftnav {
             position: fixed;
-            top: 269px;
+            top:155px;
             left: 256px;
             z-index: 11;
             min-height: 160px;
@@ -99,7 +99,9 @@
             <form is="iron-form" id="coupon-form" method="POST" action="#">
                 <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
-                        <paper-card elevation="5" class="coupon-base-card">
+                        <div class="col-1">&nbsp;</div>
+                        <div class="col-8">
+                        <paper-card elevation="5" class="coupon-extend-card">
                         <div class="card-content margin0">
                             <basic-scheme id="basicScheme" start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="couponStart" end-date-type="couponEnds" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
                             </basic-scheme>
@@ -112,10 +114,13 @@
                           </div>
                         </div>
                     </paper-card>
+                    </div>
                     </neon-animatable>
 
                     <!-- step2 -->
                     <neon-animatable>
+                    <div class="col-1">&nbsp;</div>
+                    <div class="col-8">
                     <paper-card elevation="5" class="coupon-extend-card">
                         <div class="card-content margin0">
                         <service-rate-category id="srcCatCoupon"></service-rate-category>
@@ -151,6 +156,7 @@
                             </div>
                         </div>
                     </paper-card>
+                    </div>
                     </neon-animatable>
                 </neon-animated-pages>
             </form>

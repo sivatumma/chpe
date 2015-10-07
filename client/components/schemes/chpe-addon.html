@@ -73,7 +73,7 @@
             @apply(--layout-vertical);
             @apply(--center-justified);
         }
-        
+
         .leftnav {
             position: fixed;
             top:155px;
@@ -133,7 +133,7 @@
                             <div class="card-actions col-12" style="padding:0px;margin:0px;">
                                 <div class="col-11 margin0">&nbsp;</div>
                                 <div class="col-1 margin0">
-                                    <paper-fab mini icon="done" class="blue action" on-click="_onNextClick">
+                                    <paper-fab mini icon="done" class="blue action"  on-click="_onNextClick">
                                     </paper-fab>
                                 </div>
                             </div>
@@ -198,35 +198,15 @@
                         <div class="col-8">
                         <paper-card elevation="5" class="addon-extend-card">
                             <div class="card-content">
-                                <h4 class="col-12 margin0">Discounts on Doctor Allocation</h4>
-                                <div class="col-12" id="doctrosDiscountBlock">
-                                    <template is="dom-repeat" items="{{scheme.behavior.doctorLevelDiscounts}}" as="dda">
-                                        <templte>
-                                            <div class="col-6">
-                                                <label><span class="upperCase">{{dda.type}}</span> Chosen:</label>
-                                                <chpe-discount id="{{dda.type}}" discount-modal="{{dda}}" discount-id="ddaDiscount{{index}}" percentage-id="percent{{index}}" flat-id="flat{{index}}">
-                                                </chpe-discount>
-                                            </div>
-                                        </templte>
-                                    </template>
+                                <div class="col-12 margin0">
+                                    <discounts-on-doctor id="doctorDiscounts"></discounts-on-doctor>
                                 </div>
                                 <div class="col-12" style="margin-top:15px;">
                                     <bill-range-discounts id="addonBsd">
                                     </bill-range-discounts>
                                 </div>
-                                <div id="mopDiscounts" class="col-12 margin0">
-                                    <h4 class="col-12 margin0">
-                                      Discounts on Mode of Payments
-                                    </h4>
-                                    <template id="addonMop" is="dom-repeat" items="{{scheme.behavior.modeOfPaymentDiscounts}}" as="mopDiscounts">
-                                        <templte>
-                                            <div class="col-6">
-                                                <label><span>{{mopDiscounts.mop}}</span></label>
-                                                <chpe-discount id="{{mopDiscounts.mop}}" discount-modal="{{mopDiscounts}}" discount-id="mopDiscount{{index}}" percentage-id="moppercent{{index}}" flat-id="mopflat{{index}}">
-                                                </chpe-discount>
-                                            </div>
-                                        </templte>
-                                    </template>
+                                <div  class="col-12 margin0">
+                                   <mode-of-payments id="mopDiscounts"></mode-of-payments>
                                 </div>
                             </div>
                             <div class="card-actions col-12 lastStepActions">
@@ -272,7 +252,8 @@
                 this.$.addOnCap.behavior = this.scheme.behavior;
                 this.$.addonApp.behavior = this.scheme.behavior;
                 this.$.addonBsd.behavior = this.scheme.behavior;
-                //this.$.xyz.behavior = this.scheme.behavior;
+                this.$.doctorDiscounts.behavior = this.scheme.behavior;
+                this.$.mopDiscounts.behavior = this.scheme.behavior;
 
             },
             listeners: {
@@ -283,8 +264,12 @@
             },
 
             enableButtons: function(e) {
-                /*this.actionElements = document.getElementsByClassName("action");
-                if(e.target.invalid){
+                this.actionElements = document.getElementById("firstStep");
+                /*actionElements.forEach(function(val,key){
+                    console.log(val);
+                });*/
+                //console.log(this.actionElements);
+                /*if(e.target.invalid){
                     this.actionElements.forEach(function(val,index){
                       val.disabled = true;
                     });
@@ -294,6 +279,7 @@
                     });
                 }*/
             },
+
             _onPrevClick: function() {
                 this.entryAnimation = 'slide-from-left-animation';
                 this.exitAnimation = 'slide-right-animation';

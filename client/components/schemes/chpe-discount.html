@@ -74,8 +74,7 @@
                     <paper-button  toggles  class="discountButton" on-click="togleDiscount"  id="{{flatId}}" >Flat</paper-button>
                     </div>
                     <div class="discountInput">
-                        <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  id="{{discountId}}" 
-                        max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
+                        <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
                          error-message="Max 999 if Flat ; 10 if %" value="{{discountModal.discount}}"></paper-input>
                     </div>
             </div>
@@ -86,7 +85,7 @@
         Polymer({
             is: 'chpe-discount',
             properties: {
-                discountId:Boolean,
+                discountId:String,
                 percentageId:String,
                 flatId:String,
                 discount:String,

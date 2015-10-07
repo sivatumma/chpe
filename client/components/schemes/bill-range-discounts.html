@@ -48,8 +48,8 @@
                 </div>
                  <div class="col-5">
                     <chpe-discount id="{{bsd.type}}" discount-modal="{{bsd}}"  
-                        discount-id="bsdDiscount{{index}}" percentage-id="bsdpercent{{index}}" 
-                        flat-id="bsdflat{{index}}">
+                        percentage-id="{{getPercentId(index)}}" 
+                        flat-id="{{getFlatId(index)}}">
                      </chpe-discount> 
                 </div>
                 <div class="col-1">
@@ -73,6 +73,12 @@
             },
             listeners:{
                 "onClick":"addBsd",
+            },
+            getPercentId:function(index){
+                return "bsdPercentage_"+index;
+            },
+            getFlatId:function(index){
+                return "bsdFlat_"+index;
             },
             //add or remove src categories
             addBsd :function(e){
