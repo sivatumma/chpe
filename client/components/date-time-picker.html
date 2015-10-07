@@ -1,3 +1,4 @@
+
 <dom-module id="date-time-picker">
 	<style type="text/css">
 		.card-actions{
@@ -31,6 +32,7 @@
 	      position: fixed;
 	      top:30px;
 	      left:30%;
+	      border-radius: 10px;
 	    }
 
 	    .toggleLayer{
@@ -47,21 +49,30 @@
 	   paper-input{
 	   	margin-left: 10px;
 	   }
+	   
+	   paper-dialog > *:first-child , paper-dialog .timePicker{
+	   	margin: 0px !important;
+	   	padding: 0px;
+	   }
+	   .closeBtn{
+	   	 position: absolute;
+	   	 right: 0;
+	   	 z-index: 1;
+
+	   }
 	</style>
     <template>
      <section onclick="clickHandler(event)">
      <paper-input name="{{dateType}}" class="date-time-picker-input"  no-label-float readonly="true" label="{{dateLabel}}"  on-tap="showDialog" id="{{dateTimeValue}}"  ></paper-input>
-     	<paper-dialog id="{{dateModal}}"  class="size-position paper-date-picker-dialog" with-backdrop on-iron-overlay-closed="dismissDialog">
-			  	<div class="datePicker">
+     	<paper-dialog modal id="{{dateModal}}"  class="size-position paper-date-picker-dialog padding0" with-backdrop on-iron-overlay-closed="dismissDialog">
+
+			  	<div class="datePicker margin0">
+			  		<paper-fab mini icon="icons:close" class="closeBtn" dialog-confirm autofocus></paper-fab>
 				  	<paper-date-picker id="{{dateId}}"></paper-date-picker>
 			  	</div>
-			  	<div class="timePicker">
+			  	<div class="timePicker margin0">
 					<paper-time-picker id="{{timeId}}" ></paper-time-picker>
 			  	</div>
-			      <div class="buttons">
-			      	<paper-button on-click="toggleLayer">Time / Date</paper-button>
-			        <paper-button dialog-confirm autofocus pull-right>Tap me to close</paper-button>
-			      </div>
     </paper-dialog>
     </section>
 	 </template>

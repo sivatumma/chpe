@@ -6,7 +6,8 @@ function generalConfig() {
 		memcache: {
 			names:'/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names',
 			locations: '/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations',
-			schemeNames: '/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/schemeNames'
+			schemeNames: '/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/schemeNames',
+			API_KEY:'52d0747f-2bb1-438e-879a-84726c4f90d0'
 		}
 	};
 

@@ -140,7 +140,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
             <!-- Main Area -->
-            <paper-scroll-header-panel main keep-condensed-header>
+            <paper-scroll-header-panel main keep-condensed-header fixed>
 
                 <!-- Main Toolbar -->
                 <paper-toolbar id="mainToolbar">
@@ -148,8 +148,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <span class="flex"></span>
 
                     <!-- Toolbar icons -->
-                    <paper-icon-button icon="refresh"></paper-icon-button>
-                    <paper-icon-button icon="search"></paper-icon-button>
+                    <span class="topIcons">
+                        <paper-icon-button icon="refresh"></paper-icon-button>
+                        <paper-icon-button icon="search"></paper-icon-button>
+                    </span>
+                    <span>
+                        <paper-icon-button icon="icons:input"></paper-icon-button>
+                    </span>
 
                     <!-- Application name -->
                     <div class="middle middle-container center horizontal layout">
@@ -194,6 +199,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                         <section route="scheme-info">
                               <chpe-coupon></chpe-coupon>
+                              <!-- <chpe-gift-card></chpe-gift-card> -->
                         </section>
 
                         

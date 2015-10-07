@@ -159,6 +159,9 @@ section schemes-as-cards{
 .show{
   display: block;
 }
+.topIcons{
+  margin-right: 3%;
+}
 
 .showDatepickerPopup{
      -moz-animation: slide 2s ease 3.5s forwards;
@@ -183,8 +186,8 @@ section schemes-as-cards{
           --paper-fab-keyboard-focus-background: var(--paper-light-blue-200);
         }
         paper-fab.red {
-          --paper-fab-background: var(--paper-red-500);
-          --paper-fab-keyboard-focus-background: var(--paper-red-900);
+          --paper-fab-background: var(--paper-red-500) !important;
+          --paper-fab-keyboard-focus-background: var(--paper-red-900) !important;
         }
         paper-fab.green {
           --paper-fab-background: var(--paper-green-500);

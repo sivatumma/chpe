@@ -40,7 +40,7 @@
                             </multi-value-suggestbox>
                 </div>
                 <div class="col-4">
-                <chpe-discount id="srcDiscount" discount-modal="{{src}}"  discount-type-id="srcDiscountId" percentage-id="srcPercentage" flat-id="srcFlat">
+                <chpe-discount id="srcDiscount" discount-modal="{{src}}"  discount-type-id="srcDiscountId" percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
                 </chpe-discount>
                 </div>
                 <div class="col-2">
@@ -74,7 +74,12 @@
             //add or remove src categories
             addSrc :function(e){
                 this.push('behavior.serviceRateCategoryDiscounts', {discount:0,discountType:"%",maxLength:9,srcTypes:[]});
-           ;
+            },
+            getPercentId:function(index){
+                return "srcPercentage_"+index;
+            },
+            getFlatId:function(index){
+                return "srcFlat_"+index;
             },
             deleteSrc:function(e){
                 if(e.model.index!=0){
