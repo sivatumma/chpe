@@ -16,8 +16,8 @@ var config = require('./config/config.js'),
   compressible = require('compressible'),
   compression = require("compression")(),
   logModule = require('./config/logModule')(app),
-  https = require('https')
-_id_count = 0;
+  https = require('https'),
+  _id_count = 0;
 
 app.use(cors());
 app.use(bodyParser.json());
