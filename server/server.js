@@ -55,7 +55,10 @@ app.use(session({
 function fetchModels(req, res) {
   var u1 = mongoose.model(req.params.modelName);
   u1.find(function(err, data) {
-    if (err) res.status(500).send({status:"fail",message:err.message});
+    if (err) res.status(500).send({
+      status: "fail",
+      message: err.message
+    });
     res.status(200).send(data);
   });
 }
@@ -120,47 +123,26 @@ require('./routes/proxy.js')(app);
 
 
 app.all('/', function(req, res) {
+  console.log(req.session);
+
+  if (req.session.user) {
+    res.redirect('/');
+  } else {
+    res.redirect('/ssoLogin');
+
+  }
 
 
-
-
-// Set the headers
-var headers = {
-    'User-Agent':       'Super Agent/0.0.1',
-    'Content-Type':     'application/x-www-form-urlencoded'
-}
- 
-// Configure the request
-var options = {
-    url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogin',
-    method: 'POST',
-    headers: headers,
-    form: {            'idProvider': 'https://172.19.4.179:9443/samlsso',
-                       'spEntityID': 'callhealth.com',
-                       'relayState': 'http://localhost:91/mypage'                                                      
-                                                 }
-}
-
-// Start the request
-request(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-
-        res.redirect(unescape(JSON.parse(body).url));
-
-    }
-});
 
 });
 
- var User = mongoose.model('User');
 
-app.all('/mypage', User.ssoLogin, function(req,res)
-{
+app.all('/ssoLogin', User.ssoLogin, function(req, res) {
+  res.redirect('/');
 
-//console.log(req.body.SAMLResponse);
-//res.send("i am getting data");
-res.sendfile('client/login.html');
-})
+});
+
+var User = mongoose.model('User');
 
 app.all('/test', updateModels)
 
