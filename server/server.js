@@ -20,6 +20,7 @@ var config = require('./config/config.js'),
   request = require('request'),
   cookieParser = require('cookie-parser'),
     expressSession = require('express-session'),
+  expressSession = require('express-session'),
   _id_count = 0;
 
 app.use(cors());

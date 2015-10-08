@@ -19,6 +19,8 @@ paper-material.radial-gradiant-addon {
 	padding:20px !important;
 }
 
+.logoutButton{color:white;}
+.logoutButton:active{color:lightgreen;}
 .list {
       padding-top: 12px;
       background-color: white;

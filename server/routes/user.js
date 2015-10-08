@@ -71,6 +71,10 @@ module.exports = function (app){
         });
     });
 
+    app.get('/ssoLogout',User.authorize,function (req,res){
+        console.log(req.session, req.session.user);
+    });
+
     app.get('/logout',User.authorize,function (req,res){
         console.log("/logout request...\n\n", req.user);
         req.user.tokens.pull({token:req.headers['token']});
