@@ -205,28 +205,25 @@ module.exports = function(mongoose) {
         });
     };
 
-    usersSchema.statics.extractSsoSessionData = function(saml) {
-        var buf = new Buffer(saml, 'base64'); // Ta-da
-        var parseString = require('xml2js').parseString;
-        var xml = buf.toString();
-        parseString(xml, function(err, result) {
-            return {
-                username: result['saml2p:Response']['saml2:Assertion'][0]['saml2:Subject'][0]['saml2:NameID'][0]._,
-                sessionIndex: result['saml2p:Response']['saml2:Assertion'][0]['saml2:AuthnStatement'][0].$.SessionIndex
-            };
-        });
-    };
-
     usersSchema.statics.ssoLogin = function(req, res, next) {
 
-        console.log("222 line ", req.body, req.body.SAMLResponse);
         if(req.body && req.body.SAMLResponse != null){
-            console.log(req.body.SAMLResponse);
-            req.session.user = User.extractSsoSessionData(req.body.SAMLResponse);
-            next();
+    
+            var buf = new Buffer(req.body.SAMLResponse, 'base64'); // Ta-da
+            var parseString = require('xml2js').parseString;
+            var xml = buf.toString();
+            var that = this;
+            parseString(xml, function(err, result) {
+                req.session.user = {
+                    username: result['saml2p:Response']['saml2:Assertion'][0]['saml2:Subject'][0]['saml2:NameID'][0]._,
+                    sessionIndex: result['saml2p:Response']['saml2:Assertion'][0]['saml2:AuthnStatement'][0].$.SessionIndex
+                };
+                console.log(req.session.user);
+
+                next();
+            });
         }
-        console.log(req.session, req.session.user);
-        if (req.session.user)
+        else if (req.session.user)
             res.redirect('/');
         else {
             // Set the headers
@@ -250,9 +247,7 @@ module.exports = function(mongoose) {
             // Start the request
             request(options, function(error, response, body) {
                 if (!error && response.statusCode == 200) {
-
                     res.redirect(unescape(JSON.parse(body).url));
-
                 }
             });
         }

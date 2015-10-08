@@ -18,12 +18,21 @@ var config = require('./config/config.js'),
   logModule = require('./config/logModule')(app),
   https = require('https'),
   request = require('request'),
+  cookieParser = require('cookie-parser'),
+    expressSession = require('express-session'),
   _id_count = 0;
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
+}));
+
+app.use(cookieParser());
+app.use(expressSession({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true
 }));
 
 app.use('/lib', express.static(config.application.root_path + '/lib', {
@@ -37,7 +46,7 @@ app.use('/build', express.static(config.application.root_path + '/build', {
 }));
 
 
-//app.use(express.static(config.application.root_path + '/client'));
+app.use(express.static(config.application.root_path + '/client'));
 
 
 compressible('text/html') // => true 
@@ -123,10 +132,9 @@ require('./routes/proxy.js')(app);
 
 
 app.all('/', function(req, res) {
-  console.log(req.session);
 
   if (req.session.user) {
-    res.redirect('/');
+    res.redirect('/index.html');
   } else {
     res.redirect('/ssoLogin');
 
@@ -139,7 +147,6 @@ app.all('/', function(req, res) {
 
 app.all('/ssoLogin', User.ssoLogin, function(req, res) {
   res.redirect('/');
-
 });
 
 var User = mongoose.model('User');
