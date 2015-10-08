@@ -58,7 +58,7 @@ paper-material.radial-gradiant-addon {
     max-width: 360px;
 
 }
-#iconToolBar .content{
+/*#iconToolBar .content{
   max-height:200px;
     background-color: #fff;
 }
@@ -68,14 +68,14 @@ paper-material.radial-gradiant-addon {
 #contentWrapper.iron-dropdown > *{
   width:360px;
   height:260px;
-}
+}*/
 .content{
   height: auto !important;
 }
-iron-dropdown{
+/*iron-dropdown{
   top:248px !important;
   border-top: none;
-}
+}*/
 #topBar paper-menu-button{
   padding:0px;
   color:#444343;
@@ -368,8 +368,13 @@ section schemes-as-cards{
   min-height: 240px;
 }
 .chpe-addon > paper-card .card-actions , .chpe-gift-card > paper-card .card-actions, .chpe-coupon > paper-card .card-actions{
-   background-color: rgba(244, 244, 244, 0.3);
-   /*   background-color: rgba(212, 212, 212, 0.3);*/   
+   /*background-color: rgba(244, 244, 244, 0.3);*/
+   background-color: rgba(212, 212, 212, 0.3);   
    padding: 0px !important;
    margin:0px !important;
+}
+
+/*logout styles*/
+.logout,.logout:focus,.logout:hover{
+  color:white;
 }

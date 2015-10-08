@@ -98,6 +98,7 @@
         }
     </style>
     <template>
+    <more-route context name="schemes" params="{{params}}"></more-route>
         <paper-material class="leftnav" elevation="5">
             <paper-menu selected="{{selected}}" style="padding:0px;">
                 <paper-item>1</paper-item>
@@ -239,7 +240,7 @@
                 succErrMsg: String
             },
             attached: function() {
-                //console.log(this.schemeType);
+                console.log(MoreRouting);
             },
             ready: function() {
                 this.selected = 0;
@@ -254,7 +255,6 @@
                 this.$.addonBsd.behavior = this.scheme.behavior;
                 this.$.doctorDiscounts.behavior = this.scheme.behavior;
                 this.$.mopDiscounts.behavior = this.scheme.behavior;
-
             },
             listeners: {
                 'addon-form.iron-form-submit': 'createScheme',
