@@ -87,53 +87,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     <span>View Scheme</span>
                                 </a>
                             </paper-item>
-                            <paper-item route="scheme-info">
-                                <a href="{{makeUrl('scheme-info','addon')}}"> 
+                            <paper-item route="scheme-info" onClick="setRoute('addon');">
+                                <a  href='{{makeUrl("scheme-info","{"name":"addon"}")}}'> 
                                     <iron-icon icon="star-half"></iron-icon>
                                     <span>Create Addon</span>
                                 </a>
                             </paper-item>
-                            <paper-item route="scheme-info">
-                                <a href="{{makeUrl('scheme-info','coupon')}}"> 
+                            <paper-item route="scheme-info" onClick="setRoute('coupon');" name="coupon">
+                                <a href='{{makeUrl("scheme-info","{"name":"coupon"}")}}'> 
                                     <iron-icon icon="star-half"></iron-icon>
                                     <span>Create Coupon</span>
                                 </a>
                             </paper-item>
-                            <paper-item route="scheme-info">
-                                <a href="{{makeUrl('scheme-info','giftcard')}}"> 
+                            <paper-item route="scheme-info" onClick="setRoute('giftcard');" name="giftcard" >
+                                <a href='{{makeUrl("scheme-info","{"name":"giftcard"}")}}'> 
                                     <iron-icon icon="star-half"></iron-icon>
                                     <span>Create Gift Card</span>
                                 </a>
                             </paper-item>
                              
-
-                            <!-- <paper-item route="schemes">
-                                <a href="{{makeUrl('scheme-info',{name:'Coupon'})}}"> 
-                                    <iron-icon icon="star-half"></iron-icon>
-                                    <span>Create Coupon</span>
-                                </a>
-                            </paper-item> -->
-                           <!--  <iron-selector label="home" route="home">
-                                <a  href="{{urlFor('home')}}">
-                                    <iron-icon icon="home"></iron-icon>
-                                    <span>Home</span>
-                                </a>
-                            </iron-selector> -->
-
-                            <!-- <iron-selector route="schemes">
-                              <a  href="{{urlFor('schemes')}}">
-                                <iron-icon icon="social:pages"></iron-icon>
-                                <span>View Scheme</span>
-                             </a>
-                            </iron-selector> -->
-
-                            <!-- <iron-selector route="schemes">
-                              <a  href="{{urlFor('create-scheme',{type:'Coupon'})}}">
-                                <iron-icon icon="star-half"></iron-icon>
-                                <span>Create Coupon</span>
-                             </a>
-                            </iron-selector> -->
-
                     </paper-menu>
                 </more-route-selector>
             </paper-scroll-header-panel>
@@ -151,6 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <span class="topIcons">
                         <paper-icon-button icon="refresh"></paper-icon-button>
                         <paper-icon-button icon="search"></paper-icon-button>
+
                     </span>
                     <span>
                         <a href="/ssoLogout" class="logoutButton"><paper-icon-button icon="icons:input"></paper-icon-button></a>
@@ -170,17 +143,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 <paper-toolbar id="iconToolBar" class="fixed">
                     <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                    <link-icon icon-type="social:share"></link-icon>
+                    <!-- <link-icon icon-type="social:share"></link-icon>
                     <link-icon icon-type="visibility"></link-icon>
                     <link-icon icon-type="list"></link-icon>
                     <link-icon icon-type="settings"></link-icon>
                     <link-icon icon-type="face"></link-icon>
-                    <link-icon icon-type="apps"></link-icon>
+                    <link-icon icon-type="apps"></link-icon> -->
+
                 </paper-toolbar>
-
-                <paper-dialog heading="Title for dialog" transition="paper-transition-center">
-                </paper-dialog>
-
                 <more-route-selector selectedParams="{{params}}">  
 
                     <iron-pages attr-for-selected="route" selected="{{route}}">
@@ -189,6 +159,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </section>
 
                         <section route="schemes">
+                              <h3>Passed Parameters</h3>
+                              <template is="dom-repeat" items="{{params}}" as="xyz">
+                                <span>{{xyz.name}}</span>
+                             </template>
                             <!-- <chpe-gift-card scheme-type="{{params.create}}"></chpe-gift-card> -->
                             <chpe-addon scheme-type="{{params.name}}"></chpe-addon>
                             <!-- <paper-material elevation="1">
@@ -201,56 +175,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                               <!-- <chpe-coupon></chpe-coupon> -->
                               <chpe-gift-card></chpe-gift-card>
                         </section>
-
-                        
-
-                       
-
-                        <!-- <section route="users">
-                            <paper-material elevation="1">
-                                <h2 class="paper-font-display2">Users</h2>
-                                <p>This is the users section</p>
-                                <a href="//users/Siva">Siva</a>
-                            </paper-material>
+                        <section route="scheme-info">
+                            <template is="dom-repeat" items="{{params}}" as="xyz">
+                                 <template is="dom-if" if="{{xyz.addon}}">
+                                    <chpe-addon></chpe-addon>
+                                 </template>
+                                 <template is="dom-if" if="{{xyz.coupon}}">
+                                    <chpe-coupon></chpe-coupon>
+                                </template>
+                                <template is="dom-if" if="{{xyz.giftcard}}">
+                                     <chpe-gift-card></chpe-gift-card>
+                                </template>
+                             </template>
                         </section>
-
-                        <section route="user-info">
-                            <paper-material elevation="1">
-                                <div>This is <span>{{params.operation}}</span>'s section</div>
-                            </paper-material>
-                        </section>
-
-                        <section route="contact">
-                            <paper-material elevation="1">
-                                <h2 class="paper-font-display2">Contact</h2>
-                                <p>This is the contact section</p>
-                            </paper-material>
-                        </section>
-
-                        <section route="schemes">
-                            <paper-material elevation="1">
-                                <h2 class="paper-font-display2">View Schemes</h2>
-                                <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
-                            </paper-material>
-                        </section>
-                       
-                        <section route="createScheme">
-                            <chpe-addon scheme-type="{{params.create}}"></chpe-addon>
-                        </section>
-                        
-                        <section route="createCoupon">
-                            <chpe-coupon scheme-type="{{params.create}}"></chpe-coupon>
-                        </section>
-
-                        <section route="createGiftCard">
-                            <chpe-gift-card scheme-type="{{params.create}}"></chpe-gift-card>
-                        </section>
-                        <section route="specialEffects">
-                            <paper-material elevation="1">
-
-                            </paper-material>
-                        </section> -->
-
                     </iron-pages>
 
                 </more-route-selector>
@@ -258,23 +195,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-scroll-header-panel>
         </paper-drawer-panel>
 
-
-        <!-- Uncomment next block to enable Service Worker support (1/2) -->
-        
- <!--<paper-toast id="caching-complete"
-                 duration="6000"
-                 text="Caching complete! This app will work offline.">
-    </paper-toast>
-
-    <platinum-sw-register auto-register
-                          clients-claim
-                          skip-waiting
-                          on-service-worker-installed="displayInstalledToast">
-      <platinum-sw-cache default-cache-strategy="networkFirst"
-                         precache-file="precache.json">
-      </platinum-sw-cache>
-    </platinum-sw-register>-->
         <paper-toast id="schemeSuccErrMessageToast" text=""></paper-toast>
+        <paper-toast id="caching-complete" text="Hey....Hurrey"></paper-toast>
     </template>
     </div>
 
@@ -287,10 +209,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </div>
 
 </html>
-    <script type="text/javascript">
-    window.onload = function(){
-        window.document.getElementById('pageLoading').style.display = 'none';
-        window.document.getElementById("dashboardContainer").hidden = false;
-    };
-    
-    </script>
+
+<script type="text/javascript">
+window.onload = function(){
+    window.document.getElementById('pageLoading').style.display = 'none';
+    window.document.getElementById("dashboardContainer").hidden = false;
+};
+function setRoute(schemeName){
+    MoreRouting.navigateTo('schemes', {name: schemeName});
+}
+</script>
