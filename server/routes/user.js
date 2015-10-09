@@ -71,7 +71,7 @@ module.exports = function (app){
         });
     });
 
-    app.get('/ssoLogout',User.authorize,function (req,res){
+    app.post('/ssoLogout',User.authorize,function (req,res){
         console.log(req.session, req.session.user);
     });
 

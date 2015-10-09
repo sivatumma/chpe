@@ -21,6 +21,10 @@ var config = require('./config/config.js'),
   expressSession = require('express-session'),
   _id_count = 0;
 
+app.use(function(req, res, next) {
+    res.header('X-Powered-By', "The Callhealth Pricing Engine Team");
+    next();
+});
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
