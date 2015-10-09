@@ -207,20 +207,22 @@ module.exports = function(mongoose) {
 
     usersSchema.statics.ssoLogin = function(req, res, next) {
 
-        if(req.body && req.body.SAMLResponse != null){
+        if(req.body && req.body.SAMLResponse != null && req.body.RelayState != 'callhealth.com'){
     
             var buf = new Buffer(req.body.SAMLResponse, 'base64'); // Ta-da
             var parseString = require('xml2js').parseString;
             var xml = buf.toString();
             var that = this;
             parseString(xml, function(err, result) {
-                req.session.user = {
-                    username: result['saml2p:Response']['saml2:Assertion'][0]['saml2:Subject'][0]['saml2:NameID'][0]._,
-                    sessionIndex: result['saml2p:Response']['saml2:Assertion'][0]['saml2:AuthnStatement'][0].$.SessionIndex
-                };
-                console.log(req.session.user);
+                if(!err){
+                    req.session.user = {
+                        username: result['saml2p:Response']['saml2:Assertion'][0]['saml2:Subject'][0]['saml2:NameID'][0]._,
+                        sessionIndex: result['saml2p:Response']['saml2:Assertion'][0]['saml2:AuthnStatement'][0].$.SessionIndex
+                    };
+                    console.log(req.session.user);
 
-                next();
+                    next();
+                }
             });
         }
         else if (req.session.user)

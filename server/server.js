@@ -150,6 +150,49 @@ app.all('/ssoLogin', User.ssoLogin, function(req, res) {
   res.redirect('/');
 });
 
+app.get('/ssoLogout',function(req, res) {
+
+console.log(req.session.user.sessionIndex);
+ var headers = {
+                'User-Agent': 'Super Agent/0.0.1',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+
+            // Configure the request
+            var options = {
+                url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogout',
+                method: 'POST',
+                headers: headers,
+                form: {
+                    'sessionIndex':req.session.user.sessionIndex,
+                    'spEntityID': 'callhealth.com'
+                }
+            }
+
+            // Start the request
+            request(options, function(error, response, body) {
+              console.log(response.headers.location);
+              req.session.user = null;
+              res.redirect(response.headers.location);
+              // process.exit(1);
+
+              // res.redirect(response);
+
+
+               /* if (!error && response.statusCode == 200) {
+                    res.redirect(unescape(JSON.parse(body).url));
+                }*/
+
+
+            });
+
+
+
+
+});
+
+
+
 var User = mongoose.model('User');
 
 app.all('/test', updateModels)
