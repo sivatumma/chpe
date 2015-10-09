@@ -18,8 +18,7 @@ var config = require('./config/config.js'),
   logModule = require('./config/logModule')(app),
   https = require('https'),
   request = require('request'),
-  cookieParser = require('cookie-parser'),
-    expressSession = require('express-session'),
+  expressSession = require('express-session'),
   expressSession = require('express-session'),
   _id_count = 0;
 
@@ -33,7 +32,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use(cookieParser());
 app.use(expressSession({
     secret: 'secret',
     resave: false,
@@ -156,7 +154,6 @@ app.all('/ssoLogin', User.ssoLogin, function(req, res) {
 
 app.get('/ssoLogout',function(req, res) {
 
-console.log(req.session.user.sessionIndex);
  var headers = {
                 'User-Agent': 'Super Agent/0.0.1',
                 'Content-Type': 'application/x-www-form-urlencoded'

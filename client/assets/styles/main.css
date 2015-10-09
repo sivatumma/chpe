@@ -120,7 +120,9 @@ iron-pages{
 #chepeMenu{
   padding:10px 0px; 
 }
-
+.schemeHeading{
+  margin-left: 4%;
+}
 /*scroll bar css in chrome browser*/
 
 ::-webkit-scrollbar {
