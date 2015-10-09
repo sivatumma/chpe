@@ -76,5 +76,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     return MoreRouting.urlFor(path, {name:params.name});
   };
 
+   window.onload = function(){
+    console.log(location);
+   };
+
+  app.handleResponse = function(event) {
+    console.log(event.detail, event.detail.xhr);
+    console.log(event.target.lastResponse);
+    console.log(event.target, event.target.error);
+  };
+  app.handleResponse.readystatechange = function(res){
+    console.log(res);
+  };
+  app.handleError = function(event) {
+    console.log(event, event.target);
+  };
+  app.getTitle = function(event){
+    console.log(event.currentTarget.getAttribute('title'));
+    app.screenTitle = event.currentTarget.getAttribute('title');
+    return app.screenTitle
+  };
 
 })(document);
