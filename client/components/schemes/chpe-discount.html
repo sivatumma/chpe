@@ -73,7 +73,7 @@
                     on-click="togleDiscount"  id="{{percentageId}}">%</paper-button>
                     <paper-button  toggles  class="discountButton" on-click="togleDiscount"  id="{{flatId}}" >Flat</paper-button>
                     </div>
-                    <div class="discountInput">
+                    <div class="discountInput col-6">
                         <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
                          error-message="Max 999 if Flat ; 10 if %" value="{{discountModal.discount}}"></paper-input>
                     </div>
@@ -97,7 +97,7 @@
         
             },
             ready:function(){
-                console.log(this.discountModal);
+               // console.log(this.discountModal);
                 this.discountLength  = 10;
                 this.discountPattern = "^([0-10])$";
             },

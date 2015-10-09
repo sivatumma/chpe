@@ -60,6 +60,7 @@
         .gift-card-base-card {
             margin: 0px auto;
             max-width: 720px;
+            min-width: 320px;
             @apply(--layout-vertical);
             @apply(--center-justified);
         }
@@ -72,6 +73,7 @@
         .gift-card-extend-card {
             margin: 0px auto;
             max-width: 760px;
+            min-width: 320px;
             @apply(--layout-vertical);
             @apply(--center-justified);
         }
@@ -193,7 +195,7 @@
                 succErrMsg: String
             },
             attached: function() {
-                console.log(this.schemeType);
+                //console.log(this.schemeType);
             },
             ready: function() {
                 this.selected = 0;

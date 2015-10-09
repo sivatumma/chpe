@@ -58,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<body unresolved class="fullbleed layout vertical">
+<body unresolved class="fullbleed layout vertical" onload="getTitle">
     <span id="browser-sync-binding"></span>
     <div id="dashboardContainer" hidden>
     <template is="dom-bind" id="app">
@@ -75,31 +75,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <!-- Drawer Content -->
                 <more-route-selector selected-params="{{params}}">
                     <paper-menu class="pad" id="chepeMenu"  attr-for-selected="route" selected="{{route}}" on-iron-select="onMenuSelect">
-                            <paper-item route="home">
+                            <paper-item route="home" on-click="getTitle" title="">
                                 <a href="{{makeUrl('home')}}"> 
                                     <iron-icon icon="home"></iron-icon>
                                     <span>Home</span>
                                 </a>
                             </paper-item>
-                            <paper-item route="schemes">
+                            <paper-item route="schemes" on-click="getTitle" title="View Schemes">
                                 <a href="{{makeUrl('schemes')}}"> 
                                     <iron-icon icon="social:pages"></iron-icon>
                                     <span>View Scheme</span>
                                 </a>
                             </paper-item>
-                            <paper-item route="createAddOn">
+                            <paper-item route="createAddOn" on-click="getTitle" title="Create Addon">
                                 <a  href="{{makeUrl('createAddOn')}}"> 
                                     <iron-icon icon="star-half"></iron-icon>
                                     <span>Create Addon</span>
                                 </a>
                             </paper-item>
-                            <paper-item route="createCoupon">
+                            <paper-item route="createCoupon" on-click="getTitle" title="Create Coupon">
                                 <a href="{{makeUrl('createCoupon')}}"> 
                                     <iron-icon icon="star-half"></iron-icon>
                                     <span>Create Coupon</span>
                                 </a>
                             </paper-item>
-                            <paper-item route="createGiftCard">
+                            <paper-item route="createGiftCard" on-click="getTitle" title="Create Giftcard">
                                 <a href="{{makeUrl('createGiftCard')}}"> 
                                     <iron-icon icon="star-half"></iron-icon>
                                     <span>Create Gift Card</span>
@@ -141,15 +141,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 </paper-toolbar>
 
-                <paper-toolbar id="iconToolBar" class="fixed">
-                    <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                <paper-toolbar id="iconToolBar" class="fixed padding0">
+                  
                     <!-- <link-icon icon-type="social:share"></link-icon>
                     <link-icon icon-type="visibility"></link-icon>
                     <link-icon icon-type="list"></link-icon>
                     <link-icon icon-type="settings"></link-icon>
                     <link-icon icon-type="face"></link-icon>
                     <link-icon icon-type="apps"></link-icon> -->
-
+                        <div class="col-5 margin0 schemeHeading">
+                            <h1>{{screenTitle}}</h1>
+                           <!--  <template is="dom-if" if="{{schemeType}}">
+                                <h2>CreateScheme - <span>{{schemeType}}</span></h2>
+                            </template>
+                            <template is="dom-if" if="{{screenHeading}}">
+                                <h2>{{screenHeading}}</h2>
+                            </templte> -->
+                        </div>
+                        <div class="col-5 margin0">&nbsp;</div>
+                        <div class="col-2 pull-right">
+                          <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'>
+                         </link-icon>
+                         <link-icon icon-type="list"></link-icon>
+                         <link-icon icon-type="settings"></link-icon>
+                        </div>
                 </paper-toolbar>
                 <more-route-selector selectedParams="{{params}}">  
 
@@ -201,7 +216,5 @@ window.onload = function(){
     window.document.getElementById('pageLoading').style.display = 'none';
     window.document.getElementById("dashboardContainer").hidden = false;
 };
-function setRoute(schemeName){
-    MoreRouting.navigateTo('schemes', {name: schemeName});
-}
+
 </script>
