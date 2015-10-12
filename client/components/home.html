@@ -68,7 +68,6 @@
       border-radius: 3px;
       border: 1px solid #e5e5e5;
       border-spacing: 2px;
-      margin:2% 0 0 0;
     }
     .element-table thead th{
       padding: 0 24px;
@@ -105,10 +104,13 @@
       font-weight: 400;
       font-size: 14px;
       padding: 12px 24px;
+      text-align: left;
     }
     #listView{
       display: block;
       box-shadow: none;
+      margin: 0px 10px 0px 0px ;
+      padding: 0px;
     }
     #gridView{
       display: block;
@@ -129,8 +131,8 @@
       <iron-icon>
     </div>
 	 <!-- <chepe-grid-view grid-data="{{allSchemes}}"></chpe-grid-view> -->
-    <template is="dom-repeat" items="{{allSchemes}}" as="item"> 
         <div id="gridView">
+        <template is="dom-repeat" items="{{allSchemes}}" as="item"> 
             <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards" id="{{getId(index)}}" on-focus-out="toggleStyle" on-click="toggleStyle">
                 <div class="card-content">{{item.metadata.name}}</div>
                 <div class="card-actions">
@@ -141,6 +143,7 @@
                 <link-icon icon-type="settings" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
                 </div>
             </paper-card>
+            </template>
         </div>
         <div id="listView" hidden>
           <table class="element-table responsive-table">
@@ -155,20 +158,21 @@
                 <th>Action</th>
               </thead>
               <tbody>
-                <tr>
-                  <td>{{getIndexByRow(index)}}</td>
-                  <td>{{item.metadata.name}}</td>
-                  <td>{{item.metadata.type}}</td>
-                  <td>{{item.behavior.startDate}}</td>
-                  <td>{{item.behavior.endDate}}</td>
-                  <td>{{item.metadata.createdBy}}</td>
-                  <td>{{item.metadata.status}}</td>
-                  <td>Edit</td>
-                </tr>
+                 <template is="dom-repeat" items="{{listData}}" as="item"> 
+                  <tr>
+                    <td>{{getIndexByRow(index)}}</td>
+                    <td>{{item.metadata.name}}</td>
+                    <td>{{item.metadata.type}}</td>
+                    <td>{{item.behavior.startDate}}</td>
+                    <td>{{item.behavior.endDate}}</td>
+                    <td>{{item.metadata.createdBy}}</td>
+                    <td>{{item.metadata.status}}</td>
+                    <td>Edit</td>
+                  </tr>
+                </template>
               </tbody>
           </table>
         </div>
-    </template>
     </paper-material>
     <iron-ajax  id="fetchSchemes" verbose content-type="application/json"  method="POST" params='{}'   
          handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
@@ -178,6 +182,10 @@
     is: 'schemes-as-cards',
     properties: {
       allSchemes: {
+        type:Object,
+        notify:true
+      },
+      listData:{
         type:Object,
         notify:true
       },
@@ -207,7 +215,6 @@
       this.$.fetchSchemes.generateRequest();
       this.gridView = false;
       this.toggleListGridIcon= "icons::view-list";
-
     },
     getId: function(index){
       return "r_" + index;
@@ -243,9 +250,9 @@
       //console.log(event.detail.response);
       var data = event.detail.response;
       if (data !== undefined && data != null) {
-        this.allSchemes = data;
+        this.allSchemes =  this.listData = data;
       } else {
-        this.allSchemes = [{}];
+        this.listData = this.allSchemes = [{}];
       }
     },
     handleError: function(event) {
