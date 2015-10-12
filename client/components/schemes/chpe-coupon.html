@@ -140,7 +140,7 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                              <coupon-type id="selectCouponType"></coupon-type>
+                              <coupon-type id="selectCouponType" meta-data="{{schemeObj.metadata}}"></coupon-type>
                             </div>
                         </div>
                          <div class="card-actions col-12 lastStepActions">
@@ -205,7 +205,7 @@
             createScheme: function() {
                 this.formData = document.getElementById('coupon-form').serialize();
                 this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
-                this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
+                this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
 
                 this.schemeObj.metadata.type = "COUPON";
                 this.schemeObj.metadata.published = false;

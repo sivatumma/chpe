@@ -290,14 +290,14 @@
             createScheme: function() {
                 this.formData = document.getElementById('addon-form').serialize();
                 this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
-                this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
+                this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
 
                 this.schemeObj.metadata.type = "ADD_ON";
                 this.schemeObj.metadata.published = false;
                 this.schemeObj.on = "newscheme";
                 this.schemeObj.operation = "create";
                 if (this.schemeObj !== undefined) {
-                    this.$.schemeAjax.url = 'http://172.19.4.162:91' + this.config.urls.rest;
+                    this.$.schemeAjax.url =  this.config.urls.rest;
                     this.$.schemeAjax.method = "POST";
                     this.$.schemeAjax.body = JSON.stringify(this.schemeObj);
                     this.$.schemeAjax.generateRequest();

@@ -42,7 +42,7 @@
 
 </style>
     <template>
-        <div class="col-6">
+        <div class="col-6" metadata="{{metadata}}">
             <div class="discountBox"  id="couponTypeToggle" layout horizontaly>
                 <div class="btn-group">
                     <paper-button type="button" name="day" class="discountButton noRightBorder" 
@@ -63,6 +63,10 @@
             is: 'coupon-type',
             properties: {
                 couponTypeModal:String,
+                metadata:{
+                    type:Object,
+                    notify:true
+                }
             },
             ready:function(){
 

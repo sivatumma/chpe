@@ -227,14 +227,14 @@
             createScheme: function() {
                 this.formData = document.getElementById('gift-card-form').serialize();
                 this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
-                this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
+                this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
 
                 this.schemeObj.metadata.type = "GIFT_CARD";
                 this.schemeObj.metadata.published = false;
                 this.schemeObj.on = "newscheme";
                 this.schemeObj.operation = "create";
                 if (this.schemeObj !== undefined) {
-                    this.$.giftCardAjax.url = 'http://172.19.4.162:91' + this.config.urls.rest;
+                    this.$.giftCardAjax.url =  this.config.urls.rest;
                     this.$.giftCardAjax.method = "POST";
                     this.$.giftCardAjax.body = JSON.stringify(this.schemeObj);
                     this.$.giftCardAjax.generateRequest();
