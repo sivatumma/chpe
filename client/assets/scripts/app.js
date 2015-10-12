@@ -96,4 +96,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     event.stopPropagation();
   };
 
+
+  //home page list grid manipulations
+  app.toggleListGridIcon = "icons::view-list";
+  app.toggleListGrid = function(event) {
+    var mode = event.currentTarget.getAttribute('view');
+      if (mode == "list") {
+          document.querySelector("#listView").hidden = false;
+          document.querySelector("#gridView").hidden = true;
+          this.toggleListGridIcon = "icons:view-module";
+          event.currentTarget.setAttribute('view', 'grid');
+      } else {
+          this.toggleListGridIcon = "icons:view-list";
+          event.currentTarget.setAttribute('view', 'list');
+          document.querySelector("#listView").hidden = true;
+          document.querySelector("#gridView").hidden = false;
+      }
+  };
+
+  //toggle search bar
+  app.toggleSearch  = function(){
+    
+  };
+
 })(document);

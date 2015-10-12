@@ -62,7 +62,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <span id="browser-sync-binding"></span>
     <div id="dashboardContainer" hidden>
     <template is="dom-bind" id="app">
-
         <paper-drawer-panel id="paperDrawerPanel">
             <!-- Drawer Scroll Header Panel -->
             <paper-scroll-header-panel drawer fixed>
@@ -72,6 +71,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <span class="paper-font-title"><img src="assets/images/ch-logo.png"/></span>
                 </paper-toolbar>
 
+                <div class="favicon">
+                    <img  src="assets/images/schemes-logo.png"/>
+                    <h3>Schemes</h3>
+                </div>
                 <!-- Drawer Content -->
                 <more-route-selector selected-params="{{params}}">
                     <paper-menu class="pad" id="chepeMenu"  attr-for-selected="route" selected="{{route}}" on-iron-select="onMenuSelect">
@@ -81,12 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     <span>Home</span>
                                 </a>
                             </paper-item>
-                            <paper-item route="schemes" on-click="getTitle" title="View Schemes">
-                                <a href="{{makeUrl('schemes')}}"> 
-                                    <iron-icon icon="social:pages"></iron-icon>
-                                    <span>View Scheme</span>
-                                </a>
-                            </paper-item>
+                            
                             <paper-item route="createAddOn" on-click="getTitle" title="Create Addon">
                                 <a  href="{{makeUrl('createAddOn')}}"> 
                                     <iron-icon icon="star-half"></iron-icon>
@@ -105,7 +103,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     <span>Create Gift Card</span>
                                 </a>
                             </paper-item>
-                             
                     </paper-menu>
                 </more-route-selector>
             </paper-scroll-header-panel>
@@ -116,14 +113,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 <!-- Main Toolbar -->
                 <paper-toolbar id="mainToolbar">
-                    <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+                    <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle>
+                    </paper-icon-button>
                     <span class="flex"></span>
 
                     <!-- Toolbar icons -->
                     <span class="topIcons">
-                        <paper-icon-button icon="refresh"></paper-icon-button>
                         <paper-icon-button icon="search"></paper-icon-button>
-
                     </span>
                     <span>
                         <a href="/ssoLogout" class="logoutButton"><paper-icon-button icon="icons:input"></paper-icon-button></a>
@@ -142,29 +138,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </paper-toolbar>
 
                 <paper-toolbar id="iconToolBar" class="fixed padding0">
-                  
-                    <!-- <link-icon icon-type="social:share"></link-icon>
-                    <link-icon icon-type="visibility"></link-icon>
-                    <link-icon icon-type="list"></link-icon>
-                    <link-icon icon-type="settings"></link-icon>
-                    <link-icon icon-type="face"></link-icon>
-                    <link-icon icon-type="apps"></link-icon> -->
-                        <div class="col-5 margin0 schemeHeading">
-                            <h1>{{screenTitle}}</h1>
-                           <!--  <template is="dom-if" if="{{schemeType}}">
-                                <h2>CreateScheme - <span>{{schemeType}}</span></h2>
-                            </template>
-                            <template is="dom-if" if="{{screenHeading}}">
-                                <h2>{{screenHeading}}</h2>
-                            </templte> -->
-                        </div>
-                        <div class="col-5 margin0">&nbsp;</div>
-                        <div class="col-2 pull-right">
-                          <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'>
-                         </link-icon>
-                         <link-icon icon-type="list"></link-icon>
-                         <link-icon icon-type="settings"></link-icon>
-                        </div>
+                    <div class="col-5 margin0 schemeHeading"><h1>{{screenTitle}}</h1></div>
+                    <div class="col-5 margin0">&nbsp;</div>
+                    <div class="col-2 pull-right headerIcons">
+                        <paper-icon-button icon="link"></paper-icon-button>
+                        <paper-icon-button icon="settings"></paper-icon-button>
+                        <paper-icon-button icon="{{toggleListGridIcon}}" view="list" 
+                        on-click="toggleListGrid">
+                        </paper-icon-button>
+                    </div>
                 </paper-toolbar>
                 <more-route-selector selectedParams="{{params}}">  
 
@@ -173,21 +155,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                            <schemes-as-cards></schemes-as-cards>
                         </section>
 
-                        <section route="schemes">
-                            <paper-material elevation="1">
-                                <h2 class="paper-font-display2">View Schemes</h2>
-                                <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
-                                <a  href="{{makeUrl('createCoupon')}}" path="craeteAddOn" on-click="editScheme" scheme-name="ABC">Go to Addon</a>
-                            </paper-material>
-                        </section>
-
-                        <section route="createAddOn">
+                        <section route="createAddOn" class="addonBg">
                               <chpe-addon id="adddonComp" scheme-obj="{{addonAsScheme}}"></chpe-addon>
                         </section>
-                        <section route="createCoupon">
+                        <section route="createCoupon" class="couponBg">
                               <chpe-coupon scheme-obj="{{couponAsScheme}}"></chpe-coupon>
                         </section>
-                        <section route="createGiftCard">
+                        <section route="createGiftCard" class="giftCardBg">
                               <chpe-gift-card scheme-obj="{{giftcardAsScheme}}"></chpe-gift-card>
                         </section>
                     </iron-pages>
