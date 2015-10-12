@@ -33,7 +33,7 @@
           <h4 class="col-12 margin0">Points on Advance Paid
             <paper-icon-button icon="icons:add" on-click="addApd"></paper-icon-button>
           </h4>
-          <template is="dom-repeat" items="{{behavior.advancePaidDiscounts}}" as="apd">
+          <template is="dom-repeat" items="{{behaviorData.advancePaidDiscounts}}" as="apd">
             <div class="col-12 margin0 singleRow">
                 <div class="col-5">
                        <paper-input name="amount" no-label-float label="Amount" 
@@ -55,10 +55,10 @@
         Polymer({
             'is':'advance-paid-points',
              properties:{
-                "foodArray":{
-                    type:Array,
+                behaviorData:{
+                    type:Object,
                     notify:true
-                }
+                },
             },
             ready:function(){
                    // console.log(this.behavior.serviceRateCategoryDiscounts);
@@ -68,12 +68,12 @@
             },
             //add or remove src categories
             addApd :function(e){
-                this.push('behavior.advancePaidDiscounts', {amount:"",points:""});
+                this.push('behaviorData.advancePaidDiscounts', {amount:"",points:""});
            ;
             },
             deleteApd:function(e){
                 if(e.model.index!=0){
-                    this.splice('behavior.advancePaidDiscounts',e.model.index,1);
+                    this.splice('behaviorData.advancePaidDiscounts',e.model.index,1);
                 }
             },
             doChange:function(){

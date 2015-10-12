@@ -28,11 +28,11 @@
         }
     </style>
     <template id="capBox">
-        <div class="col-12 capRowSection margin0">
+        <div class="col-12 capRowSection margin0" behavior="{{behaviorData}}">
           <h4 class="col-12 margin0">Points on Cumulative Bill Amounts
             <paper-icon-button icon="icons:add" on-click="addcap"></paper-icon-button>
           </h4>
-          <template is="dom-repeat" items="{{behavior.cumulativeAmountPoints}}" as="cap">
+          <template is="dom-repeat" items="{{behaviorData.cumulativeAmountPoints}}" as="cap">
             <div class="col-12 singleRow">
                 <div class="col-5">
                        <paper-input name="amount" no-label-float label="Amount" 
@@ -54,8 +54,8 @@
         Polymer({
             'is':'cumulative-bill-amounts',
              properties:{
-                "foodArray":{
-                    type:Array,
+                behaviorData:{
+                    type:Object,
                     notify:true
                 }
             },
@@ -67,11 +67,11 @@
             },
             //add or remove src categories
             addcap :function(e){
-                this.push('behavior.cumulativeAmountPoints', {amount:"", points: ""});
+                this.push('behaviorData.cumulativeAmountPoints', {amount:"", points: ""});
             },
             deletecap:function(e){
                 if(e.model.index!=0){
-                    this.splice('behavior.cumulativeAmountPoints',e.model.index,1);
+                    this.splice('behaviorData.cumulativeAmountPoints',e.model.index,1);
                 }
             }
         });

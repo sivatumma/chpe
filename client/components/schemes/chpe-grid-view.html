@@ -1,0 +1,44 @@
+<dom-module id="chpe-grid-view">
+    <style>
+        :host {
+            display: block;
+        }
+    </style>
+    <template>
+        <div>
+        <template is="dom-repeat" items="{{gridData}}" as="item" id="gridView"> 
+            <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards" id="{{getId(index)}}" on-focus-out="toggleStyle" on-click="toggleStyle">
+                <div class="card-content">{{item.metadata.name}}</div>
+                <div class="card-actions">
+        <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+        <link-icon icon-type="social:share" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+        <link-icon icon-type="face" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+        <link-icon icon-type="visibility" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+        <link-icon icon-type="settings" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                </div>
+            </paper-card>
+        </template>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: "chpe-grid-view",
+            properties: {
+                gridData: {
+                    type: Object,
+                    notify: true
+                }
+            },
+            ready:function(){
+                console.log("djszdjas");
+            },
+            observers: [
+                'gridDataChanged(gridData.metadata)'
+            ],
+             gridDataChanged:function(metadata){
+                console.log(metadata);
+            },
+        });
+
+    </script>
+</dom-module>

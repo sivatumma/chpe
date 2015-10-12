@@ -12,7 +12,7 @@
     <template id="doctrosDiscountBlock">
     <h4 class="col-12 margin0">Discounts on Doctor Allocation</h4>
         <div class="col-12">
-            <template is="dom-repeat" items="{{behavior.doctorLevelDiscounts}}" as="dda">
+            <template is="dom-repeat" items="{{behaviorData.doctorLevelDiscounts}}" as="dda">
                 <templte>
                     <div class="col-6">
                         <label><span class="upperCase">{{dda.type}}</span> Chosen:</label>
@@ -27,7 +27,10 @@
         Polymer({
             'is':'discounts-on-doctor',
              properties:{
-
+                behaviorData:{
+                    type:Object,
+                    notify:true
+                }
              },
             ready:function(){
 

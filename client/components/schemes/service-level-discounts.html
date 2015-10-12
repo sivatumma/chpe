@@ -25,11 +25,11 @@
         }
     </style>
     <template>
-        <div  class="col-12 slcRowSection margin0">
+        <div  class="col-12 slcRowSection margin0" behavior="{{behaviorData}}">
         <h4 class="col-12 margin0">Service Level  Discounts
             <paper-icon-button icon="icons:add" on-click="addSlc"></paper-icon-button>
         </h4>
-          <template is="dom-repeat" items="{{behavior.serviceLevelDiscounts}}" as="slc">
+          <template is="dom-repeat" items="{{behaviorData.serviceLevelDiscounts}}" as="slc">
             <div class="col-12 singleRow">
                 <div class="col-6">
                         <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceLevelDiscounts/"
@@ -50,7 +50,7 @@
                     mini icon="icons:delete" class="red action" on-click="deleteSlc">
                     </paper-fab>
                   </span>
-                </div
+                </div>
             </div>      
           </template> 
         </div>
@@ -62,6 +62,10 @@
              properties:{
                 "foodArray":{
                     type:Array,
+                    notify:true
+                },
+                behaviorData:{
+                    type:Object,
                     notify:true
                 }
             },
@@ -79,11 +83,11 @@
             },
             //add or remove Slc categories
             addSlc :function(e){
-                this.push('behavior.serviceLevelDiscounts', {discount:0,discountType:"%",maxLength:9,services:[]});
+                this.push('behaviorData.serviceLevelDiscounts', {discount:0,discountType:"%",maxLength:9,services:[]});
             },
             deleteSlc:function(e){
                 if(e.model.index!=0){
-                    this.splice('behavior.serviceLevelDiscounts',e.model.index,1);
+                    this.splice('behaviorData.serviceLevelDiscounts',e.model.index,1);
                 }
             }
         });

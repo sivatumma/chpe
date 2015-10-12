@@ -34,7 +34,7 @@
                 </paper-icon-button>
             </span>
         </h4>
-          <template is="dom-repeat" items="{{behavior.billValueDiscounts}}" as="bsd">
+          <template is="dom-repeat" items="{{behaviorData.billValueDiscounts}}" as="bsd">
             <div class="col-12 margin0">
                 <div class="col-6">
                        <div class="col-6">
@@ -63,8 +63,8 @@
         Polymer({
             'is':'bill-range-discounts',
              properties:{
-                "foodArray":{
-                    type:Array,
+                behaviorData:{
+                    type:Object,
                     notify:true
                 }
             },
@@ -91,11 +91,11 @@
                         discountType: "%",
                         maxLength:9
                     };
-                this.push('behavior.billValueDiscounts',obj);
+                this.push('behaviorData.billValueDiscounts',obj);
             },
             deleteBsd:function(e){
                 if(e.model.index!=0){
-                    this.splice('behavior.billValueDiscounts',e.model.index,1);
+                    this.splice('behaviorData.billValueDiscounts',e.model.index,1);
                 }
             },
             doChange:function(){

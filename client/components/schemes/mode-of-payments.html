@@ -12,7 +12,8 @@
     <template id="mode-of-paymentsBlock">
      <h4 class="col-12 margin0"> Discounts on Mode of Payments </h4>
         <div class="col-12 margin0">
-        <template id="addonMop" is="dom-repeat" items="{{behavior.modeOfPaymentDiscounts}}" as="mopDiscounts">
+        <template id="addonMop" is="dom-repeat" items="{{behaviorData.modeOfPaymentDiscounts}}" 
+            as="mopDiscounts">
                 <div class="col-6">
                     <label><span>{{mopDiscounts.mop}}</span></label>
                     <chpe-discount id="{{mopDiscounts.mop}}" discount-modal="{{mopDiscounts}}"  percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
@@ -25,11 +26,11 @@
         Polymer({
             'is':'mode-of-payments',
              properties:{
-
+                behaviorData:{
+                    type:Object,
+                    notify:true
+                }
              },
-            ready:function(){
-
-            },
             getPercentId:function(index){
                 return "mopPercentage_"+index;
             },

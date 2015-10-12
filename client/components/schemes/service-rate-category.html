@@ -25,11 +25,11 @@
         }
     </style>
     <template id="srcCategory">
-        <div class="col-12 srcRowSection margin0">
+        <div class="col-12 srcRowSection margin0" behavior="{{behaviorData}}">
         <h4 class="col-12 margin0">Service Rate Categories
         <paper-icon-button icon="icons:add" on-click="addSrc"></paper-icon-button>
         </h4>
-          <template is="dom-repeat" items="{{behavior.serviceRateCategoryDiscounts}}" as="src">
+          <template is="dom-repeat" items="{{behaviorData.serviceRateCategoryDiscounts}}" as="src">
             <div class="col-12 singleRow">
                 <div class="col-6">
                         <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceRateCategories/"
@@ -62,6 +62,10 @@
                 "foodArray":{
                     type:Array,
                     notify:true
+                },
+                behaviorData:{
+                    type:Object,
+                    notify:true
                 }
             },
             ready:function(){
@@ -74,7 +78,7 @@
             },
             //add or remove src categories
             addSrc :function(e){
-                this.push('behavior.serviceRateCategoryDiscounts', {discount:0,discountType:"%",maxLength:9,srcTypes:[]});
+                this.push('behaviorData.serviceRateCategoryDiscounts', {discount:0,discountType:"%",maxLength:9,srcTypes:[]});
             },
             getPercentId:function(index){
                 return "srcPercentage_"+index;
@@ -84,7 +88,7 @@
             },
             deleteSrc:function(e){
                 if(e.model.index!=0){
-                    this.splice('behavior.serviceRateCategoryDiscounts',e.model.index,1);
+                    this.splice('behaviorData.serviceRateCategoryDiscounts',e.model.index,1);
                 }
             },
             doChange:function(){
