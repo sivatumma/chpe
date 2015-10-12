@@ -112,7 +112,7 @@
                 <paper-item>2</paper-item>
             </paper-menu>
         </paper-material>
-        <paper-material elevation="1" type="{{schemeType}}">
+        <paper-material elevation="1" type="{{schemeType}}" data="{{schemeObj}}">
             <form is="iron-form" id="gift-card-form" method="POST" action="#">
                 <neon-animated-pages id="giftCardPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
@@ -120,7 +120,7 @@
                         <div class="col-8">
                         <paper-card elevation="5" class="gift-card-extend-card">
                             <div class="margin0 card-content">
-                                <basic-scheme id="basicSchemeGiftCard" start-date-modal="giftCardStartDate" end-date-modal="giftCardEndDate" scheme-starts="giftCardStart" scheme-ends="giftCardEnds" start-date-type="giftCardStart" end-date-type="giftCardEnds" sd-dp="stgcDp" sd-tp="stgcTp" ed-dp="eDgcDp" ed-tp="eDgcTp" flat-id="basicFlatInGiftCard" percentage-id="basicPerecentageInGift" basic-discount="basicDiscId" discount-value="{{defaultDiscount}}">
+                                <basic-scheme id="basicSchemeGiftCard" metadata="{{schemeObj.metadata}}" start-date-modal="giftCardStartDate" behavior="{{schemeObj.behavior}}" end-date-modal="giftCardEndDate" scheme-starts="giftCardStart" scheme-ends="giftCardEnds" start-date-type="giftCardStart" end-date-type="giftCardEnds" sd-dp="stgcDp" sd-tp="stgcTp" ed-dp="eDgcDp" ed-tp="eDgcTp" flat-id="basicFlatInGiftCard" percentage-id="basicPerecentageInGift" basic-discount="basicDiscId" discount-value="{{defaultDiscount}}">
                                 </basic-scheme>
                             </div>
                             <div class="card-actions col-12 padding0 margin0" style="padding:0px;">
@@ -145,9 +145,9 @@
                                     </div>
                                     <div class="col-10 margin0" style="margin-top:10px;">
                                         <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/" options='{
-                                    "allow_space": false,
-                                    "allow_nonmatching": false
-                                }' selected-items="{{scheme.behavior.locationOfServices}}">
+                                            "allow_space": false,
+                                            "allow_nonmatching": false}' 
+                                            selected-items="{{schemeObj.behavior.locationOfServices}}">
                                         </multi-value-suggestbox>
                                     </div>
                                 </div>
@@ -157,9 +157,9 @@
                                     </div>
                                     <div class="col-10 margin0" style="margin-top:10px;">
                                         <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names/" options='{
-                                    "allow_space": false,
-                                    "allow_nonmatching": false
-                                }' selected-items="{{scheme.metadata.toIds}}">
+                                            "allow_space": false,
+                                            "allow_nonmatching": false}' 
+                                        selected-items="{{schemeObj.metadata.toIds}}">
                                         </multi-value-suggestbox>
                                     </div>
                                 </div>
@@ -192,17 +192,15 @@
             properties: {
                 schemeType: String,
                 schemeStatus: Boolean,
-                succErrMsg: String
-            },
-            attached: function() {
-                //console.log(this.schemeType);
+                succErrMsg: String,
+                schemeObj:{
+                    type:Object,
+                    notify:true
+                }
             },
             ready: function() {
                 this.selected = 0;
                 this.config = generalConfig() || {};
-                this.scheme = schemeBase();
-                this.$.basicSchemeGiftCard.metadata = this.scheme.metadata;
-                this.$.basicSchemeGiftCard.behavior = this.scheme.behavior;
             },
             listeners: {
                 'gift-card-form.iron-form-submit': 'createScheme',
@@ -211,12 +209,6 @@
             },
 
             enableButtons: function(e) {
-                /* if(e.target.invalid){
-                     document.querySelector("#firstStepInGc").hidden = true;
-                 }else{
-                     document.querySelector("#firstStepInGc").hidden = false;
-                 }
-                 console.log(e.target.invalid);*/
             },
 
             //neon animations for coupon
@@ -234,18 +226,17 @@
             },
             createScheme: function() {
                 this.formData = document.getElementById('gift-card-form').serialize();
-                console.log(this.formData);
-                this.scheme.behavior.startDate = chUtils.toIsoString(this.formData.giftCardStart);
-                this.scheme.behavior.endDate = chUtils.toIsoString(this.formData.giftCardEnds);
+                this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
+                this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
 
-                this.scheme.metadata.type = "GIFT_CARD";
-                this.scheme.metadata.published = false;
-                this.scheme.on = "newscheme";
-                this.scheme.operation = "create";
-                if (this.scheme !== undefined) {
+                this.schemeObj.metadata.type = "GIFT_CARD";
+                this.schemeObj.metadata.published = false;
+                this.schemeObj.on = "newscheme";
+                this.schemeObj.operation = "create";
+                if (this.schemeObj !== undefined) {
                     this.$.giftCardAjax.url = 'http://172.19.4.162:91' + this.config.urls.rest;
                     this.$.giftCardAjax.method = "POST";
-                    this.$.giftCardAjax.body = JSON.stringify(this.scheme);
+                    this.$.giftCardAjax.body = JSON.stringify(this.schemeObj);
                     this.$.giftCardAjax.generateRequest();
                 }
             },
@@ -254,24 +245,22 @@
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     console.log("Received response: " + JSON.stringify(event.detail.response));
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text = this.scheme.metadata.type + " created successfully!...";
+                    toast.text = this.schemeObj.metadata.type + " created successfully!...";
                     toast.show();
                 } else {
-                    console.log(this.scheme);
+                    console.log(this.schemeObj);
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text = "Error while creating" + this.scheme.metadata.type;
+                    toast.text = "Error while creating" + this.schemeObj.metadata.type;
                 }
                 setTimeout(function() {
                     //this.formData.clear();
                 }, 2000);
             },
             handleError: function(event) {
-                var request = event.detail.request;
-                var error = event.detail.error;
-                console.log(error);
+                console.log(event.detail.error);
                 var toast = document.querySelector("#schemeSuccErrMessageToast");
-                toast.text = "Error while creating " + this.scheme.metadata.type + " Please try again.. ";
+                toast.text = "Error while creating " + this.schemeObj.metadata.type +" Please try again..";
                 toast.show();
             },
             submitForm: function(evt, details, sender) {

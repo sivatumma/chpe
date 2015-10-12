@@ -85,5 +85,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.screenTitle = event.currentTarget.getAttribute('title');
     return app.screenTitle
   };
+  app.addonAsScheme =  app.couponAsScheme = app.giftcardAsScheme = schemeBase();
+
+  //to get edit scheme screen and set the relavent data
+  var x = {};
+      x.metadata = {name:"Siva"};
+      x.behavior = {discountType:"FLAT",discount:10};
+  app.editScheme  = function(event){ 
+    app.couponAsScheme = x;
+    event.stopPropagation();
+  };
 
 })(document);

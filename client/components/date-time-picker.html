@@ -63,7 +63,7 @@
 	</style>
     <template>
      <section onclick="clickHandler(event)">
-     <paper-input name="{{dateType}}" class="date-time-picker-input"  no-label-float readonly="true" label="{{dateLabel}}"  on-tap="showDialog" id="{{dateTimeValue}}"  ></paper-input>
+     <paper-input name="{{dateType}}" class="date-time-picker-input"  no-label-float readonly="true" label="{{dateLabel}}"  on-tap="showDialog" id="{{dateTimeValue}}" value="{{dateModalValue}}"  ></paper-input>
      	<paper-dialog modal id="{{dateModal}}"  class="size-position paper-date-picker-dialog padding0" with-backdrop on-iron-overlay-closed="dismissDialog">
 
 			  	<div class="datePicker margin0">
@@ -101,7 +101,11 @@
                 dateLabel:String,
                 dateModal:String,
                 timeId:String,
-                dateId:String
+                dateId:String,
+                dateModalValue:{
+                	type:String,
+                	notify:true
+                }
             },
             ready:function(){
             	var monthNames = ["January", "February", "March", "April", "May", "June",

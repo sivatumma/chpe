@@ -177,17 +177,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             <paper-material elevation="1">
                                 <h2 class="paper-font-display2">View Schemes</h2>
                                 <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
+                                <a  href="{{makeUrl('createCoupon')}}" path="craeteAddOn" on-click="editScheme" scheme-name="ABC">Go to Addon</a>
                             </paper-material>
                         </section>
 
                         <section route="createAddOn">
-                              <chpe-addon></chpe-addon>
+                              <chpe-addon id="adddonComp" scheme-obj="{{addonAsScheme}}"></chpe-addon>
                         </section>
                         <section route="createCoupon">
-                              <chpe-coupon></chpe-coupon>
+                              <chpe-coupon scheme-obj="{{couponAsScheme}}"></chpe-coupon>
                         </section>
                         <section route="createGiftCard">
-                              <chpe-gift-card></chpe-gift-card>
+                              <chpe-gift-card scheme-obj="{{giftcardAsScheme}}"></chpe-gift-card>
                         </section>
                     </iron-pages>
 

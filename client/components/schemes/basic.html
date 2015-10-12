@@ -25,15 +25,15 @@
 
     </style>
     <template>
-        <div class="col-12">
+        <div class="col-12" metadata="{{metaData}}" behavior="{{behavior}}">
             <div class="col-6">
                 <p><strong>Scheme Name</strong> must start with an Alphabet, should contain minimum of 3 characters and cannot contain special characters like #@!, etc. Note, however the names are unique across the system and can not be duplicated</p>
                 <paper-input name="name" autocapitalize="on" value="{{metadata.name}}" required auto-validate pattern="^[a-zA-Z,-,0-9]{3,}[a-zA-Z]*$" no-label-float error-message="Recheck the Naming guidelines" label="Scheme Name">
                 </paper-input>
 
-              <date-time-picker date-type="{{startDateType}}" date-modal="{{startDateModal}}" date-time-value="{{schemeStarts}}" date-label="Start Date" date-id="{{sdDp}}" time-id="{{sdTp}}"></date-time-picker>  
+              <date-time-picker date-type="{{startDateType}}" date-modal-value="{{behavior.startDate}}" date-modal="{{startDateModal}}" date-time-value="{{schemeStarts}}" date-label="Start Date" date-id="{{sdDp}}" time-id="{{sdTp}}"></date-time-picker>  
 
-                <date-time-picker date-type="{{endDateType}}" date-modal="{{endDateModal}}" date-time-value="{{schemeEnds}}" date-label="End Date" date-id="{{edDp}}" time-id="{{edTp}}"></date-time-picker>
+                <date-time-picker date-type="{{endDateType}}" date-modal="{{endDateModal}}" date-time-value="{{schemeEnds}}" date-label="End Date" date-modal-value="{{behavior.endDate}}" date-id="{{edDp}}" time-id="{{edTp}}"></date-time-picker>
 
             </div>
             <div class="col-1">&nbsp;</div>
@@ -69,7 +69,7 @@
                 percentageId:String,
                 flatId:String,
                 discountModal:String,
-                metadata:Object,
+                metaData:Object,
                 behavior:Object,
                 basicDiscount:String
             },

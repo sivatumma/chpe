@@ -1,4 +1,3 @@
-
 <dom-module id="chpe-coupon">
     <style type="text/css">
         .submitButtons {
@@ -96,7 +95,7 @@
                 <paper-item>2</paper-item>
             </paper-menu>
         </paper-material>
-        <paper-material elevation="1" type="{{schemeType}}">
+        <paper-material elevation="1" type="{{schemeType}}" >
             <form is="iron-form" id="coupon-form" method="POST" action="#">
                 <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
@@ -104,7 +103,8 @@
                         <div class="col-8">
                         <paper-card elevation="5" class="coupon-extend-card">
                         <div class="card-content margin0">
-                            <basic-scheme id="basicScheme" start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="couponStart" end-date-type="couponEnds" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
+                            <basic-scheme id="basicScheme" metadata="{{schemeObj.metadata}}"
+                            behavior="{{schemeObj.behavior}}"  start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="couponStart" end-date-type="couponEnds" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
                             </basic-scheme>
                          </div>
                         <div class="card-actions col-12" style="padding:0px;margin:0px;">
@@ -124,7 +124,8 @@
                     <div class="col-8">
                     <paper-card elevation="5" class="coupon-extend-card">
                         <div class="card-content margin0">
-                        <service-rate-category id="srcCatCoupon"></service-rate-category>
+                        <service-rate-category id="srcCatCoupon" 
+                                behavior-data="{{schemeObj.behavior}}"></service-rate-category>
                          <div class="col-6">
                             <div class="col-12" style="margin:10px 0px 0px 0px;font-weight:bold;">
                                     <label style="margin-left:10px;">Locations :</label>
@@ -134,7 +135,7 @@
                                 options='{
                                 "allow_space": false,
                                 "allow_nonmatching": false}' 
-                                selected-items="{{scheme.behavior.locationOfServices}}">
+                                selected-items="{{schemeObj.behavior.locationOfServices}}">
                                 </multi-value-suggestbox>
                                 </div>
                             </div>
@@ -170,19 +171,15 @@
             properties: {
                 schemeType: String,
                 schemeStatus: Boolean,
-                succErrMsg: String
-            },
-            attached: function() {
-               // console.log(this.schemeType);
+                succErrMsg: String,
+                schemeObj:{
+                    type:Object,
+                    notify:true
+                }
             },
             ready: function() {
                 this.selected = 0;
                 this.config = generalConfig() || {};
-                this.scheme = schemeBase();
-                this.$.basicScheme.metadata = this.scheme.metadata;
-                this.$.basicScheme.behavior = this.scheme.behavior;
-                this.$.srcCatCoupon.behavior = this.scheme.behavior;
-                this.$.selectCouponType.metadata = this.scheme.metadata;
             },
             listeners: {
                 'coupon-form.iron-form-submit': 'createScheme',
@@ -192,41 +189,32 @@
             },
             
             enableButtons:function(e){
-                /*if(e.target.invalid){
-                    document.querySelector("#firstStep").hidden = true;
-                }else{
-                    document.querySelector("#firstStep").hidden = false;
-                }
-                console.log(e.target.invalid);*/
+                
             },
             //neon animations for coupon
             _onPrevClick: function() {
                 this.entryAnimation = 'slide-from-left-animation';
                 this.exitAnimation = 'slide-right-animation';
                 this.selected = this.selected === 0 ? 4 : (this.selected - 1);
-               // var setps = document.querySelector('#stepIndicator');
-                //setps.value  = this.selected;
             },
             _onNextClick: function() {
                 this.entryAnimation = 'slide-from-right-animation';
                 this.exitAnimation = 'slide-left-animation';
                 this.selected = this.selected === 4 ? 0 : (this.selected + 1);
-                //var setps = document.querySelector('#stepIndicator');
-                //setps.value  = this.selected;
             },
             createScheme: function() {
                 this.formData = document.getElementById('coupon-form').serialize();
-                this.scheme.behavior.startDate = chUtils.toIsoString(this.formData.couponStart);
-                this.scheme.behavior.endDate = chUtils.toIsoString(this.formData.couponEnds);
+                this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
+                this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
 
-                this.scheme.metadata.type = "COUPON";
-                this.scheme.metadata.published = false;
-                this.scheme.on = "newscheme";
-                this.scheme.operation = "create";
-                if (this.scheme !== undefined) {
+                this.schemeObj.metadata.type = "COUPON";
+                this.schemeObj.metadata.published = false;
+                this.schemeObj.on = "newscheme";
+                this.schemeObj.operation = "create";
+                if (this.schemeObj !== undefined) {
                     this.$.couponAjax.url='http://172.19.4.162:91'+this.config.urls.rest;
                     this.$.couponAjax.method = "POST";
-                    this.$.couponAjax.body = JSON.stringify(this.scheme);
+                    this.$.couponAjax.body = JSON.stringify(this.schemeObj);
                     this.$.couponAjax.generateRequest();
                 }
             },
@@ -235,13 +223,13 @@
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     console.log("Received response: " + JSON.stringify(event.detail.response));
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text =  this.scheme.metadata.type+" created successfully!...";
+                    toast.text =  this.schemeObj.metadata.type+" created successfully!...";
                     toast.show();
                 }else{
-                    console.log(this.scheme);
+                    console.log(this.schemeObj);
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text =  "Error while creating" + this.scheme.metadata.type;
+                    toast.text =  "Error while creating" + this.schemeObj.metadata.type;
                 }
                 setTimeout(function() {
                     //this.formData.clear();
@@ -252,7 +240,7 @@
                 var error = event.detail.error;
                 console.log(error);
                 var toast = document.querySelector("#schemeSuccErrMessageToast");
-                toast.text = "Error while creating " + this.scheme.metadata.type+" Please try again.. ";
+                toast.text = "Error while creating " + this.schemeObj.metadata.type+" Please try again.. ";
                 toast.show();
             },
             submitForm: function(evt, details, sender) {

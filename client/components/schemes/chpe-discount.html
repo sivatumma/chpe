@@ -91,21 +91,29 @@
                 discount:String,
                 discountType:String,
                 flatType:String,
-                discountModal:String,
+                discountModal:{
+                    type:Object,
+                    notify:true
+                },
                 discountValue:String,
                 scheme:Object,
         
             },
+            observers: [
+                'discountModalChanged(discountModal.discountType)'
+              ],
+            discountModalChanged:function(discountType){
+                this.setDiscount(discountType);
+            },
             ready:function(){
-               // console.log(this.discountModal);
                 this.discountLength  = 10;
                 this.discountPattern = "^([0-10])$";
             },
             listeners:{
               'discountToggle.onClick':'togleDiscount'
             },
-            togleDiscount:function(e){
-                var discountType = e.target.parentElement.innerText;
+
+            setDiscount:function(discountType){
                 //first removing all classes and setting clicked element to active
                 chUtils.removeClass(document.querySelector("#"+this.percentageId),"active");
                 chUtils.removeClass(document.querySelector("#"+this.flatId),"active");
@@ -116,23 +124,25 @@
                     }else{
                         this.discountLength = 10;
                     }
-
                     this.discountPattern = "^([0-10])$";
                     chUtils.addClass(document.querySelector("#"+this.percentageId),"active");
-                    //console.log(document.querySelector("#"+this.percentageId));
                     this.discountModal.discountType = discountType; 
                 } else {
                     chUtils.addClass(document.querySelector("#"+this.flatId),"active");
 
-                     if(this.discountModal.maxLength!==undefined){
+                    if(this.discountModal.maxLength!==undefined){
                         this.discountModal.maxLength = this.discountLength = 999;
                     }else{
                         this.discountLength = 999;
                     }
                     this.discountPattern = "^([0-999])$";
-                    //console.log(document.querySelector("#"+this.flatId));
                     this.discountModal.discountType = discountType; 
                 }
+            },
+
+            togleDiscount:function(e){
+                var discountType = e.target.parentElement.innerText;
+                this.setDiscount(discountType);
             }
           
         });
