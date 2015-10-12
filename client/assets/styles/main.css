@@ -14,37 +14,39 @@ body {
   color: #000;
   padding: 0px !important;
 }
-
 paper-material.radial-gradiant-addon {
 	padding:20px !important;
 }
-
-.logoutButton{color:white;}
-.logoutButton:active{color:lightgreen;}
+.logoutButton{
+  color:white;
+}
+.logoutButton:active{
+  color:lightgreen;
+}
 .list {
-      padding-top: 12px;
-      background-color: white;
-      display: inline-block;
-      width: 240px;
-      height: 228px;
-      margin: 12px;
-      @apply(--shadow-elevation-2dp);
-    }
-    .short {
-      padding-top: 12px;
-      height: 216px;
-    }
-    h4 {
-      margin-left: 24px;
-    }
-    .avatar {
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: #ccc;
-    }
+    padding-top: 12px;
+    background-color: white;
+    display: inline-block;
+    width: 240px;
+    height: 228px;
+    margin: 12px;
+    @apply(--shadow-elevation-2dp);
+  }
+.short {
+  padding-top: 12px;
+  height: 216px;
+  }
+h4 {
+  margin-left: 24px;
+  }
+.avatar {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #ccc;
+  }
 
 /*Too bar styles*/
 #iconToolBar{
@@ -60,7 +62,8 @@ paper-material.radial-gradiant-addon {
     max-width: 360px;
 
 }
-/*#iconToolBar .content{
+/*
+ #iconToolBar .content{
   max-height:200px;
     background-color: #fff;
 }
@@ -74,10 +77,6 @@ paper-material.radial-gradiant-addon {
 .content{
   height: auto !important;
 }
-/*iron-dropdown{
-  top:248px !important;
-  border-top: none;
-}*/
 #topBar paper-menu-button{
   padding:0px;
   color:#444343;
@@ -118,13 +117,31 @@ iron-pages{
   padding: 60px 0px !important ;
 }
 #chepeMenu{
-  padding:10px 0px; 
+  padding:5px 0px; 
+  position: relative;
 }
 .schemeHeading{
   margin-left: 4%;
 }
-/*scroll bar css in chrome browser*/
+.favicon{
+  height: 54px;
+  width:100%;
+  margin: 0px auto;
+  padding: 5px 0px 0px 0px;
+}
+.favicon img{
+  float: left;
+  margin-left: 15px;
+  width: 54px;
+}
+.favicon h3{
+  color:#888;
+  float: left;
+  margin-left:15px;
+  font-size: 16px;
+}
 
+/*scroll bar css in chrome browser*/
 ::-webkit-scrollbar {
     width:10px;
     height: 10px;
@@ -140,10 +157,6 @@ iron-pages{
 }
 
 /*scheme styles*/
-section schemes-as-cards{
-  /*background: #F7F6E3;*/
-  background: #f4f4f4;
-}
 .chpe-coupon,.chpe-gift-card,.chpe-addon{
     border-radius: 2px;
     margin:15px 0px;
@@ -152,6 +165,7 @@ section schemes-as-cards{
   font-size:18px !important;
   font-weight: normal;
 }
+
 
 #mainContainer{
   background: white;
@@ -163,10 +177,24 @@ section schemes-as-cards{
 .show{
   display: block;
 }
-.topIcons{
-  margin-right: 3%;
-}
 
+.headerIcons{
+  margin-left: 15%;
+}
+.headerIcons paper-icon-button{
+  margin: 0 5px;
+}
+.headerIcons .active{
+   background: #d4d4d4;
+   border-radius:2px;
+   transition: background-color 0.8s ease;   
+}
+.headerIcons paper-icon-button:last-child{
+  margin-right: 0px;
+}
+.topIcons{
+  margin-right:1%;
+}
 .showDatepickerPopup{
      -moz-animation: slide 2s ease 3.5s forwards;
    -webkit-animation: slide 2s ease 3.5s forwards;
@@ -175,102 +203,120 @@ section schemes-as-cards{
     animation: slide 2s ease 3.5s forwards;
 }
 .horizontal-section {
-    background: none;
-    margin: 0px auto
-  }
+  background: none;
+  margin: 0px auto
+}
+
+/*Backgrouds for schems*/
+.addonBg,.couponBg,.giftCardBg{
+  display: inline-block;
+  float: left;
+  width: 100%;
+  background: url('../images/dark_embroidery.png') repeat;
+  height:555px;
+}
+.leftnav{
+  background: #fff;
+}
+.couponBg{
+  background: url('../images/confectionary.png') repeat !important;
+}
+.giftCardBg{
+  background: url('../images/leather_1_@2X.png') repeat !important;
+}
 /*  custom paper fab styles*/
-        paper-fab {
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
-          border-radius: 50%;
-        }
-        paper-fab.blue {
-          --paper-fab-background: var(--paper-light-blue-300);
-          --paper-fab-keyboard-focus-background: var(--paper-light-blue-200);
-        }
-        paper-fab.red {
-          --paper-fab-background: var(--paper-red-500) !important;
-          --paper-fab-keyboard-focus-background: var(--paper-red-900) !important;
-        }
-        paper-fab.green {
-          --paper-fab-background: var(--paper-green-500);
-          --paper-fab-keyboard-focus-background: var(--paper-green-900);
-        }
-        paper-fab.orange {
-          --paper-fab-background: var(--paper-orange-500);
-          --paper-fab-keyboard-focus-background: var(--paper-orange-900);
-        }
-        .coupon-base-card{
-            margin: 0px auto;
-            max-width: 720px;
-            @apply(--layout-vertical);
-            @apply(--center-justified);
-        }
+paper-fab {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+}
+paper-fab.blue {
+  --paper-fab-background: var(--paper-light-blue-300);
+  --paper-fab-keyboard-focus-background: var(--paper-light-blue-200);
+}
+paper-fab.red {
+  --paper-fab-background: var(--paper-red-500) !important;
+  --paper-fab-keyboard-focus-background: var(--paper-red-900) !important;
+}
+paper-fab.green {
+  --paper-fab-background: var(--paper-green-500);
+  --paper-fab-keyboard-focus-background: var(--paper-green-900);
+}
+paper-fab.orange {
+  --paper-fab-background: var(--paper-orange-500);
+  --paper-fab-keyboard-focus-background: var(--paper-orange-900);
+}
+.coupon-base-card{
+    margin: 0px auto;
+    max-width: 720px;
+    @apply(--layout-vertical);
+    @apply(--center-justified);
+}
 
 /*paper spinner custom styles*/
-  paper-spinner{
-    width: 40px;
-    height: 40px;
+paper-spinner{
+  width: 40px;
+  height: 40px;
+}
+paper-spinner, button {
+  display: block;
+  margin-bottom: 24px;
+  margin-left: auto;
+  margin-right: auto;
+}
+paper-spinner.blue {
+  --paper-spinner-layer-1-color: var(--paper-light-blue-500);
+  --paper-spinner-layer-2-color: var(--paper-light-blue-500);
+  --paper-spinner-layer-3-color: var(--paper-light-blue-500);
+  --paper-spinner-layer-4-color: var(--paper-light-blue-500);
+}
+paper-spinner.red {
+  --paper-spinner-layer-1-color: var(--paper-red-500);
+  --paper-spinner-layer-2-color: var(--paper-red-500);
+  --paper-spinner-layer-3-color: var(--paper-red-500);
+  --paper-spinner-layer-4-color: var(--paper-red-500);
+}
+paper-spinner.orange {
+  --paper-spinner-layer-1-color: var(--paper-orange-500);
+  --paper-spinner-layer-2-color: var(--paper-orange-500);
+  --paper-spinner-layer-3-color: var(--paper-orange-500);
+  --paper-spinner-layer-4-color: var(--paper-orange-500);
+}
+paper-spinner.green {
+  --paper-spinner-layer-1-color: var(--paper-green-500);
+  --paper-spinner-layer-2-color: var(--paper-green-500);
+  --paper-spinner-layer-3-color: var(--paper-green-500);
+  --paper-spinner-layer-4-color: var(--paper-green-500);
+}
+
+/*custom paper slider styles*/
+ #stepIndicator{
+    margin: 10px !important;
+ }
+  paper-slider.blue {
+    --paper-slider-knob-color: var(--paper-light-blue-500);
+    --paper-slider-active-color: var(--paper-light-blue-500);
   }
-  paper-spinner, button {
-    display: block;
-    margin-bottom: 24px;
-    margin-left: auto;
-    margin-right: auto;
+  paper-slider.red {
+    --paper-slider-knob-color: var(--paper-red-500);
+    --paper-slider-active-color: var(--paper-red-500);
   }
-  paper-spinner.blue {
-    --paper-spinner-layer-1-color: var(--paper-light-blue-500);
-    --paper-spinner-layer-2-color: var(--paper-light-blue-500);
-    --paper-spinner-layer-3-color: var(--paper-light-blue-500);
-    --paper-spinner-layer-4-color: var(--paper-light-blue-500);
+  paper-slider.green {
+    --paper-slider-knob-color: var(--paper-green-500);
+    --paper-slider-active-color: var(--paper-green-500);
   }
-  paper-spinner.red {
-    --paper-spinner-layer-1-color: var(--paper-red-500);
-    --paper-spinner-layer-2-color: var(--paper-red-500);
-    --paper-spinner-layer-3-color: var(--paper-red-500);
-    --paper-spinner-layer-4-color: var(--paper-red-500);
+  paper-slider.orange {
+    --paper-slider-knob-color: var(--paper-orange-500);
+    --paper-slider-active-color: var(--paper-orange-500);
+    --paper-slider-pin-color: var(--paper-orange-500);
   }
-  paper-spinner.orange {
-    --paper-spinner-layer-1-color: var(--paper-orange-500);
-    --paper-spinner-layer-2-color: var(--paper-orange-500);
-    --paper-spinner-layer-3-color: var(--paper-orange-500);
-    --paper-spinner-layer-4-color: var(--paper-orange-500);
-  }
-  paper-spinner.green {
-    --paper-spinner-layer-1-color: var(--paper-green-500);
-    --paper-spinner-layer-2-color: var(--paper-green-500);
-    --paper-spinner-layer-3-color: var(--paper-green-500);
-    --paper-spinner-layer-4-color: var(--paper-green-500);
+  #ratingsLabel {
+    padding-left: 12px;
+    color: #a0a0a0;
   }
 
-  /*custom paper slider styles*/
-   #stepIndicator{
-      margin: 10px !important;
-   }
-    paper-slider.blue {
-      --paper-slider-knob-color: var(--paper-light-blue-500);
-      --paper-slider-active-color: var(--paper-light-blue-500);
-    }
-    paper-slider.red {
-      --paper-slider-knob-color: var(--paper-red-500);
-      --paper-slider-active-color: var(--paper-red-500);
-    }
-    paper-slider.green {
-      --paper-slider-knob-color: var(--paper-green-500);
-      --paper-slider-active-color: var(--paper-green-500);
-    }
-    paper-slider.orange {
-      --paper-slider-knob-color: var(--paper-orange-500);
-      --paper-slider-active-color: var(--paper-orange-500);
-      --paper-slider-pin-color: var(--paper-orange-500);
-    }
-    #ratingsLabel {
-      padding-left: 12px;
-      color: #a0a0a0;
-    }
-
-/*pricing custom grids*/
+/*pricing engine custom grids*/
   .margin0{
     margin:0px;
   }

@@ -1,261 +1,261 @@
 <script src="../config/general.js"></script>
 
 <dom-module id="schemes-as-cards">
-<style type="text/css">
+    <style type="text/css">
+        :host {
+            float: left;
+            padding: 10px;
+            text-align: center;
+            width: 99%;
+        }
+        
+        .cards {
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+            margin-top: 30px;
+            font-size: 16px;
+        }
+        
+        paper-card {
+            display: block;
+            /*width: calc(33% - 90px);*/
+            width: 230px;
+            height: 200px;
+            margin: 10px 5px 10px 10px;
+            cursor: pointer;
+            transition: box-shadow 0.1s;
+            float: left;
+        }
+        
+        .avatar {
+            display: inline-block;
+            height: 64px;
+            width: 64px;
+            border-radius: 50%;
+            background: var(--paper-pink-500);
+            color: white;
+            line-height: 64px;
+            font-size: 30px;
+            text-align: center;
+        }
+        
+        .fancy .title {
+            position: absolute;
+            top: 30px;
+            left: 100px;
+            color: var(--paper-indigo-500);
+        }
+        
+        .fancy img {
+            width: 100%;
+        }
+        
+        .fancy .big {
+            font-size: 22px;
+            padding: 8px 0 16px;
+            color: var(--google-grey-500);
+        }
+        
+        .fancy .medium {
+            font-size: 16px;
+            padding-bottom: 8px;
+        }
+        
+        .pink {
+            --paper-card-header-color: var(--paper-pink-500);
+        }
+        
+        paper-card .header {
+            font-size: 16px !important;
+        }
+        
+        .element-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 3px;
+            border: 1px solid #e5e5e5;
+            border-spacing: 2px;
+        }
+        .element-table thead th {
+            padding: 0 24px;
+            line-height: 56px;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.54);
+            text-align: left;
+            border-bottom: 1px solid;
+            border-bottom-color: #e5e5e5;
+        }
+        .element-table thead th:first-child{
+            border-left: 1px solid #e5e5e5;
+        }
+        
+        .element-table thead th:last-child{
+            border-right: 1px solid #e5e5e5;
+        }
+        .element-table tbody tr:first-child {
+            margin-top: 8px;
+        }
+        
+        .element-table tbody tr:hover {
+            background: #fafafa;
+        }
+        .element-table tbody tr {
+            cursor: pointer;
+            overflow: hidden;
+            height: 48px;
+        }
+        .element-table tbody tr td {
+            white-space: nowrap;
+            font-weight: 400;
+            font-size: 13px;
+            padding: 12px 24px;
+            text-align: left;
+        }
+        #listView {
+            display: block;
+            box-shadow: none;
+            margin: 0px 10px 0px 0px;
+            padding: 0px;
+        }
+        
+        #gridView {
+            display: block;
+        }
+        
+        .toogleDiv {
+            margin: 10px;
+            display: block;
+            clear: both;
+        }
+        
+        .toogleDiv iron-icon {
+            cursor: pointer;
+        }
+    </style>
+    <template>
+        <paper-material elevation="0">
+            <div id="gridView">
+                <!--    <template is="dom-repeat" items="{{allSchemes}}" as="item"> 
+           <chepe-grid-view grid-data="{{item}}"></chpe-grid-view>
+          </template>  -->
 
-  :host{
-    float:left;
-    padding:10px;
-    text-align:center;
-    width:99%;
-}
-
-	.cards {
-      @apply(--layout-vertical);
-      @apply(--center-justified);
-      margin-top:30px;
-      font-size: 16px;
-    }
-    paper-card {
-      display: block;
-	    /*width: calc(33% - 90px);*/
-      width:230px;
-      height:200px;
-	    margin: 10px 5px 10px 10px;
-	    cursor: pointer;
-	    transition: box-shadow 0.1s;
-	    float: left;
-    }
-    .avatar {
-      display: inline-block;
-      height: 64px;
-      width: 64px;
-      border-radius: 50%;
-      background: var(--paper-pink-500);
-      color: white;
-      line-height: 64px;
-      font-size: 30px;
-      text-align: center;
-    }
-    .fancy .title {
-      position: absolute;
-      top: 30px;
-      left: 100px;
-      color: var(--paper-indigo-500);
-    }
-    .fancy img {
-      width: 100%;
-    }
-    .fancy .big {
-      font-size: 22px;
-      padding: 8px 0 16px;
-      color: var(--google-grey-500);
-    }
-    .fancy .medium {
-      font-size: 16px;
-      padding-bottom: 8px;
-    }
-    .pink {
-      --paper-card-header-color: var(--paper-pink-500);
-    }
-    paper-card .header{
-    	font-size: 16px !important;
-    }
-    .element-table{
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      border-radius: 3px;
-      border: 1px solid #e5e5e5;
-      border-spacing: 2px;
-      margin:2% 0 0 0;
-    }
-    .element-table thead th{
-      padding: 0 24px;
-      line-height: 56px;
-      font-size: 13px;
-      font-weight: 500;
-      color: rgba(0, 0, 0, 0.54);
-      text-align: left;
-      border-bottom: 1px solid;
-      border-bottom-color: #e5e5e5;
-    }
-    
-    .element-table thead th:first-child,{
-      border-left:1px solid #e5e5e5;
-    }
-    .element-table thead th:last-child,{
-      border-right:1px solid #e5e5e5;
-    }
-
-
-    .element-table tbody tr:first-child{
-      margin-top: 8px;
-    }
-     .element-table tbody tr:hover{
-        background: #fafafa;
-     }
-    .element-table tbody tr{
-      cursor: pointer;
-      overflow: hidden;
-      height: 48px;
-    }
-    .element-table tbody tr td{
-      white-space: nowrap;
-      font-weight: 400;
-      font-size: 14px;
-      padding: 12px 24px;
-    }
-    #listView{
-      display: block;
-      box-shadow: none;
-    }
-    #gridView{
-      display: block;
-    }
-    .toogleDiv{
-      margin: 10px;
-      display: block;
-      clear: both;
-    }
-    .toogleDiv iron-icon{
-      cursor: pointer;
-    }
-</style>
-<template>
-	<paper-material elevation="0">
-    <div class="pull-right toogleDiv"> 
-      <iron-icon icon="{{toggleListGridIcon}}" view="list" on-click="toggleListGrid">
-      <iron-icon>
-    </div>
-	 <!-- <chepe-grid-view grid-data="{{allSchemes}}"></chpe-grid-view> -->
-    <template is="dom-repeat" items="{{allSchemes}}" as="item"> 
-        <div id="gridView">
-            <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards" id="{{getId(index)}}" on-focus-out="toggleStyle" on-click="toggleStyle">
-                <div class="card-content">{{item.metadata.name}}</div>
-                <div class="card-actions">
-                <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                <link-icon icon-type="social:share" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                <link-icon icon-type="face" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                <link-icon icon-type="visibility" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                <link-icon icon-type="settings" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                </div>
-            </paper-card>
-        </div>
-        <div id="listView" hidden>
-          <table class="element-table responsive-table">
-              <thead>
-                <th>S.No</th>
-                <th>Scheme Name</th>
-                <th>Type</th>
-                <th>Start Date</th>
-                <th>Valid Upto</th>
-                <th>Created By</th>
-                <th>Published</th>
-                <th>Action</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{getIndexByRow(index)}}</td>
-                  <td>{{item.metadata.name}}</td>
-                  <td>{{item.metadata.type}}</td>
-                  <td>{{item.behavior.startDate}}</td>
-                  <td>{{item.behavior.endDate}}</td>
-                  <td>{{item.metadata.createdBy}}</td>
-                  <td>{{item.metadata.status}}</td>
-                  <td>Edit</td>
-                </tr>
-              </tbody>
-          </table>
-        </div>
+                <template is="dom-repeat" items="{{allSchemes}}" as="item">
+                    <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards" id="{{getId(index)}}" on-focus-out="toggleStyle" on-click="toggleStyle">
+                        <div class="card-content">{{item.metadata.name}}</div>
+                        <div class="card-actions">
+                            <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                            <link-icon icon-type="social:share" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                            <link-icon icon-type="face" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                            <link-icon icon-type="visibility" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                            <link-icon icon-type="settings" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                        </div>
+                    </paper-card>
+                </template>
+            </div>
+            <div id="listView" hidden>
+                <table class="element-table responsive-table">
+                    <thead>
+                        <th>S.No</th>
+                        <th>Scheme Name</th>
+                        <th>Type</th>
+                        <th>Start Date</th>
+                        <th>Valid Upto</th>
+                        <th>Created By</th>
+                        <th>Published</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="{{listData}}" as="item">
+                            <tr>
+                                <td>{{getIndexByRow(index)}}</td>
+                                <td>{{item.metadata.name}}</td>
+                                <td>{{item.metadata.type}}</td>
+                                <td>{{item.behavior.startDate}}</td>
+                                <td>{{item.behavior.endDate}}</td>
+                                <td>{{item.metadata.createdBy}}</td>
+                                <td>{{item.metadata.status}}</td>
+                                <td>Edit</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </paper-material>
+        <iron-ajax id="fetchSchemes" verbose content-type="application/json" method="POST" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
-    </paper-material>
-    <iron-ajax  id="fetchSchemes" verbose content-type="application/json"  method="POST" params='{}'   
-         handle-as="json" on-error="handleError" on-response="handleResponse" ></iron-ajax>
-</template>
-<script>
-  Polymer({
-    is: 'schemes-as-cards',
-    properties: {
-      allSchemes: {
-        type:Object,
-        notify:true
-      },
-      scheme: Object,
-      previouslySelectedId:String
-    },
-    listeners: {
-      "onClick":"toggleStyle",
-      "onFocusOut":"toggleStyle"
-    },
-    observes:[
-      'allSchemesChanged(obj)'
-    ],
-    allSchemesChanged:function(obj){
-      console.log(obj);
-    },
+    <script>
+        Polymer({
+            is: 'schemes-as-cards',
+            properties: {
+                allSchemes: {
+                    type: Object,
+                    notify: true
+                },
+                listData: {
+                    type: Object,
+                    notify: true
+                },
+                scheme: Object,
+                previouslySelectedId: String
+            },
+            listeners: {
+                "onClick": "toggleStyle",
+                "onFocusOut": "toggleStyle"
+            },
+            observes: [
+                'allSchemesChanged(obj)'
+            ],
+            allSchemesChanged: function(obj) {
+                console.log(obj);
+            },
 
-    ready: function() {
-     // console.log("Hi Schemes as cards loaded....!");
-      this.scheme = {
-        "on": "newscheme",
-        "operation": "find"
-      };
-      this.$.fetchSchemes.url = generalConfig().urls.rest;
-      this.$.fetchSchemes.method = "GET";
-      this.$.fetchSchemes.body = JSON.stringify(this.scheme);
-      this.$.fetchSchemes.generateRequest();
-      this.gridView = false;
-      this.toggleListGridIcon= "icons::view-list";
+            ready: function() {
+                // console.log("Hi Schemes as cards loaded....!");
+                this.scheme = {
+                    "on": "newscheme",
+                    "operation": "find"
+                };
+                this.$.fetchSchemes.url = generalConfig().urls.rest;
+                this.$.fetchSchemes.method = "GET";
+                this.$.fetchSchemes.body = JSON.stringify(this.scheme);
+                this.$.fetchSchemes.generateRequest();
+                this.gridView = false;
+                this.toggleListGridIcon = "icons::view-list";
+            },
+            getId: function(index) {
+                return "r_" + index;
+            },
+            getIndexByRow: function(index) {
+                return index + 1;
+            },
+            toggleStyle: function(event) {
+                console.log(event);
+                if (this.previouslySelectedId != null) {
+                    document.querySelector(this.previouslySelectedId).style.background = '#fff';
+                    document.querySelector(this.previouslySelectedId).style.color = '#000';
+                }
+                document.querySelector('#r_' + event.model.index).style.background = 'lightblue';
+                document.querySelector('#r_' + event.model.index).style.color = '#000';
+                this.previouslySelectedId = '#r_' + event.model.index;
+            },
+            handleResponse: function(event) {
+                //console.log(event.detail.response);
+                var data = event.detail.response;
+                if (data !== undefined && data != null) {
+                    this.allSchemes = this.listData = data;
+                } else {
+                    this.listData = this.allSchemes = [{}];
+                }
+            },
+            handleError: function(event) {
+                var request = event.detail.request;
+                console.log(event);
+                var error = event.detail.error;
+                console.log(event.detail.response);
+            }
 
-    },
-    getId: function(index){
-      return "r_" + index;
-    },
-    getIndexByRow:function(index){
-      return index+1;
-    },
-    toggleListGrid:function(event){
-      var mode = event.currentTarget.getAttribute('view');
-      if(mode=="list"){
-        document.querySelector("#listView").hidden = false;
-        document.querySelector("#gridView").hidden = true;
-        this.toggleListGridIcon = "icons:view-module";
-        event.currentTarget.setAttribute('view','grid');
-      }else{
-        this.toggleListGridIcon = "icons:view-list";
-        event.currentTarget.setAttribute('view','list');
-        document.querySelector("#listView").hidden = true;
-        document.querySelector("#gridView").hidden = false;
-      }
-    },
-    toggleStyle: function(event) {
-      console.log(event);
-      if(this.previouslySelectedId != null){
-        document.querySelector(this.previouslySelectedId).style.background = '#fff';
-        document.querySelector(this.previouslySelectedId).style.color = '#000';
-      }
-      document.querySelector('#r_'+event.model.index).style.background = 'lightblue';
-      document.querySelector('#r_'+event.model.index).style.color = '#000';
-      this.previouslySelectedId = '#r_'+event.model.index;
-    },
-    handleResponse: function(event) {
-      //console.log(event.detail.response);
-      var data = event.detail.response;
-      if (data !== undefined && data != null) {
-        this.allSchemes = data;
-      } else {
-        this.allSchemes = [{}];
-      }
-    },
-    handleError: function(event) {
-      var request = event.detail.request;
-      console.log(event);
-      var error = event.detail.error;
-      console.log(event.detail.response);
-    }
-
-  });
-</script>
+        });
+    </script>
 </dom-module>
-
