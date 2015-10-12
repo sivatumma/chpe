@@ -206,9 +206,7 @@ iron-pages{
   background: none;
   margin: 0px auto
 }
-#middleBar .middle-container{
-  margin-left: 10px !important;
-}
+
 /*Backgrouds for schems*/
 .addonBg,.couponBg,.giftCardBg{
   display: inline-block;
