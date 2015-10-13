@@ -88,7 +88,7 @@ function createModels(req, res) {
   } else {
     config.configVariable.loginUser = "user";
     var u1 = mongoose.model(req.params.modelName)(quryBuilder.createSchema(req.body));
-    u1._id = _id_count++;
+    //u1._id = _id_count++;
 
     u1.save().then(function(data) {
       console.log("DATA: ", data);

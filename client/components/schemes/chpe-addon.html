@@ -231,7 +231,51 @@
                     </neon-animatable>
                 </neon-animated-pages>
             </form>
+            <div class="stickyFooter">
+                <div  align="center">
+                    <paper-menu selected="{{selected}}">
+                        <paper-item>
+                            <paper-card  class="card-as-thumbnail active">
+                                    <img src="../../assets/images/addon-thumb1.png"  />
+                            </paper-card>
+                        </paper-item>
+                        <paper-item>
+                            <paper-card  class="card-as-thumbnail active">
+                                    <img src="../../assets/images/addon-thumb2.png"  />
+                            </paper-card>
+                        </paper-item>
+                        <paper-item>
+                            <paper-card   class="card-as-thumbnail active">
+                                    <img src="../../assets/images/addon-thumb3.png"  />
+                            </paper-card>
+                        </paper-item>
+                        <paper-item>
+                            <paper-card   class="card-as-thumbnail active">
+                                    <img src="../../assets/images/addon-thumb4.png"  />
+                            </paper-card>
+                        </paper-item>
+                       
+                    </paper-menu>
+                    <!-- <paper-card elevation="{{selected}}"  class="card-as-thumbnail active">
+                        <img src="../../assets/images/addon-thumb1.png"  />
+                    </paper-card>
+                
+                    <paper-card elevation="{{selected}}" class="card-as-thumbnail">
+                        <img src="../../assets/images/addon-thumb1.png"  />
+                    </paper-card>
+                
+                    <paper-card elevation="{{selected}}" class="card-as-thumbnail">
+                        <img  src="../../assets/images/addon-thumb1.png"  />
+                    </paper-card>
+                
+                    <paper-card elevation="{{selected}}" class="card-as-thumbnail">
+                        <img src="../../assets/images/addon-thumb1.png"  />
+                    </paper-card> -->
+                </div>
+            </div>
         </paper-material>
+
+        
         <iron-ajax id="schemeAjax" content-type="application/json" method="POST" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
     <script>

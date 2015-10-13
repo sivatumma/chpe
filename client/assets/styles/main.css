@@ -223,16 +223,18 @@ iron-pages{
   float: left;
   width: 100%;
   background: url('../images/dark_embroidery.png') repeat;
-  height:555px;
+  height:720px;
 }
 .leftnav{
   background: #fff;
 }
 .couponBg{
   background: url('../images/confectionary.png') repeat !important;
+  height: 540px;
 }
 .giftCardBg{
   background: url('../images/leather_1_@2X.png') repeat !important;
+  height: 540px;
 }
 /*  custom paper fab styles*/
 paper-fab {
@@ -437,4 +439,48 @@ paper-spinner.green {
 /*logout styles*/
 .logout,.logout:focus,.logout:hover{
   color:white;
+}
+
+/*footer styles*/
+.stickyFooter {
+   position:fixed;
+   left:0px;
+   bottom:-15px;
+   height:110px;
+   width:100%;
+   background: #fff;
+}
+
+/* IE 6 */
+* html .stickyFooter {
+   position:absolute;
+   top:expression((0-(footer.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
+}
+
+/* footer thumbnails*/
+.stickyFooter paper-menu paper-item .card-as-thumbnail{
+    margin: 10px;
+    width: 100px;
+    height: 80px;
+    @apply(--layout-vertical);
+    @apply(--center-justified);
+}
+
+paper-menu paper-item .card-as-thumbnail img{
+  height:40px;
+  width: 75px;
+}
+.stickyFooter paper-menu {
+  padding: 0px;
+  margin: 0px;
+}
+.stickyFooter paper-menu paper-item{
+  display: inline;
+  cursor: pointer;
+}
+.stickyFooter paper-menu .iron-selected{
+  background: none !important;
+}
+.stickyFooter paper-menu .iron-selected paper-card{
+   box-shadow:3px 3px 5px 6px #ddd;
 }
