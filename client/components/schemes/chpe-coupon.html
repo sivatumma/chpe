@@ -139,7 +139,7 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                              <coupon-type id="selectCouponType" meta-data="{{schemeObj.metadata}}"></coupon-type>
+                              <coupon-type id="selectCouponType" metadata="{{schemeObj.metadata}}"></coupon-type>
                             </div>
                         </div>
                          <div class="card-actions col-12 lastStepActions">
@@ -211,7 +211,7 @@
                 this.schemeObj.on = "newscheme";
                 this.schemeObj.operation = "create";
                 if (this.schemeObj !== undefined) {
-                    this.$.couponAjax.url='http://172.19.4.162:91'+this.config.urls.rest;
+                    this.$.couponAjax.url= this.config.urls.rest;
                     this.$.couponAjax.method = "POST";
                     this.$.couponAjax.body = JSON.stringify(this.schemeObj);
                     this.$.couponAjax.generateRequest();

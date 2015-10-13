@@ -5,7 +5,6 @@ var mongoose = require('mongoose'),
 	_ = require('lodash');
 module.exports = function(mongoose) {
 	var schemeSchema = Schema({
-		_id: Number,
 		orders: [{
 			type: Schema.Types.ObjectId,
 			ref: 'order'
