@@ -109,13 +109,14 @@ function createModels(req, res) {
 
 function updateModels(req, res) {
 
-
-  mongoose.model("order").findOne().populate('scheme').exec(function(err, c) {
+ var m = mongoose.model('scheme');
+ m.update({_id:m._id},req.body,function(err, c) {
     if (err) {
       console.log(err);
       res.status(500).send(err);
+    }else{
+      res.status(200).send(c);
     }
-    res.status(200).send(c);
   });
 }
 

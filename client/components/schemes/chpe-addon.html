@@ -222,8 +222,8 @@
                                     <div class="col-6 margin0">
                                         <div class="submitButtons">
                                             <paper-button name="addon-form.createSchemeBtn" raised 
-                                            on-click="submitForm" status="false" id="addonSave" value="{{schemeStatus}}">Save</paper-button>
-                                            <paper-button name="addon-form.createSchemeBtn"  on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-button>
+                                            on-click="submitForm" status="false" id="addonSave" value="{{schemeStatus}}">{{saveBtnText}}</paper-button>
+                                            <paper-button name="addon-form.createSchemeBtn"  on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">{{publishBtnText}}</paper-button>
                                         </div>
                                     </div>
                                 </div>
@@ -232,7 +232,7 @@
                     </neon-animatable>
                 </neon-animated-pages>
             </form>
-            <div class="stickyFooter">
+            <div class="stickyFooter" hidden>
                 <div  align="center">
                     <paper-menu selected="{{selected}}">
                         <paper-item>
@@ -309,10 +309,12 @@
                 this.selected = 0;
                 this.schemeObj.metadata.type = "ADD_ON";
                 this.schemeObj.metadata.published = false;
-
+                this.saveBtnText = "SAVE";
+                this.publishBtnText = "SAVE + PUBlISH";
             },
             observers: [
-                'schemeObjChanged(schemeObj,schemeObj.metadata,schemeObj.behavior)'
+                'schemeObjChanged(schemeObj,schemeObj.metadata,schemeObj.behavior)',
+                'schemeMethodChanged(schemeMethod)'
             ],
             listeners: {
                 'addon-form.iron-form-submit': 'createScheme',
@@ -325,19 +327,29 @@
                 //console.log('name is  ' + metadata.name);
                 //console.log('maximum Usages is  ' + behavior.maximumUsages);
             },
-            enableButtons: function(e) {
-
+            enableButtons: function(event) {
+                console.log(event.target.invalid);
             },
-
+            schemeMethodChanged:function(schemeMethod){
+                if(schemeMethod=="PUT"){
+                    this.saveBtnText = "UPDATE";
+                    this.publishBtnText = "UPDATE + PUBlISH";
+                }else{
+                    this.saveBtnText = "SAVE";
+                    this.publishBtnText = "SAVE + PUBlISH";
+                }
+            },
             _onPrevClick: function() {
                 this.entryAnimation = 'slide-from-left-animation';
                 this.exitAnimation = 'slide-right-animation';
                 this.selected = this.selected === 0 ? 3 : (this.selected - 1);
             },
-            _onNextClick: function() {
-                this.entryAnimation = 'slide-from-right-animation';
-                this.exitAnimation = 'slide-left-animation';
-                this.selected = this.selected === 3 ? 0 : (this.selected + 1);
+            _onNextClick: function(event) {
+                //if(event.target.invalid===false){
+                    this.entryAnimation = 'slide-from-right-animation';
+                    this.exitAnimation = 'slide-left-animation';
+                    this.selected = this.selected === 3 ? 0 : (this.selected + 1);
+                //}
 
             },
             createScheme: function() {
@@ -358,17 +370,25 @@
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     console.log("Received response: " + JSON.stringify(event.detail.response));
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text = this.schemeObj.metadata.type + " created successfully!...";
+                    if(this.schemeMethod=="POST"){
+                        toast.text = this.schemeObj.metadata.type + " created successfully!...";
+                    }else{
+                        toast.text = this.schemeObj.metadata.type + " updated successfully!...";
+                    }
                     toast.show();
                 } else {
                     console.log(this.schemeObj);
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text = "Error while creating" + this.schemeObj.metadata.type;
+                    if(this.schemeMethod=="POST"){
+                        toast.text = "Error while creating" + this.schemeObj.metadata.type;
+                    }else{
+                         toast.text = "Error while updating" + this.schemeObj.metadata.type;
+                    }
                 }
                 setTimeout(function() {
-                    //this.formData.clear();
-                }, 2000);
+                    location.href="/";
+                }, 1000);
             },
             handleError: function(event) {
                 var request = event.detail.request;

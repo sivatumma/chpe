@@ -226,18 +226,18 @@ iron-pages{
   float: left;
   width: 100%;
   background: url('../images/dark_embroidery.png') repeat;
-  height:720px;
+  height:570px;
 }
 .leftnav{
   background: #fff;
 }
 .couponBg{
   background: url('../images/confectionary.png') repeat !important;
-  height: 540px;
+  height: 570px;
 }
 .giftCardBg{
   background: url('../images/leather_1_@2X.png') repeat !important;
-  height: 540px;
+  height: 570px;
 }
 /*  custom paper fab styles*/
 paper-fab {

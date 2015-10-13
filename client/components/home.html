@@ -20,7 +20,7 @@
             display: block;
             /*width: calc(33% - 90px);*/
             width: 230px;
-            height: 200px;
+            height: 150px;
             margin: 10px 5px 10px 10px;
             cursor: pointer;
             transition: box-shadow 0.1s;
@@ -138,8 +138,13 @@
            background: #f4f4f4;
         }
         /*Edit Scheme Styles */
+        .editScheme paper-icon-button{
+            padding: 0px;
+            margin:0px;
+        }
         .editScheme iron-icon{
          opacity: 0.5 !important;
+         padding: 0px;
         }
         .element-table tbody tr:hover iron-icon{
             opacity: 1 !important;
@@ -155,12 +160,10 @@
                 <template is="dom-repeat" items="{{allSchemes}}" as="item">
                     <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards" id="{{getId(index)}}" on-focus-out="toggleStyle" on-click="toggleStyle">
                         <div class="card-content">{{item.metadata.name}}</div>
-                        <div class="card-actions">
-                            <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                            <link-icon icon-type="social:share" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                            <link-icon icon-type="face" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                            <link-icon icon-type="visibility" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                            <link-icon icon-type="settings" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                        <div class="card-actions" align="right">
+                               <paper-icon-button icon="link"></paper-icon-button>
+                               <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
                         </div>
                     </paper-card>
                 </template>
@@ -288,7 +291,6 @@
                 if(schemeObj.metadata.type=="COUPON"){
                     route = "createCoupon";
                     app.couponAsScheme = schemeObj;
-                    app.couponAsScheme.operation = "upadte";
                 }else if(schemeObj.metadata.type=="ADD_ON"){
                     route = "createAddOn";
                     app.addonAsScheme = schemeObj;
