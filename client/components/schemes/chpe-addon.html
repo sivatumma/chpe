@@ -311,6 +311,7 @@
                 this.schemeObj.metadata.published = false;
                 this.saveBtnText = "SAVE";
                 this.publishBtnText = "SAVE + PUBlISH";
+                this.formError = false;
             },
             observers: [
                 'schemeObjChanged(schemeObj,schemeObj.metadata,schemeObj.behavior)',
@@ -328,7 +329,7 @@
                 //console.log('maximum Usages is  ' + behavior.maximumUsages);
             },
             enableButtons: function(event) {
-                console.log(event.target.invalid);
+                this.formError = event.target.invalid;
             },
             schemeMethodChanged:function(schemeMethod){
                 if(schemeMethod=="PUT"){
@@ -340,16 +341,22 @@
                 }
             },
             _onPrevClick: function() {
-                this.entryAnimation = 'slide-from-left-animation';
-                this.exitAnimation = 'slide-right-animation';
-                this.selected = this.selected === 0 ? 3 : (this.selected - 1);
+                if(this.formError===true){
+                    this.selected = this.selected;
+                }else{
+                    this.entryAnimation = 'slide-from-left-animation';
+                    this.exitAnimation = 'slide-right-animation';
+                    this.selected = this.selected === 0 ? 3 : (this.selected - 1);
+                }
             },
             _onNextClick: function(event) {
-                //if(event.target.invalid===false){
+               if(this.formError===true){
+                    this.selected = this.selected;
+                }else{
                     this.entryAnimation = 'slide-from-right-animation';
                     this.exitAnimation = 'slide-left-animation';
                     this.selected = this.selected === 3 ? 0 : (this.selected + 1);
-                //}
+                }
 
             },
             createScheme: function() {
