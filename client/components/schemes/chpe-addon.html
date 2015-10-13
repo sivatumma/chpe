@@ -221,8 +221,9 @@
                                     <div class="col-5 margin0">&nbsp;</div>
                                     <div class="col-6 margin0">
                                         <div class="submitButtons">
-                                            <paper-button name="addon-form.createSchemeBtn" raised on-click="submitForm" data-args="false" id="addonSave" value="{{schemeStatus}}">Save</paper-button>
-                                            <paper-button name="addon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-button>
+                                            <paper-button name="addon-form.createSchemeBtn" raised 
+                                            on-click="submitForm" status="false" id="addonSave" value="{{schemeStatus}}">Save</paper-button>
+                                            <paper-button name="addon-form.createSchemeBtn"  on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-button>
                                         </div>
                                     </div>
                                 </div>
@@ -276,7 +277,7 @@
         </paper-material>
 
         
-        <iron-ajax id="schemeAjax" content-type="application/json" method="POST" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
+        <iron-ajax id="schemeAjax" content-type="application/json" method="{{schemeMethod}}" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
     <script>
         Polymer({
@@ -297,14 +298,21 @@
                 schemeObj: {
                     type: Object,
                     notify: true
+                },
+                schemeMethod:{
+                    type:String,
+                    notify:true
                 }
             },
             ready: function() {
                 this.config = generalConfig() || {};
                 this.selected = 0;
+                this.schemeObj.metadata.type = "ADD_ON";
+                this.schemeObj.metadata.published = false;
+
             },
             observers: [
-                'schemeObjChanged(schemeObj.metadata,schemeObj.behavior)'
+                'schemeObjChanged(schemeObj,schemeObj.metadata,schemeObj.behavior)'
             ],
             listeners: {
                 'addon-form.iron-form-submit': 'createScheme',
@@ -312,7 +320,8 @@
                 'value-change': 'getCurrentStep',
                 'addon-form.iron-input-validate': 'enableButtons'
             },
-            schemeObjChanged: function(metadata, behavior) {
+            schemeObjChanged: function(schemeObj,metadata, behavior) {
+                //console.log(metadata);
                 //console.log('name is  ' + metadata.name);
                 //console.log('maximum Usages is  ' + behavior.maximumUsages);
             },
@@ -335,14 +344,11 @@
                 this.formData = document.getElementById('addon-form').serialize();
                 this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
                 this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
-
-                this.schemeObj.metadata.type = "ADD_ON";
-                this.schemeObj.metadata.published = false;
-                this.schemeObj.on = "newscheme";
-                this.schemeObj.operation = "create";
+                
+                this.schemeObj.on = "scheme";
                 if (this.schemeObj !== undefined) {
                     this.$.schemeAjax.url =  this.config.urls.rest;
-                    this.$.schemeAjax.method = "POST";
+                    this.$.schemeAjax.method = this.schemeMethod;
                     this.$.schemeAjax.body = JSON.stringify(this.schemeObj);
                     this.$.schemeAjax.generateRequest();
                 }
@@ -372,7 +378,8 @@
                 toast.text = "Error while creating " + this.schemeObj.metadata.type + " Please try again.. ";
                 toast.show();
             },
-            submitForm: function(evt, details, sender) {
+            submitForm: function(event) {
+                this.schemeObj.metadata.published = event.currentTarget.getAttribute('status');
                 document.getElementById('addon-form').submit();
             }
         });

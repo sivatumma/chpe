@@ -120,6 +120,9 @@ iron-pages{
   padding:5px 0px; 
   position: relative;
 }
+#chepeMenu iron-icon{
+  opacity: 1 !important;
+}
 
 #middleBar .middle-container{
   margin-left: 26px !important;
@@ -484,3 +487,4 @@ paper-menu paper-item .card-as-thumbnail img{
 .stickyFooter paper-menu .iron-selected paper-card{
    box-shadow:3px 3px 5px 6px #ddd;
 }
+

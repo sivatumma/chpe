@@ -86,19 +86,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </paper-item>
                             <paper-item route="createAddOn" on-click="getTitle" title="Create Addon">
                                 <a  href="{{makeUrl('createAddOn')}}"> 
-                                    <iron-icon icon="star-half"></iron-icon>
+                                    <iron-icon src="assets/images/addon.png"></iron-icon>
                                     <span>Create Addon</span>
                                 </a>
                             </paper-item>
                             <paper-item route="createCoupon" on-click="getTitle" title="Create Coupon">
                                 <a href="{{makeUrl('createCoupon')}}"> 
-                                    <iron-icon icon="star-half"></iron-icon>
+                                    <iron-icon src="assets/images/coupon.png"></iron-icon>
                                     <span>Create Coupon</span>
                                 </a>
                             </paper-item>
                             <paper-item route="createGiftCard" on-click="getTitle" title="Create Giftcard">
                                 <a href="{{makeUrl('createGiftCard')}}"> 
-                                    <iron-icon icon="star-half"></iron-icon>
+                                    <iron-icon src="assets/images/giftcard.png"></iron-icon>
                                     <span>Create Gift Card</span>
                                 </a>
                             </paper-item>
@@ -156,7 +156,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                            <schemes-as-cards></schemes-as-cards>
                         </section>
                         <section route="createAddOn" class="addonBg">
-                              <chpe-addon id="adddonComp" scheme-obj="{{addonAsScheme}}"></chpe-addon>
+                              <chpe-addon id="adddonComp" scheme-obj="{{addonAsScheme}}" 
+                              scheme-method="{{addonMethod}}"></chpe-addon>
                         </section>
                         <section route="createCoupon" class="couponBg">
                               <chpe-coupon scheme-obj="{{couponAsScheme}}"></chpe-coupon>
