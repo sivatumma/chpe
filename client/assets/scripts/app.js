@@ -96,7 +96,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.screenTitle = event.currentTarget.getAttribute('title');
     return app.screenTitle
   };
+
+  //setting empty data modal to addon / coupon / giftcard
   app.addonAsScheme =  app.couponAsScheme = app.giftcardAsScheme = schemeBase();
+  app.addonMethod   = "POST";
 
   //to get edit scheme screen and set the relavent data
   var x = {};
@@ -127,7 +130,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   //toggle search bar
   app.toggleSearch  = function(){
-    
+
   };
+
 
 })(document);

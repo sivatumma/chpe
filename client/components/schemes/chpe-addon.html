@@ -221,8 +221,9 @@
                                     <div class="col-5 margin0">&nbsp;</div>
                                     <div class="col-6 margin0">
                                         <div class="submitButtons">
-                                            <paper-button name="addon-form.createSchemeBtn" raised on-click="submitForm" data-args="false" id="addonSave" value="{{schemeStatus}}">Save</paper-button>
-                                            <paper-button name="addon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-button>
+                                            <paper-button name="addon-form.createSchemeBtn" raised 
+                                            on-click="submitForm" status="false" id="addonSave" value="{{schemeStatus}}">{{saveBtnText}}</paper-button>
+                                            <paper-button name="addon-form.createSchemeBtn"  on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">{{publishBtnText}}</paper-button>
                                         </div>
                                     </div>
                                 </div>
@@ -231,8 +232,52 @@
                     </neon-animatable>
                 </neon-animated-pages>
             </form>
+            <div class="stickyFooter" hidden>
+                <div  align="center">
+                    <paper-menu selected="{{selected}}">
+                        <paper-item>
+                            <paper-card  class="card-as-thumbnail active">
+                                    <img src="../../assets/images/addon-thumb1.png"  />
+                            </paper-card>
+                        </paper-item>
+                        <paper-item>
+                            <paper-card  class="card-as-thumbnail active">
+                                    <img src="../../assets/images/addon-thumb2.png"  />
+                            </paper-card>
+                        </paper-item>
+                        <paper-item>
+                            <paper-card   class="card-as-thumbnail active">
+                                    <img src="../../assets/images/addon-thumb3.png"  />
+                            </paper-card>
+                        </paper-item>
+                        <paper-item>
+                            <paper-card   class="card-as-thumbnail active">
+                                    <img src="../../assets/images/addon-thumb4.png"  />
+                            </paper-card>
+                        </paper-item>
+                       
+                    </paper-menu>
+                    <!-- <paper-card elevation="{{selected}}"  class="card-as-thumbnail active">
+                        <img src="../../assets/images/addon-thumb1.png"  />
+                    </paper-card>
+                
+                    <paper-card elevation="{{selected}}" class="card-as-thumbnail">
+                        <img src="../../assets/images/addon-thumb1.png"  />
+                    </paper-card>
+                
+                    <paper-card elevation="{{selected}}" class="card-as-thumbnail">
+                        <img  src="../../assets/images/addon-thumb1.png"  />
+                    </paper-card>
+                
+                    <paper-card elevation="{{selected}}" class="card-as-thumbnail">
+                        <img src="../../assets/images/addon-thumb1.png"  />
+                    </paper-card> -->
+                </div>
+            </div>
         </paper-material>
-        <iron-ajax id="schemeAjax" content-type="application/json" method="POST" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
+
+        
+        <iron-ajax id="schemeAjax" content-type="application/json" method="{{schemeMethod}}" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
     <script>
         Polymer({
@@ -253,14 +298,24 @@
                 schemeObj: {
                     type: Object,
                     notify: true
+                },
+                schemeMethod:{
+                    type:String,
+                    notify:true
                 }
             },
             ready: function() {
                 this.config = generalConfig() || {};
                 this.selected = 0;
+                this.schemeObj.metadata.type = "ADD_ON";
+                this.schemeObj.metadata.published = false;
+                this.saveBtnText = "SAVE";
+                this.publishBtnText = "SAVE + PUBlISH";
+                this.formError = false;
             },
             observers: [
-                'schemeObjChanged(schemeObj.metadata,schemeObj.behavior)'
+                'schemeObjChanged(schemeObj,schemeObj.metadata,schemeObj.behavior)',
+                'schemeMethodChanged(schemeMethod)'
             ],
             listeners: {
                 'addon-form.iron-form-submit': 'createScheme',
@@ -268,37 +323,51 @@
                 'value-change': 'getCurrentStep',
                 'addon-form.iron-input-validate': 'enableButtons'
             },
-            schemeObjChanged: function(metadata, behavior) {
+            schemeObjChanged: function(schemeObj,metadata, behavior) {
+                //console.log(metadata);
                 //console.log('name is  ' + metadata.name);
                 //console.log('maximum Usages is  ' + behavior.maximumUsages);
             },
-            enableButtons: function(e) {
-
+            enableButtons: function(event) {
+                this.formError = event.target.invalid;
             },
-
+            schemeMethodChanged:function(schemeMethod){
+                if(schemeMethod=="PUT"){
+                    this.saveBtnText = "UPDATE";
+                    this.publishBtnText = "UPDATE + PUBlISH";
+                }else{
+                    this.saveBtnText = "SAVE";
+                    this.publishBtnText = "SAVE + PUBlISH";
+                }
+            },
             _onPrevClick: function() {
-                this.entryAnimation = 'slide-from-left-animation';
-                this.exitAnimation = 'slide-right-animation';
-                this.selected = this.selected === 0 ? 3 : (this.selected - 1);
+                if(this.formError===true){
+                    this.selected = this.selected;
+                }else{
+                    this.entryAnimation = 'slide-from-left-animation';
+                    this.exitAnimation = 'slide-right-animation';
+                    this.selected = this.selected === 0 ? 3 : (this.selected - 1);
+                }
             },
-            _onNextClick: function() {
-                this.entryAnimation = 'slide-from-right-animation';
-                this.exitAnimation = 'slide-left-animation';
-                this.selected = this.selected === 3 ? 0 : (this.selected + 1);
+            _onNextClick: function(event) {
+               if(this.formError===true){
+                    this.selected = this.selected;
+                }else{
+                    this.entryAnimation = 'slide-from-right-animation';
+                    this.exitAnimation = 'slide-left-animation';
+                    this.selected = this.selected === 3 ? 0 : (this.selected + 1);
+                }
 
             },
             createScheme: function() {
                 this.formData = document.getElementById('addon-form').serialize();
                 this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
                 this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
-
-                this.schemeObj.metadata.type = "ADD_ON";
-                this.schemeObj.metadata.published = false;
-                this.schemeObj.on = "newscheme";
-                this.schemeObj.operation = "create";
+                
+                this.schemeObj.on = "scheme";
                 if (this.schemeObj !== undefined) {
                     this.$.schemeAjax.url =  this.config.urls.rest;
-                    this.$.schemeAjax.method = "POST";
+                    this.$.schemeAjax.method = this.schemeMethod;
                     this.$.schemeAjax.body = JSON.stringify(this.schemeObj);
                     this.$.schemeAjax.generateRequest();
                 }
@@ -308,17 +377,25 @@
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     console.log("Received response: " + JSON.stringify(event.detail.response));
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text = this.schemeObj.metadata.type + " created successfully!...";
+                    if(this.schemeMethod=="POST"){
+                        toast.text = this.schemeObj.metadata.type + " created successfully!...";
+                    }else{
+                        toast.text = this.schemeObj.metadata.type + " updated successfully!...";
+                    }
                     toast.show();
                 } else {
                     console.log(this.schemeObj);
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text = "Error while creating" + this.schemeObj.metadata.type;
+                    if(this.schemeMethod=="POST"){
+                        toast.text = "Error while creating" + this.schemeObj.metadata.type;
+                    }else{
+                         toast.text = "Error while updating" + this.schemeObj.metadata.type;
+                    }
                 }
                 setTimeout(function() {
-                    //this.formData.clear();
-                }, 2000);
+                    location.href="/";
+                }, 1000);
             },
             handleError: function(event) {
                 var request = event.detail.request;
@@ -328,7 +405,8 @@
                 toast.text = "Error while creating " + this.schemeObj.metadata.type + " Please try again.. ";
                 toast.show();
             },
-            submitForm: function(evt, details, sender) {
+            submitForm: function(event) {
+                this.schemeObj.metadata.published = event.currentTarget.getAttribute('status');
                 document.getElementById('addon-form').submit();
             }
         });

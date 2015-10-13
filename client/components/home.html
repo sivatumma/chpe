@@ -20,7 +20,7 @@
             display: block;
             /*width: calc(33% - 90px);*/
             width: 230px;
-            height: 200px;
+            height: 150px;
             margin: 10px 5px 10px 10px;
             cursor: pointer;
             transition: box-shadow 0.1s;
@@ -133,6 +133,22 @@
         .toogleDiv iron-icon {
             cursor: pointer;
         }
+        .card-actions{
+           padding: 0px;
+           background: #f4f4f4;
+        }
+        /*Edit Scheme Styles */
+        .editScheme paper-icon-button{
+            padding: 0px;
+            margin:0px;
+        }
+        .editScheme iron-icon{
+         opacity: 0.5 !important;
+         padding: 0px;
+        }
+        .element-table tbody tr:hover iron-icon{
+            opacity: 1 !important;
+        }
     </style>
     <template>
         <paper-material elevation="0">
@@ -144,12 +160,10 @@
                 <template is="dom-repeat" items="{{allSchemes}}" as="item">
                     <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards" id="{{getId(index)}}" on-focus-out="toggleStyle" on-click="toggleStyle">
                         <div class="card-content">{{item.metadata.name}}</div>
-                        <div class="card-actions">
-                            <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                            <link-icon icon-type="social:share" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                            <link-icon icon-type="face" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                            <link-icon icon-type="visibility" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
-                            <link-icon icon-type="settings" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                        <div class="card-actions" align="right">
+                               <paper-icon-button icon="link"></paper-icon-button>
+                               <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
                         </div>
                     </paper-card>
                 </template>
@@ -176,7 +190,10 @@
                                 <td>{{item.behavior.endDate}}</td>
                                 <td>{{item.metadata.createdBy}}</td>
                                 <td>{{item.metadata.status}}</td>
-                                <td>Edit</td>
+                                <td class="editScheme">
+                                    <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                    scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                                </td>
                             </tr>
                         </template>
                     </tbody>
@@ -214,7 +231,7 @@
             ready: function() {
                 // console.log("Hi Schemes as cards loaded....!");
                 this.scheme = {
-                    "on": "newscheme",
+                    "on": "scheme",
                     "operation": "find"
                 };
                 this.$.fetchSchemes.url = generalConfig().urls.rest;
@@ -254,7 +271,40 @@
                 console.log(event);
                 var error = event.detail.error;
                 console.log(event.detail.response);
+            },
+
+          /**
+           *Edit Scheme method
+           *@params schemeIndex
+           *@url based on type
+           */
+          editScheme : function(event){
+            var scheme = this.allSchemes[event.model.index];
+            console.log(scheme);
+            this.navigateTo(scheme);
+          },
+
+          navigateTo:function(schemeObj){
+            console.log(schemeObj);
+            if(schemeObj!==undefined){
+                var route = "";
+                if(schemeObj.metadata.type=="COUPON"){
+                    route = "createCoupon";
+                    app.couponAsScheme = schemeObj;
+                }else if(schemeObj.metadata.type=="ADD_ON"){
+                    route = "createAddOn";
+                    app.addonAsScheme = schemeObj;
+                    app.couponAsScheme.operation = "update";
+                    app.addonMethod = "PUT";
+                }else if(schemeObj.metadata.type=="GIFT_CARD"){
+                    route = "createGiftCard";
+                    app.giftcardAsScheme.operation = "update";
+                    app.giftcardAsScheme = schemeObj;
+                }
+                console.log(route,schemeObj);
+                MoreRouting.navigateTo(route);
             }
+          }
 
         });
     </script>

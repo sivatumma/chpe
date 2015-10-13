@@ -87,19 +87,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                             <paper-item route="createAddOn" on-click="getTitle" title="Create Addon">
                                 <a  href="{{makeUrl('createAddOn')}}"> 
-                                    <iron-icon icon="star-half"></iron-icon>
+                                    <iron-icon src="assets/images/addon.png"></iron-icon>
                                     <span>Create Addon</span>
                                 </a>
                             </paper-item>
                             <paper-item route="createCoupon" on-click="getTitle" title="Create Coupon">
                                 <a href="{{makeUrl('createCoupon')}}"> 
-                                    <iron-icon icon="star-half"></iron-icon>
+                                    <iron-icon src="assets/images/coupon.png"></iron-icon>
                                     <span>Create Coupon</span>
                                 </a>
                             </paper-item>
                             <paper-item route="createGiftCard" on-click="getTitle" title="Create Giftcard">
                                 <a href="{{makeUrl('createGiftCard')}}"> 
-                                    <iron-icon icon="star-half"></iron-icon>
+                                    <iron-icon src="assets/images/giftcard.png"></iron-icon>
                                     <span>Create Gift Card</span>
                                 </a>
                             </paper-item>
@@ -138,7 +138,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </paper-toolbar>
 
                 <paper-toolbar id="iconToolBar" class="fixed padding0">
-                    <div class="col-5 margin0 schemeHeading"><h1>{{screenTitle}}</h1></div>
+                    <div class="col-5 margin0 schemeHeading">
+                        <h1 class="col-11">{{screenTitle}}</h1>
+                    </div>
                     <div class="col-5 margin0">&nbsp;</div>
                     <div class="col-2 pull-right headerIcons">
                         <paper-icon-button icon="link"></paper-icon-button>
@@ -154,10 +156,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <section route="home">
                            <schemes-as-cards></schemes-as-cards>
                         </section>
-
                         <section route="createAddOn" class="addonBg">
-                              <chpe-addon id="adddonComp" scheme-obj="{{addonAsScheme}}"></chpe-addon>
-
+                              <chpe-addon id="adddonComp" scheme-obj="{{addonAsScheme}}" 
+                              scheme-method="{{addonMethod}}"></chpe-addon>
                         </section>
                         <section route="createCoupon" class="couponBg">
                               <chpe-coupon scheme-obj="{{couponAsScheme}}"></chpe-coupon>

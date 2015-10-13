@@ -120,25 +120,38 @@ iron-pages{
   padding:5px 0px; 
   position: relative;
 }
-.schemeHeading{
-  margin-left: 4%;
+#chepeMenu iron-icon{
+  opacity: 1 !important;
 }
+
+#middleBar .middle-container{
+  margin-left: 26px !important;
+}
+.schemeHeading  h1{
+  margin-left: 26px;
+}
+
 .favicon{
   height: 54px;
   width:100%;
-  margin: 0px auto;
+  margin: 0 15px;
   padding: 5px 0px 0px 0px;
 }
 .favicon img{
   float: left;
-  margin-left: 15px;
-  width: 54px;
+  margin-left: 12px;
+  width: 42px;
+  height: 42px;
 }
 .favicon h3{
   color:#888;
   float: left;
   margin-left:15px;
-  font-size: 16px;
+  font-size: 18px;
+}
+.paper-font-title img{
+  padding: 0 15px;
+  margin-top: 10px;
 }
 
 /*scroll bar css in chrome browser*/
@@ -213,16 +226,18 @@ iron-pages{
   float: left;
   width: 100%;
   background: url('../images/dark_embroidery.png') repeat;
-  height:555px;
+  height:570px;
 }
 .leftnav{
   background: #fff;
 }
 .couponBg{
   background: url('../images/confectionary.png') repeat !important;
+  height: 570px;
 }
 .giftCardBg{
   background: url('../images/leather_1_@2X.png') repeat !important;
+  height: 570px;
 }
 /*  custom paper fab styles*/
 paper-fab {
@@ -428,3 +443,48 @@ paper-spinner.green {
 .logout,.logout:focus,.logout:hover{
   color:white;
 }
+
+/*footer styles*/
+.stickyFooter {
+   position:fixed;
+   left:0px;
+   bottom:-15px;
+   height:110px;
+   width:100%;
+   background: #fff;
+}
+
+/* IE 6 */
+* html .stickyFooter {
+   position:absolute;
+   top:expression((0-(footer.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
+}
+
+/* footer thumbnails*/
+.stickyFooter paper-menu paper-item .card-as-thumbnail{
+    margin: 10px;
+    width: 100px;
+    height: 80px;
+    @apply(--layout-vertical);
+    @apply(--center-justified);
+}
+
+paper-menu paper-item .card-as-thumbnail img{
+  height:40px;
+  width: 75px;
+}
+.stickyFooter paper-menu {
+  padding: 0px;
+  margin: 0px;
+}
+.stickyFooter paper-menu paper-item{
+  display: inline;
+  cursor: pointer;
+}
+.stickyFooter paper-menu .iron-selected{
+  background: none !important;
+}
+.stickyFooter paper-menu .iron-selected paper-card{
+   box-shadow:3px 3px 5px 6px #ddd;
+}
+
