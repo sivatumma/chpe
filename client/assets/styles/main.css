@@ -120,9 +120,7 @@ iron-pages{
   padding:5px 0px; 
   position: relative;
 }
-#chepeMenu paper-item a{
-  padding: 0px;
-}
+
 #middleBar .middle-container{
   margin-left: 26px !important;
 }
@@ -133,19 +131,24 @@ iron-pages{
 .favicon{
   height: 54px;
   width:100%;
-  margin: 0px auto;
+  margin: 0 15px;
   padding: 5px 0px 0px 0px;
 }
 .favicon img{
   float: left;
   margin-left: 12px;
-  width: 54px;
+  width: 42px;
+  height: 42px;
 }
 .favicon h3{
   color:#888;
   float: left;
-  margin-left:5px;
+  margin-left:15px;
   font-size: 18px;
+}
+.paper-font-title img{
+  padding: 0 15px;
+  margin-top: 10px;
 }
 
 /*scroll bar css in chrome browser*/
