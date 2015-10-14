@@ -227,7 +227,13 @@ module.exports = function(mongoose) {
 			this.behavior.endDate.setDate(startDate.getDate() + daysCount[this.metadata.defaultLife]);
 		}
 	};
-	schemeSchema.methods.beforeSaveGiftCardValidation = function() {};
+	schemeSchema.methods.beforeSaveGiftCardValidation = function() {
+		console.log(this.metadata.toIds.length);
+		
+	if (this.metadata.published == true && this.metadata.toIds.length > 0) {
+			return next(new Error("Provide Benifecary"));
+		}	
+	};
 	schemeSchema.methods.beforeSaveAddOnValidation = function() {
 
 
@@ -305,6 +311,23 @@ if(this.metadata.type=="COUPON"){
 
 		next();
 	});
+	// schemeSchema.pre('update', function(next) {
+
+	// 	console.log("helo world");
+	// 	this.beforeSaveDefaultValidation();
+
+	// 	if (this.metadata.type == "COUPON") {
+	// 		this.beforeSaveCouponValidation();
+	// 	} else if (this.metadata.type == "ADD_ON") {
+	// 		this.beforeSaveAddOnValidation();
+	// 	} else if (this.metadata.type == "GIFT_CARD") {
+	// 		this.beforeSaveGiftCardValidation();
+	// 	}
+
+	// 	next();
+	// });
+
+
 	var Scheme = mongoose.model('scheme', schemeSchema);
 	return Scheme;
 }
