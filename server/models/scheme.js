@@ -290,20 +290,20 @@ module.exports = function(mongoose) {
 			}
 		});
 	};
-
-
-	var validators = {
-		"COUPON": this.beforeSaveCouponValidation,
-		"GIFT_CARD": this.beforeSaveGiftCardValidation,
-		"ADD_ON": this.beforeSaveAddOnValidation
-	};
+	
 	schemeSchema.pre('save', function(next) {
+
 		this.beforeSaveDefaultValidation();
-		this.beforeSaveAddOnValidation();
+
+if(this.metadata.type=="COUPON"){
+	this.beforeSaveCouponValidation();	
+} else if(this.metadata.type=="ADD_ON") {
+	this.beforeSaveAddOnValidation();
+} else if(this.metadata.type=="GIFT_CARD"){
+	this.beforeSaveGiftCardValidation();
+}
+
 		next();
-		/*this.save(function(data){
-			console.log(data);
-		});*/
 	});
 	var Scheme = mongoose.model('scheme', schemeSchema);
 	return Scheme;
