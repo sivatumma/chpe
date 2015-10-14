@@ -89,7 +89,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.getTitle = function(event){
     console.log(event.currentTarget.getAttribute('title'));
     app.screenTitle = event.currentTarget.getAttribute('title');
-    return app.screenTitle
+    app.setScheme();
+    chUtils.resetForm('coupon-form');
+    chUtils.resetForm('addon-form');
+    chUtils.resetForm('gift-card-form');
   };
 
   app.setScheme();

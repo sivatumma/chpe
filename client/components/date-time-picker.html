@@ -67,11 +67,12 @@
      	<paper-dialog modal id="{{dateModal}}"  class="size-position paper-date-picker-dialog padding0" with-backdrop on-iron-overlay-closed="dismissDialog">
 
 			  	<div class="datePicker margin0">
-			  		<paper-fab mini icon="icons:close" class="closeBtn" dialog-confirm autofocus></paper-fab>
+			  		<paper-fab mini icon="icons:close" class="closeBtn" dialog-confirm autofocus>
+			  		</paper-fab>
 				  	<paper-date-picker id="{{dateId}}"></paper-date-picker>
 			  	</div>
 			  	<div class="timePicker margin0">
-					<paper-time-picker id="{{timeId}}" ></paper-time-picker>
+					<paper-time-picker id="{{timeId}}"></paper-time-picker>
 			  	</div>
     </paper-dialog>
     </section>
@@ -106,6 +107,7 @@
                 	type:String,
                 	notify:true
                 }
+               
             },
             ready:function(){
             	var monthNames = ["January", "February", "March", "April", "May", "June",
@@ -124,6 +126,9 @@
             	'on-tap':'showDialog',
             	'iron-overlay-closed':'getdateTime'
             },
+            observers:[
+            	'dateModalValueChanged(dateModalValue)'
+            ],
             toggleLayer:function(){
             	console.log("what happened");
             	document.querySelector('#datePicker').style.zIndex = '-1';
@@ -150,7 +155,24 @@
 		        if (event.detail.confirmed) {
 		        	this.setDateTime();
 		        }
-		      }
+		    },
+		    dateModalValueChanged:function(dateValue){
+		    	console.log(this.dateType);
+		    	if(dateValue){
+			    	this.updateDateTime(dateValue);
+		    	}
+		    },
+		    updateDateTime:function(dateTime){
+		    	if(dateTime!==undefined && dateTime!==null){
+		    		var hours  = chUtils.getHoursByDate(dateTime); 
+		    		var minutes = chUtils.getMinutesByDate(dateTime);
+		    		var existedDate  =  chUtils.getYMD(dateTime);
+		    		
+		    		document.querySelector("#"+this.dateId).setAttribute('date',existedDate);
+		    		document.querySelector("#"+this.timeId).setAttribute('hour',hours);
+		    		document.querySelector("#"+this.timeId).setAttribute('minute',minutes);
+		    	}
+		    }
         });
     </script>
 </dom-module>
