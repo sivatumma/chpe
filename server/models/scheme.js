@@ -5,7 +5,6 @@ var mongoose = require('mongoose'),
 	_ = require('lodash');
 module.exports = function(mongoose) {
 	var schemeSchema = Schema({
-		_id: Number,
 		orders: [{
 			type: Schema.Types.ObjectId,
 			ref: 'order'
@@ -190,6 +189,7 @@ module.exports = function(mongoose) {
 		}
 	});
 	schemeSchema.methods.beforeSaveDefaultValidation = function() {
+
 		if (this.behavior && !this.behavior.startDate) {
 			this.behavior.startDate = new Date();
 			var d = new Date();
@@ -198,16 +198,20 @@ module.exports = function(mongoose) {
 		}
 		if (!this.behavior.maximumUsages) {
 			this.behavior.maximumUsages = 15;
+
 		}
 		if (!this.behavior.defaultDiscount) {
 			this.behavior.defaultDiscount = 0;
 			this.behavior.discountType = '%';
+
 		}
 		// If locationOfServices empty here we adding Default Locations
 		if (this.behavior.locationOfServices.length <= 0) {
-			this.behavior.locationOfServices = ["AllLocation"];
+			this.behavior.locationOfServices = [{id:0,name:"AllLocation"}];
+
 		}
-		if (this.behavior.discountType == "%" && this.behavior.defaultDiscount > 9) {
+		if (this.behavior.discountType == "%" && this.behavior.discount > 9) {
+
 			return next(new Error("defaultDiscount should be below 9 percentage"));
 		}
 	};
@@ -225,46 +229,58 @@ module.exports = function(mongoose) {
 	};
 	schemeSchema.methods.beforeSaveGiftCardValidation = function() {};
 	schemeSchema.methods.beforeSaveAddOnValidation = function() {
+
+
 		//service Discount validate
 		var serviceDiscount = _.map(this.behavior.serviceLevelDiscounts, function(x) {
 			if (x.discountType == "%") {
 				return x.discount;
 			}
 		});
+
 		var serviceMaxval = _.max(serviceDiscount, function(serviceDiscount) {
 			return serviceDiscount;
 		});
+
 		if (serviceMaxval > 9) {
 			return next(new Error("serviceLevelDiscount should be below 9"));
 		}
+
 		//billValueDiscount validate
 		var billValueDiscounts = _.map(this.behavior.billValueDiscounts, function(x) {
 			if (x.discountType == "%") {
 				return x.discount;
 			}
 		});
+
 		var billMaxval = _.max(billValueDiscounts, function(billValueDiscounts) {
 			return billValueDiscounts;
 		});
+
 		if (billMaxval > 9) {
 			return next(new Error("billValueDiscounts should be below 9"));
 		}
+
 		//serviceRateCategoryDiscounts validate
 		var serviceRateCategoryDiscounts = _.map(this.behavior.serviceRateCategoryDiscounts, function(x) {
 			if (x.discountType == "%") {
 				return x.discount;
 			}
 		});
+
 		var serviceRateMaxVal = _.max(serviceRateCategoryDiscounts, function(serviceRateCategoryDiscounts) {
 			return serviceRateCategoryDiscounts;
 		});
+
 		if (serviceRateMaxVal > 9) {
 			return next(new Error("serviceRateCategoryDiscounts should be below 9"));
 		}
+
 		//doctorLevelDiscounts
 		if ((this.behavior.doctorLevelDiscounts.userChosenDiscount > 9 && this.behavior.doctorLevelDiscounts.userChosenDiscountType == "%") || (this.behavior.doctorLevelDiscounts.systemAllocationDiscount > 9 && this.behavior.doctorLevelDiscounts.systemAllocationDiscountType == "%")) {
 			return next(new Error("doctorLevelDiscounts discount should be less than 9"));
 		}
+
 		//modeOfPaymentDiscounts validate
 		var discountPayment = null;
 		_.each(this.behavior.modeOfPaymentDiscounts, function(single, index) {
@@ -281,11 +297,14 @@ module.exports = function(mongoose) {
 		"GIFT_CARD": this.beforeSaveGiftCardValidation,
 		"ADD_ON": this.beforeSaveAddOnValidation
 	};
-	// schemeSchema.pre('save', function(next) {
-	// 	beforeSaveDefaultValidation();
-
-	// 	next();
-	// });
+	schemeSchema.pre('save', function(next) {
+		this.beforeSaveDefaultValidation();
+		this.beforeSaveAddOnValidation();
+		next();
+		/*this.save(function(data){
+			console.log(data);
+		});*/
+	});
 	var Scheme = mongoose.model('scheme', schemeSchema);
 	return Scheme;
 }

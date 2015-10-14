@@ -75,6 +75,18 @@ function fetchModels(req, res) {
   });
 }
 
+
+
+function fetchOrders(req,res)
+{
+
+var u1 = mongoose.model(req.params.modelName);
+u1.aggregate([{$match:{schemeName:req.params.schemeName}},{$group:{_id:"$schemeName",total:{$sum:"$billAmount"}}}],function(err,data){
+console.log(err);
+console.log(data);
+res.status(200).send("Call");
+  })
+}
 function createModels(req, res) {
 
   if (req.params.modelName == 'order') {
@@ -88,20 +100,23 @@ function createModels(req, res) {
   } else {
     config.configVariable.loginUser = "user";
     var u1 = mongoose.model(req.params.modelName)(quryBuilder.createSchema(req.body));
-    u1._id = _id_count++;
 
-    u1.save().then(function(data) {
-      console.log("DATA: ", data);
-      res.status(200).send(data);
-
-    }, function(err) {
-      console.log(err.message);
-      res.status(500).send({
-        "status": "fail",
-        "message": err.message
-      });
-      console.log(err);
+    u1.save(function(err,data){
+    res.send(data);
     });
+
+    // .then(function(data) {
+    //   console.log("DATA: ", data);
+    //   res.status(200).send(data);
+
+    // }, function(err) {
+    //   console.log(err.message);
+    //   res.status(500).send({
+    //     "status": "fail",
+    //     "message": err.message
+    //   });
+    //   console.log(err);
+    // });
 
 
   }
@@ -157,7 +172,7 @@ app.get('/ssoLogout',function(req, res) {
  var headers = {
                 'User-Agent': 'Super Agent/0.0.1',
                 'Content-Type': 'application/x-www-form-urlencoded'
-            }
+            };
 
             // Configure the request
             var options = {
@@ -168,7 +183,7 @@ app.get('/ssoLogout',function(req, res) {
                     'sessionIndex':req.session.user.sessionIndex,
                     'spEntityID': 'callhealth.com'
                 }
-            }
+            };
 
             // Start the request
             request(options, function(error, response, body) {
@@ -196,8 +211,9 @@ app.get('/ssoLogout',function(req, res) {
 
 var User = mongoose.model('User');
 
-app.all('/test', updateModels)
+app.all('/test', updateModels);
 
+app.route('/order/:modelName/:schemeName').get(fetchOrders);
 
 app.route('/mdb/:modelName')
   .get(fetchModels)
@@ -220,13 +236,24 @@ dbModule.once('open', function callback() {
     console.log("HTTPS could not be started as the port is in use. Trying to serve only HTTP");
     console.log("...");
   });
-  httpsServer.listen(config.https_port || 443, function(err) {
+  httpsServer.listen(config.https_port || 1443, function(err) {
     if (err) {} else
       console.log('Express HTTPS server listening on port ' + config.http_port || 443);
   });
 
-  app.listen(process.argv[2] || 91, function() {
+  app.listen(91, function(err) {
+    if(err){
+      console.log(err.message);
+    }
     console.log('Express server (HTTP) listening on port ', process.argv[2] || 91);
   });
 
+  app.on('error', function(err){
+    console.log(err);
+  });
+
+});
+
+process.on('error',function(err){
+  console.log(err);
 });
