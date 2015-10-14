@@ -10,8 +10,14 @@ unset MANPATH # delete if you already modified MANPATH elsewhere in your config
 MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 source ~/.bashrc
 
-npm update
-bower update
+
+if [[ $1 -eq "true" ]]; then 
+	npm update
+fi
+
+if [[ $2 -eq "true" ]]; then 
+	bower update
+fi
 
 sudo mongod &
 
