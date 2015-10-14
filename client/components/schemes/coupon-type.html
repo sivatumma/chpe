@@ -71,11 +71,16 @@
             ready:function(){
 
             },
+            observers:[
+                'metadataChanged(metadata)'
+            ],
             listeners:{
               'couponTypeToggle.onClick':'togleType'
             },
-            togleType:function(e){
-                var couponType = e.target.parentElement.innerText;
+            metadataChanged:function(metadata){
+                this.setCouponLife(metadata.defaultLife);
+            },
+            setCouponLife:function(couponType){
                 //first removing all classes and setting clicked element to active
                 chUtils.removeClass(document.querySelector("#couponWeek"),"active");
                 chUtils.removeClass(document.querySelector("#couponDay"),"active");
@@ -91,6 +96,10 @@
                     chUtils.addClass(document.querySelector("#couponMonth"),"active");
                     this.metadata.defaultLife = couponType;
                 }
+            },
+            togleType:function(e){
+                var couponType = e.target.parentElement.innerText;
+                this.setCouponLife(couponType);
             }
           
         });

@@ -151,8 +151,8 @@
                             <div class="col-5 margin0">&nbsp;</div>
                             <div class="col-6 margin0">
                                 <div class="submitButtons">
-                                    <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" data-args="false" id="saveBtn"  value="{{schemeStatus}}">Save</paper-button>
-                                    <paper-button name="coupon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised value="{{schemeStatus}}">Save + Publish</paper-button>
+                                    <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" status="false" id="saveBtn">{{saveBtnText}}</paper-button>
+                                    <paper-button name="coupon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised>{{publishBtnText}}</paper-button>
                                 </div>
                             </div>
                         </div>
@@ -174,11 +174,25 @@
                 schemeObj:{
                     type:Object,
                     notify:true
+                },
+                schemeMethod:{
+                    type:String,
+                    notify:true
+                },
+                saveBtnText:{
+                    type:String
+                },
+                publishBtnText:{
+                    type:String
                 }
             },
             ready: function() {
                 this.selected = 0;
                 this.config = generalConfig() || {};
+                this.schemeObj.metadata.published = false;
+                this.saveBtnText = "SAVE";
+                this.publishBtnText = "SAVE + PUBlISH";
+                this.formError = false;
             },
             listeners: {
                 'coupon-form.iron-form-submit': 'createScheme',
@@ -186,63 +200,93 @@
                 'value-change':'getCurrentStep',
                 'coupon-form.iron-input-validate':'enableButtons'
             },
-            
+            observers: [
+                'schemeMethodChanged(schemeMethod)'
+            ],
             enableButtons:function(e){
-                
+                this.formError = event.target.invalid;
+            },
+            schemeMethodChanged:function(schemeMethod){
+                if(schemeMethod=="PUT"){
+                    this.saveBtnText = "UPDATE";
+                    this.publishBtnText = "UPDATE + PUBlISH";
+                }else{
+                    this.saveBtnText = "SAVE";
+                    this.publishBtnText = "SAVE + PUBlISH";
+                }
             },
             //neon animations for coupon
             _onPrevClick: function() {
-                this.entryAnimation = 'slide-from-left-animation';
-                this.exitAnimation = 'slide-right-animation';
-                this.selected = this.selected === 0 ? 4 : (this.selected - 1);
+                if(this.formError===true){
+                    this.selected = this.selected;
+                }else{
+                    this.entryAnimation = 'slide-from-left-animation';
+                    this.exitAnimation = 'slide-right-animation';
+                    this.selected = this.selected === 0 ? 4 : (this.selected - 1);
+                }
             },
-            _onNextClick: function() {
-                this.entryAnimation = 'slide-from-right-animation';
-                this.exitAnimation = 'slide-left-animation';
-                this.selected = this.selected === 4 ? 0 : (this.selected + 1);
+            _onNextClick: function(event) {
+               if(this.formError===true){
+                    this.selected = this.selected;
+                }else{
+                    this.entryAnimation = 'slide-from-right-animation';
+                    this.exitAnimation = 'slide-left-animation';
+                    this.selected = this.selected === 4 ? 0 : (this.selected + 1);
+                }
             },
             createScheme: function() {
                 this.formData = document.getElementById('coupon-form').serialize();
+                this.schemeObj.metadata.type = "COUPON";
                 this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
                 this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
 
-                this.schemeObj.metadata.type = "COUPON";
-                this.schemeObj.metadata.published = false;
-                this.schemeObj.on = "newscheme";
-                this.schemeObj.operation = "create";
+                this.schemeObj.on = "scheme";
                 if (this.schemeObj !== undefined) {
                     this.$.couponAjax.url= this.config.urls.rest;
-                    this.$.couponAjax.method = "POST";
+                    this.$.couponAjax.method = this.schemeMethod;
                     this.$.couponAjax.body = JSON.stringify(this.schemeObj);
                     this.$.couponAjax.generateRequest();
                 }
             },
             handleResponse: function(event) {
-                if(event.detail.response!=null && event.detail.response!==undefined){
+                if (event.detail.response != null && event.detail.response !== undefined) {
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     console.log("Received response: " + JSON.stringify(event.detail.response));
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text =  this.schemeObj.metadata.type+" created successfully!...";
+                    if(this.schemeMethod=="POST"){
+                        toast.text = this.schemeObj.metadata.type + " created successfully!...";
+                    }else{
+                        toast.text = this.schemeObj.metadata.type + " updated successfully!...";
+                    }
                     toast.show();
-                }else{
+                } else {
                     console.log(this.schemeObj);
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text =  "Error while creating" + this.schemeObj.metadata.type;
+                    if(this.schemeMethod=="POST"){
+                        toast.text = "Error while creating" + this.schemeObj.metadata.type;
+                    }else{
+                         toast.text = "Error while updating" + this.schemeObj.metadata.type;
+                    }
                 }
                 setTimeout(function() {
-                    //this.formData.clear();
-                },2000);
+                    location.href="/";
+                }, 1000);
             },
             handleError: function(event) {
                 var request = event.detail.request;
                 var error = event.detail.error;
                 console.log(error);
                 var toast = document.querySelector("#schemeSuccErrMessageToast");
-                toast.text = "Error while creating " + this.schemeObj.metadata.type+" Please try again.. ";
+                if(this.schemeMethod=="POST"){
+                    toast.text = "Error while creating " + this.schemeObj.metadata.type+" Please try again";
+                }else{
+                    toast.text = "Error while updating " + this.schemeObj.metadata.type+" Please try again";
+                }
                 toast.show();
             },
-            submitForm: function(evt, details, sender) {
+            submitForm: function(event) {
+                this.schemeObj.metadata.published = event.currentTarget.getAttribute('status');
                 document.getElementById('coupon-form').submit();
             }
         });

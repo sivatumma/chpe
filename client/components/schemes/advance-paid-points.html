@@ -36,7 +36,7 @@
           <h4 class="col-12 margin0">Points on Advance Paid
             <paper-icon-button icon="icons:add" on-click="addApd"></paper-icon-button>
           </h4>
-          <template is="dom-repeat" items="{{behaviorData.advancePaidDiscounts}}" as="apd">
+          <template is="dom-repeat" items="{{behaviorData.advancePaidPoints}}" as="apd">
             <div class="col-12 margin0 singleRow">
                 <div class="col-5">
                        <paper-input name="amount" no-label-float label="Amount" 
@@ -71,12 +71,12 @@
             },
             //add or remove src categories
             addApd :function(e){
-                this.push('behaviorData.advancePaidDiscounts', {amount:"",points:""});
+                this.push('behaviorData.advancePaidPoints', {amount:"",points:""});
            ;
             },
             deleteApd:function(e){
                 if(e.model.index!=0){
-                    this.splice('behaviorData.advancePaidDiscounts',e.model.index,1);
+                    this.splice('behaviorData.advancePaidPoints',e.model.index,1);
                 }
             },
             doChange:function(){

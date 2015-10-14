@@ -68,7 +68,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 <!-- Drawer Toolbar -->
                 <paper-toolbar id="drawerToolbar">
+                    <a href="/">
                     <span class="paper-font-title"><img src="assets/images/ch-logo.png"/></span>
+                    </a>
                 </paper-toolbar>
 
                 <div class="favicon">
@@ -160,10 +162,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                               scheme-method="{{addonMethod}}"></chpe-addon>
                         </section>
                         <section route="createCoupon" class="couponBg">
-                              <chpe-coupon scheme-obj="{{couponAsScheme}}"></chpe-coupon>
+                              <chpe-coupon scheme-obj="{{couponAsScheme}}" scheme-method="{{couponMethod}}"></chpe-coupon>
                         </section>
                         <section route="createGiftCard" class="giftCardBg">
-                              <chpe-gift-card scheme-obj="{{giftcardAsScheme}}"></chpe-gift-card>
+                              <chpe-gift-card scheme-obj="{{giftcardAsScheme}}" scheme-method="{{giftcardMethod}}"></chpe-gift-card>
                         </section>
                     </iron-pages>
 

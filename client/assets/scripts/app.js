@@ -76,29 +76,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     return MoreRouting.urlFor(path, {name:params.name});
   };
 
-   window.onload = function(){
-    console.log(location);
-   };
+
+  /*
+   *Method for setting base scheme
+   *@use this method  
+   */
+  app.setScheme = function(){
+    app.addonMethod   =  app.couponMethod = app.giftcardMethod = "POST"; 
+    app.saveBtnText   = "SAVE"; app.publishBtnText   = "SAVE + PUBLISH";
+    app.addonAsScheme =  app.couponAsScheme = app.giftcardAsScheme = schemeBase();
+  };
+
+  app.setScheme();
 
   app.getTitle = function(event){
-    console.log(event.currentTarget.getAttribute('title'));
     app.screenTitle = event.currentTarget.getAttribute('title');
-    return app.screenTitle
+    app.setScheme();
   };
-
-  //setting empty data modal to addon / coupon / giftcard
-  app.addonAsScheme =  app.couponAsScheme = app.giftcardAsScheme = schemeBase();
-  app.addonMethod   = "POST";
-
-  //to get edit scheme screen and set the relavent data
-  var x = {};
-      x.metadata = {name:"Siva"};
-      x.behavior = {discountType:"FLAT",discount:10};
-  app.editScheme  = function(event){ 
-    app.couponAsScheme = x;
-    event.stopPropagation();
-  };
-
 
   //home page list grid manipulations
   app.toggleListGridIcon = "icons::view-list";

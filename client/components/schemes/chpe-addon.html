@@ -302,6 +302,12 @@
                 schemeMethod:{
                     type:String,
                     notify:true
+                },
+                saveBtnText:{
+                    type:String
+                },
+                publishBtnText:{
+                    type:String
                 }
             },
             ready: function() {
@@ -346,7 +352,7 @@
                 }else{
                     this.entryAnimation = 'slide-from-left-animation';
                     this.exitAnimation = 'slide-right-animation';
-                    this.selected = this.selected === 0 ? 3 : (this.selected - 1);
+                    this.selected = this.selected === 0 ? 4 : (this.selected - 1);
                 }
             },
             _onNextClick: function(event) {
@@ -355,11 +361,11 @@
                 }else{
                     this.entryAnimation = 'slide-from-right-animation';
                     this.exitAnimation = 'slide-left-animation';
-                    this.selected = this.selected === 3 ? 0 : (this.selected + 1);
+                    this.selected = this.selected === 4 ? 0 : (this.selected + 1);
                 }
-
             },
             createScheme: function() {
+                this.schemeObj.metadata.type= "ADD_ON";
                 this.formData = document.getElementById('addon-form').serialize();
                 this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
                 this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
@@ -388,9 +394,9 @@
                     document.querySelector("#schemeSuccErrMessageToast").show();
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
                     if(this.schemeMethod=="POST"){
-                        toast.text = "Error while creating" + this.schemeObj.metadata.type;
+                        toast.text = "Error while creating " + this.schemeObj.metadata.type;
                     }else{
-                         toast.text = "Error while updating" + this.schemeObj.metadata.type;
+                         toast.text = "Error while updating " + this.schemeObj.metadata.type;
                     }
                 }
                 setTimeout(function() {
@@ -402,7 +408,11 @@
                 var error = event.detail.error;
                 console.log(error);
                 var toast = document.querySelector("#schemeSuccErrMessageToast");
-                toast.text = "Error while creating " + this.schemeObj.metadata.type + " Please try again.. ";
+                if(this.schemeMethod=="POST"){
+                    toast.text = "Error while creating " + this.schemeObj.metadata.type+" Please try again";
+                }else{
+                    toast.text = "Error while updating " + this.schemeObj.metadata.type+" Please try again";
+                }
                 toast.show();
             },
             submitForm: function(event) {

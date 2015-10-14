@@ -43,7 +43,7 @@ function schemeBase(scheme){    //init metadata as per schema
             {type:"user",discount:0,discountType:"%",maxLength:9},
             {type:"system",discount:0,discountType:"%",maxLength:9}
         ],
-        advancePaidDiscounts: [{
+        advancePaidPoints: [{
             points: "",
             amount: ""
         }],

@@ -200,7 +200,7 @@
                 </table>
             </div>
         </paper-material>
-        <iron-ajax id="fetchSchemes" verbose content-type="application/json" method="POST" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
+        <iron-ajax id="fetchSchemes" verbose content-type="application/json" method="GET" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
     <script>
         Polymer({
@@ -235,7 +235,6 @@
                     "operation": "find"
                 };
                 this.$.fetchSchemes.url = generalConfig().urls.rest;
-                this.$.fetchSchemes.method = "GET";
                 this.$.fetchSchemes.body = JSON.stringify(this.scheme);
                 this.$.fetchSchemes.generateRequest();
                 this.gridView = false;
@@ -248,7 +247,6 @@
                 return index + 1;
             },
             toggleStyle: function(event) {
-                console.log(event);
                 if (this.previouslySelectedId != null) {
                     document.querySelector(this.previouslySelectedId).style.background = '#fff';
                     document.querySelector(this.previouslySelectedId).style.color = '#000';
@@ -280,28 +278,26 @@
            */
           editScheme : function(event){
             var scheme = this.allSchemes[event.model.index];
-            console.log(scheme);
+            //console.log(scheme);
             this.navigateTo(scheme);
           },
 
           navigateTo:function(schemeObj){
-            console.log(schemeObj);
             if(schemeObj!==undefined){
                 var route = "";
                 if(schemeObj.metadata.type=="COUPON"){
                     route = "createCoupon";
                     app.couponAsScheme = schemeObj;
+                    app.couponMethod = "PUT";
                 }else if(schemeObj.metadata.type=="ADD_ON"){
                     route = "createAddOn";
                     app.addonAsScheme = schemeObj;
-                    app.couponAsScheme.operation = "update";
                     app.addonMethod = "PUT";
                 }else if(schemeObj.metadata.type=="GIFT_CARD"){
                     route = "createGiftCard";
-                    app.giftcardAsScheme.operation = "update";
+                    app.giftcardMethod = "PUT";
                     app.giftcardAsScheme = schemeObj;
                 }
-                console.log(route,schemeObj);
                 MoreRouting.navigateTo(route);
             }
           }
