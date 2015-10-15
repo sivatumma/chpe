@@ -88,8 +88,12 @@ module.exports = function(mongoose) {
 			// of products categorized, grouped already)
 			serviceRateCategoryDiscounts: [{
 				srcTypes: [{
-					id:{type:Number},
-					name:{type: String}
+					id: {
+						type: Number
+					},
+					name: {
+						type: String
+					}
 				}],
 				discount: {
 					type: Number
@@ -110,16 +114,24 @@ module.exports = function(mongoose) {
 				}
 			}],
 			doctorLevelDiscounts: [{
-				type: {type:String},
-				discount: {type:Number},
-				discountType: {type:String},
-				maxLength:{type:Number}
+				type: {
+					type: String
+				},
+				discount: {
+					type: Number
+				},
+				discountType: {
+					type: String
+				},
+				maxLength: {
+					type: Number
+				}
 			}],
 			modeOfPaymentDiscounts: [{
 				mop: {
 					type: String,
 					enum: ",EPAY,COD,CHEQUE".split(","),
-					default:"EPAY"
+					default: "EPAY"
 				},
 				discount: {
 					type: Number
@@ -161,13 +173,21 @@ module.exports = function(mongoose) {
 				}
 			}],
 			locationOfServices: [{
-				id:{type:Number},
-				name:{type: String}
+				id: {
+					type: Number
+				},
+				name: {
+					type: String
+				}
 			}],
 			serviceLevelDiscounts: [{
 				services: [{
-					id:{type:Number},
-					name:{type: String}
+					id: {
+						type: Number
+					},
+					name: {
+						type: String
+					}
 				}],
 				discount: {
 					type: Number
@@ -207,7 +227,10 @@ module.exports = function(mongoose) {
 		}
 		// If locationOfServices empty here we adding Default Locations
 		if (this.behavior.locationOfServices.length <= 0) {
-			this.behavior.locationOfServices = [{id:0,name:"AllLocation"}];
+			this.behavior.locationOfServices = [{
+				id: 0,
+				name: "AllLocation"
+			}];
 
 		}
 		if (this.behavior.discountType == "%" && this.behavior.discount > 9) {
@@ -227,7 +250,13 @@ module.exports = function(mongoose) {
 			this.behavior.endDate.setDate(startDate.getDate() + daysCount[this.metadata.defaultLife]);
 		}
 	};
-	schemeSchema.methods.beforeSaveGiftCardValidation = function() {};
+	schemeSchema.methods.beforeSaveGiftCardValidation = function() {
+		console.log(this.metadata.toIds.length);
+
+		if (this.metadata.published == true && this.metadata.toIds.length > 0) {
+			return next(new Error("Provide Benifecary"));
+		}
+	};
 	schemeSchema.methods.beforeSaveAddOnValidation = function() {
 
 
@@ -284,27 +313,47 @@ module.exports = function(mongoose) {
 		//modeOfPaymentDiscounts validate
 		var discountPayment = null;
 		_.each(this.behavior.modeOfPaymentDiscounts, function(single, index) {
-			if (single.discount > config.configVariable[config.configVariable.loginUser].Discount && single.discountType == "%")
-			{
+			if (single.discount > config.configVariable[config.configVariable.loginUser].Discount && single.discountType == "%") {
 				return next(new Error(single.mop + "- NOT ALLOW DISCOUNT MORE THAN 9"))
 			}
 		});
 	};
-	
+
 	schemeSchema.pre('save', function(next) {
 
 		this.beforeSaveDefaultValidation();
 
-if(this.metadata.type=="COUPON"){
-	this.beforeSaveCouponValidation();	
-} else if(this.metadata.type=="ADD_ON") {
-	this.beforeSaveAddOnValidation();
-} else if(this.metadata.type=="GIFT_CARD"){
-	this.beforeSaveGiftCardValidation();
-}
+		if (this.metadata.type == "COUPON") {
+			this.beforeSaveCouponValidation();
+		} else if (this.metadata.type == "ADD_ON") {
+			this.beforeSaveAddOnValidation();
+		} else if (this.metadata.type == "GIFT_CARD") {
+			this.beforeSaveGiftCardValidation();
+		}
 
 		next();
 	});
+	schemeSchema.pre('update', function(next) {
+
+		console.log("helo world");
+		try{
+			this.beforeSaveDefaultValidation();
+		} catch(e){
+			console.log(e.stack);
+		}
+		console.log("After beforeSave")
+
+		if (this.metadata.type == "COUPON") {
+			this.beforeSaveCouponValidation();
+		} else if (this.metadata.type == "ADD_ON") {
+			this.beforeSaveAddOnValidation();
+		} else if (this.metadata.type == "GIFT_CARD") {
+			this.beforeSaveGiftCardValidation();
+		}
+
+		next();
+	});
+
 	var Scheme = mongoose.model('scheme', schemeSchema);
 	return Scheme;
 }

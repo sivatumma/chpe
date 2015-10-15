@@ -8,7 +8,7 @@ var config = require('./config/config.js'),
   session = require('express-session'),
   exceptionHandlers = require('./config/exceptionHandlers.js'),
   dbModule = require('./config/dbModule.js')(),
-  quryBuilder = require('./config/queryBuilder.js'),
+  queryBuilder = require('./config/queryBuilder.js'),
   mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   User = mongoose.model('User'),
@@ -89,7 +89,7 @@ res.status(200).send("Call");
 function createModels(req, res) {
 
   if (req.params.modelName == 'order') {
-    var u1 = mongoose.model(req.params.modelName)(quryBuilder.createSchema(req.body));
+    var u1 = mongoose.model(req.params.modelName)(queryBuilder.createSchema(req.body));
     u1.scheme = 0;
     u1.save().then(function(data) {
       res.status(200).send(data);
@@ -98,37 +98,34 @@ function createModels(req, res) {
     });
   } else {
     config.configVariable.loginUser = "user";
-    var u1 = mongoose.model(req.params.modelName)(quryBuilder.createSchema(req.body));
+    var u1 = mongoose.model(req.params.modelName)(queryBuilder.createSchema(req.body));
 
-    u1.save(function(err,data){
+   /* u1.save(function(err,data){
+      console.log(err);
     res.send(data);
+    });*/
+     u1.save().then(function(data) {
+      res.status(200).send(data);
+    }, function(err) {
+      console.log(err.message);
+      res.status(500).send({
+        "status": "fail",
+        "message": err.message
+      });
     });
-
-    // .then(function(data) {
-    //   console.log("DATA: ", data);
-    //   res.status(200).send(data);
-
-    // }, function(err) {
-    //   console.log(err.message);
-    //   res.status(500).send({
-    //     "status": "fail",
-    //     "message": err.message
-    //   });
-    //   console.log(err);
-    // });
 
 
   }
 }
 
 function updateModels(req, res) {
- var m = mongoose.model('scheme');
- m.update({_id:m._id},req.body,function(err, c) {
+  console.log("in updateModels function");
+  mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body),req.body).exec().then(function(err, data) {
     if (err) {
       console.log(err);
       res.status(500).send(err);
     }else{
-      res.status(200).send(c);
+      res.status(200).send(data);
     }
   });
 }
