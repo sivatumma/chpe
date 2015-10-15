@@ -87,6 +87,7 @@ module.exports = function(mongoose) {
 var Order = mongoose.model('order', orderSchema);
 orderSchema.pre('save',function(next){
 var schemeName = this.schemeName;
+var userId = this.userId;
 var s = mongoose.model('scheme').find({"metadata.name":this.schemeName}).exec();
 s.then(function(data)
 {
@@ -95,7 +96,7 @@ return data;
 
 if(data.length>0){
 	
-var o = Order.count({"schemeName":schemeName}).exec();
+var o = Order.count({"schemeName":schemeName,"userId":userId}).exec();
 
 o.then(function(orderData){
 
