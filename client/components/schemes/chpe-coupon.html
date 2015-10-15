@@ -130,12 +130,12 @@
                                     <label style="margin-left:10px;">Locations :</label>
                                 </div>
                                 <div class="col-12 margin0">
-                                <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/"
-                                options='{
-                                "allow_space": false,
-                                "allow_nonmatching": false}' 
-                                selected-items="{{schemeObj.behavior.locationOfServices}}">
-                                </multi-value-suggestbox>
+                                    <multi-value-suggestbox id="multi_suggest" is-multiple="multi" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/"
+                                    options="{
+                                    'allow_space': false,
+                                    'allow_nonmatching': false}" 
+                                    selected-items="{{schemeObj.behavior.locationOfServices}}">
+                                    </multi-value-suggestbox>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -237,9 +237,11 @@
             createScheme: function() {
                 this.formData = document.getElementById('coupon-form').serialize();
                 this.schemeObj.metadata.type = "COUPON";
-                this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
-                this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
-
+                if(chUtils.isEmpty(this.schemeObj.behavior.startDate)===false){
+                    this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
+                }else if(chUtils.isEmpty(this.schemeObj.behavior.endDate)===false){
+                    this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
+                }
                 this.schemeObj.on = "scheme";
                 if (this.schemeObj !== undefined) {
                     this.$.couponAjax.url= this.config.urls.rest;
@@ -270,7 +272,7 @@
                     }
                 }
                 setTimeout(function() {
-                    location.href="/";
+                    //location.href="/";
                 }, 1000);
             },
             handleError: function(event) {

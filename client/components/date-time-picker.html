@@ -64,7 +64,7 @@
     <template>
      <section onclick="clickHandler(event)">
      <paper-input name="{{dateType}}" class="date-time-picker-input"  no-label-float readonly="true" label="{{dateLabel}}"  on-tap="showDialog" id="{{dateTimeValue}}" value="{{dateModalValue}}"  ></paper-input>
-     	<paper-dialog modal id="{{dateModal}}"  class="size-position paper-date-picker-dialog padding0" with-backdrop on-iron-overlay-closed="dismissDialog">
+     	<paper-dialog modal id="{{dateModal}}"  class="size-position paper-date-picker-dialog padding0" with-backdrop>
 
 			  	<div class="datePicker margin0">
 			  		<paper-fab mini icon="icons:close" class="closeBtn" dialog-confirm autofocus>
@@ -122,7 +122,6 @@
 				};
             },
             listeners:{
-            	'dismissDialog ':'getDate',
             	'on-tap':'showDialog',
             	'iron-overlay-closed':'getdateTime'
             },
@@ -137,7 +136,7 @@
             	console.log(document.querySelector('paper-date-picker'));
             },
             setDateTime:function(){
-            	this.pickedDate = this.formatDate(document.querySelector("#"+this.dateId).date);
+            		this.pickedDate = this.formatDate(document.querySelector("#"+this.dateId).date);
 		        	this.pickedTime = document.querySelector("#"+this.timeId).time;
 		            var dateTime = this.pickedDate+' '+this.pickedTime;
 		            document.querySelector("#"+this.dateTimeValue).setAttribute("value",dateTime);
@@ -157,16 +156,16 @@
 		        }
 		    },
 		    dateModalValueChanged:function(dateValue){
-		    	console.log(this.dateType);
-		    	if(dateValue){
+		    	if(chUtils.isEmpty(dateValue)===false){
 			    	this.updateDateTime(dateValue);
 		    	}
 		    },
-		    updateDateTime:function(dateTime){
-		    	if(dateTime!==undefined && dateTime!==null){
-		    		var hours  = chUtils.getHoursByDate(dateTime); 
-		    		var minutes = chUtils.getMinutesByDate(dateTime);
-		    		var existedDate  =  chUtils.getYMD(dateTime);
+		    updateDateTime:function(editDate){
+		    	if(chUtils.isEmpty(editDate)===false){
+		    		console.log(editDate);
+		    		var hours  = chUtils.getHoursByDate(editDate); 
+		    		var minutes = chUtils.getMinutesByDate(editDate);
+		    		var existedDate  =  chUtils.getYMD(editDate);
 		    		
 		    		document.querySelector("#"+this.dateId).setAttribute('date',existedDate);
 		    		document.querySelector("#"+this.timeId).setAttribute('hour',hours);
