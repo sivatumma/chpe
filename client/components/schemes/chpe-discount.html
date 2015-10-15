@@ -70,8 +70,8 @@
             <div class="discountBox"  id="discountToggle" layout horizontal>
                 <div class="btn-group">
                     <paper-button  toggles  class="discountButton noRightBorder active" 
-                    on-click="togleDiscount"  id="{{percentageId}}">%</paper-button>
-                    <paper-button  toggles  class="discountButton" on-click="togleDiscount"  id="{{flatId}}" >Flat</paper-button>
+                    on-click="togleDiscount" type="%"  id="{{percentageId}}">%</paper-button>
+                    <paper-button  toggles  type="FLAT" class="discountButton" on-click="togleDiscount"  id="{{flatId}}" >Flat</paper-button>
                     </div>
                     <div class="discountInput col-6">
                         <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
@@ -127,7 +127,7 @@
                     this.discountPattern = "^([0-10])$";
                     chUtils.addClass(document.querySelector("#"+this.percentageId),"active");
                     this.discountModal.discountType = discountType; 
-                } else {
+                } else if(discountType=="FLAT") {
                     chUtils.addClass(document.querySelector("#"+this.flatId),"active");
 
                     if(this.discountModal.maxLength!==undefined){
@@ -140,8 +140,8 @@
                 }
             },
 
-            togleDiscount:function(e){
-                var discountType = e.target.parentElement.innerText;
+            togleDiscount:function(event){
+                var discountType = event.currentTarget.getAttribute('type');
                 this.setDiscount(discountType);
             }
           
