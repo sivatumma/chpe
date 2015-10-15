@@ -7,7 +7,7 @@ function schemeBase(scheme){    //init metadata as per schema
     var metadata = {
         name: "",
         createdBy: "",
-        toIds: [{}],
+        toIds: [], //Array of objects
         userID:"",
         location:{longitude:0, latitude:0,ip:""},
         published: false,

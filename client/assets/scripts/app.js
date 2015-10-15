@@ -85,6 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.saveBtnText   = "SAVE"; app.publishBtnText   = "SAVE + PUBLISH";
     app.addonAsScheme =  app.couponAsScheme = app.giftcardAsScheme = schemeBase();
   };
+
   
   app.getTitle = function(event){
     console.log(event.currentTarget.getAttribute('title'));
@@ -119,10 +120,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
   };
 
-  //toggle search bar
-  app.toggleSearch  = function(){
-
-  };
-
+  app.allSchemes = [{}];
 
 })(document);

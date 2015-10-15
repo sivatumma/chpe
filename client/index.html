@@ -121,7 +121,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     <!-- Toolbar icons -->
                     <span class="topIcons">
-                        <paper-icon-button icon="search"></paper-icon-button>
+                        <search-bar></search-bar>
                     </span>
                     <span>
                         <a href="/ssoLogout" class="logoutButton"><paper-icon-button icon="icons:input"></paper-icon-button></a>
@@ -156,7 +156,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     <iron-pages attr-for-selected="route" selected="{{route}}">
                         <section route="home">
-                           <schemes-as-cards></schemes-as-cards>
+                           <schemes-as-cards schemes-obj="{{allSchemes}}"></schemes-as-cards>
                         </section>
                         <section route="createAddOn" class="addonBg">
                               <chpe-addon id="adddonComp" scheme-obj="{{addonAsScheme}}" 
