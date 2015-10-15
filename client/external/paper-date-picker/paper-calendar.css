@@ -12,7 +12,6 @@
   overflow-x: hidden;
   background: var(--primary-background-color);
   @apply(--layout-fit);
-  color:white;
 }
 .month-header {
   @apply(--layout-vertical);
@@ -78,7 +77,4 @@
 
 :host([isTouch]) #calendarList::-webkit-scrollbar {
   width: 0 !important 
-}
-#calendarList.paper-calendar{
-  right: -10px !important;
 }

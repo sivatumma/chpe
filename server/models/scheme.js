@@ -334,24 +334,16 @@ module.exports = function(mongoose) {
 		next();
 	});
 	schemeSchema.pre('update', function(next) {
+		console.log(this.schema);
+		// if (this.metadata.type == "COUPON") {
+		// 	this.beforeSaveCouponValidation();
+		// } else if (this.metadata.type == "ADD_ON") {
+		// 	this.beforeSaveAddOnValidation();
+		// } else if (this.metadata.type == "GIFT_CARD") {
+		// 	this.beforeSaveGiftCardValidation();
+		// }
 
-		console.log("helo world");
-		try{
-			this.beforeSaveDefaultValidation();
-		} catch(e){
-			console.log(e.stack);
-		}
-		console.log("After beforeSave")
-
-		if (this.metadata.type == "COUPON") {
-			this.beforeSaveCouponValidation();
-		} else if (this.metadata.type == "ADD_ON") {
-			this.beforeSaveAddOnValidation();
-		} else if (this.metadata.type == "GIFT_CARD") {
-			this.beforeSaveGiftCardValidation();
-		}
-
-		next();
+		next(null, this);
 	});
 
 	var Scheme = mongoose.model('scheme', schemeSchema);

@@ -46,13 +46,13 @@
             <div class="discountBox"  id="couponTypeToggle" layout horizontaly>
                 <div class="btn-group">
                     <paper-button type="button" name="day" class="discountButton noRightBorder" 
-                    on-click="togleType" id="couponDay" type="DAY">DAY</paper-button>
+                    on-click="togleType" id="couponDay" life="DAY">DAY</paper-button>
 
                     <paper-button type="button" name="week" class="discountButton noRightBorder"
-                    on-click="togleType" id="couponWeek" type="WEEK">WEEK</paper-button>
+                    on-click="togleType" id="couponWeek" life="WEEK">WEEK</paper-button>
 
                     <paper-button type="button" name="month" class="discountButton"
-                    on-click="togleType" id="couponMonth" type="MONTH">MONTH</paper-button>
+                    on-click="togleType" id="couponMonth" life="MONTH">MONTH</paper-button>
                 </div>
             </div>
         </div>
@@ -97,9 +97,10 @@
                     this.metadata.defaultLife = couponType;
                 }
             },
-            togleType:function(e){
-                var couponType = e.target.parentElement.innerText;
-                this.setCouponLife(couponType);
+            togleType:function(event){
+                var life = event.currentTarget.getAttribute('life');
+                console.log(life);
+                this.setCouponLife(life);
             }
           
         });

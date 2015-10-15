@@ -105,14 +105,21 @@ function createModels(req, res) {
 
 function updateModels(req, res) {
   console.log("in updateModels function");
-  mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body),req.body).exec().then(function(err, data) {
-    if (err) {
-      console.log(err);
-      res.status(500).send(err);
-    }else{
-      res.status(200).send(data);
-    }
+  delete req.body._id;
+  var updateBuilder = mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body));
+  updateBuilder.update(req.body, function(err, data){
+    // console.log(err ? err + "ERROR++++++++++++++++++++++++++++++++" : data);
+    console.log("Callback", data);
   });
+
+  // updateBuilder.exec().then(function(err, data) {
+  //   if (err) {
+  //     console.log(err);
+  //     res.status(500).send(err);
+  //   }else{
+  //     res.status(200).send(data);
+  //   }
+  // });
 }
 
 function deleteModels(req, res) {
