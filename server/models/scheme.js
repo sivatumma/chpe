@@ -335,11 +335,11 @@ module.exports = function(mongoose) {
 	});
 	schemeSchema.pre('update', function(next) {
 		console.log(this);
-		// if (this._update.$set.metadata.type == "COUPON") {
+		// if (this.metadata.type == "COUPON") {
 		// 	this.beforeSaveCouponValidation();
-		// } else if (this._update.$set.metadata.type == "ADD_ON") {
+		// } else if (this.metadata.type == "ADD_ON") {
 		// 	this.beforeSaveAddOnValidation();
-		// } else if (this._update.$set.metadata.type == "GIFT_CARD") {
+		// } else if (this.metadata.type == "GIFT_CARD") {
 		// 	this.beforeSaveGiftCardValidation();
 		// }
 
