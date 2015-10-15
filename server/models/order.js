@@ -84,8 +84,38 @@ module.exports = function(mongoose) {
 
 	});
 
+var Order = mongoose.model('order', orderSchema);
+orderSchema.pre('save',function(next){
+var schemeName = this.schemeName;
+var s = mongoose.model('scheme').find({"metadata.name":this.schemeName}).exec();
+s.then(function(data)
+{
+return data;
+}).then(function(data){
 
-	var Order = mongoose.model('order', orderSchema);
+if(data.length>0){
+	
+var o = Order.count({"schemeName":schemeName}).exec();
 
+o.then(function(orderData){
+
+if(data[0].behavior.maximumUsages>orderData){
+	next();
+}else if(orderData==0)
+{
+	next();
+}else{
+
+ return	next(new Error("Maximum Usages Completed"));
+}
+})
+
+}else{
+	return next(new Error("Invalid Shcema Name"));
+}
+
+})
+	
+})
 	return Order;
 }
