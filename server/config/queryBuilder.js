@@ -1,4 +1,7 @@
+
+var chUtils = require('../../lib/chUtils.js').chUtils;
 module.exports = {
+
 	createSchema: function(data) {
 
 		return data;
@@ -15,21 +18,20 @@ module.exports = {
 		return query;
 
 	},
-	suggestDiscount: function(req, res) {
+	suggestDiscounts: function(data) {
 		var query = {
-		/*	"metadata.name": req.body.name,*/
-			// "behavior.locationOfServices": {
-			// 	$in: [req.body.locationOfService, "AllLocation"]
-			// },
-			// "behavior.startDate": {
-			// 	$lte: new Date(req.body.orderDate)
-			// },
-			// "behavior.endDate": {
-			// 	$gte: new Date(req.body.orderDate)
-			// },
-			// "metadata.toIds.id": req.body.userId,
-			// "metadata.published": true
-		}
+			"metadata.name": data.name,
+			"behavior.locationOfServices.name": {
+				$in: [data.locationOfService, "AllLocation"]
+			},
+			"behavior.startDate": {
+				$lte: new Date(data.orderDate)
+			},
+			"behavior.endDate": {
+				$gte: new Date(data.orderDate)
+			},
+			"metadata.published": true
+		};
 		return query;
 	},
 
@@ -44,6 +46,27 @@ module.exports = {
 	shcemaFindQuery: function(query) {
 
 		return query;
-	}
+	},
+	saveOrder: function(bodydata,data)
+	{
 
+		if (data[0].metadata.type != "ADD_ON") {
+
+			bodydata.finalAmount = chUtils.callDiscount(bodydata.billAmount, data[0].behavior.discount, data[0].behavior.discountType);
+		}
+		var query = {
+			schemeName: bodydata.name,
+			userId: bodydata.userId,
+			businessName: bodydata.businessName,
+			dateOfService: new Date(bodydata.dateOfService),
+			services: bodydata.services,
+			billAmount: bodydata.billAmount,
+			successfullyApplied: false,
+			businessOrderId: bodydata.businessOrderId,
+			locationOfService: bodydata.orderLocationOfService,
+			finalAmount: bodydata.finalAmount
+		};
+
+		return query;
+	}
 };
