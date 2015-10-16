@@ -64,8 +64,9 @@ app.use(session({
 }));
 
 function fetchModels(req, res) {
+  var modelId = req.params.modelId ? {"metadata.name":req.params.modelId} : {};
   var u1 = mongoose.model(req.params.modelName);
-  u1.find(function(err, data) {
+  u1.find(modelId, function(err, data) {
     if (err) res.status(500).send({
       status: "fail",
       message: err.message
@@ -88,34 +89,19 @@ res.status(200).send("Call");
 }
 function createModels(req, res) {
 
-  if (req.params.modelName == 'order') {
-    var u1 = mongoose.model(req.params.modelName)(queryBuilder.createSchema(req.body));
-    u1.scheme = 0;
-    u1.save().then(function(data) {
-      res.status(200).send(data);
-    }, function(reason) {
-      res.status(500).send(reason);
-    });
-  } else {
     config.configVariable.loginUser = "user";
     var u1 = mongoose.model(req.params.modelName)(queryBuilder.createSchema(req.body));
 
-   /* u1.save(function(err,data){
-      console.log(err);
-    res.send(data);
-    });*/
+   
      u1.save().then(function(data) {
       res.status(200).send(data);
     }, function(err) {
-      console.log(err.message);
+     
       res.status(500).send({
         "status": "fail",
         "message": err.message
       });
     });
-
-
-  }
 }
 
 function updateModels(req, res) {
@@ -183,6 +169,7 @@ var User = mongoose.model('User');
 app.all('/test', updateModels);
 
 app.route('/order/:modelName/:schemeName').get(fetchOrders);
+app.route('/mdb/:modelName/:modelId').get(fetchModels);
 
 app.route('/mdb/:modelName')
   .get(fetchModels)
