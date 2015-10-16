@@ -1,0 +1,76 @@
+<script src="../../../lib/chUtils.js"></script>
+<script src="../../config/general.js"></script>
+<dom-module id="preview-scheme">
+	<style type="text/css">
+		:host{
+			display: block;
+		}
+		.simple-extend-card{
+            margin: 0px auto;
+            max-width: 760px;
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+        }
+
+        .cards {
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+            margin-top: 30px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+	</style>
+	<template>
+		<more-route context name="previewScheme" params="{{params}}"></more-route>
+			<template is="dom-repeat" items="{{previewData}}" as="item">
+				<paper-card elevation="3" heading="{{item.metadata.type}}"  class="cards">
+					<div class="card-content">
+						<span>{{item.metadata.name}}</span>
+					</div>
+				</paper-card>
+			</template>
+		<iron-ajax  id="previewSchemeAjax" content-type="application/json"   method="GET"  
+         handle-as="json" on-error="handleError" on-response="handleResponse"  debounce-duration="300"></iron-ajax>
+	</template>
+	<script>
+		Polymer({
+			is:'preview-scheme',
+			ready:function(){
+				//this.config = generalConfig() || {};
+			},
+			properties:{
+				previewData:{
+					type:Object,
+					notify:true
+				},
+				schemeName:{
+					type:String,
+					notify:true
+				}
+			},
+			observers:[ 
+				'previewSchemeChanged(params.schemeName)'
+			],
+			previewSchemeChanged:function(schemeName){
+				if(schemeName!==undefined && schemeName.length>0){
+				  this.scheme = {
+                    "on": "scheme",
+                    "operation": "find"
+                };
+                this.$.previewSchemeAjax.url =  generalConfig().urls.rest;
+                this.$.previewSchemeAjax.body = JSON.stringify(this.scheme);
+                this.$.previewSchemeAjax.generateRequest();
+				}
+			},
+			handleResponse:function(event){
+				if(chUtils.isEmpty(event.detail.response)===false){
+					this.previewData = event.detail.response;
+					console.log(event.detail.response);
+				}
+			},
+			handleError:function(event){
+				console.log(event);
+			}
+		});
+	</script>
+</dom-module>

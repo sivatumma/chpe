@@ -69,12 +69,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <!-- Drawer Toolbar -->
                 <paper-toolbar id="drawerToolbar">
                     <a href="/">
-                    <span class="paper-font-title"><img src="assets/images/ch-logo.png"/></span>
+                    <span class="paper-font-title">
+                        <img src="assets/images/ch-logo.png"/ width="200px" height="30px"></span>
                     </a>
                 </paper-toolbar>
 
                 <div class="favicon">
-                    <img  src="assets/images/schemes-logo.png"/>
+                    <img  src="assets/images/schemes-logo.png" />
                     <h3>Schemes</h3>
                 </div>
                 <!-- Drawer Content -->
@@ -169,7 +170,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                               <chpe-gift-card scheme-obj="{{giftcardAsScheme}}" scheme-method="{{giftcardMethod}}"></chpe-gift-card>
                         </section>
                         <section route="previewScheme" class="previewSchemeBg">
-                              <chpe-gift-card scheme-obj="{{previewSchemeAsScheme}}" scheme-method="{{previewSchemeMethod}}"></chpe-gift-card>
+                              <preview-scheme scheme-name="{{previewSchemeName}}"></preview-scheme>
                         </section>
                     </iron-pages>
 
@@ -179,7 +180,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-drawer-panel>
 
         <paper-toast id="schemeSuccErrMessageToast" text=""></paper-toast>
-        <paper-toast id="caching-complete" text="Hey....Hurrey"></paper-toast>
     </template>
     </div>
 
