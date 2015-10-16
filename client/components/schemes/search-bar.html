@@ -202,6 +202,7 @@
                 if(chUtils.isEmpty(q)===false){
                     this.show = false;
                     this.searchInput = '';
+                    console.log(app.screenTitle);
                     MoreRouting.navigateTo('previewScheme', {schemeName: q});
                 }
             }

@@ -143,6 +143,8 @@
         .editScheme paper-icon-button{
             padding: 0px;
             margin:0px;
+            width: 24px;
+            height: 24px;
         }
         .editScheme iron-icon{
          opacity: 0.5 !important;
@@ -156,37 +158,67 @@
             display: flex;
             min-height: 200px;
             clear: both;
-            width: 100%;
-            margin: 
+            width: 99%;
+            margin:10px 10px 20px 0px; 
         }
         .schemes-sec{
             background: #ffffe8;
             display: flex;
             min-height: 200px;
             clear: both;
-            width: 100%;
-            margin: 
+            width: 99%;
+            margin:10px 10px 10px 20px; 
         }
         .giftcard-sec{
             background: #fafafa;
             display: flex;
             min-height: 200px;
             clear: both;
-            width: 100%;
-            margin: 
+            width: 99%;
+            margin:10px 10px 10px 20px; 
         }
 
     </style>
     <template>
         <div id="gridView">
             <paper-material class="coupons-sec">
-                <h5>Coupon</h5>            
+                <h3>Coupons</h3> 
+                <template is="dom-repeat" items="{{couponsData}}" as="item">
+                    <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards"  on-focus-out="toggleStyle" on-click="toggleStyle">
+                        <div class="card-content">{{item.metadata.name}}</div>
+                        <div class="card-actions" align="right">
+                               <paper-icon-button icon="link"></paper-icon-button>
+                               <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                        </div>
+                    </paper-card>
+                </template>           
             </paper-material>
             <paper-material class="schemes-sec">
-                <h5>Add ons</h5>
+                <h3>Schemes</h3> 
+                <template is="dom-repeat" items="{{addonsData}}" as="item">
+                    <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards"  on-focus-out="toggleStyle" on-click="toggleStyle">
+                        <div class="card-content">{{item.metadata.name}}</div>
+                        <div class="card-actions" align="right">
+                               <paper-icon-button icon="link"></paper-icon-button>
+                               <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                        </div>
+                    </paper-card>
+                </template>
             </paper-material>
             <paper-material class="giftcard-sec">
-                <h5>Giftcards</h5>
+                <h3>Gift Cards</h3> 
+                <template is="dom-repeat" items="{{giftCardsData}}" as="item">
+                    <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards"  on-focus-out="toggleStyle" on-click="toggleStyle">
+                        <div class="card-content">{{item.metadata.name}}</div>
+                        <div class="card-actions" align="right">
+                               <paper-icon-button icon="link"></paper-icon-button>
+                               <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                        </div>
+                    </paper-card>
+                </template>
             </paper-material>
         </div>
         <paper-material elevation="1">
@@ -249,7 +281,19 @@
                     notify: true
                 },
                 scheme: Object,
-                previouslySelectedId: String
+                previouslySelectedId: String,
+                giftCardsData:{
+                    type:Object,
+                    notify:true
+                },
+                couponsData:{
+                    type:Object,
+                    notify:true
+                },
+                addonsData:{
+                    type:Object,
+                    notify:true
+                }
             },
             listeners: {
                 "onClick": "toggleStyle",
@@ -294,6 +338,9 @@
                 var data = event.detail.response;
                 if (data !== undefined && data != null) {
                     this.allSchemes = this.listData = data;
+                    this.addonsData = chUtils.getSchemesByType(this.allSchemes,"ADD_ON");
+                    this.couponsData = chUtils.getSchemesByType(this.allSchemes,"COUPON");
+                    this.giftCardsData = chUtils.getSchemesByType(this.allSchemes,"GIFT_CARD");
                 } else {
                     this.listData = this.allSchemes = [{}];
                 }
@@ -311,8 +358,9 @@
            *@url based on type
            */
           editScheme : function(event){
-            var scheme = this.allSchemes[event.model.index];
-            //console.log(scheme);
+            var sName = event.model.item.metadata.name;
+            
+            var scheme = chUtils.getSchemeByName(this.allSchemes,sName);
             this.navigateTo(scheme);
           },
 

@@ -22,6 +22,7 @@
 	</style>
 	<template>
 		<more-route context name="previewScheme" params="{{params}}"></more-route>
+			<h4>{{params.schemeName}}</h4>
 			<template is="dom-repeat" items="{{previewData}}" as="item">
 				<paper-card elevation="3" heading="{{item.metadata.type}}"  class="cards">
 					<div class="card-content">
