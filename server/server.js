@@ -64,9 +64,9 @@ app.use(session({
 }));
 
 function fetchModels(req, res) {
-  var modelId = req.params.modelId ? req.params.modelId : {};
-  var u1 = mongoose.model(req.params.modelName)({"metadata.name":modelId});
-  u1.find(function(err, data) {
+  var modelId = req.params.modelId ? {"metadata.name":req.params.modelId} : {};
+  var u1 = mongoose.model(req.params.modelName);
+  u1.find(modelId, function(err, data) {
     if (err) res.status(500).send({
       status: "fail",
       message: err.message
