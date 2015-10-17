@@ -208,6 +208,9 @@ module.exports = function(mongoose) {
 			}
 		}
 	});
+	schemeSchema.virtual("serviceLevelDiscounts._services").get(function() {
+	    return _.pluck(this.serviceLevelDiscounts._services,"name");
+	});
 	schemeSchema.methods.beforeSaveDefaultValidation = function() {
 
 		if (this.behavior && !this.behavior.startDate) {
