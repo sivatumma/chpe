@@ -101,7 +101,7 @@
         }
         
         .element-table tbody tr:hover {
-            background: #fafafa;
+            background: #f4f4f4;
         }
         .element-table tbody tr {
             cursor: pointer;
@@ -151,14 +151,46 @@
         .element-table tbody tr:hover iron-icon{
             opacity: 1 !important;
         }
+        .coupons-sec{
+            background: #e6ffff;
+            display: flex;
+            min-height: 200px;
+            clear: both;
+            width: 100%;
+            margin: 
+        }
+        .schemes-sec{
+            background: #ffffe8;
+            display: flex;
+            min-height: 200px;
+            clear: both;
+            width: 100%;
+            margin: 
+        }
+        .giftcard-sec{
+            background: #fafafa;
+            display: flex;
+            min-height: 200px;
+            clear: both;
+            width: 100%;
+            margin: 
+        }
+
     </style>
     <template>
-        <paper-material elevation="0">
-            <div id="gridView">
-                <!--    <template is="dom-repeat" items="{{allSchemes}}" as="item"> 
-           <chepe-grid-view grid-data="{{item}}"></chpe-grid-view>
-          </template>  -->
-
+        <div id="gridView">
+            <paper-material class="coupons-sec">
+                <h5>Coupon</h5>            
+            </paper-material>
+            <paper-material class="schemes-sec">
+                <h5>Add ons</h5>
+            </paper-material>
+            <paper-material class="giftcard-sec">
+                <h5>Giftcards</h5>
+            </paper-material>
+        </div>
+        <paper-material elevation="1">
+            <!-- <div id="gridView">
                 <template is="dom-repeat" items="{{allSchemes}}" as="item">
                     <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards" id="{{getId(index)}}" on-focus-out="toggleStyle" on-click="toggleStyle">
                         <div class="card-content">{{item.metadata.name}}</div>
@@ -169,7 +201,7 @@
                         </div>
                     </paper-card>
                 </template>
-            </div>
+            </div> -->
             <div id="listView" hidden>
                 <table class="element-table responsive-table">
                     <thead>
@@ -236,7 +268,7 @@
                     "on": "scheme",
                     "operation": "find"
                 };
-                this.$.fetchSchemes.url = generalConfig().urls.rest;
+                this.$.fetchSchemes.url =  generalConfig().urls.rest;
                 this.$.fetchSchemes.body = JSON.stringify(this.scheme);
                 this.$.fetchSchemes.generateRequest();
                 this.gridView = false;
