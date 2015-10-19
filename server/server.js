@@ -26,6 +26,22 @@ app.use(function(req, res, next) {
     next();
 });
 app.use(cors());
+
+function readRawBody(req, res, next) {
+  console.log("inside readRawBody");
+
+  req.data = '';
+  req.on('data', function(chunk) {
+    req.data += chunk.toString('utf-8');
+  });
+
+  req.on('end', function() {
+    console.log("ended ", req.data);
+    // console.log(req.data.toString('utf8',0,5));
+    // next();
+  });
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -75,7 +91,9 @@ function fetchModels(req, res) {
   });
 }
 
-
+function convertXMLToJson(req, res) {
+  var parseString = require('xml2js').parseString;
+}
 
 function fetchOrders(req,res)
 {
@@ -103,7 +121,26 @@ function createModels(req, res) {
       });
     });
 }
+function suggestDiscounts(req, res) {  
 
+  var u1= mongoose.model('scheme').find(queryBuilder.suggestDiscounts(req.body));
+
+u1.exec().then(function(data)
+{
+
+var o1 = mongoose.model('order')(queryBuilder.saveOrder(req.body,data));
+
+o1.save().then(function(data)
+{
+  res.status(200).send(data);
+},function(err){
+
+  res.status(500).send({"status":"fail","message":err.message})
+})
+
+})
+
+}
 function updateModels(req, res) {
   console.log("in updateModels function");
   delete req.body._id;
@@ -167,8 +204,8 @@ app.get('/ssoLogout',function(req, res) {
 var User = mongoose.model('User');
 
 app.all('/test', updateModels);
+app.all('/pricingengine/suggestDiscounts',suggestDiscounts);
 
-app.route('/order/:modelName/:schemeName').get(fetchOrders);
 app.route('/mdb/:modelName/:modelId').get(fetchModels);
 
 app.route('/mdb/:modelName')
@@ -179,6 +216,10 @@ app.route('/mdb/:modelName')
 
 app.route('/operation/:filter').put(updateModels).post(updateModels);
 
+app.post('/utils/xml2json',readRawBody, function(req,res){
+  console.log(req.rawBody, req.rawBody);
+  res.status(200).send("done reading rawbody");
+});
 
 var server_credentials = {
   key: fs.readFileSync(path.join(config.certificates_dir, 'server.key')),

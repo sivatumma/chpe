@@ -94,6 +94,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     chUtils.resetForm('coupon-form');
     chUtils.resetForm('addon-form');
     chUtils.resetForm('gift-card-form');
+
+    app.location = function(){return document.location;};
+
   };
 
   app.setScheme();
@@ -119,6 +122,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector("#gridView").hidden = false;
       }
   };
+
+  app.location = function(){return document.location;};
 
   app.previewSchemeName = "";
 
