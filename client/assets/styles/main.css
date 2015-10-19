@@ -120,6 +120,10 @@ iron-pages{
   padding:5px 0px; 
   position: relative;
 }
+#chepeMenu paper-item.iron-selected{
+  background:#cad6e6;
+}
+
 #chepeMenu iron-icon{
   opacity: 1 !important;
 }
@@ -140,18 +144,19 @@ iron-pages{
 .favicon img{
   float: left;
   margin-left: 12px;
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
+  margin-top: 10px;
 }
 .favicon h3{
   color:#888;
   float: left;
-  margin-left:15px;
+  margin-left:22px;
   font-size: 18px;
 }
 .paper-font-title img{
-  padding: 0 15px;
-  margin-top: 10px;
+  padding: 0 15px 0 10px;
+  margin-top: 5px;
 }
 
 /*scroll bar css in chrome browser*/
@@ -169,7 +174,6 @@ iron-pages{
     background:#888;
 }
 
-/*scheme styles*/
 .chpe-coupon,.chpe-gift-card,.chpe-addon{
     border-radius: 2px;
     margin:15px 0px;
@@ -192,7 +196,7 @@ iron-pages{
 }
 
 .headerIcons{
-  margin-left: 15%;
+  margin-left:0%;
 }
 .headerIcons paper-icon-button{
   margin: 0 5px;
@@ -207,6 +211,9 @@ iron-pages{
 }
 .topIcons{
   margin-right:1%;
+}
+.topLogout{
+  margin-right: 30px;
 }
 .showDatepickerPopup{
      -moz-animation: slide 2s ease 3.5s forwards;
@@ -427,8 +434,7 @@ paper-spinner.green {
   @apply(--layout-flex-3);
 }
 
-
-/* custom paper styles*/
+/* custom paper styles for addon coupon giftcard*/
 .chpe-addon > paper-card .card-content, .chpe-gift-card > paper-card .card-content,.chpe-coupon > paper-card .card-content{
   min-height: 240px;
 }
@@ -438,6 +444,7 @@ paper-spinner.green {
    padding: 0px !important;
    margin:0px !important;
 }
+
 
 /*logout styles*/
 .logout,.logout:focus,.logout:hover{
@@ -488,3 +495,60 @@ paper-menu paper-item .card-as-thumbnail img{
    box-shadow:3px 3px 5px 6px #ddd;
 }
 
+/*Home Page Schems as cards styles*/
+#gridView .header .title-text{
+  font-size: 16px !important;
+}
+
+/*Css Start Styles*/
+
+#star-five {
+   margin: 50px 0;
+   position: relative;
+   display: block;
+   color: #ff8787;
+   width: 0px;
+   height: 0px;
+   border-right:  100px solid transparent;
+   border-bottom: 70px  solid #ff8787;
+   border-left:   100px solid transparent;
+   -moz-transform:    rotate(35deg);
+   -webkit-transform: rotate(35deg);
+   -ms-transform:     rotate(35deg);
+   -o-transform:      rotate(35deg);
+}
+#star-five:before {
+   border-bottom: 80px solid #ff8787;
+   border-left: 30px solid transparent;
+   border-right: 30px solid transparent;
+   position: absolute;
+   height: 0;
+   width: 0;
+   top: -45px;
+   left: -65px;
+   display: block;
+   content: '';
+   -webkit-transform: rotate(-35deg);
+   -moz-transform:    rotate(-35deg);
+   -ms-transform:     rotate(-35deg);
+   -o-transform:      rotate(-35deg);
+
+}
+#star-five:after {
+   position: absolute;
+   display: block;
+   color: #ff8787;
+   top: 3px;
+   left: -105px;
+   width: 0px;
+   height: 0px;
+   border-right: 100px solid transparent;
+   border-bottom: 70px solid #ff8787;
+   border-left: 100px solid transparent;
+   -webkit-transform: rotate(-70deg);
+   -moz-transform:    rotate(-70deg);
+   -ms-transform:     rotate(-70deg);
+   -o-transform:      rotate(-70deg);
+   content: '';
+}
+  

@@ -1,0 +1,216 @@
+<script src="../../../lib/chUtils.js"></script>
+<script src="../../config/general.js"></script>
+<dom-module id="preview-scheme">
+	<style type="text/css">
+		:host{
+			display: block;
+		}
+		.simple-extend-card{
+            margin: 0px auto;
+            max-width: 760px;
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+        }
+        .previewScheme{
+        	min-height: 200px;
+        	display: block;
+        	width: 92%;
+        	margin:20px 20px 0px 45px;
+
+        }
+        .cards {
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+            margin-top: 30px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .container {
+	      @apply(--layout-horizontal);
+	      @apply(--layout-wrap);
+    	}
+    	.flexchild1 {
+	      @apply(--layout-flex-1);
+	    }
+	    .flex2child {
+	      @apply(--layout-flex-2);
+	    }
+	    .flex4child {
+	      @apply(--layout-flex-4);
+	    }
+	    .row{
+	    	padding: 0px 10px;
+	    	border-bottom: 1px solid #ccc;
+	    }
+	    .section{
+	    	padding: 10px 0px 10px 0px;
+	    	border-bottom: 1px solid #ccc;
+	    }
+	    .section h1{
+	    	font-size: 20px;
+	    	font-weight: 300;
+	    	text-align: center;
+	    	padding: 0px;
+	    	margin: 0px;
+	    }
+	    .info{
+	    	font-size: 24px;
+	    	text-align: center;
+	    	font-weight: 500;
+	    	padding: 0px;
+	    	margin: 0px;
+	    }
+	    .descr-sec{
+	    	border-right: 1px solid #ccc;
+	    	border-bottom: 1px solid #ccc;
+	    }
+	    .descr-sec:last-child{
+	    	border-right: none;
+	    }
+	    .descr-sec h3{
+	    	font-size: 18px;
+	    	font-weight: 300;
+	    	margin: 0px;
+	    	padding: 10px 0px 0px 23px;
+	    }
+	   
+	    .descr-sec ul li{
+	    	line-height: 24px;
+	    	padding: 5px 0px;
+	    	list-style-type: square;
+	    }
+	    .fullDescription{
+	    	padding: 10px 20px;
+	    	margin: 0px;
+	    	border-bottom: 1px solid #ccc;
+	    }
+	    .fullDescription p{
+	    	text-align: justify;
+	    }
+	    .graphContainer{
+	    	padding: 10px 20px;
+	    	margin: 0px 0px 10px 0px;
+
+	    }
+	</style>
+	<template>
+		<more-route context name="previewScheme" params="{{params}}"></more-route>
+			<!-- <template  item="{{previewData}}">
+				<paper-card elevation="3" heading="{{item.metadata.type}}"  class="cards">
+					<div class="card-content">
+						<span>{{item.metadata.name}}</span>
+					</div>
+				</paper-card>
+			</template> -->
+			<paper-material elevation="2" class="previewScheme">
+				<div class="container">
+					<div class="flexchild1"></div>
+				    <div class="flex2child section">
+				    	<h1>Unique Cities</h1>
+				    	<p class="info">1000</p>
+				    </div>
+				    <div class="flex2child section">
+						<h1>Locations</h1>
+				    	<p class="info">55</p>				    		
+				    </div>
+				    <div class="flex2child section">
+						<h1>Cities</h1>
+				    	<p class="info">03</p>	
+				    </div>
+				    <div class="flex2child section">
+						<h1>Discounts</h1>
+				    	<p class="info">5K</p>
+				    </div>
+				     <div class="flex2child section">
+						<h1>Total Revenue</h1>
+				    	<p class="info">24L</p>
+				    </div>
+				    <div class="flexchild1"></div>
+				</div>
+				<div class="container description">
+					<div class="flex4child descr-sec">
+						<h3>General Behavior</h3>
+						<ul>
+							<li>Lorem Ipsum is simply</li>
+							<li>when an unknown printer</li>
+							<li>It was popularised in</li>
+							<li>Lorem Ipsum is not simply </li>
+							<li>Many desktop publishing</li>
+							<li>There are many variations</li>
+						</ul>
+					</div>
+					<div class="flex4child descr-sec">
+						<h3>Combinational Discounts</h3>
+						<ul>
+							<li>Lorem Ipsum is simply</li>
+							<li>when an unknown printer</li>
+							<li>It was popularised in</li>
+							<li>Lorem Ipsum is not simply </li>
+							<li>Many desktop publishing</li>
+							<li>There are many variations</li>
+						</ul>
+					</div>
+					<div class="flex4child descr-sec">
+						<h3>Recurring Benfit Points</h3>
+						<ul>
+							<li>Lorem Ipsum is simply</li>
+							<li>when an unknown printer</li>
+							<li>It was popularised in</li>
+							<li>Lorem Ipsum is not simply </li>
+							<li>Many desktop publishing</li>
+							<li>There are many variations</li>
+						</ul>
+					</div>
+				</div>
+				<div class="container description">
+					<div class="fullDescription">
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+					</div>
+				</div>
+				<div class="graphContainer container">
+						<h4>Graph Will come</h4>
+				</div>
+			</paper-material>
+		<iron-ajax  id="previewSchemeAjax" content-type="application/json"   method="GET"  
+         handle-as="json" on-error="handleError" on-response="handleResponse"  debounce-duration="300"></iron-ajax>
+	</template>
+	<script>
+		Polymer({
+			is:'preview-scheme',
+			ready:function(){
+				//this.config = generalConfig() || {};
+			},
+			properties:{
+				previewData:{
+					type:Object,
+					notify:true
+				},
+				schemeName:{
+					type:String,
+					notify:true
+				}
+			},
+			observers:[ 
+				'previewSchemeChanged(params.schemeName)'
+			],
+			previewSchemeChanged:function(schemeName){
+				if(schemeName!==undefined && schemeName.length>0){
+
+                this.$.previewSchemeAjax.url =  'mdb/schemes/'+schemeName;
+                this.$.previewSchemeAjax.headers = {"API_KEY":"MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9"};
+                //this.$.previewSchemeAjax.body = JSON.stringify(this.scheme);
+                this.$.previewSchemeAjax.generateRequest();
+				}
+			},
+			handleResponse:function(event){
+				if(chUtils.isEmpty(event.detail.response)===false){
+					this.previewData = event.detail.response;
+					console.log(event.detail.response);
+				}
+			},
+			handleError:function(event){
+				console.log(event);
+			}
+		});
+	</script>
+</dom-module>

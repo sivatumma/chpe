@@ -47,6 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="external/webcomponentsjs/webcomponents-lite.js"></script>
     <!-- endbuild -->
 
+    <script src="external/lodash/lodash.min.js"></script>
 
     <!-- will be replaced with elements/elements.vulcanized.html -->
     <link rel="import" href="/components/elements.html">
@@ -69,12 +70,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <!-- Drawer Toolbar -->
                 <paper-toolbar id="drawerToolbar">
                     <a href="/">
-                    <span class="paper-font-title"><img src="assets/images/ch-logo.png"/></span>
+                    <span class="paper-font-title">
+                        <img src="assets/images/ch-logo.png"/ width="200px" height="30px"></span>
                     </a>
                 </paper-toolbar>
 
                 <div class="favicon">
-                    <img  src="assets/images/schemes-logo.png"/>
+                    <img  src="assets/images/schemes-logo.png" />
                     <h3>Schemes</h3>
                 </div>
                 <!-- Drawer Content -->
@@ -121,9 +123,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     <!-- Toolbar icons -->
                     <span class="topIcons">
-                        <paper-icon-button icon="search"></paper-icon-button>
+                        <search-bar></search-bar>
                     </span>
-                    <span>
+                    <span class="topLogout">
                         <a href="/ssoLogout" class="logoutButton"><paper-icon-button icon="icons:input"></paper-icon-button></a>
                     </span>
 
@@ -156,7 +158,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     <iron-pages attr-for-selected="route" selected="{{route}}">
                         <section route="home">
-                           <schemes-as-cards></schemes-as-cards>
+                           <schemes-as-cards schemes-obj="{{allSchemes}}"></schemes-as-cards>
                         </section>
                         <section route="createAddOn" class="addonBg">
                               <chpe-addon id="adddonComp" scheme-obj="{{addonAsScheme}}" 
@@ -169,7 +171,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                               <chpe-gift-card scheme-obj="{{giftcardAsScheme}}" scheme-method="{{giftcardMethod}}"></chpe-gift-card>
                         </section>
                         <section route="previewScheme" class="previewSchemeBg">
-                              <chpe-gift-card scheme-obj="{{previewSchemeAsScheme}}" scheme-method="{{previewSchemeMethod}}"></chpe-gift-card>
+                              <preview-scheme scheme-name="{{previewSchemeName}}"></preview-scheme>
                         </section>
                     </iron-pages>
 
@@ -179,7 +181,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-drawer-panel>
 
         <paper-toast id="schemeSuccErrMessageToast" text=""></paper-toast>
-        <paper-toast id="caching-complete" text="Hey....Hurrey"></paper-toast>
     </template>
     </div>
 

@@ -182,6 +182,10 @@
                 chipsId:{
                     type:String,
                     notify:true
+                },
+                isMultiple:{
+                    type:String,
+                    notify:true
                 }
             },
             // Fires when the "<multi-value-suggestbox>" has been fully prepared
@@ -198,7 +202,11 @@
             listeners:{
                 'input-changed':'addRemoveChips'
             },
-
+            observers:[
+                'isMultipleChanged(isMultiple)'
+            ],
+            isMultipleChanged:function(isMultiple){
+            },
             addRemoveChips:function(ele){
                 if (ele.detail.newInput !== undefined) {
                     this.$.namesAsChips.url=this.attributes.url.value+ele.detail.newInput;
@@ -233,7 +241,6 @@
                             chips.push(contact);
                         });
                        this.suggestedItems = chips;
-                      console.log(this.suggestedItems);
                   }                       
              },
              handleError:function(event){
@@ -244,8 +251,12 @@
             },
 
             suggestionTapped: function(event, detail, sender) {
-                this.push('selectedItems',{id:event.target.id,name:event.target.innerText});
                 // reset input
+                if(this.isMultiple=="multi"){
+                    this.push('selectedItems',{id:event.target.id,name:event.target.innerText});
+                }else{
+                     this.selectedItems = [{id:event.target.id,name:event.target.innerText}];
+                }
                 this.$.item_input.innerText = '';
 
                 this.resetSuggestions();
@@ -257,7 +268,6 @@
 
             removeTapped: function(event, detail, sender) {
                 this.splice('selectedItems',calculateLiIndex(event.target.parentNode), 1);
-                console.log(this.selectedItems);
             },
             keydownHandler: function(event, detail, sender) {
                 var activeSuggestion;
@@ -277,13 +287,14 @@
                         activeSuggestion = this.$.item_list.querySelector('#suggest_menu li.active');
                         var topSuggestion = this.$.item_list.querySelector('#suggest_menu li');
                         if (activeSuggestion) {
-
-                            console.log(activeSuggestion.id);
-                            this.push('selectedItems',{id:activeSuggestion.id,name:activeSuggestion.innerText});
+                            if(this.isMultiple=="multi"){
+                                this.push('selectedItems',{id:activeSuggestion.id,name:activeSuggestion.innerText});
+                            }else{
+                                 this.selectedItems = [{id:activeSuggestion.id,name:activeSuggestion.innerText}];
+                            }
                             this.$.item_input.innerText = '';
                             this.resetSuggestions();
-                        } else if ((this.options.allow_nonmatching === true && this.$.item_input.innerText.length > 0) ||
-                                this.$.item_input.innerText === topSuggestion.innerText) {
+                        } else if ((this.options.allow_nonmatching === true && this.$.item_input.innerText.length > 0) ||this.$.item_input.innerText === topSuggestion.innerText) {
                             this.push('selectedItems',{id:event.target.id,name:event.target.innerText});
                             this.$.item_input.innerText = '';
                             this.resetSuggestions();

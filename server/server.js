@@ -64,8 +64,9 @@ app.use(session({
 }));
 
 function fetchModels(req, res) {
+  var modelId = req.params.modelId ? {"metadata.name":req.params.modelId} : {};
   var u1 = mongoose.model(req.params.modelName);
-  u1.find(function(err, data) {
+  u1.find(modelId, function(err, data) {
     if (err) res.status(500).send({
       status: "fail",
       message: err.message
@@ -187,7 +188,8 @@ var User = mongoose.model('User');
 app.all('/test', updateModels);
 app.all('/pricingengine/suggestDiscounts',suggestDiscounts);
 
-app.route('/order/:modelName/:schemeName').get(fetchOrders);
+app.route('/mdb/:modelName/:modelId').get(fetchModels);
+
 app.route('/mdb/:modelName')
   .get(fetchModels)
   .post(createModels)

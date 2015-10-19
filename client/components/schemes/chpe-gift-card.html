@@ -143,7 +143,7 @@
                                         <label class="text-bold">Locations : </label>
                                     </div>
                                     <div class="col-10 margin0" style="margin-top:10px;">
-                                        <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/" options='{
+                                        <multi-value-suggestbox id="multi_suggest" is-multiple="multi" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/" options='{
                                             "allow_space": false,
                                             "allow_nonmatching": false}' 
                                             selected-items="{{schemeObj.behavior.locationOfServices}}">
@@ -155,7 +155,7 @@
                                         <label class="text-bold">Benficiary :</label>
                                     </div>
                                     <div class="col-10 margin0" style="margin-top:10px;">
-                                        <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names/" options='{
+                                        <multi-value-suggestbox is-multiple="multi" id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names/" options='{
                                             "allow_space": false,
                                             "allow_nonmatching": false}' 
                                         selected-items="{{schemeObj.metadata.toIds}}">
