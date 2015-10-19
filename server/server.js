@@ -102,15 +102,11 @@ function createModels(req, res) {
       });
     });
 }
-function checkSuggest(req, res) {  
+function suggestDiscounts(req, res) {  
 
-  var u1= mongoose.model('scheme').find(queryBuilder.suggestDiscounts(req.body)).exec();
+  var u1= mongoose.model('scheme').find(queryBuilder.suggestDiscounts(req.body));
 
-u1.then(function(data)
-{
-return data;
-
-}).then(function(data)
+u1.exec().then(function(data)
 {
 
 var o1 = mongoose.model('order')(queryBuilder.saveOrder(req.body,data));
@@ -189,7 +185,7 @@ app.get('/ssoLogout',function(req, res) {
 var User = mongoose.model('User');
 
 app.all('/test', updateModels);
-app.all('/pricingengine/suggestDiscounts',checkSuggest);
+app.all('/pricingengine/suggestDiscounts',suggestDiscounts);
 
 app.route('/order/:modelName/:schemeName').get(fetchOrders);
 app.route('/mdb/:modelName')

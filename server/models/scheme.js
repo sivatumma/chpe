@@ -189,6 +189,10 @@ module.exports = function(mongoose) {
 						type: String
 					}
 				}],
+				_services:[{
+
+					type:String
+				}],
 				discount: {
 					type: Number
 				},
