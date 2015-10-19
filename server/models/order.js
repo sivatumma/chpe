@@ -17,7 +17,7 @@
 module.exports = function(mongoose) {
 	var Schema = mongoose.Schema;
 	var orderSchema = Schema({
-		scheme : { type: Number, ref: 'scheme' },
+	
 		schemeName: {
 			type: String
 		},
@@ -80,6 +80,10 @@ module.exports = function(mongoose) {
 		successfullyAvailed: {
 			type: Boolean,
 			default: false
+		},
+		finalAmount:{
+
+			type:Number
 		}
 
 	});
