@@ -39,7 +39,7 @@
                                     options='{
                                         "allow_space": false,
                                         "allow_nonmatching": false
-                                    }' selected-items="{{src.srcTypes}}" is-multiple="multi">
+                                    }' selected-items="{{src.services}}" is-multiple="multi">
                             </multi-value-suggestbox>
                 </div>
                 <div class="col-4">
@@ -81,7 +81,7 @@
             },
             //add or remove src categories
             addSrc :function(e){
-                this.push('behaviorData.serviceRateCategoryDiscounts', {discount:0,discountType:"%",maxLength:9,srcTypes:[]});
+                this.push('behaviorData.serviceRateCategoryDiscounts', {discount:0,discountType:"%",maxLength:9,services:[]});
             },
             getPercentId:function(index){
                 return "srcPercentage_"+index;

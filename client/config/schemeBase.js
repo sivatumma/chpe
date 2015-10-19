@@ -26,7 +26,7 @@ function schemeBase(scheme){    //init metadata as per schema
         serviceRateCategoryDiscounts: [{
             discount: 0,
             discountType: "%",
-            srcTypes: [],
+            services: [],
             maxLength:9
         }],
         serviceLevelDiscounts: [{
