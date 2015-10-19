@@ -4,10 +4,10 @@
     <style type="text/css">
         :host {
             float: left;
-            padding: 10px;
+            padding:0px;
             text-align: center;
-            width: 99%;
-            background-color:rgba(240,248,255, 0.8);
+            display: block;
+            margin: 10px 43px 10px 42px;
             /*background: #DBE6D2;*/
         }
         
@@ -20,8 +20,8 @@
         
         paper-card {
             display: block;
-            width: 240px;
-            height: 150px;
+            width: 236px;
+            height: auto;
             margin: 10px 5px 10px 10px;
             cursor: pointer;
             transition: box-shadow 0.1s;
@@ -79,7 +79,7 @@
             border-spacing: 2px;
         }
         .element-table thead th {
-            padding: 0 24px;
+            padding: 0 22px;
             line-height: 56px;
             font-size: 12px;
             font-weight: 500;
@@ -117,8 +117,9 @@
         #listView {
             display: block;
             box-shadow: none;
-            margin: 0px 10px 0px 0px;
+            margin: 10px 10px 0px 0px;
             padding: 0px;
+            width: 100%;
         }
         
         #gridView {
@@ -155,30 +156,41 @@
         .coupons-sec{
             background: #e6ffff;
             display: block;
-            width: 95%;
-            padding: 5px 10px 15px 20px;
-            margin:5px 10px 20px 5px; 
+            width: 100%;
+            padding:0px;
+            margin:10px 0px; 
             float: left;
         }
         .schemes-sec{
             background: #ffffe8;
             display: block;
-            width: 95%;
-            padding: 5px 10px 15px 20px;
-            margin:5px 10px 20px 5px;
+            width: 100%;
+            padding: 0px;
+            margin:10px 0px;
             float: left; 
         }
         .giftcard-sec{
             background: #fafafa;
-            width: 95%;
-            padding:5px 10px 15px 20px;
-            margin:5px 10px 20px 5px;
+            width: 100%;
+            padding:0px;
+            margin:0px;
             float: left; 
         }
         .coupons-sec paper-card:hover,  .coupons-sec paper-card:focus{
             background:#ebffff;
             color: #000; 
             transition: background-color 0.8s ease;
+        }
+        .coupons-sec paper-card .card-content{
+            padding: 12px;
+        }
+        .coupons-sec paper-card .couponIcon{
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            top: 5px;
+            left: 5px;
+            background: #4fc3f7;
         }
         .giftcard-sec paper-card:hover,  .giftcard-sec paper-card:focus{
             background:#f5f5f5;
@@ -200,7 +212,7 @@
         }
         #gridView .schemeTitle{
            border-bottom: 1px solid #ccc;
-           margin:0px 10px;
+           margin:0px;
            padding: 0px;
         }
         #gridView .schemeTitle h2{
@@ -220,8 +232,11 @@
                     <h2 >Coupons</h2>
                 </div>
                 <template is="dom-repeat" items="{{couponsData}}" as="item">
-                    <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards"  on-focus-out="toggleStyle">
-                        <div class="card-content">{{item.metadata.name}}</div>
+                    <paper-card elevation="2" class="cards"  on-focus-out="toggleStyle">
+                        <div class="card-content">
+                            <paper-fab mini class="couponIcon" src="../../assets/images/c.png"></paper-fab>
+                            <span>{{item.metadata.name}}</span>
+                        </div>
                         <div class="card-actions" align="right">
                                <paper-icon-button icon="link"></paper-icon-button>
                                <paper-icon-button icon="icons:create" on-click="editScheme" 
