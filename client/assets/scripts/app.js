@@ -129,6 +129,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     if(this.currentPage!==undefined){
       this.showPalet(this.currentPage);
+    }else{
+       this.showPalet('/');
     }
   };
 
@@ -155,5 +157,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.location = function(){return document.location;};
 
   app.previewSchemeName = "";
+
+  
 
 })(document);

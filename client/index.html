@@ -124,6 +124,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <span class="topIcons">
                         <search-bar></search-bar>
                     </span>
+                    <span><user-profile></user-profile></span>
                     <span class="topLogout">
                         <a href="/ssoLogout" class="logoutButton"><paper-icon-button icon="icons:input"></paper-icon-button></a>
                     </span>
@@ -160,7 +161,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <div class="col-5 margin0">&nbsp;</div> 
                          <template is="dom-if" if="{{isHome}}">
                             <div class="col-2 pull-right headerIcons">
-                                <paper-icon-button icon="link"></paper-icon-button>
                                 <paper-icon-button icon="settings"></paper-icon-button>
                                 <paper-icon-button icon="{{toggleListGridIcon}}" view="list" 
                                 on-click="toggleListGrid">

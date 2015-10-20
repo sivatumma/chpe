@@ -196,7 +196,8 @@ iron-pages{
 }
 
 .headerIcons{
-  margin-left:0%;
+  position: relative;
+  left: 5%;
 }
 .headerIcons paper-icon-button{
   margin: 0 5px;
@@ -213,7 +214,7 @@ iron-pages{
   margin-right:1%;
 }
 .topLogout{
-  margin-right: 30px;
+  margin-right:26px;
 }
 .showDatepickerPopup{
      -moz-animation: slide 2s ease 3.5s forwards;
