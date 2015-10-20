@@ -95,6 +95,13 @@ module.exports = function(mongoose) {
 						type: String
 					}
 				}],
+				_srcTypes:[
+
+				{
+                type: String
+                
+				}],
+
 				discount: {
 					type: Number
 				},
