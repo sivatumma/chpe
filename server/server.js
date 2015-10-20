@@ -167,8 +167,15 @@ function deleteModels(req, res) {
 require('./routes/user.js')(app);
 require('./routes/proxy.js')(app);
 
-app.all('/',function(req, res) {
+app.get('/',function(req, res) {
+  console.log("Redirecting to /ssoLogin");
     res.redirect('/ssoLogin');
+});
+
+app.head('/',function(req, res) {
+  console.log("setting header: ", req.session.user || "No User");
+    res.serHeader('user', req.session.user || "No User");
+    res.status(500).send("hi");
 });
 
 

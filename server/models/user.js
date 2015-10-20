@@ -219,7 +219,6 @@ module.exports = function(mongoose) {
                         username: result['saml2p:Response']['saml2:Assertion'][0]['saml2:Subject'][0]['saml2:NameID'][0]._,
                         sessionIndex: result['saml2p:Response']['saml2:Assertion'][0]['saml2:AuthnStatement'][0].$.SessionIndex
                     };
-                    res.headers['user'] = req.session.user;
                     console.log(req.session.user);
 
                     next();
