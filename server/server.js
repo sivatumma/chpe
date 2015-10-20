@@ -26,7 +26,23 @@ app.use(function(req, res, next) {
     next();
 });
 app.use(cors());
-app.use(bodyParser.json());
+
+function readRawBody(req, res, next) {
+  console.log("inside readRawBody");
+
+  req.data = '';
+  req.on('data', function(chunk) {
+    req.data += chunk.toString('utf-8');
+  });
+
+  req.on('end', function() {
+    console.log("ended ", req.data);
+    // console.log(req.data.toString('utf8',0,5));
+    // next();
+  });
+}
+
+app.use(bodyParser.raw({type:"application/xml"}));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -75,7 +91,9 @@ function fetchModels(req, res) {
   });
 }
 
-
+function convertXMLToJson(req, res) {
+  var parseString = require('xml2js').parseString;
+}
 
 function fetchOrders(req,res)
 {
@@ -198,6 +216,11 @@ app.route('/mdb/:modelName')
 
 app.route('/operation/:filter').put(updateModels).post(updateModels);
 
+app.post('/utils/xml2json', function(req,res){
+
+  console.log(req.body);
+  res.status(200).send("done reading rawbody");
+});
 
 var server_credentials = {
   key: fs.readFileSync(path.join(config.certificates_dir, 'server.key')),

@@ -206,6 +206,9 @@
             enableButtons:function(e){
                 this.formError = event.target.invalid;
             },
+            getCurrentPage : function(){
+               return location;
+            },
             schemeMethodChanged:function(schemeMethod){
                 if(schemeMethod=="PUT"){
                     this.saveBtnText = "UPDATE";
@@ -243,6 +246,20 @@
                     this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
                 }
                 this.schemeObj.on = "scheme";
+
+
+                if(chUtils.isEmpty(this.schemeObj.behavior.serviceRateCategoryDiscounts)===false){
+                    chUtils.pluckObjByName(this.schemeObj.behavior.serviceRateCategoryDiscounts,"_services",false);
+                }
+                if(chUtils.isEmpty(this.schemeObj.behavior.locationOfServices)===false){
+                    this.schemeObj.behavior._locations = _.pluck(this.schemeObj.behavior.locationOfServices,"name");
+                }
+                if(chUtils.isEmpty(this.schemeObj.metadata.toIds)===false){
+                   this.schemeObj.metadata.toIds = _.pluck(this.schemeObj.metadata.toIds,"name");
+                }
+
+                console.log(this.schemeObj);
+                
                 if (this.schemeObj !== undefined) {
                     this.$.couponAjax.url= this.config.urls.rest;
                     this.$.couponAjax.method = this.schemeMethod;

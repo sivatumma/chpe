@@ -86,22 +86,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.addonAsScheme =  app.couponAsScheme = app.giftcardAsScheme = schemeBase();
   };
 
+  app.setScheme();
+  app.currentPage = "";
   
   app.getTitle = function(event){
-    console.log(event.currentTarget.getAttribute('title'));
-    app.screenTitle = event.currentTarget.getAttribute('title');
+    this.getCurrentPage(event.currentTarget.getAttribute('route'));
+    //app.screenTitle = event.currentTarget.getAttribute('title');
     app.setScheme();
     chUtils.resetForm('coupon-form');
     chUtils.resetForm('addon-form');
     chUtils.resetForm('gift-card-form');
+
+    app.location = function(){return document.location;};
+
   };
 
-  app.setScheme();
-
-  app.getTitle = function(event){
-    app.screenTitle = event.currentTarget.getAttribute('title');
-    app.setScheme();
+  //display selected tool bars 
+  app.showPalet = function(paletName){
+    app.isHome = app.isCoupon = app.isAddon =  app.isGiftCard=false; 
+   switch(paletName){
+      case "/":
+        app.isHome = true;
+        break;
+      case "/createAddOn":
+        app.isAddon  = true;
+        break;
+      case "/createCoupon":
+        app.isCoupon = true;
+        break;
+      case "/createGiftCard":
+        app.isGiftCard = true;
+        break;
+   }
   };
+
+  //to get current path name
+  app.getCurrentPage = function(name){
+    if(name===undefined){
+      this.currentPage = location.hash.split("!")[1];
+    }else{
+      this.currentPage = MoreRouting.getRouteByName(name).path;
+    }
+    if(this.currentPage!==undefined){
+      this.showPalet(this.currentPage);
+    }
+  };
+
+  app.getCurrentPage();
+
 
   //home page list grid manipulations
   app.toggleListGridIcon = "icons::view-list";
@@ -119,6 +151,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector("#gridView").hidden = false;
       }
   };
+
+  app.location = function(){return document.location;};
 
   app.previewSchemeName = "";
 
