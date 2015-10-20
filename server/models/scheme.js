@@ -189,6 +189,10 @@ module.exports = function(mongoose) {
 						type: String
 					}
 				}],
+				_services:[{
+
+					type:String
+				}],
 				discount: {
 					type: Number
 				},
@@ -207,6 +211,9 @@ module.exports = function(mongoose) {
 				type: Date
 			}
 		}
+	});
+	schemeSchema.virtual("serviceLevelDiscounts._services").get(function() {
+	    return _.pluck(this.serviceLevelDiscounts._services,"name");
 	});
 	schemeSchema.methods.beforeSaveDefaultValidation = function() {
 
