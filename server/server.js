@@ -42,7 +42,7 @@ function readRawBody(req, res, next) {
   });
 }
 
-app.use(bodyParser.json());
+app.use(bodyParser.raw({type:"application/xml"}));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -216,8 +216,9 @@ app.route('/mdb/:modelName')
 
 app.route('/operation/:filter').put(updateModels).post(updateModels);
 
-app.post('/utils/xml2json',readRawBody, function(req,res){
-  console.log(req.rawBody, req.rawBody);
+app.post('/utils/xml2json', function(req,res){
+
+  console.log(req.body);
   res.status(200).send("done reading rawbody");
 });
 
