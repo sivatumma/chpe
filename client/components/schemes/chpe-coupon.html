@@ -206,6 +206,9 @@
             enableButtons:function(e){
                 this.formError = event.target.invalid;
             },
+            getCurrentPage : function(){
+               return location;
+            },
             schemeMethodChanged:function(schemeMethod){
                 if(schemeMethod=="PUT"){
                     this.saveBtnText = "UPDATE";

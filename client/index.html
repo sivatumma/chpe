@@ -88,7 +88,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     <span>Home</span>
                                 </a>
                             </paper-item>
-
                             <paper-item route="createAddOn" on-click="getTitle" title="Create Addon">
                                 <a  href="{{makeUrl('createAddOn')}}"> 
                                     <iron-icon src="assets/images/addon.png"></iron-icon>
@@ -143,9 +142,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 <paper-toolbar id="iconToolBar" class="fixed padding0">
                     <div class="col-5 margin0 schemeHeading">
-                        <h1 class="col-11">{{screenTitle}}</h1>
+                        <h1 class="col-11">
+                            <template is="dom-if" if="{{isHome}}">
+                                <span>Schemes</span>
+                            </template>
+                            <template is="dom-if" if="{{isAddon}}">
+                                <span>Create Addon</span>
+                            </template>
+                            <template is="dom-if" if="{{isCoupon}}">
+                                <span>Create Coupon</span>
+                            </template>
+                            <template is="dom-if" if="{{isGiftCard}}">
+                                <span>Create Gift Card</span>
+                            </template>
+                        </h1>
                     </div>
-                    <div class="col-5 margin0">&nbsp;</div>
+                    <div class="col-5 margin0">&nbsp;</div> 
+                         <template is="dom-if" if="{{isHome}}">
+                            <div class="col-2 pull-right headerIcons">
+                                <paper-icon-button icon="settings"></paper-icon-button>
+                                <paper-icon-button icon="{{toggleListGridIcon}}" view="list" 
+                                on-click="toggleListGrid">
+                                </paper-icon-button>
+                            </div>
+                        </template>
+                    <!-- <div class="col-2 pull-right headerIcons">
+                        <paper-icon-button icon="link"></paper-icon-button>
+                        <paper-icon-button icon="settings"></paper-icon-button>
+                        <paper-icon-button icon="{{toggleListGridIcon}}" view="list" 
+                        on-click="toggleListGrid">
+                        </paper-icon-button>
+                    </div>
                     <div class="col-2 pull-right headerIcons">
                         <paper-icon-button icon="link"></paper-icon-button>
                         <paper-icon-button icon="settings"></paper-icon-button>
@@ -153,6 +180,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         on-click="toggleListGrid">
                         </paper-icon-button>
                     </div>
+                    <div class="col-2 pull-right headerIcons">
+                        <paper-icon-button icon="link"></paper-icon-button>
+                        <paper-icon-button icon="settings"></paper-icon-button>
+                        <paper-icon-button icon="{{toggleListGridIcon}}" view="list" 
+                        on-click="toggleListGrid">
+                        </paper-icon-button>
+                    </div> -->
                 </paper-toolbar>
                 <more-route-selector selectedParams="{{params}}">  
 
