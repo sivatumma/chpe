@@ -139,7 +139,8 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                              <coupon-type id="selectCouponType" metadata="{{schemeObj.metadata}}"></coupon-type>
+                              <coupon-type id="selectCouponType" metadata="{{schemeObj.metadata}}">
+                              </coupon-type>
                             </div>
                         </div>
                          <div class="card-actions col-12 lastStepActions">
@@ -151,7 +152,7 @@
                             <div class="col-5 margin0 hideIn320">&nbsp;</div>
                             <div class="col-6 margin0">
                                 <div class="submitButtons">
-                                    <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" status="false" id="saveBtn">{{saveBtnText}}</paper-button>
+                                    <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" status="false" id="saveBtn" disabled="{{schemeObj.metadata.published}}">{{saveBtnText}}</paper-button>
                                     <paper-button name="coupon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised>{{publishBtnText}}</paper-button>
                                 </div>
                             </div>

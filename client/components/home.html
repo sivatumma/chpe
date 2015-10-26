@@ -277,9 +277,7 @@
         .listView[smallDesktop]{
             display: none;
         }
-
-        
-        
+   
     </style>
     <template>
         <div id="gridView">
@@ -291,6 +289,7 @@
                     <paper-card elevation="1" class="cards"  on-focus-out="toggleStyle">
                         <paper-fab class="couponIcon" mini  src="../../assets/images/c.png"></paper-fab>
                         <div class="card-content col-12">
+                            <paper-ripple></paper-ripple>   
                             <div class="col-12 content">
                                 <span class="couponName">{{item.metadata.name}}</span>
                                 <div class="actions pull-right margin0 paddin0">
@@ -307,6 +306,7 @@
                                 scheme-type="{{item.metadata.type}}"></paper-icon-button>
                         </div> -->
                     </paper-card>
+
                 </template>   
             </paper-material>
             <paper-material class="giftcard-sec" elevation="0">
@@ -316,7 +316,9 @@
                 <template is="dom-repeat" items="{{giftCardsData}}" as="item">
                     <paper-card elevation="2"  class="cards"  
                     on-focus-out="toggleStyle">
-                        <paper-fab mini class="giftCardIcon" src="../../assets/images/gift-star.png"></paper-fab>
+                        <paper-fab mini class="giftCardIcon" src="../../assets/images/gift-star.png">
+                        </paper-fab>
+                        <paper-ripple></paper-ripple>
                         <div class="card-content">
                             <span class="giftcardName">{{item.metadata.name}}</span>
                         </div>
@@ -336,6 +338,7 @@
                     <paper-card elevation="2"  class="cards"  
                     on-focus-out="toggleStyle">
                         <paper-fab mini class="addonIcon"  src="../../assets/images/addon-plus.png"></paper-fab>
+                        <paper-ripple></paper-ripple>
                         <div class="card-content">
                             <span class="schemeName">{{item.metadata.name}}</span></div>
                         <div class="card-actions" align="right">
