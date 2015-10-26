@@ -222,7 +222,7 @@
                                     <div class="col-6 margin0">
                                         <div class="submitButtons">
                                             <paper-button name="addon-form.createSchemeBtn" raised 
-                                            on-click="submitForm" status="false" id="addonSave" value="{{schemeStatus}}">{{saveBtnText}}</paper-button>
+                                            on-click="submitForm" status="false" id="addonSave" value="{{schemeStatus}}" disabled="[[schemeObj.metadata.published]]">{{saveBtnText}}</paper-button>
                                             <paper-button name="addon-form.createSchemeBtn"  on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">{{publishBtnText}}</paper-button>
                                         </div>
                                     </div>
@@ -316,7 +316,7 @@
                 this.schemeObj.metadata.type = "ADD_ON";
                 this.schemeObj.metadata.published = false;
                 this.saveBtnText = "SAVE";
-                this.publishBtnText = "SAVE + PUBlISH";
+                this.publishBtnText = "SAVE + PUBLISH";
                 this.formError = false;
             },
             observers: [

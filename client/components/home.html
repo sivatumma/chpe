@@ -224,6 +224,10 @@
             white-space: nowrap;
             text-align: left;
         }
+         .giftcard-sec paper-card[published] ,.schemes-sec paper-card[published],
+         .coupons-sec paper-card[published] {
+            background: lightgreen;
+         }
         .coupons-sec paper-card .actions{
             margin-left: 10px;
         }
@@ -286,7 +290,7 @@
                     <h2 >Coupons</h2>
                 </div> -->
                 <template is="dom-repeat" items="{{couponsData}}" as="item">
-                    <paper-card elevation="1" class="cards"  on-focus-out="toggleStyle">
+                    <paper-card elevation="1" class="cards"  on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
                         <paper-fab class="couponIcon" mini  src="../../assets/images/c.png"></paper-fab>
                         <div class="card-content col-12">
                             <paper-ripple></paper-ripple>   
@@ -315,7 +319,7 @@
                 </div> -->
                 <template is="dom-repeat" items="{{giftCardsData}}" as="item">
                     <paper-card elevation="2"  class="cards"  
-                    on-focus-out="toggleStyle">
+                    on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
                         <paper-fab mini class="giftCardIcon" src="../../assets/images/gift-star.png">
                         </paper-fab>
                         <paper-ripple></paper-ripple>
@@ -336,7 +340,7 @@
                 </div> -->
                 <template is="dom-repeat" items="{{addonsData}}" as="item">
                     <paper-card elevation="2"  class="cards"  
-                    on-focus-out="toggleStyle">
+                    on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
                         <paper-fab mini class="addonIcon"  src="../../assets/images/addon-plus.png"></paper-fab>
                         <paper-ripple></paper-ripple>
                         <div class="card-content">
@@ -491,7 +495,9 @@
             var sName = event.model.item.metadata.name;
             
             var scheme = chUtils.getSchemeByName(this.allSchemes,sName);
-            this.navigateTo(scheme);
+            if(!scheme.metadata.published){
+                this.navigateTo(scheme);
+            }
           },
 
           navigateTo:function(schemeObj){

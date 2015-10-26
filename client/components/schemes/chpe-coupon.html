@@ -152,7 +152,7 @@
                             <div class="col-5 margin0 hideIn320">&nbsp;</div>
                             <div class="col-6 margin0">
                                 <div class="submitButtons">
-                                    <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" status="false" id="saveBtn" disabled="{{schemeObj.metadata.published}}">{{saveBtnText}}</paper-button>
+                                    <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" status="false" id="saveBtn" disabled="[[schemeObj.metadata.published]]">{{saveBtnText}}</paper-button>
                                     <paper-button name="coupon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised>{{publishBtnText}}</paper-button>
                                 </div>
                             </div>
@@ -192,7 +192,7 @@
                 this.config = generalConfig() || {};
                 this.schemeObj.metadata.published = false;
                 this.saveBtnText = "SAVE";
-                this.publishBtnText = "SAVE + PUBlISH";
+                this.publishBtnText = "SAVE + PUBLISH";
                 this.formError = false;
             },
             listeners: {
