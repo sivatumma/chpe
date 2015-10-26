@@ -22,8 +22,8 @@ var config = require('./config/config.js'),
   _id_count = 0;
 
 app.use(function(req, res, next) {
-    res.header('X-Powered-By', "The Callhealth Pricing Engine Team");
-    next();
+  res.header('X-Powered-By', "The Callhealth Pricing Engine Team");
+  next();
 });
 app.use(cors());
 
@@ -42,15 +42,18 @@ function readRawBody(req, res, next) {
   });
 }
 
-app.use(bodyParser.raw({type:"application/xml"}));
+app.use(bodyParser.raw({
+  type: "application/xml"
+}));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
 app.use(expressSession({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: true
 }));
 
 app.use('/lib', express.static(config.application.root_path + '/lib', {
@@ -80,7 +83,9 @@ app.use(session({
 }));
 
 function fetchModels(req, res) {
-  var modelId = req.params.modelId ? {"metadata.name":req.params.modelId} : {};
+  var modelId = req.params.modelId ? {
+    "metadata.name": req.params.modelId
+  } : {};
   var u1 = mongoose.model(req.params.modelName);
   u1.find(modelId, function(err, data) {
     if (err) res.status(500).send({
@@ -95,59 +100,72 @@ function convertXMLToJson(req, res) {
   var parseString = require('xml2js').parseString;
 }
 
-function fetchOrders(req,res)
-{
+function fetchOrders(req, res) {
 
-var u1 = mongoose.model(req.params.modelName);
-u1.aggregate([{$match:{schemeName:req.params.schemeName}},{$group:{_id:"$schemeName",total:{$sum:"$billAmount"}}}],function(err,data){
-console.log(err);
-console.log(data);
-res.status(200).send("Call");
+  var u1 = mongoose.model(req.params.modelName);
+  u1.aggregate([{
+    $match: {
+      schemeName: req.params.schemeName
+    }
+  }, {
+    $group: {
+      _id: "$schemeName",
+      total: {
+        $sum: "$billAmount"
+      }
+    }
+  }], function(err, data) {
+    console.log(err);
+    console.log(data);
+    res.status(200).send("Call");
   })
 }
+
 function createModels(req, res) {
 
-    config.configVariable.loginUser = "user";
-    var u1 = mongoose.model(req.params.modelName)(queryBuilder.createSchema(req.body));
+  config.configVariable.loginUser = "user";
+  var u1 = mongoose.model(req.params.modelName)(queryBuilder.createSchema(req.body));
 
-   
-     u1.save().then(function(data) {
+
+  u1.save().then(function(data) {
+    res.status(200).send(data);
+  }, function(err) {
+
+    res.status(500).send({
+      "status": "fail",
+      "message": err.message
+    });
+  });
+}
+
+function suggestDiscounts(req, res) {
+
+  var u1 = mongoose.model('scheme').find(queryBuilder.suggestDiscounts(req.body));
+
+  u1.exec().then(function(data) {
+
+    var o1 = mongoose.model('order')(queryBuilder.saveOrder(req.body, data));
+
+    o1.save().then(function(data) {
       res.status(200).send(data);
     }, function(err) {
-     
+
       res.status(500).send({
         "status": "fail",
         "message": err.message
-      });
-    });
-}
-function suggestDiscounts(req, res) {  
+      })
+    })
 
-  var u1= mongoose.model('scheme').find(queryBuilder.suggestDiscounts(req.body));
-
-u1.exec().then(function(data)
-{
-
-var o1 = mongoose.model('order')(queryBuilder.saveOrder(req.body,data));
-
-o1.save().then(function(data)
-{
-  res.status(200).send(data);
-},function(err){
-
-  res.status(500).send({"status":"fail","message":err.message})
-})
-
-})
+  })
 
 }
+
 function updateModels(req, res) {
-  console.log("in updateModels function");
-  delete req.body._id;
   var updateBuilder = mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body));
-  updateBuilder.update(req.body, function(err, data){
+  updateBuilder.update(req.body, function(err, data) {
     // console.log(err ? err + "ERROR++++++++++++++++++++++++++++++++" : data);
     console.log("Callback", data);
+    res.send(data);
   });
 
   // updateBuilder.exec().then(function(err, data) {
@@ -167,42 +185,45 @@ function deleteModels(req, res) {
 require('./routes/user.js')(app);
 require('./routes/proxy.js')(app);
 
-app.get('/',function(req, res) {
+app.get('/', function(req, res) {
   console.log("Redirecting to /ssoLogin");
-    res.redirect('/ssoLogin');
+  res.redirect('/ssoLogin');
 });
 
-app.head('/',function(req, res) {
+app.head('/', function(req, res) {
   console.log("setting header: ", req.session.user || "No User");
-    res.serHeader('user', req.session.user || "No User");
-    res.status(500).send("hi");
+  res.serHeader('user', req.session.user || "No User");
+  res.status(500).send("hi");
 });
 
 
 app.all('/ssoLogin', User.ssoLogin, function(req, res) {
-  res.send("verify document.URL to confirm login");
+  res.redirect('http://localhost:91');
 });
 
-app.get('/ssoLogout',function(req, res) {
-
- var headers = {
-      'User-Agent': 'Super Agent/0.0.1',
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    options = {
-      url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogout',
-      method: 'POST',
-      headers: headers,
-      form: {
-          'sessionIndex':req.session.user.sessionIndex,
+app.get('/ssoLogout', function(req, res) {
+  if (!req.session.user) {
+    res.status(401).send("User not authorized.");
+  } else {
+    var headers = {
+        'User-Agent': 'Super Agent/0.0.1',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      options = {
+        url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogout',
+        method: 'POST',
+        headers: headers,
+        form: {
+          'sessionIndex': req.session.user.sessionIndex,
           'spEntityID': 'callhealth.com'
-      }
-    };
+        }
+      };
     request(options, function(error, response, body) {
       console.log(response.headers.location);
       req.session.user = null;
       res.redirect(response.headers.location);
     });
+  }
 
 });
 
@@ -211,7 +232,7 @@ app.get('/ssoLogout',function(req, res) {
 var User = mongoose.model('User');
 
 app.all('/test', updateModels);
-app.all('/pricingengine/suggestDiscounts',suggestDiscounts);
+app.all('/pricingengine/suggestDiscounts', suggestDiscounts);
 
 app.route('/mdb/:modelName/:modelId').get(fetchModels);
 
@@ -223,7 +244,7 @@ app.route('/mdb/:modelName')
 
 app.route('/operation/:filter').put(updateModels).post(updateModels);
 
-app.post('/utils/xml2json', function(req,res){
+app.post('/utils/xml2json', function(req, res) {
 
   console.log(req.body);
   res.status(200).send("done reading rawbody");
@@ -247,18 +268,18 @@ dbModule.once('open', function callback() {
   });
 
   app.listen(91, function(err) {
-    if(err){
+    if (err) {
       console.log(err.message);
     }
     console.log('Express server (HTTP) listening on port ', process.argv[2] || 91);
   });
 
-  app.on('error', function(err){
+  app.on('error', function(err) {
     console.log(err);
   });
 
 });
 
-process.on('error',function(err){
+process.on('error', function(err) {
   console.log(err);
 });

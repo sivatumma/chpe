@@ -272,6 +272,13 @@
         #gridView .title-text{
             font-size: 16px !important;
         }
+
+        /*media queries for list view*/
+        .listView[smallDesktop]{
+            display: none;
+        }
+
+        
         
     </style>
     <template>
@@ -355,7 +362,7 @@
                 </template>
             </div> -->
             <div id="listView" hidden>
-                <table class="element-table responsive-table">
+                <table class="element-table responsive-table" smallDesktop$="{{smallDesktop}}">
                     <thead>
                         <th>S.No</th>
                         <th>Name</th>
@@ -420,7 +427,7 @@
                 "onFocusOut": "toggleStyle"
             },
             observes: [
-                'allSchemesChanged(obj)'
+                'allSchemesChanged(obj)',
             ],
             allSchemesChanged: function(obj) {
                 console.log(obj);
@@ -503,6 +510,9 @@
                 MoreRouting.navigateTo(route);
                 app.getCurrentPage();
             }
+          },
+          queryChanged:function(){
+            console.log(this.displayList);
           }
 
         });

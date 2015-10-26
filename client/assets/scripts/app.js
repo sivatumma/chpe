@@ -86,8 +86,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.addonAsScheme =  app.couponAsScheme = app.giftcardAsScheme = schemeBase();
   };
 
+
+  //Resetting edit scheme data to defaults
   app.setScheme();
   app.currentPage = "";
+  app.previewSchemeName = "";
   
   app.getTitle = function(event){
     this.getCurrentPage(event.currentTarget.getAttribute('route'));
@@ -117,11 +120,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       case "/createGiftCard":
         app.isGiftCard = true;
         break;
+      case "/previewScheme":
+       app.isPreviewScheme = true;
+       break;
    }
   };
 
   //to get current path name
   app.getCurrentPage = function(name){
+    app.previewSchemeName = '';
     if(name===undefined){
       this.currentPage = location.hash.split("!")[1];
     }else{
@@ -134,6 +141,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
 
+  //to set Page Icons on load we have to run this method
   app.getCurrentPage();
 
 

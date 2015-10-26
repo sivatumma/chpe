@@ -195,7 +195,8 @@
 			],
 			previewSchemeChanged:function(schemeName){
 				if(schemeName!==undefined && schemeName.length>0){
-
+				app.showPalet('/previewScheme');
+				app.previewSchemeName = 'Preview Scheme - '+schemeName;
                 this.$.previewSchemeAjax.url =  'mdb/schemes/'+schemeName;
                 this.$.previewSchemeAjax.headers = {"API_KEY":"MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9"};
                 //this.$.previewSchemeAjax.body = JSON.stringify(this.scheme);

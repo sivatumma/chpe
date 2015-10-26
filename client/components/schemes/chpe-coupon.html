@@ -98,7 +98,7 @@
             <form is="iron-form" id="coupon-form" method="POST" action="#">
                 <neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
-                        <div class="col-1">&nbsp;</div>
+                        <div class="col-1 widthAt480">&nbsp;</div>
                         <div class="col-8">
                         <paper-card elevation="5" class="coupon-extend-card">
                         <div class="card-content margin0">
@@ -119,7 +119,7 @@
 
                     <!-- step2 -->
                     <neon-animatable>
-                    <div class="col-1">&nbsp;</div>
+                    <div class="col-1 widthAt480">&nbsp;</div>
                     <div class="col-8">
                     <paper-card elevation="5" class="coupon-extend-card">
                         <div class="card-content margin0">
@@ -148,7 +148,7 @@
                                 on-click="_onPrevClick">
                                 </paper-fab>
                             </div>
-                            <div class="col-5 margin0">&nbsp;</div>
+                            <div class="col-5 margin0 hideIn320">&nbsp;</div>
                             <div class="col-6 margin0">
                                 <div class="submitButtons">
                                     <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" status="false" id="saveBtn">{{saveBtnText}}</paper-button>
@@ -203,8 +203,10 @@
             observers: [
                 'schemeMethodChanged(schemeMethod)'
             ],
-            enableButtons:function(e){
-                this.formError = event.target.invalid;
+            enableButtons:function(event){
+                if(event){
+                    this.formError = event.target.invalid;
+                }
             },
             getCurrentPage : function(){
                return location;
@@ -289,7 +291,7 @@
                     }
                 }
                 setTimeout(function() {
-                    //location.href="/";
+                    location.href="/";
                 }, 1000);
             },
             handleError: function(event) {

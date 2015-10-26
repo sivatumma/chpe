@@ -49,6 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="external/lodash/lodash.min.js"></script>
 
+
     <!-- will be replaced with elements/elements.vulcanized.html -->
     <link rel="import" href="/components/elements.html">
     <!-- endreplace-->
@@ -63,7 +64,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <span id="browser-sync-binding"></span>
     <div id="dashboardContainer" hidden>
     <template is="dom-bind" id="app">
-        <paper-drawer-panel id="paperDrawerPanel">
+        <iron-media-query query="(max-width: 460px)" query-matches="{{queryMatches}}"></iron-media-query>
+        <paper-drawer-panel id="paperDrawerPanel" responsive-width="767px">
             <!-- Drawer Scroll Header Panel -->
             <paper-scroll-header-panel drawer fixed>
 
@@ -121,17 +123,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <span class="flex"></span>
 
                     <!-- Toolbar icons -->
+                    <div class="col-2 text-right topLevelIcons">
                     <span class="topIcons">
                         <search-bar></search-bar>
                     </span>
                     <span><user-profile></user-profile></span>
-                    <span class="topLogout">
-                        <a href="/ssoLogout" class="logoutButton"><paper-icon-button icon="icons:input"></paper-icon-button></a>
-                    </span>
+                    </div>
 
                     <!-- Application name -->
                     <div class="middle middle-container center horizontal layout">
-                        <div class="app-name">Schemes Dashboard - The Guts of Healthcare Industry</div>
+                        <div class="app-name">
+                            <template is="dom-if" if="{{queryMatches}}">
+                              Schemes Dashboard
+                            </template>
+                             <template is="dom-if" if="{{!queryMatches}}">
+                               Schemes Dashboard - The Guts of Healthcare Industry
+                            </template>
+                        </div>
                     </div>
 
                     <!-- Application sub title -->
@@ -156,14 +164,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             <template is="dom-if" if="{{isGiftCard}}">
                                 <span>Create Gift Card</span>
                             </template>
+                            <template is="dom-if" if="{{isPreviewScheme}}">
+                                <span class="preview-scheme-name">{{previewSchemeName}}</span>
+                            </template>
                         </h1>
                     </div>
                     <div class="col-5 margin0">&nbsp;</div> 
                          <template is="dom-if" if="{{isHome}}">
-                            <div class="col-2 pull-right headerIcons">
+                            
+                            <div class="col-2 text-right" style="margin-right:25px;">
                                 <paper-icon-button icon="settings"></paper-icon-button>
                                 <paper-icon-button icon="{{toggleListGridIcon}}" view="list" 
-                                on-click="toggleListGrid">
+                                on-click="toggleListGrid" class="toggleListGrid">
                                 </paper-icon-button>
                             </div>
                         </template>
