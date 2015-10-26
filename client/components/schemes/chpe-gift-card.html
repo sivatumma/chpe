@@ -115,7 +115,7 @@
             <form is="iron-form" id="gift-card-form" method="POST" action="#">
                 <neon-animated-pages id="giftCardPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
-                        <div class="col-1">&nbsp;</div>
+                        <div class="col-1 widthAt480">&nbsp;</div>
                         <div class="col-8">
                         <paper-card elevation="5" class="gift-card-extend-card">
                             <div class="margin0 card-content">
@@ -134,12 +134,12 @@
                         </div>
                     </neon-animatable>
                     <neon-animatable>
-                        <div class="col-1">&nbsp;</div>
-                        <div class="col-8">
+                        <div class="col-1 widthAt480">&nbsp;</div>
+                        <div class="col-8 locBen">
                         <paper-card elevation="5" class="gift-card-extend-card">
                             <div class="card-content margn0">
                                 <div class="col-12 margin0 ">
-                                    <div class="col-2 text-right" style="margin-top:6%;">
+                                    <div class="col-2 text-right gcBL" style="margin-top:6%;">
                                         <label class="text-bold">Locations : </label>
                                     </div>
                                     <div class="col-10 margin0" style="margin-top:10px;">
@@ -151,7 +151,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 margin0">
-                                    <div class="col-2 text-right" style="margin-top:5%;">
+                                    <div class="col-2 text-right  gcBL" style="margin-top:5%;">
                                         <label class="text-bold">Benficiary :</label>
                                     </div>
                                     <div class="col-10 margin0" style="margin-top:10px;">
@@ -169,7 +169,7 @@
                                     on-click="_onPrevClick">
                                     </paper-fab>
                                 </div>
-                                <div class="col-5 margin0">&nbsp;</div>
+                                <div class="col-5 margin0 hideIn320">&nbsp;</div>
                                 <div class="col-6 margin0">
                                     <div class="submitButtons">
                                         <paper-button name="createSchemeBtn" raised  on-click="submitForm"  id="saveBtn"  status="false">{{saveBtnText}}</paper-button>
@@ -222,8 +222,10 @@
             observers: [
                 'schemeMethodChanged(schemeMethod)'
             ],
-            enableButtons:function(){
-                this.formError = event.target.invalid;
+            enableButtons:function(event){
+                if(event){
+                    this.formError = event.target.invalid;
+                }
             },
             schemeMethodChanged:function(schemeMethod){
                 console.log(schemeMethod);

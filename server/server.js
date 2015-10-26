@@ -43,6 +43,7 @@ function readRawBody(req, res, next) {
 }
 
 app.use(bodyParser.raw({type:"application/xml"}));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -142,12 +143,11 @@ o1.save().then(function(data)
 
 }
 function updateModels(req, res) {
-  console.log("in updateModels function");
-  delete req.body._id;
   var updateBuilder = mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body));
   updateBuilder.update(req.body, function(err, data){
     // console.log(err ? err + "ERROR++++++++++++++++++++++++++++++++" : data);
     console.log("Callback", data);
+    res.send(data);
   });
 
   // updateBuilder.exec().then(function(err, data) {
@@ -173,7 +173,7 @@ app.all('/',function(req, res) {
 
 
 app.all('/ssoLogin', User.ssoLogin, function(req, res) {
-  res.send("verify document.URL to confirm login");
+  res.redirect('http://localhost:91');
 });
 
 app.get('/ssoLogout',function(req, res) {

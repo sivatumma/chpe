@@ -2,8 +2,6 @@
 	<style>
 	 :host{
 	 	display: inline-block;
-	 	margin-right: 15px;
-
 	 }
 	
 	 #profileBox[show]{
@@ -32,11 +30,32 @@
 	 	font-size: 13px;
 	 }
 	 #profileBox[show] .profile-info{
-	 	padding: 10px;
+	 	padding: 15px 0px;
+	 	float: left;
+	 	width: 100%;
 	 }
+	  #profileBox[show] .profile-info .profileImg{
+	  	float: left;
+	  	width: 33%;
+	  }
+	   #profileBox[show] .profile-info .profileInfoActions{
+	  	float: left;
+	  	width: 66%;
+	  	margin-top: 10px;
+	  	text-align: left;
+	  }
+	  #profileBox[show] .profile-info .profileInfoActions h3{
+	  	padding: 0px;
+	  	margin: 0px;
+	  }
 	 #profileBox[show] .profile-actions{
-	 	padding: 10px;
 	 	border-top:1px solid #ccc;
+	 	clear: both;
+	 	padding: 5px 0px;
+	 	width: 100%;
+	 }
+	 #profileBox[show] .profile-actions a{
+	 	color: #000;
 	 }
 	.arrow-up {
 	  width: 0; 
@@ -47,7 +66,7 @@
 	  position:absolute; 
 	  right: 0px; 
 	  top:-10px; 
-	  left:56%;
+	  left:79%;
 	}
 	.arrow-up-white {
 	  width: 0; 
@@ -58,7 +77,12 @@
 	  position:absolute; 
 	  right: 0px; 
 	  top: -10px; 
-	  left: 56%;
+	  left: 79%;
+	}
+
+	paper-fab{
+		background: #3F51B5;
+		color: #fff;
 	}
 
 	</style>
@@ -69,11 +93,15 @@
 			<span class="arrow-up"></span>
 			<span class="arrow-up-white"></span>
 			<div class="profile-info">
-				<span><iron-icon icon="icons:face"></iron-icon></span>
-				<span>Hello Siva...........</span>
+				<div class="profileImg"><paper-fab icon="icons:account-circle"></paper-fab></div>
+				<div class="profileInfoActions">
+					<h3>Siva Prasad</h3>
+					<span>siva@callhealth.com</span>
+				</div>
+				<!-- <div class="text-right col-12"><paper-button name="account" raised>My Account</paper-button></div> -->
 			</div>
 			<div class="profile-actions text-right">
-				<span><a href="javascript:void(0)">Logout</a></span>
+				<span><a href="/ssoLogout"><paper-button name="logoutButton" raised>Sign Out</paper-button></a></span>
 			</div>
 		</div>
 	</template>

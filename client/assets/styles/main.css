@@ -421,20 +421,28 @@ paper-spinner.green {
   font-weight: bold;
  }
  /* flexchildt styles*/
-
-.flexContainer{
+.container {
   @apply(--layout-horizontal);
+  @apply(--layout-wrap);
+  }
+.flexchild1 {
+  @apply(--layout-flex-1);
 }
-.flexchild1{
-  @apply(--layout-flex);
-}
-.flexchild2{
+.flex2child {
   @apply(--layout-flex-2);
 }
-.flexchild3{
+.flex3child {
   @apply(--layout-flex-3);
 }
-
+.flex4child {
+  @apply(--layout-flex-4);
+}
+.flex5child {
+  @apply(--layout-flex-5);
+}
+.flex6child {
+  @apply(--layout-flex-6);
+}
 /* custom paper styles for addon coupon giftcard*/
 .chpe-addon > paper-card .card-content, .chpe-gift-card > paper-card .card-content,.chpe-coupon > paper-card .card-content{
   min-height: 240px;
@@ -552,4 +560,376 @@ paper-menu paper-item .card-as-thumbnail img{
    -o-transform:      rotate(-70deg);
    content: '';
 }
+.topLevelIcons{
+  margin-right: 25px;
+}
+.preview-scheme-name{
+  font-size: 20px;
+}
+
+ #scrollable{
+  padding: 0px !important;
+  border-radius: 20px !important;
+}
   
+/*media queries for all devices*/
+
+@media (min-width:1100px) and (max-width:1280px){
+  .schemes-as-cards{
+    width: 100%;
+  }
+  #listView.schemes-as-cards{
+    width: 100%;
+    margin: 0px;
+  }
+ .element-table.schemes-as-cards thead.schemes-as-cards th.schemes-as-cards{
+   padding: 0 20px;
+  }
+  .element-table.schemes-as-cards tbody.schemes-as-cards tr.schemes-as-cards td.schemes-as-cards{
+    font-size: 12px;
+    padding: 10px 22px;
+  }
+
+  .chpe-addon paper-card,.chpe-coupon paper-card,.chpe-gift-card paper-card{
+    width:800px;
+  }
+}
+
+@media (min-width:980px) and (max-width:1099px){
+  .schemes-as-cards{
+    width: 100%;
+  }
+  #listView.schemes-as-cards{
+    width: 100%;
+    margin: 0px;
+  }
+ .element-table.schemes-as-cards thead.schemes-as-cards th.schemes-as-cards{
+   padding: 0 10px;
+  }
+  .element-table.schemes-as-cards tbody.schemes-as-cards tr.schemes-as-cards td.schemes-as-cards{
+    font-size: 12px;
+    padding: 10px;
+    max-width: 100px;
+    word-wrap:break-word;
+    white-space: normal;
+  }
+  .topLevelIcons{
+      width: 100%;
+  }
+  .chpe-addon paper-card,.chpe-coupon paper-card,.chpe-gift-card paper-card{
+    width:640px;
+  }
+  .btn-group.coupon-type > paper-button.coupon-type{
+    width: 70px;
+   }
+}
+@media (min-width:768px) and (max-width: 979px){
+    #listView.schemes-as-cards,.toggleListGrid{
+      display: none;
+    }
+    #mainToolbar .app-name{
+      font-size: 14px;
+    }
+    .topLevelIcons{
+      width: 100%;
+    }
+    .leftnav{
+      display: none;
+    }
+    .chpe-addon  paper-card,.chpe-coupon  paper-card,.chpe-gift-card  paper-card{
+      width:  440px;
+    }
+    .chpe-addon  paper-card .paper-material,.chpe-coupon  paper-card .paper-material,.chpe-gift-card  paper-card .paper-material{
+      width: 100%;
+      float: left;
+      background: #fff;
+    }
+    .chpe-coupon h4, .chpe-gift-card h4, .chpe-addon h4{
+      font-size: 14px;
+    }
+    .chpe-addon  paper-card .locationLabel{
+      display: none;
+    }
+    .chpe-addon chpe-discount .discountInput,.chpe-coupon chpe-discount .discountInput,.chpe-gift-card chpe-discount .discountInput{
+      width:25%;
+    }
+    .schemeHeading h1{
+      font-size: 20px;
+    }
+    .chpe-addon paper-card .card-actions paper-fab, .chpe-coupon paper-card .card-actions paper-fab, .chpe-gift-card paper-card .card-actions paper-fab{
+       width: 32px;
+       height: 32px;
+     }
+     .chpe-addon paper-fab[mini], .chpe-coupon paper-fab[mini], .chpe-gift-card paper-fab[mini]{
+      padding: 5px;
+       width: 32px;
+       height: 32px;
+     }
+     .btn-group.coupon-type > paper-button.coupon-type{
+      width: 70px;
+     }
+     .chpe-gift-card .locBen label{
+      float: left;
+      font-weight: normal;
+      width: 70px;
+     }
+
+      paper-dialog.size-position{
+        left: 20% !important;
+      }
+    
+
+  }
+
+  @media (min-width:641px) and (max-width: 767px){
+    .leftnav{
+        display: none;
+    }
+     .chpe-addon  paper-card,.chpe-coupon  paper-card,.chpe-gift-card  paper-card{
+      width:540px;
+    }
+     .chpe-addon chpe-discount .discountInput,.chpe-coupon chpe-discount .discountInput,.chpe-gift-card chpe-discount .discountInput{
+      width:25%;
+    }
+    .chpe-addon paper-fab[mini], .chpe-coupon paper-fab[mini], .chpe-gift-card paper-fab[mini]{
+      padding: 5px;
+       width: 32px;
+       height: 32px;
+     }
+     .btn-group.coupon-type > paper-button.coupon-type{
+      width: 70px;
+     }
+      #mainToolbar .app-name{
+      font-size: 14px;
+      margin-left: 20px;
+    }
+    .chpe-coupon h4, .chpe-gift-card h4, .chpe-addon h4{
+      font-size: 14px !important;
+    }
+     .chpe-coupon paper-card .card-content, .chpe-gift-card paper-card .card-content, .chpe-addon paper-card .card-content{
+      padding: 10px;
+      margin: 0px;
+     }
+     schemes-as-cards{
+       margin: 0px 40px 40px 40px;
+     }
+     #listView.schemes-as-cards{
+      width: 100%;
+      margin: 0px;
+    }
+   .element-table.schemes-as-cards thead.schemes-as-cards th.schemes-as-cards{
+     padding: 0 5px;
+    }
+    .element-table.schemes-as-cards tbody.schemes-as-cards tr.schemes-as-cards td.schemes-as-cards{
+      font-size: 12px;
+      padding: 10px;
+      max-width: 100px;
+      word-wrap:break-word;
+      white-space: normal;
+    }
+      paper-dialog.size-position{
+        left:10% !important;
+      }
+     .paper-date-picker-dialog{
+        height:540px !important;
+      }
+
+  }
+
+  @media (min-width: 480px) and (max-width:640px){
+    schemes-as-cards{
+       margin: 0px 40px 40px 40px;
+     }
+     #listView.schemes-as-cards{
+      width: 100%;
+      margin: 0px;
+    }
+    #listView.schemes-as-cards,.toggleListGrid{
+      display: none;
+    }
+    .leftnav{
+        display: none;
+    }
+     .chpe-addon  paper-card,.chpe-coupon  paper-card,.chpe-gift-card  paper-card{
+      width:420px;
+      margin:0px;
+    }
+     .chpe-addon chpe-discount .discountInput,.chpe-coupon chpe-discount .discountInput,.chpe-gift-card chpe-discount .discountInput{
+      width:25%;
+    }
+    .chpe-addon paper-fab[mini], .chpe-coupon paper-fab[mini], .chpe-gift-card paper-fab[mini]{
+      padding: 5px;
+       width: 32px;
+       height: 32px;
+     }
+     .btn-group.coupon-type > paper-button.coupon-type{
+      width: 70px;
+     }
+      #mainToolbar .app-name{
+      font-size: 12px;
+      margin-left: 20px;
+    }
+    .chpe-coupon h4, .chpe-gift-card h4, .chpe-addon h4{
+      font-size: 14px !important;
+    }
+     .chpe-coupon paper-card .card-content, .chpe-gift-card paper-card .card-content, .chpe-addon paper-card .card-content{
+      padding: 10px;
+      margin: 0px;
+     }
+     schemes-as-cards{
+       margin: 0px 0px 20px 0px;
+     }
+     #listView.schemes-as-cards{
+      width: 100%;
+      margin: 0px;
+    }
+    .topLevelIcons{
+      width: 100%;
+      margin: 0px;
+    }
+    .widthAt480{
+      width: 3%;
+    }
+    .locationLabel label{
+      margin: 0px !important;
+    }
+    .schemeHeading h1{
+      font-size: 18px;
+    }
+    paper-dialog.size-position{
+      left:15% !important;
+    }
+   .paper-date-picker-dialog{
+      height:550px !important;
+      overflow-y:scroll;
+      border-radius: 0px !important;
+    }
+   #scrollable{
+      padding: 0px !important;
+      border-radius:0px !important;
+    }
+
+  }
+  @media (min-width:320px) and (max-width: 479px){
+      schemes-as-cards{
+       margin: 0px 40px 40px 40px;
+     }
+     #listView.schemes-as-cards{
+      width: 100%;
+      margin: 0px;
+    }
+    #listView.schemes-as-cards,.toggleListGrid{
+      display: none;
+    }
+    .leftnav{
+        display: none;
+    }
+     .chpe-addon  paper-card,.chpe-coupon  paper-card,.chpe-gift-card  paper-card{
+      width:320px;
+      margin:0px;
+    }
+    .discountBox.chpe-discount{
+      width: 200px;
+      font-size: 11px;
+    }
+     .chpe-addon chpe-discount .discountInput,.chpe-coupon chpe-discount .discountInput,.chpe-gift-card chpe-discount .discountInput{
+      width:35px;
+    }
+    .chpe-addon paper-fab[mini], .chpe-coupon paper-fab[mini], .chpe-gift-card paper-fab[mini]{
+      padding: 5px;
+       width: 32px;
+       height: 32px;
+     }
+     .btn-group.coupon-type > paper-button.coupon-type{
+      width: 52px;
+      font-size: 12px;
+      padding: 10px 5px;
+     }
+      #mainToolbar .app-name{
+      font-size: 12px;
+      margin-left: 20px;
+    }
+    .chpe-coupon h4, .chpe-gift-card h4, .chpe-addon h4{
+      font-size: 14px !important;
+    }
+     .chpe-coupon paper-card .card-content, .chpe-gift-card paper-card .card-content, .chpe-addon paper-card .card-content{
+      padding: 10px;
+      margin: 0px;
+     }
+     schemes-as-cards{
+       margin: 0px 0px 20px 0px;
+     }
+     #listView.schemes-as-cards{
+      width: 100%;
+      margin: 0px;
+    }
+    .topLevelIcons{
+      width: 100%;
+      margin: 0px;
+    }
+    .widthAt480{
+      width: 3%;
+    }
+    .locationLabel label{
+      margin: 0px !important;
+      font-size: 10px;
+    }
+    .schemeHeading h1{
+      font-size: 16px;
+    }
+    basic-scheme{
+      width: 100% !important;
+      display: block;
+    }
+
+   .chpe-gift-card paper-card .card-actions .col-11,.chpe-addon paper-card .card-actions .col-11,.chpe-coupon paper-card .card-actions .col-11{
+      width: 85%;
+    }
+   .hideIn320{
+    display: none;
+   }
+   .arrows.chpe-gift-card,.arrows.chpe-coupon, .arrows.chpe-addon{
+    width: 20%;
+    margin: 0px;
+    padding: 0px;
+   }
+  .submitButtons.chpe-gift-card, .submitButtons.chpe-coupon, .submitButtons.chpe-addon{
+    width:225px;
+    margin-left: 20px;
+   }
+   .gcBL{
+    width: 100%;
+    float:left;
+    text-align: left;
+    padding: 0px;
+    margin: 0px;
+   }
+   .addon320{
+    float: right;
+    margin-right: 20px;
+   }
+   .coupons-sec paper-card,.schemes-sec paper-card,.giftcard-sec paper-card{
+    width: 155px;
+   }
+   .coupons-sec paper-card .card-content, .schemes-sec paper-card .card-content , .giftcard-sec paper-card .card-content{
+      font-size: 11px;
+   }
+
+   .coupons-sec paper-card .couponName{
+    float: left;
+    margin: 0px 0px 0px 35px !important;
+    font-size: 11px;
+   }
+   paper-dialog.size-position{
+      left:15% !important;
+    }
+   .paper-date-picker-dialog{
+      height:550px !important;
+      overflow-y:scroll;
+      border-radius: 0px !important;
+    }
+   #scrollable{
+    padding: 0px !important;
+    border-radius:0px !important;
+  }
+}
