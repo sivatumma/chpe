@@ -16,7 +16,7 @@ module.exports = function(env) {
             root_path: path.join('/home', 'siva', 'Downloads', 'chpe-polymer-1.0.3'),
             //root_path: path.join('E:','Work','chpe-1.0'),
             //root_path: path.join('/splice(index, howMany)e', 'siva', 'Downloads', 'chpe-polymer-1.0.3'),
-            // root_path: "C:\\Users\\inthiyaz.pageBreakAfterramala.CHSPLDC\\WebstormProjects\\chpe-1.0",
+            // root_path: "C:\\Users\\inthiyaz.karamala.CHSPLDC\\WebstormProjects\\chpe-1.0",
             addPrefixes: process.argv[2],
             logFilenamePrefix: "",
             modelNamePrefix: "",

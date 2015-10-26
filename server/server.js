@@ -45,6 +45,7 @@ function readRawBody(req, res, next) {
 app.use(bodyParser.raw({
   type: "application/xml"
 }));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -138,6 +139,7 @@ function createModels(req, res) {
   });
 }
 
+
 function suggestDiscounts(req, res) {
 
   var u1 = mongoose.model('scheme').find(queryBuilder.suggestDiscounts(req.body));
@@ -161,21 +163,13 @@ function suggestDiscounts(req, res) {
 }
 
 function updateModels(req, res) {
+
+//  delete req.body._id;
   var updateBuilder = mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body));
-  updateBuilder.update(req.body, function(err, data) {
-    // console.log(err ? err + "ERROR++++++++++++++++++++++++++++++++" : data);
-    console.log("Callback", data);
+  updateBuilder.update(req.body, function(err, data){
+    console.log(err);
     res.send(data);
   });
-
-  // updateBuilder.exec().then(function(err, data) {
-  //   if (err) {
-  //     console.log(err);
-  //     res.status(500).send(err);
-  //   }else{
-  //     res.status(200).send(data);
-  //   }
-  // });
 }
 
 function deleteModels(req, res) {
@@ -196,9 +190,8 @@ app.head('/', function(req, res) {
   res.status(500).send("hi");
 });
 
-
 app.all('/ssoLogin', User.ssoLogin, function(req, res) {
-  res.redirect('http://localhost:91');
+  res.redirect("/#!/");
 });
 
 app.get('/ssoLogout', function(req, res) {
@@ -231,9 +224,8 @@ app.get('/ssoLogout', function(req, res) {
 
 var User = mongoose.model('User');
 
-app.all('/test', updateModels);
-app.all('/pricingengine/suggestDiscounts', suggestDiscounts);
-
+app.post('/pricingengine/suggestDiscounts', suggestDiscounts);
+app.all('/mdb/update/:modelName',updateModels);
 app.route('/mdb/:modelName/:modelId').get(fetchModels);
 
 app.route('/mdb/:modelName')

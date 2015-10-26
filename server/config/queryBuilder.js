@@ -45,6 +45,7 @@ module.exports = {
 		return data;
 	},
 	updateSchema: function(data) {
+
 		var query = {
 			"metadata.name": data.metadata.name
 		};
