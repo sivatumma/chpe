@@ -206,8 +206,11 @@ module.exports = function(mongoose) {
     };
 
     usersSchema.statics.ssoLogin = function(req, res, next) {
+        console.log(req.session.user);
+        if ( req.session.user !== undefined && req.session.user !== null )
+            next();
 
-        if(req.body && req.body.SAMLResponse != null && req.body.RelayState != 'callhealth.com'){
+        else if(req.body && req.body.SAMLResponse != null && req.body.RelayState != 'callhealth.com'){
     
             var buf = new Buffer(req.body.SAMLResponse, 'base64'); // Ta-da
             var parseString = require('xml2js').parseString;
@@ -227,8 +230,6 @@ module.exports = function(mongoose) {
                 }
             });
         }
-        else if (req.session.user)
-            res.redirect('/');
         else {
             // Set the headers
             var headers = {
