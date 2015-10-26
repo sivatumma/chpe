@@ -191,7 +191,7 @@ app.head('/', function(req, res) {
 });
 
 app.all('/ssoLogin', User.ssoLogin, function(req, res) {
-  res.redirect("/#!/");
+  res.redirect("home.html");
 });
 
 app.get('/ssoLogout', function(req, res) {
