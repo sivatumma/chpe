@@ -175,7 +175,7 @@ function updateModels(req, res) {
 function profileFetch(req, res) {
   // console.log("I am here at profileFetch function");
   // console.log("setting header: ", req.session.user || "No User");
-  res.setHeader('user', req.session.user || "No User");
+  res.setHeader('user', JSON.stringify(req.session.user) || "No User");
   res.send();
   // res.status(500).send("hi");
 }

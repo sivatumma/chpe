@@ -97,8 +97,8 @@
 					<paper-fab icon="icons:account-circle"></paper-fab>
 				</div>
 				<div class="profileInfoActions">
-					<h3>Siva Prasad</h3>
-					<span>siva@callhealth.com</span>
+					<h3>{{userObject.username}}</h3>
+					<span>{{userObject.role}}</span>
 				</div>
 				<!-- <div class="text-right col-12"><paper-button name="account" raised>My Account</paper-button></div> -->
 			</div>
@@ -107,8 +107,6 @@
 				<span><a href="/ssoLogout"><paper-button name="logoutButton" raised>Sign Out</paper-button></a></span>
 			</div>
 		</div>
-		 <iron-ajax id="profileAjax" auto url="/" method="HEAD"  handle-as="json" on-error="handleError" 
-		 on-response="handleResponse"></iron-ajax>
 	</template>
 	<script>
 		Polymer({
@@ -131,21 +129,14 @@
 				'userObjectChanged(userObject)'
 			],
 			userObjectChanged:function(userData){
-				console.log(userData);
+				//console.log(userData);
 			},
 			openProfileInfo:function(event){
 				if (event) { // comes first
                 	event.stopPropagation();
             	}
             	this.show = !this.show;
-        	},
-        	handleError:function(event){
-        		console.log(event.detail.error);
-        	},
-        	handleResponse:function(event){
-        		console.log(event.detail.response);
         	}
-            
 		});
 	</script>
 </dom-module>
