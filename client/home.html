@@ -60,9 +60,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<body unresolved class="fullbleed layout vertical" onload="getTitle">
+<body unresolved class="fullbleed layout vertical">
     <span id="browser-sync-binding"></span>
-    <div id="dashboardContainer" hidden>
+    <div id="dashboardContainer">
     <template is="dom-bind" id="app">
         <iron-media-query query="(max-width: 460px)" query-matches="{{queryMatches}}"></iron-media-query>
         <paper-drawer-panel id="paperDrawerPanel" responsive-width="767px">
@@ -127,7 +127,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <span class="topIcons">
                         <search-bar></search-bar>
                     </span>
-                    <span><user-profile></user-profile></span>
+                    <span><user-profile user-object="{{userInfo}}"></user-profile></span>
                     </div>
 
                     <!-- Application name -->
@@ -228,6 +228,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-drawer-panel>
 
         <paper-toast id="schemeSuccErrMessageToast" text=""></paper-toast>
+         <iron-ajax id="userAjax" auto url="/"  
+         handle-as="json" headers='{"X-Requested-With": "XMLHttpRequest"}'
+         method="HEAD" on-error="handleUserError" 
+         on-response="handleUserResponse"></iron-ajax>
+
+
     </template>
     </div>
 
@@ -235,17 +241,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="assets/scripts/app.js"></script>
     <!-- endbuild-->
 </body>
-<div align="center" style="margin:18% auto;" id="pageLoading"> 
+<div align="center" style="margin:18% auto; display:none;" id="pageLoading"> 
     <paper-spinner class="blue" active ></paper-spinner>
 </div>
 
 </html>
 
-<script type="text/javascript">
-window.onload = function(){
-    window.document.getElementById('pageLoading').style.display = 'none';
-    window.document.getElementById("dashboardContainer").hidden = false;
-};
 
-
-</script>

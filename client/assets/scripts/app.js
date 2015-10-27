@@ -23,6 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     console.log('Our app is ready to rock!');
+   
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
@@ -106,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   //display selected tool bars 
   app.showPalet = function(paletName){
-    app.isHome = app.isCoupon = app.isAddon =  app.isGiftCard=false; 
+    app.isHome = app.isCoupon = app.isAddon =  app.isGiftCard= app.isPreviewScheme = false; 
    switch(paletName){
       case "/":
         app.isHome = true;
@@ -166,6 +167,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.previewSchemeName = "";
 
+  //setting logged in user vinformation
   
+  app.userInfo = {}, localStorage.sessionIndex = '';;
+  
+
+  app.handleUserError = function(event){
+    console.log(event.detail.error);
+    window.location = '/';
+  };
+
+  app.handleUserResponse = function(event,request){
+    var headers = JSON.parse(request.xhr.getResponseHeader('user'));
+      if(chUtils.isEmpty(headers)===false){
+        app.userInfo = headers || {};
+      }else{
+        app.userInfo =  {};
+        window.location = '/';
+      }
+  };
+
 
 })(document);

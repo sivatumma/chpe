@@ -190,7 +190,7 @@ require('./routes/proxy.js')(app);
 app.route('/').get(function(req, res) {
   console.log("Redirecting to /ssoLogin");
   res.redirect('/ssoLogin');
-}).head(profileFetch) ;
+}).head(profileFetch);
 
 app.route('/checkAuthPing').head(profileFetch);
 
