@@ -141,33 +141,31 @@ function createModels(req, res) {
 
 
 function suggestDiscounts(req, res) {
-
   var u1 = mongoose.model('scheme').find(queryBuilder.suggestDiscounts(req.body));
-
   u1.exec().then(function(data) {
-
-    var o1 = mongoose.model('order')(queryBuilder.saveOrder(req.body, data));
-
+    var queryData = queryBuilder.saveOrder(req.body, data);
+    var o1 = mongoose.model('order')(queryData.orderData);
     o1.save().then(function(data) {
-      res.status(200).send(data);
+      queryData.finalData._id = data._id;
+      res.status(200).send(queryData.finalData);
     }, function(err) {
-
       res.status(500).send({
         "status": "fail",
         "message": err.message
       })
     })
-
   })
-
 }
-
+function schemeApplied(req, res) {
+  var o1 = mongoose.model('order').update(queryBuilder.schemeApplied(req.body), req.body);
+  o1.exec().then(function(data) {
+    res.send(data);
+  })
+}
 function updateModels(req, res) {
-
 //  delete req.body._id;
-  var updateBuilder = mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body));
-  updateBuilder.update(req.body, function(err, data){
-    console.log(err);
+  var updateBuilder = mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body),req.body);
+  updateBuilder.exec().then(function(data){
     res.send(data);
   });
 }
@@ -228,7 +226,7 @@ app.get('/ssoLogout', function(req, res) {
 
 
 var User = mongoose.model('User');
-
+app.post('/pricingengine/schemeAppliedSuccessfully',schemeApplied);
 app.post('/pricingengine/suggestDiscounts', suggestDiscounts);
 app.all('/mdb/update/:modelName',updateModels);
 app.route('/mdb/:modelName/:modelId').get(fetchModels);

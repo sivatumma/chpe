@@ -72,6 +72,14 @@ module.exports = {
 		};
 		return query;
 	},
+	schemeApplied: function(data) {
+		data.successfullyAvailed = true;
+		var query = {
+			_id: Object(data._id),
+			successfullyAvailed: false
+		};
+		return query;
+	},
 	findOrderQuery: function(req) {
 		var query = {
 			schemeName: req.body.name,
@@ -100,6 +108,7 @@ module.exports = {
 
 		}
 		var query = {
+			orderData:{
 			schemeName: bodydata.name,
 			userId: bodydata.userId,
 			businessName: bodydata.businessName,
@@ -110,6 +119,8 @@ module.exports = {
 			businessOrderId: bodydata.businessOrderId,
 			locationOfService: bodydata.orderLocationOfService,
 			finalAmount:finalData.finalAmount
+		},
+		finalData:finalData
 		};
 		return query;
 	}
