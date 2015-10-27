@@ -206,7 +206,7 @@ module.exports = function(mongoose) {
     };
 
     usersSchema.statics.ssoLogin = function(req, res, next) {
-        console.log(req.session.user);
+        console.log(req.session.user+'--------------');
         if ( req.session.user !== undefined && req.session.user !== null )
             next();
 

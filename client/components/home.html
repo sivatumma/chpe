@@ -107,6 +107,9 @@
             overflow: hidden;
             height: 48px;
         }
+        .element-table tbody  tr td[published]{
+            color: lightgreen;
+        }
         .element-table tbody tr td {
             white-space: nowrap;
             font-weight: 400;
@@ -389,8 +392,8 @@
                                 <td>{{item.behavior.startDate}}</td>
                                 <td>{{item.behavior.endDate}}</td>
                                 <td>{{item.metadata.createdBy}}</td>
-                                <td>{{item.metadata.published}}</td>
-                                <td class="editScheme">
+                                <td>{{publishedState(item.metadata.published)}}</td>
+                                <td class="editScheme" published$="[[item.metadata.published]]">
                                     <paper-icon-button icon="icons:create" on-click="editScheme" 
                                     scheme-type="{{item.metadata.type}}"></paper-icon-button>
                                 </td>
@@ -451,6 +454,13 @@
                 this.$.fetchSchemes.generateRequest();
                 this.gridView = false;
                 this.toggleListGridIcon = "icons::view-list";
+            },
+            publishedState:function(status){
+                if(status){
+                    return 'Yes';
+                }else{
+                    return 'No';
+                }
             },
             getId: function(index) {
                 return "r_" + index;
