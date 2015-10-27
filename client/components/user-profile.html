@@ -107,12 +107,14 @@
 				<span><a href="/ssoLogout"><paper-button name="logoutButton" raised>Sign Out</paper-button></a></span>
 			</div>
 		</div>
+		 <iron-ajax id="profileAjax" auto url="/" method="HEAD"  handle-as="json" on-error="handleError" 
+		 on-response="handleResponse"></iron-ajax>
 	</template>
 	<script>
 		Polymer({
 			is:'user-profile',
 			ready:function(){
-				console.log("Profile Element is ready...");
+				 this.config = generalConfig() || {};
 			},
 			properties:{
 				show: {
@@ -136,6 +138,12 @@
                 	event.stopPropagation();
             	}
             	this.show = !this.show;
+        	},
+        	handleError:function(event){
+        		console.log(event.detail.error);
+        	},
+        	handleResponse:function(event){
+        		console.log(event.detail.response);
         	}
             
 		});
