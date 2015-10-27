@@ -172,6 +172,14 @@ function updateModels(req, res) {
   });
 }
 
+function profileFetch(req, res) {
+  // console.log("I am here at profileFetch function");
+  // console.log("setting header: ", req.session.user || "No User");
+  res.setHeader('user', JSON.stringify(req.session.user) || "No User");
+  res.send();
+  // res.status(500).send("hi");
+}
+
 function deleteModels(req, res) {
   res.status(200).end("Executed delete method on model : " + req.params.modelName);
 }
@@ -179,23 +187,20 @@ function deleteModels(req, res) {
 require('./routes/user.js')(app);
 require('./routes/proxy.js')(app);
 
-app.get('/', function(req, res) {
+app.route('/').get(function(req, res) {
   console.log("Redirecting to /ssoLogin");
   res.redirect('/ssoLogin');
-});
+}).head(profileFetch) ;
 
-app.head('/', function(req, res) {
-  console.log("setting header: ", req.session.user || "No User");
-  res.serHeader('user', req.session.user || "No User");
-  res.status(500).send("hi");
-});
+app.route('/checkAuthPing').head(profileFetch);
 
 app.all('/ssoLogin', User.ssoLogin, function(req, res) {
+  console.log(req.session.user);
   res.redirect("home.html");
 });
 
 app.get('/ssoLogout', function(req, res) {
-  if (!req.session.user) {
+  if (req.session.user === undefined || req.session.user === null) {
     res.status(401).send("User not authorized.");
   } else {
     var headers = {
