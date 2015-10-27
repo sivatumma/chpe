@@ -157,20 +157,15 @@ function suggestDiscounts(req, res) {
   })
 }
 function schemeApplied(req, res) {
-
-  var o1 = mongoose.model('order').update(queryBuilder.schemeApplied(req.body));
-  o1.update(req.body, function(err, data) {
-    console.log(err);
+  var o1 = mongoose.model('order').update(queryBuilder.schemeApplied(req.body), req.body);
+  o1.exec().then(function(data) {
     res.send(data);
   })
-
 }
 function updateModels(req, res) {
-
 //  delete req.body._id;
-  var updateBuilder = mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body));
-  updateBuilder.update(req.body, function(err, data){
-    console.log(err);
+  var updateBuilder = mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body),req.body);
+  updateBuilder.exec().then(function(data){
     res.send(data);
   });
 }
