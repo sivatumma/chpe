@@ -209,13 +209,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </section>
                         <section route="createAddOn" class="addonBg">
                               <chpe-addon id="adddonComp" scheme-obj="{{addonAsScheme}}" 
-                              scheme-method="{{addonMethod}}"></chpe-addon>
+                              scheme-method="{{addonMethod}}" current-step="{{addonStage}}"></chpe-addon>
                         </section>
                         <section route="createCoupon" class="couponBg">
-                              <chpe-coupon scheme-obj="{{couponAsScheme}}" scheme-method="{{couponMethod}}"></chpe-coupon>
+                              <chpe-coupon scheme-obj="{{couponAsScheme}}" scheme-method="{{couponMethod}}"
+                              current-step="{{couponStage}}" ></chpe-coupon>
                         </section>
                         <section route="createGiftCard" class="giftCardBg">
-                              <chpe-gift-card scheme-obj="{{giftcardAsScheme}}" scheme-method="{{giftcardMethod}}"></chpe-gift-card>
+                              <chpe-gift-card scheme-obj="{{giftcardAsScheme}}" scheme-method="{{giftcardMethod}}" current-step="{{giftCardStage}}"></chpe-gift-card>
                         </section>
                         <section route="previewScheme" class="previewSchemeBg">
                               <preview-scheme scheme-name="{{previewSchemeName}}"></preview-scheme>
