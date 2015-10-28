@@ -13,3 +13,4 @@ client/build.html
 tmp_*.js
 *.*~
 *.out
+chena.js

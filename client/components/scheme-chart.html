@@ -1,0 +1,57 @@
+<script src="https://www.google.com/jsapi"></script>
+
+<dom-module id="scheme-chart">
+	<template>
+		  <div id="[[chartId]]" style="width: 900px; height: 500px"></div>
+	</template>
+
+	<script>
+		Polymer({
+			is:'scheme-chart',
+			ready:function(){
+			
+			},
+			created: function(){
+			},
+			properties:{
+				chartOptions:{
+					type:Object,
+					notify:true
+				},
+				chartId:{
+					type:String,
+					notify:true
+				},
+				chartData:{
+					type:Array,
+					notify:true
+				}
+			},
+			observers:[
+			 	'chartDataChanged(chartData)'
+			],
+			chartDataChanged:function(chartData){
+			 	console.log(chartData);
+			 	if(chUtils.isEmpty(chartData)===false){
+			 		//google.load('visualization', '1.0', {'packages':['corechart']});
+			 		//google.setOnLoadCallback(this.drawChart());
+
+				 	console.log(google);
+			 	}
+			},
+		    drawChart:function(){
+		    	var chartOptions = { 
+		        	title: 'Company Performance',
+		        	curveType: 'function',
+		        	legend:{ position: 'bottom' }
+		        };
+		    	console.log(this.chartOptions,this.chartData, this.chartId);
+		        var data = google.visualization.arrayToDataTable(this.chartData);
+		        console.log(data);
+		        var chart = new google.visualization.LineChart(document.getElementById(this.chartId));
+		        chart.draw(chartData, chartOptions);
+		    }
+
+		});
+	</script>
+</dom-module>

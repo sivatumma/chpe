@@ -109,7 +109,7 @@
 				<div class="container">
 					<div class="flexchild1"></div>
 				    <div class="flex2child section">
-				    	<h1>Unique Cities</h1>
+				    	<h1>Unique Clients</h1>
 				    	<p class="info">1000</p>
 				    </div>
 				    <div class="flex2child section">
@@ -171,7 +171,9 @@
 					</div>
 				</div>
 				<div class="graphContainer container">
-						<h4>Graph Will come</h4>
+					<img src="https://chart.googleapis.com/chart?cht=lc&chs=600x250&chl=January|February|March|April|May|June|July|August|September|October&chy:10,20,40,65,80,70,120,90,160&chd=t:10,20,40,65,80,100,120,110,160"/>
+					<!-- <scheme-chart chart-id="line-chart-1" chart-data="{{previewData1}}" 
+					chart-options="{{optionData}}"></scheme-chart> -->
 				</div>
 			</paper-material>
 		<iron-ajax  id="previewSchemeAjax" content-type="application/json"   method="GET"  
@@ -182,6 +184,8 @@
 			is:'preview-scheme',
 			ready:function(){
 				//this.config = generalConfig() || {};
+				app.previewSchemeName = '';
+				this.schemeName = "";
 			},
 			properties:{
 				previewData:{
@@ -200,10 +204,22 @@
 				if(schemeName!==undefined && schemeName.length>0){
 				app.showPalet('/previewScheme');
 				app.previewSchemeName = 'Preview Scheme - '+schemeName;
-                this.$.previewSchemeAjax.url =  'mdb/schemes/'+schemeName;
-                this.$.previewSchemeAjax.headers = {"API_KEY":"MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9"};
+
+				this.previewData1 = [['Year', 'Sales', 'Expenses'],
+		          ['2004',  1000,      400],
+		          ['2005',  1170,      460],
+		          ['2006',  660,       1120],
+		          ['2007',  1030,      540]];
+
+		        this.optionData = { 
+		        	title: 'Company Performance',
+		        	curveType: 'function',
+		        	legend:{ position: 'bottom' }
+		        };
+                //this.$.previewSchemeAjax.url =  'mdb/schemes/'+schemeName;
+                //this.$.previewSchemeAjax.headers = {"API_KEY":"MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9"};
                 //this.$.previewSchemeAjax.body = JSON.stringify(this.scheme);
-                this.$.previewSchemeAjax.generateRequest();
+                //this.$.previewSchemeAjax.generateRequest();
 				}
 			},
 			handleResponse:function(event){
@@ -214,7 +230,9 @@
 			},
 			handleError:function(event){
 				console.log(event);
-			}
+				//this.$.discountRevenueChart.drawChart();
+			},
+
 		});
 	</script>
 </dom-module>

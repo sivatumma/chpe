@@ -124,6 +124,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       case "/previewScheme":
        app.isPreviewScheme = true;
        break;
+     
    }
   };
 
@@ -132,14 +133,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.previewSchemeName = '';
     if(name===undefined){
       this.currentPage = location.hash.split("!")[1];
+        if(this.currentPage!==undefined){
+        this.showPalet(this.currentPage);
+        }else{
+           this.showPalet('/');
+        }
     }else{
       this.currentPage = MoreRouting.getRouteByName(name).path;
+      if(this.currentPage!==undefined){
+        this.showPalet(this.currentPage);
+      }else{
+         this.showPalet('/');
+      }
     }
-    if(this.currentPage!==undefined){
-      this.showPalet(this.currentPage);
-    }else{
-       this.showPalet('/');
-    }
+    
   };
 
   //to set Page Icons on load we have to run this method
