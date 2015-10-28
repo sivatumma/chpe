@@ -237,15 +237,16 @@ module.exports = function(mongoose) {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
 
+            console.log("This is the referer", 'http://' + req.ip.split(':')[3] + req.url, req.originalURL, req.get('Referer'), req.get('Content-Type'));
             // Configure the request
             var options = {
-                url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogin',
+                url: config.authentication.ssoEndpoint,
                 method: 'POST',
                 headers: headers,
                 form: {
-                    'idProvider': 'https://172.19.4.179:9443/samlsso',
-                    'spEntityID': 'callhealth.com',
-                    'relayState': 'http://localhost:91/ssoLogin'
+                    'idProvider': config.authentication.idProvider,
+                    'spEntityID': config.authentication.spEntityID,
+                    'relayState':  'http://' + req.ip.split(':')[3] + ':91' + req.url
                 }
             }
 

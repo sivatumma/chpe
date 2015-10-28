@@ -231,11 +231,15 @@ app.post('/pricingengine/suggestDiscounts', suggestDiscounts);
 app.all('/mdb/update/:modelName',updateModels);
 app.route('/mdb/:modelName/:modelId').get(fetchModels);
 
-app.route('/mdb/:modelName')
-  .get(fetchModels)
-  .post(createModels)
-  .put(updateModels)
-  .delete(deleteModels);
+app.get('/mdb/:modelName',User.ssoLogin, fetchModels);
+app.post('/mdb/:modelName',User.ssoLogin, createModels);
+app.put('/mdb/:modelName',User.ssoLogin, updateModels);
+app.delete('/mdb/:modelName',User.ssoLogin, deleteModels);
+
+  // .get(fetchModels)
+  // .post(createModels)
+  // .put(updateModels)
+  // .delete(deleteModels);
 
 app.route('/operation/:filter').put(updateModels).post(updateModels);
 

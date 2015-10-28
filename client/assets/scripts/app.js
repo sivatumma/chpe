@@ -84,7 +84,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.setScheme = function(){
     app.addonMethod   =  app.couponMethod = app.giftcardMethod = "POST"; 
     app.saveBtnText   = "SAVE"; app.publishBtnText   = "SAVE + PUBLISH";
-    app.addonAsScheme =  app.couponAsScheme = app.giftcardAsScheme = schemeBase();
+    app.addonAsScheme = schemeBase();
+    app.couponAsScheme = schemeBase();
+    app.giftcardAsScheme = schemeBase(); 
+    
+    app.addonStage = 0; 
+    app.couponStage = 0; 
+    app.giftCardStage = 0; 
   };
 
 
@@ -97,9 +103,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     this.getCurrentPage(event.currentTarget.getAttribute('route'));
     //app.screenTitle = event.currentTarget.getAttribute('title');
     app.setScheme();
-    chUtils.resetForm('coupon-form');
-    chUtils.resetForm('addon-form');
-    chUtils.resetForm('gift-card-form');
+    //chUtils.resetForm('coupon-form');
+    //chUtils.resetForm('addon-form');
+    //chUtils.resetForm('gift-card-form');
 
     app.location = function(){return document.location;};
 

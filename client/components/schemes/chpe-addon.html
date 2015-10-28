@@ -102,18 +102,18 @@
         <more-route context name="createAddOn" params="{{params}}"></more-route>
         <span>{{params.schemeName}}</span>
         <paper-material class="leftnav" elevation="5">
-            <paper-menu selected="{{selected}}" style="padding:0px;">
-                <paper-item>1</paper-item>
-                <paper-item>2</paper-item>
-                <paper-item>3</paper-item>
-                <paper-item>4</paper-item>
+            <paper-menu selected="{{currentStep}}" style="padding:0px;">
+                <paper-item disabled$="{{formError}}">1</paper-item>
+                <paper-item disabled$="{{formError}}">2</paper-item>
+                <paper-item disabled$="{{formError}}">3</paper-item>
+                <paper-item disabled$="{{formError}}">4</paper-item>
             </paper-menu>
         </paper-material>
         <paper-material elevation="1" type="{{schemeType}}" data="{{schemeObj}}">
             <!--  <paper-slider id="stepIndicator" pin snaps max="7" step="1" value="0" class="pull-right orange col-8"></paper-slider> -->
             </h4>
             <form is="iron-form" id="addon-form" method="POST" action="#">
-                <neon-animated-pages id="addonPages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
+                <neon-animated-pages id="addonPages" class="flex" selected="[[currentStep]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
                         <div class="col-1 widthAt480">&nbsp;</div>
                         <div class="col-8">
@@ -291,6 +291,11 @@
                     type: Boolean,
                     notify: true
                 },
+                currentStep:{
+                    type:Number,
+                    notify:true,
+                    value:0
+                },
                 succErrMsg: {
                     type: String,
                     notify: true
@@ -308,11 +313,15 @@
                 },
                 publishBtnText:{
                     type:String
+                },
+                formError:{
+                    type:Boolean,
+                    value:false
                 }
             },
             ready: function() {
                 this.config = generalConfig() || {};
-                this.selected = 0;
+                this.currentStep = 0;
                 this.schemeObj.metadata.type = "ADD_ON";
                 this.schemeObj.metadata.published = false;
                 this.saveBtnText = "SAVE";
@@ -349,21 +358,22 @@
                 }
             },
             _onPrevClick: function() {
+
                 if(this.formError===true){
-                    this.selected = this.selected;
+                    this.currentStep = this.currentStep;
                 }else{
                     this.entryAnimation = 'slide-from-left-animation';
                     this.exitAnimation = 'slide-right-animation';
-                    this.selected = this.selected === 0 ? 4 : (this.selected - 1);
+                    this.currentStep = this.currentStep === 0 ? 4 : (this.currentStep - 1);
                 }
             },
             _onNextClick: function(event) {
                if(this.formError===true){
-                    this.selected = this.selected;
+                    this.currentStep = this.currentStep;
                 }else{
                     this.entryAnimation = 'slide-from-right-animation';
                     this.exitAnimation = 'slide-left-animation';
-                    this.selected = this.selected === 4 ? 0 : (this.selected + 1);
+                    this.currentStep = this.currentStep === 4 ? 0 : (this.currentStep + 1);
                 }
             },
             createScheme: function() {
@@ -389,7 +399,7 @@
                
                 console.log(this.schemeObj);
 
-                if(chUtils.isEmpty(this.schemeObj)===false) {
+                if(this.schemeObj!==undefined && this.schemeObj.metadata.name!=="") {
                     this.$.schemeAjax.url =  this.config.urls.rest;
                     this.$.schemeAjax.method = this.schemeMethod;
                     this.$.schemeAjax.body = JSON.stringify(this.schemeObj);
