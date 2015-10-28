@@ -16,8 +16,9 @@
     "paper-menu-button": "PolymerElements/paper-menu-button#1.0.1",
     "paper-time-picker": "https://github.com/bendavis78/paper-time-picker.git#~1.0.3",
     "platinum-elements": "PolymerElements/platinum-elements#1.0.1",
-    "more-routing":"https://github.com/PolymerLabs/more-routing.git",
-    "lodash":"https://github.com/lodash/lodash.git"
+    "more-routing": "https://github.com/PolymerLabs/more-routing.git",
+    "lodash": "https://github.com/lodash/lodash.git",
+    "google-chart": "https://github.com/GoogleWebComponents/google-chart.git#~1.0.3"
   },
   "devDependencies": {
     "web-component-tester": "*",
