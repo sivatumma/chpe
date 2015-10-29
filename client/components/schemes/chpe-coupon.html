@@ -194,7 +194,7 @@
                 formError:{
                     type:Boolean,
                     value:false
-                },locationsMemcacheURL
+                },
                 locationsMemcacheURL:{
                     type:String
                 }
@@ -206,7 +206,7 @@
                 this.saveBtnText = "SAVE";
                 this.publishBtnText = "SAVE + PUBLISH";
                 this.formError = false;
-                this.locationsMemcacheURL = this.config.memcache.locations
+                this.locationsMemcacheURL = this.config.urls.memcache.locations;
             },
             listeners: {
                 'coupon-form.iron-form-submit': 'createScheme',

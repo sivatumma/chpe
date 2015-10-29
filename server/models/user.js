@@ -246,7 +246,8 @@ module.exports = function(mongoose) {
                 form: {
                     'idProvider': config.authentication.idProvider,
                     'spEntityID': config.authentication.spEntityID,
-                    'relayState':  'http://' + req.ip.split(':')[3] + ':91' + req.url
+                    //'relayState':  'http://' + req.ip.split(':')[3] + ':91' + req.url
+                    'relayState':  'http://localhost:91/ssoLogin'
                 }
             }
 
