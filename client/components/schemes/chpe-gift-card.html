@@ -226,7 +226,8 @@
             listeners: {
                 'gift-card-form.iron-form-submit': 'createScheme',
                 'gift-card-form.saveBtn.onClick': 'submitForm',
-                'gift-card-form.iron-input-validate': 'enableButtons'
+                'gift-card-form.iron-input-validate': 'enableButtons',
+                'gift-card-form.iron-form-invalid':'resetSteps'
             },
             observers: [
                 'schemeMethodChanged(schemeMethod)'
@@ -327,6 +328,13 @@
             submitForm: function(event) {
                 this.schemeObj.metadata.published = event.currentTarget.getAttribute('status');
                 document.getElementById('gift-card-form').submit();
+            },
+            resetSteps:function(event){
+                this.currentStep = 0;
+                this.formError = true; 
+                document.querySelector("#schemeSuccErrMessageToast").show();
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
+                toast.text = "Please Recheck the form, you have missed the required fields some where...!";
             }
         });
     </script>

@@ -336,7 +336,8 @@
                 'addon-form.iron-form-submit': 'createScheme',
                 'addon-form.addonSave.onClick': 'submitForm',
                 'value-change': 'getCurrentStep',
-                'addon-form.iron-input-validate': 'enableButtons'
+                'addon-form.iron-input-validate': 'enableButtons', 
+                'addon-form.iron-form-invalid':'resetSteps'
             },
             schemeObjChanged: function(schemeObj,metadata, behavior) {
                 //console.log(metadata);
@@ -446,6 +447,13 @@
             submitForm: function(event) {
                 this.schemeObj.metadata.published = event.currentTarget.getAttribute('status');
                 document.getElementById('addon-form').submit();
+            },
+            resetSteps:function(event){
+                this.currentStep = 0; 
+                this.formError = true; 
+                document.querySelector("#schemeSuccErrMessageToast").show();
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
+                toast.text = "Please Recheck the form, you have missed the required fields some where...!";
             }
         });
 

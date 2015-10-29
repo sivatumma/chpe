@@ -95,8 +95,8 @@
             </paper-menu>
         </paper-material>
         <paper-material elevation="1" type="{{schemeType}}" >
-            <form is="iron-form" id="coupon-form" method="POST" action="#">
-                <neon-animated-pages id="pages" class="flex" selected="[[currentStep]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
+            <form is="iron-form" id="coupon-form" method="POST" action="#" disableNativeValid>
+                <neon-animated-pages id="couponPages" current$="[[currentStep]]" class="flex" selected="[[currentStep]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <neon-animatable>
                         <div class="col-1 widthAt480">&nbsp;</div>
                         <div class="col-8">
@@ -212,7 +212,8 @@
                 'coupon-form.iron-form-submit': 'createScheme',
                 'coupon-form.saveBtn.onClick': 'submitForm',
                 'value-change':'getCurrentStep',
-                'coupon-form.iron-input-validate':'enableButtons'
+                'coupon-form.iron-input-validate':'enableButtons',
+                'coupon-form.iron-form-invalid':'resetSteps'
             },
             observers: [
                 'schemeMethodChanged(schemeMethod)'
@@ -323,6 +324,14 @@
             submitForm: function(event) {
                 this.schemeObj.metadata.published = event.currentTarget.getAttribute('status');
                 document.getElementById('coupon-form').submit();
+                
+            },
+            resetSteps:function(event){
+                this.currentStep = 0; 
+                this.formError = true; 
+                document.querySelector("#schemeSuccErrMessageToast").show();
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
+                toast.text = "Please Recheck the form, you have missed the required fields some where...!";
             }
         });
     </script>
