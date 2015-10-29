@@ -46,8 +46,9 @@
                        value="{{cap.points}}"></paper-input>
                 </div>
                 <div class="col-2">
-                    <paper-fab  class="pull-right"mini icon="icons:delete" class="red" on-click="deletecap">
-                    </paper-fab>
+                    <paper-icon-button  hidden$="{{showDeleteByRow(index)}}"
+                        class="pull-right"mini icon="icons:delete" class="red" on-click="deletecap">
+                    </paper-icon-button>
                 </div>
             </div>      
           </template> 
@@ -67,6 +68,13 @@
             },
             listeners:{
                 "onClick":"addcap",
+            },
+            showDeleteByRow:function(row){
+                if(row==0){
+                    return true;
+                }else{
+                    return false;
+                }
             },
             //add or remove src categories
             addcap :function(e){

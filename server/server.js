@@ -199,7 +199,8 @@ app.all('/ssoLogin', User.ssoLogin, function(req, res) {
 
 app.get('/ssoLogout', function(req, res) {
   if (req.session.user === undefined || req.session.user === null) {
-    res.status(401).send("User not authorized.");
+    res.redirect("unAuthorized.html");
+    //res.status(401).send("User not authorized.");
   } else {
     var headers = {
         'User-Agent': 'Super Agent/0.0.1',

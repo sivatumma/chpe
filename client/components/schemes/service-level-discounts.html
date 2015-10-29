@@ -49,9 +49,9 @@
                 </div>
                 <div class="col-2">
                   <span>
-                    <paper-fab class="pull-right"
+                    <paper-icon-button hidden$="{{showDeleteByRow(index)}}" class="pull-right"
                     mini icon="icons:delete" class="red action" on-click="deleteSlc">
-                    </paper-fab>
+                    </paper-icon-button>
                   </span>
                 </div>
             </div>      
@@ -74,6 +74,13 @@
             },
             ready:function(){
                 // console.log(this.behavior.serviceLevelDiscounts);
+            },
+            showDeleteByRow:function(row){
+                if(row==0){
+                    return true;
+                }else{
+                    return false;
+                }
             },
             getPercentId:function(index){
                 return "slcPercentage_"+index;

@@ -56,7 +56,7 @@
                      </chpe-discount> 
                 </div>
                 <div class="col-1">
-                    <paper-fab class="pull-right" mini icon="icons:delete" class="red" on-click="deleteBsd"></paper-fab>
+                    <paper-icon-button hidden$="{{showDeleteByRow(index)}}"class="pull-right" mini icon="icons:delete" class="red" on-click="deleteBsd"></paper-icon-button>
                 </div>
             </div>
           </template> 
@@ -82,6 +82,13 @@
             },
             getFlatId:function(index){
                 return "bsdFlat_"+index;
+            },
+            showDeleteByRow:function(row){
+                if(row==0){
+                    return true;
+                }else{
+                    return false;
+                }
             },
             //add or remove src categories
             addBsd :function(e){

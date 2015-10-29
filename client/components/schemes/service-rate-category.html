@@ -48,9 +48,9 @@
                 </div>
                 <div class="col-2">
                   <span>
-                    <paper-fab class="pull-right" 
+                    <paper-icon-button class="pull-right" hidden$="{{showDeleteByRow(index)}}"
                     mini icon="icons:delete" class="red" on-click="deleteSrc">
-                    </paper-fab>
+                    </paper-icon-button>
                   </span>
                 </div>
             </div>      
@@ -78,6 +78,13 @@
                 "onClick":"addSrc",
                 "onTap":"addSrc",
                 "food-array-change":"doChange"
+            },
+            showDeleteByRow:function(row){
+                if(row==0){
+                    return true;
+                }else{
+                    return false;
+                }
             },
             //add or remove src categories
             addSrc :function(e){
