@@ -21,6 +21,7 @@ var config = require('./config/config.js'),
   expressSession = require('express-session'),
   q2m = require('query-to-mongo'),
   mongoskin = require('mongoskin'),
+  chUtils = require('../lib/chUtils.js').chUtils,
   _id_count = 0;
 
 app.use(function(req, res, next) {
@@ -168,7 +169,7 @@ function getPreviewData(req, res) {
 
   var u1 = mongoose.model('order').find(query.criteria);
   u1.exec().then(function(data) {
-    res.send(queryBuilder.getPreviewData(data));
+    res.send( chUtils.getPreviewData(data));
 
   });
 

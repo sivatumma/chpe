@@ -72,28 +72,6 @@ module.exports = {
 		};
 		return query;
 	},
-	getPreviewData:function(data){
-
-		var finalData = {};
-		var totalAmount = 0;
-		var afterDTA =0;
-
-		finalData.uniqueUsers =_.unique(data, 'userId').length;
-		var uniqueLocation = _.unique(data, 'locationOfService.name');
-		finalData.orderLocations = uniqueLocation.length;
-		_.each(data, function(item) {
-			if (item.billAmount && item.finalAmount)
-			{
-				totalAmount = parseInt(totalAmount) + parseInt(item.billAmount);
-                 afterDTA =  parseInt(afterDTA) + parseInt(item.finalAmount);
-             }
-		}, 0);
-
-		finalData.totalAmount = totalAmount;
-		finalData.afterDTA = afterDTA;
-		finalData.discountAmount = parseInt(totalAmount) - parseInt(afterDTA);
-return finalData;
-		},
 	schemeApplied: function(data) {
 		data.successfullyAvailed = true;
 		var query = {
