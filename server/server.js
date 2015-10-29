@@ -19,6 +19,8 @@ var config = require('./config/config.js'),
   https = require('https'),
   request = require('request'),
   expressSession = require('express-session'),
+  q2m = require('query-to-mongo'),
+  mongoskin = require('mongoskin'),
   _id_count = 0;
 
 app.use(function(req, res, next) {
@@ -87,8 +89,11 @@ function fetchModels(req, res) {
   var modelId = req.params.modelId ? {
     "metadata.name": req.params.modelId
   } : {};
+
+  var queryreq = req.url.split('?');
+  var query = q2m(queryreq[1]);
   var u1 = mongoose.model(req.params.modelName);
-  u1.find(modelId, function(err, data) {
+  u1.find(query.criteria, function(err, data) {
     if (err) res.status(500).send({
       status: "fail",
       message: err.message
@@ -156,16 +161,30 @@ function suggestDiscounts(req, res) {
     })
   })
 }
+
+function getPreviewData(req, res) {
+  var queryreq = req.url.split('?');
+  var query = q2m(queryreq[1]);
+
+  var u1 = mongoose.model('order').find(query.criteria);
+  u1.exec().then(function(data) {
+    res.send(queryBuilder.getPreviewData(data));
+
+  });
+
+}
+
 function schemeApplied(req, res) {
   var o1 = mongoose.model('order').update(queryBuilder.schemeApplied(req.body), req.body);
   o1.exec().then(function(data) {
     res.send(data);
   })
 }
+
 function updateModels(req, res) {
-//  delete req.body._id;
-  var updateBuilder = mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body),req.body);
-  updateBuilder.exec().then(function(data){
+  //  delete req.body._id;
+  var updateBuilder = mongoose.model(req.params.modelName).update(queryBuilder.updateSchema(req.body), req.body);
+  updateBuilder.exec().then(function(data) {
     res.send(data);
   });
 }
@@ -226,9 +245,10 @@ app.get('/ssoLogout', function(req, res) {
 
 
 var User = mongoose.model('User');
-app.post('/pricingengine/schemeAppliedSuccessfully',schemeApplied);
+app.get('/pricingengine/previewData', getPreviewData)
+app.post('/pricingengine/schemeAppliedSuccessfully', schemeApplied);
 app.post('/pricingengine/suggestDiscounts', suggestDiscounts);
-app.all('/mdb/update/:modelName',updateModels);
+app.all('/mdb/update/:modelName', updateModels);
 app.route('/mdb/:modelName/:modelId').get(fetchModels);
 
 app.route('/mdb/:modelName')
