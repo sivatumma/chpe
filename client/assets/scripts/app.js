@@ -161,8 +161,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   //home page list grid manipulations
   app.toggleListGridIcon = "icons::view-list";
+  app.listGridVar = '';
   app.toggleListGrid = function(event) {
-    var mode = event.currentTarget.getAttribute('view');
+    var mode = event.currentTarget.getAttribute('view') || listGridVar;
       if (mode == "list") {
           document.querySelector("#listView").hidden = false;
           document.querySelector("#gridView").hidden = true;
