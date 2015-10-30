@@ -237,7 +237,7 @@ module.exports = function(mongoose) {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
 
-            console.log("This is the referer", 'http://' + req.ip.split(':')[3] + req.url, req.originalURL, req.get('Referer'), req.get('Content-Type'));
+           /* console.log("This is the referer", 'http://' + req.ip.split(':')[3] + req.url, req.originalURL, req.get('Referer'), req.get('Content-Type'));*/
             // Configure the request
             var options = {
                 url: config.authentication.ssoEndpoint,
@@ -255,6 +255,8 @@ module.exports = function(mongoose) {
             request(options, function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     res.redirect(unescape(JSON.parse(body).url));
+                }else{
+                    console.log("400 or 500");
                 }
             });
         }

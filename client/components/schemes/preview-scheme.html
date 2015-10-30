@@ -1,5 +1,14 @@
 <script src="../../../lib/chUtils.js"></script>
 <script src="../../config/general.js"></script>
+<script type="text/javascript"
+  src="https://www.google.com/jsapi?autoload={
+    'modules':[{
+      'name':'visualization',
+      'version':'1',
+      'packages':['corechart']
+    }]
+  }">
+</script>
 <dom-module id="preview-scheme">
 	<style type="text/css">
 		:host{
@@ -95,6 +104,18 @@
 	    	font-size: 12px;
 	    	font-weight: normal !important;
 	    }
+	    .graphIcon{
+	    	width: 15px;
+	    	height: 15px;
+	    	float: left;
+	    	margin-right: 5px;
+	    }
+	    .green{
+	    	background: lightgreen;
+	    }
+	    .red{
+	    	background: red;
+	    }
 	</style>
 	<template>
 		<more-route context name="previewScheme" params="{{params}}"></more-route>
@@ -171,8 +192,43 @@
 					</div>
 				</div>
 				<div class="graphContainer container">
-					<img src="https://chart.googleapis.com/chart?cht=lc&chs=600x250&chl=January|February|March|April|May|June|July|August|September|October&chy:10,20,40,65,80,70,120,90,160&chd=t:10,20,40,65,80,100,120,110,160"/>
-					<!-- <scheme-chart chart-id="line-chart-1" chart-data="{{previewData1}}" 
+					<div class="col-5">
+					<div class="col-6" style="margin-bottom:10px;">
+						<h3 class="margin0 padding0">Discounts & Revenues</h3>
+					</div>
+					<div class="col-3">
+						<span class="graphIcon red"></span>						
+						<span>Revenues</span>
+					</div>
+					<div class="col-3">
+						<span class="graphIcon green"></span>
+						<span>Discounts</span>
+					</div>
+					<paper-card elevation="2">
+					<img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&chd=t:10,15,5,0,20,50,60,45,80,90,70,68|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chxt=x,y&chx=Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec&chy:10,20,20,65,80,70,40,90,110,120"/>
+						<!-- <img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&
+						chxt=x,y&chxl=0:|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|1:|0|10|20|30|40|50|60|70|80|90|120&chy:10,20,20,65,80,70,40,90,110,20|45&chd=t:10,20,40,15,80,60,80,90,85,45,33,65"/> -->
+					</paper-card>
+					</div>
+					<div class="col-1"></div>
+					<div class="col-6">
+					<div class="col-6" style="margin-bottom:10px;">
+						<h3 class="margin0 padding0">Discounts & Unique Customers</h3>
+					</div>
+					<div class="col-3">
+						<span class="graphIcon red"></span>						
+						<span>Customers</span>
+					</div>
+					<div class="col-3">
+						<span class="graphIcon green"></span>
+						<span>Discounts</span>
+					</div>
+					<paper-card elevation="2">
+						<img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&chd=t:0,0,50,0,10,0,0,0,500,0,500,10|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chxt=x,y"/>
+					</paper-card>
+					</div>
+					
+					<!-- <scheme-chart preview-graph-id"line-chart-1" chart-data="{{previewData1}}" 
 					chart-options="{{optionData}}"></scheme-chart> -->
 				</div>
 			</paper-material>
@@ -210,12 +266,6 @@
 		          ['2005',  1170,      460],
 		          ['2006',  660,       1120],
 		          ['2007',  1030,      540]];
-
-		        this.optionData = { 
-		        	title: 'Company Performance',
-		        	curveType: 'function',
-		        	legend:{ position: 'bottom' }
-		        };
                 //this.$.previewSchemeAjax.url =  'mdb/schemes/'+schemeName;
                 //this.$.previewSchemeAjax.headers = {"API_KEY":"MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9"};
                 //this.$.previewSchemeAjax.body = JSON.stringify(this.scheme);
