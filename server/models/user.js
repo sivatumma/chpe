@@ -206,8 +206,19 @@ module.exports = function(mongoose) {
     };
 
     usersSchema.statics.ssoLogin = function(req, res, next) {
-        console.log(req.session.user+'--------------');
-        if ( req.session.user !== undefined && req.session.user !== null )
+        
+        if (config.approvedAuthorizedAPIKeys.indexOf(req.query.API_KEY) >= 0) {
+            // console.log("API Key is available");
+            next(); 
+        }
+      else if(req.query.API_KEY!=undefined)
+        {
+      res.send(401, {message: 'Authentication token required.'});
+        }
+        /*if (config.approvedAuthorizedAPIKeys.indexOf(req.query.API_KEY) == -1)
+            res.end(401, {message: 'Authentication token required.'});*/
+
+        else if ( req.session.user !== undefined && req.session.user !== null )
             next();
 
         else if(req.body && req.body.SAMLResponse != null && req.body.RelayState != 'callhealth.com'){
@@ -224,7 +235,6 @@ module.exports = function(mongoose) {
                     };
 
                     res.header('user', req.session.user);
-                    console.log(req.session.user);
 
                     next();
                 }
