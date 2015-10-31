@@ -677,6 +677,13 @@ paper-menu paper-item .card-as-thumbnail img{
       paper-dialog.size-position{
         left: 20% !important;
       }
+
+    .preview-scheme-name{
+      font-size: 14px;
+    }
+    .section.preview-scheme h1.preview-scheme{
+      font-size: 14px;
+    }
     
 
   }
@@ -808,6 +815,16 @@ paper-menu paper-item .card-as-thumbnail img{
       padding: 0px !important;
       border-radius:0px !important;
     }
+
+    /*preview scheme*/
+   
+    .preview-scheme-name{
+      font-size: 14px;
+    }
+    .section.preview-scheme h1.preview-scheme{
+      font-size: 14px;
+    }
+
 
   }
   @media (min-width:320px) and (max-width: 479px){
