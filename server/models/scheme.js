@@ -247,6 +247,40 @@ module.exports = function(mongoose) {
 			}];
 
 		}
+		// If serviceRateCategoryDiscounts empty here we adding empty array
+		if (!this.behavior.serviceRateCategoryDiscounts) {
+				this.behavior.serviceRateCategoryDiscounts = [];
+			}
+			        
+        // If serviceLevelDiscounts empty here we adding empty array
+		if (!this.behavior.serviceLevelDiscounts) {
+				this.behavior.serviceLevelDiscounts = [];
+			}
+			
+		// If advancePaidPoints empty here we adding empty array
+		if (!this.behavior.advancePaidPoints) {
+			this.behavior.advancePaidPoints = [];
+		}
+
+		// If billValueDiscounts empty here we adding empty array
+		if (!this.behavior.billValueDiscounts) {
+			this.behavior.billValueDiscounts = [];
+		}
+		
+		// If cumulativeAmountPoints empty here we adding empty array
+		if (!this.behavior.cumulativeAmountPoints) {
+			this.behavior.cumulativeAmountPoints = [];
+		}
+       
+       // If serviceLevelDiscounts empty here we adding empty array
+		if (!this.behavior.serviceLevelDiscounts) {
+			this.behavior.serviceLevelDiscounts = [];
+		}
+		// If cumulativeAmountPoints empty here we adding empty array
+		if (!this.metadata.toIds) {
+			this.metadata.toIds = [];
+		}
+
 		if (this.behavior.discountType == "%" && this.behavior.discount > 9) {
 
 			return next(new Error("defaultDiscount should be below 9 percentage"));
