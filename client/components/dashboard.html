@@ -547,7 +547,9 @@
         }
         if(window.innerWidth>=320 && window.innerWidth<=640){
            document.querySelector("#gridView").hidden = false;
-           document.querySelector(".toggleListGrid").setAttribute("view","list");
+           if(document.querySelector(".toggleListGrid")){
+               document.querySelector(".toggleListGrid").setAttribute("view","list");
+           }
         }
     };
     </script>

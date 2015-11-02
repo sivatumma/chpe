@@ -674,9 +674,9 @@ paper-menu paper-item .card-as-thumbnail img{
       width: 70px;
      }
 
-      paper-dialog.size-position{
+    paper-dialog.size-position{
         left: 20% !important;
-      }
+    }
 
     .preview-scheme-name{
       font-size: 14px;
@@ -684,7 +684,21 @@ paper-menu paper-item .card-as-thumbnail img{
     .section.preview-scheme h1.preview-scheme{
       font-size: 14px;
     }
-    
+    .info.preview-scheme{
+      font-size: 14px;
+    }
+    .graphContainer  h3{
+      font-size: 12px;
+    }
+    .discRevenues{
+      float: left;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .descr-sec{
+      font-size: 12px;
+    }
+
 
   }
 
@@ -740,6 +754,31 @@ paper-menu paper-item .card-as-thumbnail img{
      .paper-date-picker-dialog{
         height:540px !important;
       }
+      .preview-scheme-name{
+      font-size: 14px;
+    }
+    .section.preview-scheme h1.preview-scheme{
+      font-size: 14px;
+    }
+    .info.preview-scheme{
+      font-size: 14px;
+    }
+    .graphContainer  h3{
+      font-size: 12px;
+    }
+    .discRevenues{
+      float: left;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .descr-sec{
+      font-size: 12px;
+    }
+    .previewScheme{
+      width: 100% !important;
+      padding: 5px;
+      margin: 0px  !important;
+     }
 
   }
 
@@ -817,12 +856,34 @@ paper-menu paper-item .card-as-thumbnail img{
     }
 
     /*preview scheme*/
-   
+   .previewScheme{
+    width: 100% !important;
+    padding: 5px;
+    margin: 0px  !important;
+   }
     .preview-scheme-name{
       font-size: 14px;
     }
     .section.preview-scheme h1.preview-scheme{
       font-size: 14px;
+    }
+    .info.preview-scheme{
+      font-size: 14px;
+    }
+    .graphContainer  h3{
+      font-size: 12px;
+    }
+    .discRevenues{
+      float: left;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .descr-sec{
+      font-size: 12px;
+    }
+    .graphContainer .col-5{
+      float: left;
+      width: 100%;
     }
 
 
@@ -949,4 +1010,33 @@ paper-menu paper-item .card-as-thumbnail img{
     padding: 0px !important;
     border-radius:0px !important;
   }
+  .previewScheme{
+    width: 100% !important;
+    margin: 0px !important;
+   }
+    .preview-scheme-name{
+      font-size: 14px;
+    }
+    .section.preview-scheme h1.preview-scheme{
+      font-size: 14px;
+    }
+    .info.preview-scheme{
+      font-size: 14px;
+    }
+    .graphContainer  h3{
+      font-size: 12px;
+    }
+    .graphContainer .col-5{
+      float: left;
+      width: 100% !important;
+    }
+    .discRevenues{
+      float: left;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .descr-sec{
+      font-size: 12px;
+    }
+
 }
