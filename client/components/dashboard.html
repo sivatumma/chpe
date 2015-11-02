@@ -488,6 +488,11 @@
                 } else {
                     this.listData = this.allSchemes = [{}];
                 }
+                if(chUtils.isEmpty(data)===false && data.length==0){
+                    document.querySelector("#schemeSuccErrMessageToast").show();
+                    var toast = document.querySelector("#schemeSuccErrMessageToast");
+                    toast.text = "No Data found....";
+                }
             },
             handleError: function(event) {
                 var request = event.detail.request;
