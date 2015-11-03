@@ -31,10 +31,10 @@
         <div class="col-12" metadata="{{metadata}}" behavior="{{behavior}}">
             <div class="col-6">
                 <p><strong>Scheme Name</strong> must start with an Alphabet, should contain minimum of 3 characters and cannot contain special characters like #@!, etc.</p>
-                <paper-input name="name" auto-capitalize   value="{{metadata.name}}" required auto-validate pattern="^[a-zA-Z,-]{3,}[a-zA-Z,0-9]*$"  disabled$="[[disableName]]" no-label-float error-message="Recheck the Naming guidelines" label="Scheme Name">
+                <paper-input name="name" value="{{metadata.name}}" required auto-validate pattern="^[a-zA-Z,-,0-9]{3,}[a-zA-Z,0-9]*$"  disabled$="[[disableName]]" no-label-float error-message="Recheck the Naming guidelines" label="Scheme Name">
                 </paper-input>
 
-              <date-time-picker date-type="{{startDateType}}" date-modal-value="{{behavior.startDate}}" date-modal="{{startDateModal}}" date-time-value="{{schemeStarts}}" date-label="Start Date" date-id="{{sdDp}}" time-id="{{sdTp}}"></date-time-picker>  
+              <date-time-picker metadata="{{metadata}}" date-type="{{startDateType}}" date-modal-value="{{behavior.startDate}}" date-modal="{{startDateModal}}" date-time-value="{{schemeStarts}}" date-label="Start Date" date-id="{{sdDp}}" time-id="{{sdTp}}"></date-time-picker>  
 
                 <date-time-picker date-type="{{endDateType}}" date-modal="{{endDateModal}}" date-time-value="{{schemeEnds}}" date-label="End Date" date-modal-value="{{behavior.endDate}}" date-id="{{edDp}}" time-id="{{edTp}}"></date-time-picker>
 
@@ -47,7 +47,7 @@
 
             <div>
                 <p><strong>Default discount</strong> for this product. If you assume line item wise discounts, leave blank.</p>
-                <chpe-discount  discount-id="{{basicDiscount}}" percentage-id="{{percentageId}}" flat-id="{{flatId}}" discount="{{defaultDiscount}}" discount-modal="{{behavior}}">
+                <chpe-discount metadata="{{metadata}}" discount-id="{{basicDiscount}}" percentage-id="{{percentageId}}" flat-id="{{flatId}}" discount="{{defaultDiscount}}" discount-modal="{{behavior}}">
                 </chpe-discount>
             </div>
 

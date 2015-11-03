@@ -66,12 +66,12 @@
 
 </style>
     <template>
-        <div class="col-6 margin-bottom15">
+        <div class="col-6 margin-bottom15" metadata="{{metadata}}">
             <div class="discountBox"  id="discountToggle" layout horizontal>
                 <div class="btn-group">
-                    <paper-button  toggles  class="discountButton noRightBorder active" 
+                    <paper-button  toggles disabled$="{{metadata.published}}"  class="discountButton noRightBorder active" 
                     on-click="togleDiscount" type="%"  id="{{percentageId}}">%</paper-button>
-                    <paper-button  toggles  type="FLAT" class="discountButton" on-click="togleDiscount"  id="{{flatId}}" >Flat</paper-button>
+                    <paper-button  toggles disabled$="{{metadata.published}}"  type="FLAT" class="discountButton" on-click="togleDiscount"  id="{{flatId}}" >Flat</paper-button>
                     </div>
                     <div class="discountInput col-6">
                         <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
@@ -97,6 +97,10 @@
                 },
                 discountValue:String,
                 scheme:Object,
+                metadata:{
+                    type:Object,
+                    notify:true
+                }
         
             },
             observers: [

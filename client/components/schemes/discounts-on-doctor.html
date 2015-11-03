@@ -16,7 +16,7 @@
                 <templte>
                     <div class="col-6">
                         <label><span class="upperCase">{{dda.type}}</span> Chosen:</label>
-                        <chpe-discount id="{{dda.type}}" discount-modal="{{dda}}" percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
+                        <chpe-discount id="{{dda.type}}" metadata="{{metadata}}" discount-modal="{{dda}}" percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
                         </chpe-discount>
                     </div>
                 </templte>
@@ -28,6 +28,10 @@
             'is':'discounts-on-doctor',
              properties:{
                 behaviorData:{
+                    type:Object,
+                    notify:true
+                },
+                metadata:{
                     type:Object,
                     notify:true
                 }

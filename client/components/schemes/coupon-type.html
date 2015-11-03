@@ -45,13 +45,13 @@
         <div class="col-6" metadata="{{metadata}}">
             <div class="discountBox"  id="couponTypeToggle" layout horizontaly>
                 <div class="btn-group">
-                    <paper-button type="button" name="day" class="discountButton noRightBorder" 
+                    <paper-button type="button" disabled$="{{metadata.published}}" name="day" class="discountButton noRightBorder" 
                     on-click="togleType" id="couponDay" life="DAY">DAY</paper-button>
 
-                    <paper-button type="button" name="week" class="discountButton noRightBorder"
+                    <paper-button type="button" disabled$="{{metadata.published}}" name="week" class="discountButton noRightBorder"
                     on-click="togleType" id="couponWeek" life="WEEK">WEEK</paper-button>
 
-                    <paper-button type="button" name="month" class="discountButton"
+                    <paper-button type="button" disabled$="{{metadata.published}}" name="month" class="discountButton"
                     on-click="togleType" id="couponMonth" life="MONTH">MONTH</paper-button>
                 </div>
             </div>

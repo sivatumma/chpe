@@ -93,13 +93,20 @@
                 pickedDate:String,
                 pickedTime:String,
                 dateTimeValue:String,
-                dateType:String,
+                dateType:{
+                	type:String,
+                	notify:true
+                },
                 dateLabel:String,
                 dateModal:String,
                 timeId:String,
                 dateId:String,
                 dateModalValue:{
                 	type:String,
+                	notify:true
+                },
+                metadata:{
+                	type:Object,
                 	notify:true
                 }
                
@@ -121,7 +128,8 @@
             	'iron-overlay-closed':'getdateTime'
             },
             observers:[
-            	'dateModalValueChanged(dateModalValue)'
+            	'dateModalValueChanged(dateModalValue)',
+            	'metadataChanged(metadata)'
             ],
             toggleLayer:function(){
             	console.log("what happened");
@@ -129,6 +137,9 @@
             	document.querySelector('#datePicker').class = 'toggleLayer';
             	console.log(document.querySelector('paper-date-picker').class);
             	console.log(document.querySelector('paper-date-picker'));
+            },
+            metadataChanged:function(metadata){
+
             },
             setDateTime:function(){
             		this.pickedDate = this.formatDate(document.querySelector("#"+this.dateId).date);

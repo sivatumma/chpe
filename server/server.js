@@ -86,15 +86,16 @@ app.use(session({
   secret: 'Welcome2C@llHe@lth'
 }));
 
+
 function fetchModels(req, res) {
   var modelId = req.params.modelId ? {
     "metadata.name": req.params.modelId
   } : {};
 
-  var queryreq = req.url.split('?');
-  var query = q2m(queryreq[1]);
+  // var queryreq = req.url.split('?');
+  // var query = q2m(queryreq[1]);
   var u1 = mongoose.model(req.params.modelName);
-  u1.find(query.criteria, function(err, data) {
+  u1.find({}, function(err, data) {
     if (err) res.status(500).send({
       status: "fail",
       message: err.message

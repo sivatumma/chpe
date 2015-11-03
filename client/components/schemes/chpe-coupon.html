@@ -124,13 +124,13 @@
                     <paper-card elevation="5" class="coupon-extend-card">
                         <div class="card-content margin0">
                         <service-rate-category id="srcCatCoupon" 
-                                behavior-data="{{schemeObj.behavior}}"></service-rate-category>
+                                behavior-data="{{schemeObj.behavior}}" metadata="{{schemeObj.metadata}}"></service-rate-category>
                          <div class="col-6">
                             <div class="col-12" style="margin:10px 0px 0px 0px;font-weight:bold;">
                                     <label style="margin-left:10px;">Locations :</label>
                                 </div>
                                 <div class="col-12 margin0">
-                                    <multi-value-suggestbox id="multi_suggest" is-multiple="multi" newInput="" url="{{locationsMemcacheURL}}"
+                                    <multi-value-suggestbox id="multi_suggest" is-multiple="multi" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/"
                                     options="{
                                     'allow_space': false,
                                     'allow_nonmatching': false}" 
@@ -216,11 +216,17 @@
                 'coupon-form.iron-form-invalid':'resetSteps'
             },
             observers: [
-                'schemeMethodChanged(schemeMethod)'
+                'schemeMethodChanged(schemeMethod)',
+                'schemeObjChanged(schemeObj)'
             ],
             enableButtons:function(event){
                 if(event){
                     this.formError = event.target.invalid;
+                }
+            },
+            schemeObjChanged:function(schemeObj){
+                if(document.getElementById("coupon-form")){
+                    chUtils.disableInputs(schemeObj.metadata.published,"coupon-form")
                 }
             },
             getCurrentPage : function(){
@@ -332,6 +338,7 @@
                 document.querySelector("#schemeSuccErrMessageToast").show();
                 var toast = document.querySelector("#schemeSuccErrMessageToast");
                 toast.text = "Please Recheck the form, you have missed the required fields some where...!";
+                   
             }
         });
     </script>

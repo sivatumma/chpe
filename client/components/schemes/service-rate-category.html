@@ -30,7 +30,7 @@
     <template id="srcCategory">
         <div class="col-12 srcRowSection margin0" behavior="{{behaviorData}}">
         <h4 class="col-12 margin0">Service Rate Categories
-        <paper-icon-button icon="icons:add" on-click="addSrc"></paper-icon-button>
+        <paper-icon-button icon="icons:add" disabled$="{{metadata.published}}" on-click="addSrc"></paper-icon-button>
         </h4>
           <template is="dom-repeat" items="{{behaviorData.serviceRateCategoryDiscounts}}" as="src">
             <div class="col-12 singleRow">
@@ -43,12 +43,12 @@
                             </multi-value-suggestbox>
                 </div>
                 <div class="col-4">
-                <chpe-discount id="srcDiscount" discount-modal="{{src}}"  discount-type-id="srcDiscountId" percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
+                <chpe-discount id="srcDiscount" metadata="{{metadata}}" discount-modal="{{src}}"  discount-type-id="srcDiscountId" percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
                 </chpe-discount>
                 </div>
                 <div class="col-2">
                   <span>
-                    <paper-icon-button class="pull-right" hidden$="{{showDeleteByRow(index)}}"
+                    <paper-icon-button class="pull-right" disabled$="{{metadata.published}}" hidden$="{{showDeleteByRow(index)}}"
                     mini icon="icons:delete" class="red" on-click="deleteSrc">
                     </paper-icon-button>
                   </span>
@@ -67,6 +67,10 @@
                     notify:true
                 },
                 behaviorData:{
+                    type:Object,
+                    notify:true
+                },
+                metadata:{
                     type:Object,
                     notify:true
                 }

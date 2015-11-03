@@ -16,7 +16,7 @@
             as="mopDiscounts">
                 <div class="col-6">
                     <label><span>{{mopDiscounts.mop}}</span></label>
-                    <chpe-discount id="{{mopDiscounts.mop}}" discount-modal="{{mopDiscounts}}"  percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
+                    <chpe-discount id="{{mopDiscounts.mop}}" metadata="{{metadata}}" discount-modal="{{mopDiscounts}}"  percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
                     </chpe-discount>
                 </div>
         </template>
@@ -27,6 +27,10 @@
             'is':'mode-of-payments',
              properties:{
                 behaviorData:{
+                    type:Object,
+                    notify:true
+                },
+                metadata:{
                     type:Object,
                     notify:true
                 }

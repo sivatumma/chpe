@@ -150,8 +150,8 @@
                             <paper-card elevation="5" class="addon-extend-card">
                                 <div class="card-content">
                                     <div class="margin0">
-                                        <service-rate-category id="addonSrc" behavior-data="{{schemeObj.behavior}}" class="margin0 addon-extend-card"></service-rate-category>
-                                        <service-level-discounts behavior-data="{{schemeObj.behavior}}" id="addonSlc" class="margin0 addon-extend-card">
+                                        <service-rate-category id="addonSrc" behavior-data="{{schemeObj.behavior}}" metadata="{{schemeObj.metadata}}" class="margin0 addon-extend-card"></service-rate-category>
+                                        <service-level-discounts behavior-data="{{schemeObj.behavior}}" id="addonSlc" metadata="{{schemeObj.metadata}}" class="margin0 addon-extend-card">
                                         </service-level-discounts>
                                     </div>
                                 </div>
@@ -177,8 +177,10 @@
                             <paper-card elevation="5" class="addon-extend-card">
                                 <div class="card-content">
                                     <div class="margin0">
-                                        <cumulative-bill-amounts id="addOnCap" behavior-data="{{schemeObj.behavior}}"></cumulative-bill-amounts>
-                                        <advance-paid-points id="addonApp" behavior-data="{{schemeObj.behavior}}"></advance-paid-points>
+                                        <cumulative-bill-amounts id="addOnCap" behavior-data="{{schemeObj.behavior}}" metadata="{{schemeObj.metadata}}">
+                                        </cumulative-bill-amounts>
+                                        <advance-paid-points id="addonApp" behavior-data="{{schemeObj.behavior}}" metadata="{{schemeObj.metadata}}">
+                                        </advance-paid-points>
                                     </div>
                                 </div>
                                 <div class="card-actions col-12" style="padding:0px;">
@@ -202,14 +204,15 @@
                             <paper-card elevation="5" class="addon-extend-card">
                                 <div class="card-content">
                                     <div class="col-12 margin0">
-                                        <discounts-on-doctor id="doctorDiscounts" behavior-data="{{schemeObj.behavior}}"></discounts-on-doctor>
+                                        <discounts-on-doctor id="doctorDiscounts" behavior-data="{{schemeObj.behavior}}" metadata="{{schemeObj.metadata}}">
+                                        </discounts-on-doctor>
                                     </div>
                                     <div class="col-12" style="margin-top:15px;">
-                                        <bill-range-discounts id="addonBsd" behavior-data="{{schemeObj.behavior}}">
+                                        <bill-range-discounts id="addonBsd" behavior-data="{{schemeObj.behavior}}" metadata="{{schemeObj.metadata}}">
                                         </bill-range-discounts>
                                     </div>
                                     <div class="col-12 margin0">
-                                        <mode-of-payments id="mopDiscounts" behavior-data="{{schemeObj.behavior}}">
+                                        <mode-of-payments id="mopDiscounts" metadata="{{schemeObj.metadata}}" behavior-data="{{schemeObj.behavior}}">
                                         </mode-of-payments>
                                     </div>
                                 </div>
@@ -317,6 +320,9 @@
                 formError:{
                     type:Boolean,
                     value:false
+                },
+                locationsMemcacheURL:{
+                    type:String
                 }
             },
             ready: function() {
@@ -327,6 +333,7 @@
                 this.saveBtnText = "SAVE";
                 this.publishBtnText = "SAVE + PUBLISH";
                 this.formError = false;
+                this.locationsMemcacheURL = this.config.urls.memcache.locations;
             },
             observers: [
                 'schemeObjChanged(schemeObj,schemeObj.metadata,schemeObj.behavior)',
@@ -340,9 +347,12 @@
                 'addon-form.iron-form-invalid':'resetSteps'
             },
             schemeObjChanged: function(schemeObj,metadata, behavior) {
-                //console.log(metadata);
-                //console.log('name is  ' + metadata.name);
-                //console.log('maximum Usages is  ' + behavior.maximumUsages);
+                if(metadata.published){
+                    if(document.getElementById("addon-form")){
+                        chUtils.disableInputs(metadata.published,"addon-form")
+                    }
+                }
+                
             },
             enableButtons: function(event) {
                 if(event){

@@ -508,11 +508,10 @@
            */
           editScheme : function(event){
             var sName = event.model.item.metadata.name;
-            
             var scheme = chUtils.getSchemeByName(this.allSchemes,sName);
-            if(!scheme.metadata.published){
-                this.navigateTo(scheme);
-            }
+            this.navigateTo(scheme);
+            console.log(schemeBase(scheme));
+
           },
 
           navigateTo:function(schemeObj){

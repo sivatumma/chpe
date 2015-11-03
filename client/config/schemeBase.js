@@ -17,7 +17,7 @@ function schemeBase(scheme){    //init metadata as per schema
 
     //init behavior as per schema
     var behavior = {
-        maximumUsages: 0,
+        maximumUsages: 10,
         startDate: "",
         endDate: "",
         discountType: "%",
