@@ -1,0 +1,110 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
+<dom-module id="coupon-type">
+<style type="text/css">
+    :host{
+        display: block;
+        margin-bottom:5px;
+    }
+    .discountBox{
+        display: inline-block;
+        padding: 0px;
+        width:320px;
+    }
+   .discountButton{
+        min-width:30px;
+        background: #f4f4f4;
+        border:1px solid #ccc;
+    }
+    .active{
+        color:#000 !important;
+        background: lightgreen !important;
+        box-shadow: none;
+    }
+    .noRightBorder{
+        border-right: none !important;
+    }
+
+    .btn-group {
+      display: inline-block;
+      vertical-align: middle;
+      float: left;
+      margin:0px;
+      width:320px;
+    }
+    .btn-group > paper-button {
+      float: left;
+      margin: 0px;
+     border-radius: 0px !important;
+     width:106.66666px;
+
+    }
+
+</style>
+    <template>
+        <div class="col-6" metadata="{{metadata}}">
+            <div class="discountBox"  id="couponTypeToggle" layout horizontaly>
+                <div class="btn-group">
+                    <paper-button type="button" disabled$="{{metadata.published}}" name="day" class="discountButton noRightBorder" 
+                    on-click="togleType" id="couponDay" life="DAY">DAY</paper-button>
+
+                    <paper-button type="button" disabled$="{{metadata.published}}" name="week" class="discountButton noRightBorder"
+                    on-click="togleType" id="couponWeek" life="WEEK">WEEK</paper-button>
+
+                    <paper-button type="button" disabled$="{{metadata.published}}" name="month" class="discountButton"
+                    on-click="togleType" id="couponMonth" life="MONTH">MONTH</paper-button>
+                </div>
+            </div>
+        </div>
+      		
+    </template>
+    <script>
+        Polymer({
+            is: 'coupon-type',
+            properties: {
+                couponTypeModal:String,
+                metadata:{
+                    type:Object,
+                    notify:true
+                }
+            },
+            ready:function(){
+
+            },
+            observers:[
+                'metadataChanged(metadata)'
+            ],
+            listeners:{
+              'couponTypeToggle.onClick':'togleType'
+            },
+            metadataChanged:function(metadata){
+                this.setCouponLife(metadata.defaultLife);
+            },
+            setCouponLife:function(couponType){
+                //first removing all classes and setting clicked element to active
+                chUtils.removeClass(document.querySelector("#couponWeek"),"active");
+                chUtils.removeClass(document.querySelector("#couponDay"),"active");
+                chUtils.removeClass(document.querySelector("#couponMonth"),"active");
+
+                if (couponType == "DAY") {
+                    chUtils.addClass(document.querySelector("#couponDay"),"active");
+                    this.metadata.defaultLife = couponType;
+                } else if(couponType == "WEEK"){
+                    chUtils.addClass(document.querySelector("#couponWeek"),"active");
+                    this.metadata.defaultLife = couponType;
+                }else if(couponType == "MONTH"){
+                    chUtils.addClass(document.querySelector("#couponMonth"),"active");
+                    this.metadata.defaultLife = couponType;
+                }
+            },
+            togleType:function(event){
+                var life = event.currentTarget.getAttribute('life');
+                console.log(life);
+                this.setCouponLife(life);
+            }
+          
+        });
+       
+        
+    </script>
+</dom-module>

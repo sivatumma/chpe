@@ -1,0 +1,46 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
+<dom-module id="mode-of-payments">
+    <style type="text/css">
+        label{
+            font-weight: bold;
+        }
+        h4{
+            margin-bottom: 10px;
+        }
+    </style>
+    <template id="mode-of-paymentsBlock">
+     <h4 class="col-12 margin0"> Discounts on Mode of Payments </h4>
+        <div class="col-12 margin0">
+        <template id="addonMop" is="dom-repeat" items="{{behaviorData.modeOfPaymentDiscounts}}" 
+            as="mopDiscounts">
+                <div class="col-6">
+                    <label><span>{{mopDiscounts.mop}}</span></label>
+                    <chpe-discount id="{{mopDiscounts.mop}}" metadata="{{metadata}}" discount-modal="{{mopDiscounts}}"  percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
+                    </chpe-discount>
+                </div>
+        </template>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            'is':'mode-of-payments',
+             properties:{
+                behaviorData:{
+                    type:Object,
+                    notify:true
+                },
+                metadata:{
+                    type:Object,
+                    notify:true
+                }
+             },
+            getPercentId:function(index){
+                return "mopPercentage_"+index;
+            },
+            getFlatId:function(index){
+                return "mopFlat_"+index;
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,27 @@
+{
+  "name": "polymer-starter-kit",
+  "private": true,
+  "dependencies": {
+    "am-step-progress": "https://github.com/MasterAM/am-step-progress.git#~0.0.1",
+    "iron-dropdown": "PolymerElements/iron-dropdown#1.0.1",
+    "iron-elements": "PolymerElements/iron-elements#1.0.0",
+    "iron-selector": "PolymerElements/iron-selector#1.0.1",
+    "neon-elements": "PolymerElements/neon-elements#1.0.0",
+    "page": "visionmedia/page.js#~1.6.3",
+    "paper-card": "PolymerElements/paper-card#1.0.1",
+    "paper-date-picker": "https://github.com/bendavis78/paper-date-picker.git#~1.0.3",
+    "paper-elements": "PolymerElements/paper-elements#1.0.1",
+    "paper-item": "PolymerElements/paper-item#1.0.1",
+    "paper-menu": "PolymerElements/paper-menu#1.0.1",
+    "paper-menu-button": "PolymerElements/paper-menu-button#1.0.1",
+    "paper-time-picker": "https://github.com/bendavis78/paper-time-picker.git#~1.0.3",
+    "platinum-elements": "PolymerElements/platinum-elements#1.0.1",
+    "more-routing": "https://github.com/PolymerLabs/more-routing.git",
+    "lodash": "https://github.com/lodash/lodash.git",
+    "google-chart": "https://github.com/GoogleWebComponents/google-chart.git#~1.0.3"
+  },
+  "devDependencies": {
+    "web-component-tester": "*",
+    "test-fixture": "PolymerElements/test-fixture#^1.0.0"
+  }
+}

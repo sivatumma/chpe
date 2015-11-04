@@ -1,0 +1,109 @@
+<script Slc="../../config/general.js"></script>
+<script Slc="../../config/schemeBase.js"></script>
+<dom-module id="service-level-discounts">
+    <style type="text/css">
+        .searchBoxInSlc{
+            width: 100%;
+        }
+        .searchBoxInSlc paper-input{
+            margin-left: 20px;
+        }
+        
+        .row{
+            width: 100%;
+            margin-top: 10px;
+        }
+        .discountBox.chpe-discount{
+            width: 320px !important;
+        }
+         paper-input {
+            margin-top: 0px !important;
+            margin-left: 10px;
+        }
+        .singleRow{
+            margin: 0px;
+        }
+        paper-fab{
+            margin-right: -5px;
+        }
+    </style>
+    <template>
+        <div  class="col-12 slcRowSection margin0" behavior="{{behaviorData}}">
+        <h4 class="col-12 margin0">Service Level  Discounts
+            <paper-icon-button icon="icons:add" disabled$="{{metadata.published}}" on-click="addSlc"></paper-icon-button>
+        </h4>
+          <template is="dom-repeat" items="{{behaviorData.serviceLevelDiscounts}}" as="slc">
+            <div class="col-12 singleRow">
+                <div class="col-6">
+                        <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceLevelDiscounts/"
+                                    options='{
+                                        "allow_space": false,
+                                        "allow_nonmatching": false
+                                    }' selected-items="{{slc.services}}" is-multiple="multi">
+                            </multi-value-suggestbox>
+                </div>
+                <div class="col-4">
+                    <chpe-discount id="slcDiscount" metadata="{{metadata}}" discount-modal="{{slc}}" 
+                     percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
+                    </chpe-discount>
+                </div>
+                <div class="col-2">
+                  <span>
+                    <paper-icon-button  disabled$="{{metadata.published}}" hidden$="{{showDeleteByRow(index)}}" class="pull-right"
+                    mini icon="icons:delete" class="red action" on-click="deleteSlc">
+                    </paper-icon-button>
+                  </span>
+                </div>
+            </div>      
+          </template> 
+        </div>
+
+    </template>
+    <script>
+        Polymer({
+            'is':'service-level-discounts',
+             properties:{
+                "foodArray":{
+                    type:Array,
+                    notify:true
+                },
+                behaviorData:{
+                    type:Object,
+                    notify:true
+                },
+                metadata:{
+                    type:Object,
+                    notify:true
+                }
+            },
+            ready:function(){
+                // console.log(this.behavior.serviceLevelDiscounts);
+            },
+            showDeleteByRow:function(row){
+                if(row==0){
+                    return true;
+                }else{
+                    return false;
+                }
+            },
+            getPercentId:function(index){
+                return "slcPercentage_"+index;
+            },
+            getFlatId:function(index){
+                return "slcFlat_"+index;
+            },
+            listeners:{
+                "onClick":"addSlc",
+            },
+            //add or remove Slc categories
+            addSlc :function(e){
+                this.push('behaviorData.serviceLevelDiscounts', {discount:0,discountType:"%",maxLength:9,services:[]});
+            },
+            deleteSlc:function(e){
+                if(e.model.index!=0){
+                    this.splice('behaviorData.serviceLevelDiscounts',e.model.index,1);
+                }
+            }
+        });
+    </script>
+</dom-module>

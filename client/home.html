@@ -1,0 +1,250 @@
+<!doctype html>
+<!--@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt-->
+
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="The Pricing Engine Team, Callhealth.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="The Pricing Engine Team, Callhealth." />
+    <title>Schemes Dashboard</title>
+    <!-- Place favicon.ico in the `app/` directory -->
+
+    <!-- Chrome for Android theme color -->
+    <meta name="theme-color" content="#303F9F">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Tile color for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="CHPE">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
+    <link rel="apple-touch-icon" href="/assets/images/touch/apple-touch-icon.png">
+
+    <!-- Tile icon for Win8 (144x144) -->
+    <meta name="msapplication-TileImage" content="../assets/images/favicon.png">
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="/assets/styles/main.css">
+    <!-- endbuild-->
+
+    <script src="external/webcomponentsjs/webcomponents-lite.js"></script>
+    <!-- endbuild -->
+
+    <script src="external/lodash/lodash.min.js"></script>
+
+    <!-- will be replaced with elements/elements.vulcanized.html -->
+    <link rel="import" href="/components/elements.html">
+    <!-- endreplace-->
+    <script src="../config/schemeBase.js"></script>
+    <script src="../config/general.js"></script>
+    <script src="../lib/chUtils.js"></script>
+</head>
+
+
+
+<body unresolved class="fullbleed layout vertical">
+    <span id="browser-sync-binding"></span>
+    <div id="dashboardContainer">
+    <template is="dom-bind" id="app">
+        <iron-media-query query="(max-width: 460px)" query-matches="{{queryMatches}}"></iron-media-query>
+        <paper-drawer-panel id="paperDrawerPanel" responsive-width="767px">
+            <!-- Drawer Scroll Header Panel -->
+            <paper-scroll-header-panel drawer fixed>
+
+                <!-- Drawer Toolbar -->
+                <paper-toolbar id="drawerToolbar">
+                    <a href="/">
+                    <span class="paper-font-title">
+                        <img src="assets/images/ch-logo.png"/ width="200px" height="30px"></span>
+                    </a>
+                </paper-toolbar>
+
+                <div class="favicon">
+                    <img  src="assets/images/schemes-logo.png" />
+                    <h3>Schemes</h3>
+                </div>
+                <!-- Drawer Content -->
+                <more-route-selector selected-params="{{params}}">
+                    <paper-menu class="pad" id="chepeMenu"  attr-for-selected="route" selected="{{route}}" on-iron-select="onMenuSelect">
+                            <paper-item route="home" on-click="getTitle" title="">
+                                <a href="{{makeUrl('home')}}"> 
+                                    <iron-icon icon="home"></iron-icon>
+                                    <span>Home</span>
+                                </a>
+                            </paper-item>
+                            <paper-item route="createAddOn" on-click="getTitle" title="Create Addon">
+                                <a  href="{{makeUrl('createAddOn')}}"> 
+                                    <iron-icon src="assets/images/addon.png"></iron-icon>
+                                    <span>Create Addon</span>
+                                </a>
+                            </paper-item>
+                            <paper-item route="createCoupon" on-click="getTitle" title="Create Coupon">
+                                <a href="{{makeUrl('createCoupon')}}"> 
+                                    <iron-icon src="assets/images/coupon.png"></iron-icon>
+                                    <span>Create Coupon</span>
+                                </a>
+                            </paper-item>
+                            <paper-item route="createGiftCard" on-click="getTitle" title="Create Giftcard">
+                                <a href="{{makeUrl('createGiftCard')}}"> 
+                                    <iron-icon src="assets/images/giftcard.png"></iron-icon>
+                                    <span>Create Gift Card</span>
+                                </a>
+                            </paper-item>
+                    </paper-menu>
+                </more-route-selector>
+            </paper-scroll-header-panel>
+
+
+            <!-- Main Area -->
+            <paper-scroll-header-panel main keep-condensed-header fixed>
+
+                <!-- Main Toolbar -->
+                <paper-toolbar id="mainToolbar">
+                    <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle>
+                    </paper-icon-button>
+                    <span class="flex"></span>
+
+                    <!-- Toolbar icons -->
+                    <div class="col-2 text-right topLevelIcons">
+                    <span class="topIcons">
+                        <search-bar></search-bar>
+                    </span>
+                    <span><user-profile user-object="{{userInfo}}"></user-profile></span>
+                    </div>
+
+                    <!-- Application name -->
+                    <div class="middle middle-container center horizontal layout">
+                        <div class="app-name">
+                            <template is="dom-if" if="{{queryMatches}}">
+                              Schemes Dashboard
+                            </template>
+                             <template is="dom-if" if="{{!queryMatches}}">
+                               Schemes Dashboard - The Guts of Healthcare Industry
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Application sub title -->
+                    <div class="bottom bottom-container center horizontal layout">
+                        <div class="bottom-title paper-font-subhead"></div>
+                    </div>
+
+                </paper-toolbar>
+
+                <paper-toolbar id="iconToolBar" class="fixed padding0">
+                    <div class="col-5 margin0 schemeHeading">
+                        <h1 class="col-11">
+                            <template is="dom-if" if="{{isHome}}">
+                                <span>Schemes</span>
+                            </template>
+                            <template is="dom-if" if="{{isAddon}}">
+                                <span>Create Addon</span>
+                            </template>
+                            <template is="dom-if" if="{{isCoupon}}">
+                                <span>Create Coupon</span>
+                            </template>
+                            <template is="dom-if" if="{{isGiftCard}}">
+                                <span>Create Gift Card</span>
+                            </template>
+                            <template is="dom-if" if="{{isPreviewScheme}}">
+                                <span class="preview-scheme-name">{{previewSchemeName}}</span>
+                            </template>
+                        </h1>
+                    </div>
+                    <div class="col-5 margin0">&nbsp;</div> 
+                         <template is="dom-if" if="{{isHome}}">
+                            
+                            <div class="col-2 text-right" style="margin-right:25px;">
+                                <paper-icon-button icon="settings"></paper-icon-button>
+                                <paper-icon-button icon="{{toggleListGridIcon}}" view="list" 
+                                on-click="toggleListGrid" class="toggleListGrid">
+                                </paper-icon-button>
+                            </div>
+                        </template>
+                    <!-- <div class="col-2 pull-right headerIcons">
+                        <paper-icon-button icon="link"></paper-icon-button>
+                        <paper-icon-button icon="settings"></paper-icon-button>
+                        <paper-icon-button icon="{{toggleListGridIcon}}" view="list" 
+                        on-click="toggleListGrid">
+                        </paper-icon-button>
+                    </div>
+                    <div class="col-2 pull-right headerIcons">
+                        <paper-icon-button icon="link"></paper-icon-button>
+                        <paper-icon-button icon="settings"></paper-icon-button>
+                        <paper-icon-button icon="{{toggleListGridIcon}}" view="list" 
+                        on-click="toggleListGrid">
+                        </paper-icon-button>
+                    </div>
+                    <div class="col-2 pull-right headerIcons">
+                        <paper-icon-button icon="link"></paper-icon-button>
+                        <paper-icon-button icon="settings"></paper-icon-button>
+                        <paper-icon-button icon="{{toggleListGridIcon}}" view="list" 
+                        on-click="toggleListGrid">
+                        </paper-icon-button>
+                    </div> -->
+                </paper-toolbar>
+                <more-route-selector selectedParams="{{params}}">  
+
+                    <iron-pages attr-for-selected="route" selected="{{route}}">
+                        <section route="home">
+                           <schemes-as-cards schemes-obj="{{allSchemes}}"></schemes-as-cards>
+                        </section>
+                        <section route="createAddOn" class="addonBg">
+                              <chpe-addon id="adddonComp" scheme-obj="{{addonAsScheme}}" 
+                              scheme-method="{{addonMethod}}" current-step="{{addonStage}}"></chpe-addon>
+                        </section>
+                        <section route="createCoupon" class="couponBg">
+                              <chpe-coupon scheme-obj="{{couponAsScheme}}" scheme-method="{{couponMethod}}"
+                              current-step="{{couponStage}}" ></chpe-coupon>
+                        </section>
+                        <section route="createGiftCard" class="giftCardBg">
+                              <chpe-gift-card scheme-obj="{{giftcardAsScheme}}" scheme-method="{{giftcardMethod}}" current-step="{{giftCardStage}}"></chpe-gift-card>
+                        </section>
+                        <section route="previewScheme" class="previewSchemeBg">
+                              <preview-scheme scheme-name="{{previewSchemeName}}"></preview-scheme>
+                        </section>
+                    </iron-pages>
+
+                </more-route-selector>
+                </div>
+            </paper-scroll-header-panel>
+        </paper-drawer-panel>
+
+        <paper-toast id="schemeSuccErrMessageToast" text=""></paper-toast>
+         <iron-ajax id="userAjax" auto url="/"  
+         handle-as="json" headers='{"X-Requested-With": "XMLHttpRequest"}'
+         method="HEAD" on-error="handleUserError" 
+         on-response="handleUserResponse"></iron-ajax>
+
+
+    </template>
+    </div>
+
+    <!-- build:js scripts/app.js -->
+    <script src="assets/scripts/app.js"></script>
+    <!-- endbuild-->
+</body>
+<div align="center" style="margin:18% auto; display:none;" id="pageLoading"> 
+    <paper-spinner class="blue" active ></paper-spinner>
+</div>
+
+</html>
+
+

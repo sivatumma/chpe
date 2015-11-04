@@ -1,0 +1,215 @@
+<script src="../../../lib/chUtils.js"></script>
+<script src="../../config/general.js"></script>
+
+<dom-module id="search-bar">
+     <style>
+        :host{
+            display: inline-block;
+        }
+        #search {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flexbox;
+            display: -o-flex;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -moz-align-items: center;
+            -ms-align-items: center;
+            -o-align-items: center;
+            align-items: center;
+            -webkit-box-flex: 1;
+            -webkit-flex: 0 0 auto;
+            -moz-flex: 0 0 auto;
+            -ms-flex: 0 0 auto;
+            -o-flex: 0 0 auto;
+            flex: 0 0 auto;
+            width: 40px;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            background-color: inherit
+        }
+
+        #search[show] {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 0 16px;
+            margin-left: 0;
+            background:#3f51b5;
+            z-index: 10;
+        }
+
+        #search[show] input {
+            padding: 10px;
+            visibility: visible
+        }
+        #search ul{
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 50px;
+            background: #fff;
+            border: 1px solid #ccc;
+            z-index:11;
+            padding: 0 5px;
+        }
+        #search ul[display]{
+            visibility: visible;
+        }
+         #search ul li{
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            color: #000;
+            padding: 10px 0px;
+            list-style-type:none;
+         }
+
+        input {
+            background-color: inherit;
+            border: none;
+            font-size: 20px;
+            outline: none;
+            padding: 0;
+            color: inherit;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1 0 0;
+            -moz-flex: 1 0 0;
+            -ms-flex: 1 0 0;
+            -o-flex: 1 0 0;
+            flex: 1 0 0;
+            visibility: hidden;
+            -webkit-appearance: none
+        }
+        input::-webkit-calendar-picker-indicator {
+          display: none;
+        }
+        datalist{
+            background: #fff;
+            border:1px solid #ccc;
+            width: 300px;
+        }
+        .option{
+            border:1px solid #ccc;
+            padding: 10px;
+            background: #fff;
+        }
+        .option:hover{
+            background: #3f51b5;
+            color: #fff;
+        }
+        li option{
+           background: #3f51b5;
+            color: #fff;
+        }
+
+    </style>
+    <template>
+        <div id="search" show$="{{show}}" on-click="toggleSearch">
+            <paper-icon-button icon="search"></paper-icon-button>
+            <input is="iron-input" list="mylist" bind-value="{{searchInput}}" type="search" id="input" on-keyup="onKeyPress" autocomplete="off">
+            <!-- <ul display$="{{list}}">
+                <template is="dom-repeat" items="{{suggestions}}" as="option">
+                    <li on-tap="pickItem">{{option}}</li>
+                </template>
+            </ul> -->
+            <datalist id="mylist">
+                <template is="dom-repeat" items="{{suggestions}}" as="option">
+                    <li><option class="option">{{option}}</option></li>
+                </template>
+            </datalist>
+        </div>
+        <iron-ajax  id="searchSchemes" content-type="application/json"   method="GET"  
+         handle-as="json" on-error="handleError" on-response="handleResponse"  debounce-duration="300"></iron-ajax>
+    </template>
+    <script>
+    Polymer({
+        is: 'search-bar',
+
+        properties: {
+            show: {
+                type: Boolean,
+                value: false,
+                notify:true
+            },
+            searchInput: {
+                type: String,
+                value: ''
+            },
+            suggestions:{
+                type:Array,
+                notify:true
+            },
+            display:{
+                type:Boolean,
+                value:false
+            }
+        },
+        ready:function(){
+            this.serachObj = [];
+            this.config = generalConfig() || {};
+        },
+        observers:[
+            'searchInputChanged(searchInput)'
+        ],
+        searchInputChanged:function(input){
+            if(input.length>0){
+                this.$.searchSchemes.url='/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/schemeNames/'+input;
+                this.$.searchSchemes.method='GET';
+                this.$.searchSchemes.headers={'API_KEY':this.config.urls.memcache.API_KEY};
+                this.$.searchSchemes.generateRequest();
+                //this.searchSchemes
+            }
+        },
+        handleResponse: function(event) {
+          if(event.detail.response!=null && event.detail.response!==undefined){
+                this.suggestions = event.detail.response;
+                console.log(this.suggestions);
+            }else{
+                this.suggestions = [];
+            }     
+         },
+         handleError:function(event){
+            console.log(event);
+         },
+         pickItem:function(event){
+            if(event){
+                event.stopPropagation();
+            }
+            if(chUtils.isEmpty(event.target.innerText)===false){
+                this.searchInput = event.target.innerText;
+            }
+         },
+        toggleSearch: function(e) {
+            if (e) { // comes first
+                e.stopPropagation();
+            }
+            //cosnole.log(e.target);
+            if (e.target === this.$.input) {
+                return;
+            }
+            this.show = !this.show;
+            
+            this.async(function() {
+                this.$.input.focus();
+            });
+        },
+
+        onKeyPress: function(e) {
+            if (e.keyCode == 13) { // Enter
+                var q = this.searchInput;
+                if(chUtils.isEmpty(q)===false){
+                    this.show = false;
+                    this.searchInput = '';
+                    MoreRouting.navigateTo('previewScheme', {schemeName: q});
+                    app.getCurrentPage();
+                }
+            }
+        }
+    });
+    </script>
+</dom-module>

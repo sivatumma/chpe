@@ -1,0 +1,50 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
+<dom-module id="discounts-on-doctor">
+    <style type="text/css">
+        label{
+            font-weight: bold;
+        }
+        h4{
+            margin-bottom: 10px;
+        }
+    </style>
+    <template id="doctrosDiscountBlock">
+    <h4 class="col-12 margin0">Discounts on Doctor Allocation</h4>
+        <div class="col-12">
+            <template is="dom-repeat" items="{{behaviorData.doctorLevelDiscounts}}" as="dda">
+                <templte>
+                    <div class="col-6">
+                        <label><span class="upperCase">{{dda.type}}</span> Chosen:</label>
+                        <chpe-discount id="{{dda.type}}" metadata="{{metadata}}" discount-modal="{{dda}}" percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
+                        </chpe-discount>
+                    </div>
+                </templte>
+            </template>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            'is':'discounts-on-doctor',
+             properties:{
+                behaviorData:{
+                    type:Object,
+                    notify:true
+                },
+                metadata:{
+                    type:Object,
+                    notify:true
+                }
+             },
+            ready:function(){
+
+            },
+            getPercentId:function(index){
+                return "ddaPercentage_"+index;
+            },
+            getFlatId:function(index){
+                return "ddaFlat_"+index;
+            }
+        });
+    </script>
+</dom-module>

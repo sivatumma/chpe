@@ -1,0 +1,59 @@
+<dom-module id="scheme-chart">
+	<template>
+		  <div id="{{previewGraphId}}"  style="width: 900px; height: 500px"></div>
+	</template>
+	<script>
+		Polymer({
+			is:'scheme-chart',
+			ready:function(){
+				 
+			},
+			properties:{
+				chartOptions:{
+					type:Object,
+					notify:true,
+					value:{
+			        	title: 'Company Performance',
+			        	curveType: 'function',
+			        	legend:{ position: 'bottom'}
+		        	}
+				},
+				previewGraphId:{
+					type:String,
+					notify:true,
+					value:'line-chart-1'
+				},
+				chartData:{
+					type:Array,
+					notify:true
+				}
+			},
+			observers:[
+			 	'chartDataChanged(chartData)'
+			],
+			chartDataChanged:function(chartData){
+			 	if(chUtils.isEmpty(chartData)===false){
+				 	console.log(google);
+			 		console.log(this.chartData,this.chartOptions,this.previewGraphId)
+			 		google.setOnLoadCallback(this.drawChart());
+			 	}
+			},
+		    drawChart:function(){
+		       var chart = new google.visualization.LineChart(document.getElementById(this.previewGraphId));
+
+        		chart.draw(this.chartData, this.chartOptions);
+		    }
+
+		});
+	</script>
+</dom-module>
+<script src="https://www.google.com/jsapi"></script>
+
+    <script type="text/javascript"
+          src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>

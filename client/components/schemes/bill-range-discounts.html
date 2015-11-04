@@ -1,0 +1,121 @@
+
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
+<dom-module id="bill-range-discounts">
+    <style type="text/css">
+        .searchBoxInSrc{
+            width: 100%;
+        }
+        .searchBoxInSrc paper-input{
+            margin-left: 20px;
+        }
+        
+        .row{
+            width: 100%;
+            margin-top: 10px;
+        }
+        .discountBox.chpe-discount{
+            width: 320px !important;
+        }
+         paper-input {
+            margin-top: 0px !important;
+            margin-left: 10px;
+        }
+        .bsdBox{
+            border-bottom: 1px solid #ccc;
+            margin: 10px 0px;
+        }
+        #bsdBox paper-fab{
+            margin-right: -5px;
+        }
+    </style>
+    <template id="bsdBox">
+      <div  class="col-12 bsdBox margin0">
+        <h4 class="col-12 margin0">Bill Slabs - Discounts on bill ranges
+            <span> 
+                <paper-icon-button icon="icons:add" disabled$="{{metadata.published}}" on-click="addBsd">
+                </paper-icon-button>
+            </span>
+        </h4>
+          <template is="dom-repeat" items="{{behaviorData.billValueDiscounts}}" as="bsd">
+            <div class="col-12 margin0">
+                <div class="col-6">
+                       <div class="col-6">
+                            <paper-input name="from" no-label-float label="From" 
+                       value="{{bsd.billRange.from}}"></paper-input>
+                       </div>
+                       <div class="col-6">
+                            <paper-input name="to" no-label-float label="To" 
+                       value="{{bsd.billRange.to}}"></paper-input>
+                       </div>
+                </div>
+                 <div class="col-5">
+                    <chpe-discount id="{{bsd.type}}"  metadata="{{metadata}}" discount-modal="{{bsd}}"  
+                        percentage-id="{{getPercentId(index)}}" 
+                        flat-id="{{getFlatId(index)}}">
+                     </chpe-discount> 
+                </div>
+                <div class="col-1">
+                    <paper-icon-button disabled$="{{metadata.published}}" hidden$="{{showDeleteByRow(index)}}"class="pull-right" mini icon="icons:delete" class="red" on-click="deleteBsd"></paper-icon-button>
+                </div>
+            </div>
+          </template> 
+        </div>
+    </template>
+    <script>
+        Polymer({
+            'is':'bill-range-discounts',
+             properties:{
+                behaviorData:{
+                    type:Object,
+                    notify:true
+                },
+                metadata:{
+                    type:Object,
+                    notify:true
+                 }
+            },
+            ready:function(){
+                   // console.log(this.behavior.serviceRateCategoryDiscounts);
+            },
+            listeners:{
+                "onClick":"addBsd",
+            },
+            getPercentId:function(index){
+                return "bsdPercentage_"+index;
+            },
+            getFlatId:function(index){
+                return "bsdFlat_"+index;
+            },
+            showDeleteByRow:function(row){
+                if(row==0){
+                    return true;
+                }else{
+                    return false;
+                }
+            },
+            //add or remove src categories
+            addBsd :function(e){
+                var obj = {
+                        billRange: {
+                            from: "",
+                            to: ""
+                        },
+                        discount: 0,
+                        discountType: "%",
+                        maxLength:9
+                    };
+                this.push('behaviorData.billValueDiscounts',obj);
+            },
+            deleteBsd:function(e){
+                if(e.model.index!=0){
+                    this.splice('behaviorData.billValueDiscounts',e.model.index,1);
+                }
+            },
+            doChange:function(){
+                console.log(this);
+                this.fire('render');
+            }
+        });
+    </script>
+</dom-module>

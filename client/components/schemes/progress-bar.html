@@ -1,0 +1,43 @@
+<dom module id="progress-bar">
+<style type="text/css">
+		.leftnav {
+            position: fixed;
+            top:155px;
+            left: 256px;
+            z-index: 11;
+            min-height: 160px;
+        }
+        
+        .leftnav paper-item {
+            cursor: pointer;
+        }
+        
+        .leftnav .iron-selected {
+            background: #4fc3f7 !important;
+            border-radius: 0px;
+        }
+</style>
+<template>
+	<paper-material class="leftnav">
+	<paper-menu selected="0"  style="padding:0px;">
+		<!-- <template is="dom-repeat" items="{{noOfSteps}}" as="step"> -->
+		    <paper-item>1</span></paper-item>
+		    <paper-item>1</span></paper-item>
+		<!-- </template> -->
+	</paper-menu>
+	</paper-material>
+</template>
+    <script>
+    	Polymer({
+    		is:'progress-bar',
+    		properties:{
+    			selectedItem:Number,
+    			noOfSteps:Array
+    		},
+    		ready:function(){
+    			console.log(this.noOfSteps);
+    		}
+
+    	});
+	</script>
+</dom-module>

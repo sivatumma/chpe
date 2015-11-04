@@ -1,0 +1,156 @@
+
+<dom-module id="chpe-discount">
+<style type="text/css">
+    :host{
+        display: block;
+        margin-bottom: 15px;
+    }
+    .discountBox{
+        display: inline-block;
+        margin-left: 10px;
+        padding: 0px 0px 5px 0px;
+        margin-top: 10px;
+        width:248px;
+    }
+   .discountButton{
+        min-width:30px;
+        background: #f4f4f4;
+        border:1px solid #ccc;
+    }
+    .active{
+        color:#000 !important;
+        background: lightgreen !important;
+        box-shadow: none;
+    }
+    .noRightBorder{
+        border-right: none !important;
+    }
+    label{
+        float: left;
+        line-height:40px;
+        margin-right: 10px;
+    }
+    .btn-group {
+      display: inline-block;
+      vertical-align: middle;
+      float: left;
+      margin:0px;
+      width: 40%;
+    }
+    .btn-group > paper-button:first-child {
+      float: left;
+      margin: 0px;
+     border-top-left-radius: 20px !important;
+     border-bottom-left-radius: 20px !important;
+     width:50%;
+
+    }
+    .btn-group > paper-button:nth-child(2) {
+      float: left;
+      margin: 0px;
+      border-radius:0px;
+     width:46%;
+
+    }
+    .discountInput{
+        float:left;
+        display: inline-block;
+        margin: 0;
+        line-height: 28px;
+        height: 36px;
+        width:58%;
+    }
+    .margin-bottom15{
+        margin-bottom: 15px;
+    }
+
+</style>
+    <template>
+        <div class="col-6 margin-bottom15" metadata="{{metadata}}">
+            <div class="discountBox"  id="discountToggle" layout horizontal>
+                <div class="btn-group">
+                    <paper-button  toggles disabled$="{{metadata.published}}"  class="discountButton noRightBorder active" 
+                    on-click="togleDiscount" type="%"  id="{{percentageId}}">%</paper-button>
+                    <paper-button  toggles disabled$="{{metadata.published}}"  type="FLAT" class="discountButton" on-click="togleDiscount"  id="{{flatId}}" >Flat</paper-button>
+                    </div>
+                    <div class="discountInput col-6">
+                        <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
+                         error-message="Max 999 if Flat ; 10 if %" value="{{discountModal.discount}}"></paper-input>
+                    </div>
+            </div>
+         </div>
+      		
+    </template>
+    <script>
+        Polymer({
+            is: 'chpe-discount',
+            properties: {
+                discountId:String,
+                percentageId:String,
+                flatId:String,
+                discount:String,
+                discountType:String,
+                flatType:String,
+                discountModal:{
+                    type:Object,
+                    notify:true
+                },
+                discountValue:String,
+                scheme:Object,
+                metadata:{
+                    type:Object,
+                    notify:true
+                }
+        
+            },
+            observers: [
+                'discountModalChanged(discountModal.discountType)'
+              ],
+            discountModalChanged:function(discountType){
+                this.setDiscount(discountType);
+            },
+            ready:function(){
+                this.discountLength  = 10;
+                this.discountPattern = "^([0-10])$";
+            },
+            listeners:{
+              'discountToggle.onClick':'togleDiscount'
+            },
+
+            setDiscount:function(discountType){
+                //first removing all classes and setting clicked element to active
+                chUtils.removeClass(document.querySelector("#"+this.percentageId),"active");
+                chUtils.removeClass(document.querySelector("#"+this.flatId),"active");
+
+                if (discountType == "%") {
+                    if(this.discountModal.maxLength!==undefined){
+                        this.discountModal.maxLength = this.discountLength = 10;
+                    }else{
+                        this.discountLength = 10;
+                    }
+                    this.discountPattern = "^([0-10])$";
+                    chUtils.addClass(document.querySelector("#"+this.percentageId),"active");
+                    this.discountModal.discountType = discountType; 
+                } else if(discountType=="FLAT") {
+                    chUtils.addClass(document.querySelector("#"+this.flatId),"active");
+
+                    if(this.discountModal.maxLength!==undefined){
+                        this.discountModal.maxLength = this.discountLength = 999;
+                    }else{
+                        this.discountLength = 999;
+                    }
+                    this.discountPattern = "^([0-999])$";
+                    this.discountModal.discountType = discountType; 
+                }
+            },
+
+            togleDiscount:function(event){
+                var discountType = event.currentTarget.getAttribute('type');
+                this.setDiscount(discountType);
+            }
+          
+        });
+       
+        
+    </script>
+</dom-module>

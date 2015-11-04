@@ -1,0 +1,180 @@
+<dom-module name="app" id="main-element">
+    <template is="dom-bind">
+
+        <paper-drawer-panel id="paperDrawerPanel">
+            <!-- Drawer Scroll Header Panel -->
+            <paper-scroll-header-panel drawer fixed>
+
+                <!-- Drawer Toolbar -->
+                <paper-toolbar id="drawerToolbar">
+                    <span class="paper-font-title"><img src="assets/images/ch-logo.png"/></span>
+                </paper-toolbar>
+
+                <!-- Drawer Content -->
+                <more-route-selector selectedParams="{{params}}">
+                    <paper-menu class="pad" id="chepeMenu"  attr-for-selected="route" selected="{{route}}" on-iron-select="onMenuSelect">
+                            <paper-item route="home">
+                                <a href="{{makeUrl('home')}}"> 
+                                    <iron-icon icon="home"></iron-icon>
+                                    <span>Home</span>
+                                </a>
+                            </paper-item>
+                            <paper-item route="schemes">
+                                <a href="{{makeUrl('schemes','')}}"> 
+                                    <iron-icon icon="social:pages"></iron-icon>
+                                    <span>View Scheme</span>
+                                </a>
+                            </paper-item>
+                            <paper-item route="scheme-info">
+                                <a href="{{makeUrl('scheme-info','addon')}}"> 
+                                    <iron-icon icon="star-half"></iron-icon>
+                                    <span>Create Addon</span>
+                                </a>
+                            </paper-item>
+                            <paper-item route="scheme-info">
+                                <a href="{{makeUrl('scheme-info','coupon')}}"> 
+                                    <iron-icon icon="star-half"></iron-icon>
+                                    <span>Create Coupon</span>
+                                </a>
+                            </paper-item>
+                            <paper-item route="scheme-info">
+                                <a href="{{makeUrl('scheme-info','giftcard')}}"> 
+                                    <iron-icon icon="star-half"></iron-icon>
+                                    <span>Create Gift Card</span>
+                                </a>
+                            </paper-item>
+                             
+
+                            <!-- <paper-item route="schemes">
+                                <a href="{{makeUrl('scheme-info',{name:'Coupon'})}}"> 
+                                    <iron-icon icon="star-half"></iron-icon>
+                                    <span>Create Coupon</span>
+                                </a>
+                            </paper-item> -->
+                           <!--  <iron-selector label="home" route="home">
+                                <a  href="{{urlFor('home')}}">
+                                    <iron-icon icon="home"></iron-icon>
+                                    <span>Home</span>
+                                </a>
+                            </iron-selector> -->
+
+                            <!-- <iron-selector route="schemes">
+                              <a  href="{{urlFor('schemes')}}">
+                                <iron-icon icon="social:pages"></iron-icon>
+                                <span>View Scheme</span>
+                             </a>
+                            </iron-selector> -->
+
+                            <!-- <iron-selector route="schemes">
+                              <a  href="{{urlFor('create-scheme',{type:'Coupon'})}}">
+                                <iron-icon icon="star-half"></iron-icon>
+                                <span>Create Coupon</span>
+                             </a>
+                            </iron-selector> -->
+
+                    </paper-menu>
+                </more-route-selector>
+            </paper-scroll-header-panel>
+
+
+            <!-- Main Area -->
+            <paper-scroll-header-panel main condenses keep-condensed-header>
+
+                <!-- Main Toolbar -->
+                <paper-toolbar id="mainToolbar" class="tall">
+                    <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+                    <span class="flex"></span>
+
+                    <!-- Toolbar icons -->
+                    <paper-icon-button icon="refresh"></paper-icon-button>
+                    <paper-icon-button icon="search"></paper-icon-button>
+
+                    <!-- Application name -->
+                    <div class="middle middle-container center horizontal layout">
+                        <div class="app-name">Schemes Dashboard</div>
+                    </div>
+
+                    <!-- Application sub title -->
+                    <div class="bottom bottom-container center horizontal layout">
+                        <div class="bottom-title paper-font-subhead">The Guts of Healthcare Industry</div>
+                    </div>
+
+                </paper-toolbar>
+
+                <paper-toolbar id="iconToolBar" class="fixed">
+                    <link-icon icon-type="link" icon-links='[{"route":"users"},{"route":"info"},{"route":"test"}]'></link-icon>
+                    <link-icon icon-type="social:share"></link-icon>
+                    <link-icon icon-type="visibility"></link-icon>
+                    <link-icon icon-type="list"></link-icon>
+                    <link-icon icon-type="settings"></link-icon>
+                    <link-icon icon-type="face"></link-icon>
+                    <link-icon icon-type="apps"></link-icon>
+                </paper-toolbar>
+
+                <paper-dialog heading="Title for dialog" transition="paper-transition-center">
+                </paper-dialog>
+
+                <more-route-selector selectedParams="params">  
+                    <iron-pages attr-for-selected="route" selected="{{route}}">
+                        <section route="home">
+                           <schemes-as-cards></schemes-as-cards>
+                        </section>
+
+                        <section route="schemes" hidden?="{{params.schemeName == ''}}">
+                            <basic-scheme></basic-scheme>
+                            <a href="{{makeUrl('scheme-info','coupon')}}"> 
+                                    <span>Create Coupon</span>
+                                </a>
+                            <!-- <paper-material elevation="1">
+                                <h2 class="paper-font-display2">View Schemes</h2>
+                                <p>This is where we show the complete Schemes created by the currently logged-In User. Type-Wise. We will show grid and list views, and provide a plethora of options the user can do.</p>
+                            </paper-material> -->
+                        </section>
+
+                        <section route="scheme-info">
+                            Hi,
+                              <span>{{this.params.pop().schemeName}}</span>
+                              <span>{{MoreRouting}}</span>
+                        </section>
+
+                    </iron-pages>
+
+                </more-route-selector>
+                </div>
+            </paper-scroll-header-panel>
+        </paper-drawer-panel>
+
+
+        <!-- Uncomment next block to enable Service Worker support (1/2) -->
+        
+ <!--<paper-toast id="caching-complete"
+                 duration="6000"
+                 text="Caching complete! This app will work offline.">
+    </paper-toast>
+
+    <platinum-sw-register auto-register
+                          clients-claim
+                          skip-waiting
+                          on-service-worker-installed="displayInstalledToast">
+      <platinum-sw-cache default-cache-strategy="networkFirst"
+                         precache-file="precache.json">
+      </platinum-sw-cache>
+    </platinum-sw-register>-->
+        <paper-toast id="schemeSuccErrMessageToast" text=""></paper-toast>
+    </template>
+
+    <script type="text/javascript">
+ Polymer({
+     is: "main-element",
+     ready: function() {},
+     makeUrl: function(route, schemeName) {
+         return MoreRouting.urlFor(route, {
+             schemeName: schemeName
+         });
+     },
+     onMenuSelect:function(e){
+     }
+
+ }); </script>
+
+</dom-module>

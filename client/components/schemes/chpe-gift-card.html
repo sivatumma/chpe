@@ -1,0 +1,341 @@
+<dom-module id="chpe-gift-card">
+    <style type="text/css">
+        .submitButtons {
+            text-align: right;
+            margin: 0px 12px 0px 0px;
+            padding: 0px;
+        }
+        
+        .submitButtons span {
+            display: inline-block;
+        }
+        
+        .arrows {
+            background: none;
+        }
+        
+        .base-scheme-card {
+            width: 50%;
+            padding: 2%;
+        }
+        
+        #cards {
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+            max-width: 780px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px;
+        }
+        
+        paper-fab {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 50%;
+            height: 40px;
+            width: 40px;
+        }
+        
+        paper-fab.blue {
+            --paper-fab-background: var(--paper-light-blue-300);
+            --paper-fab-keyboard-focus-background: var(--paper-light-blue-200);
+        }
+        
+        paper-fab.red {
+            --paper-fab-background: var(--paper-red-500);
+            --paper-fab-keyboard-focus-background: var(--paper-red-900);
+        }
+        
+        paper-fab.green {
+            --paper-fab-background: var(--paper-green-500);
+            --paper-fab-keyboard-focus-background: var(--paper-green-900);
+        }
+        
+        paper-fab.orange {
+            --paper-fab-background: var(--paper-orange-500);
+            --paper-fab-keyboard-focus-background: var(--paper-orange-900);
+        }
+        
+        .gift-card-base-card {
+            margin: 0px auto;
+            max-width: 720px;
+            min-width: 320px;
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+        }
+        
+        paper-input {
+            margin-top: 0px !important;
+            margin-left: 10px;
+        }
+        
+        .gift-card-extend-card {
+            margin: 0px auto;
+            max-width: 760px;
+            min-width: 320px;
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+        }
+        
+        paper-menu > paper-item {
+            cursor: pointer;
+        }
+        
+        .leftnav {
+            position: fixed;
+            top:155px;
+            left: 256px;
+            z-index: 11;
+            min-height: 160px;
+        }
+        
+        .leftnav paper-item {
+            cursor: pointer;
+        }
+        
+        .leftnav .iron-selected {
+            background: #4fc3f7 !important;
+            border-radius: 0px;
+        }
+        .lastStepActions {
+            padding: 0px;
+            margin: 0px;
+            /*background: #4fc3f7;*/
+        }
+    </style>
+    <template>
+        <paper-material class="leftnav">
+            <paper-menu selected="{{currentStep}}" style="padding:0px;">
+                <paper-item disabled$="[[formError]]">1</paper-item>
+                <paper-item disabled$="[[formError]]">2</paper-item>
+            </paper-menu>
+        </paper-material>
+        <paper-material elevation="1" type="{{schemeType}}" data="{{schemeObj}}">
+            <form is="iron-form" id="gift-card-form" method="POST" action="#">
+                <neon-animated-pages id="giftCardPages" class="flex" selected="[[currentStep]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
+                    <neon-animatable>
+                        <div class="col-1 widthAt480">&nbsp;</div>
+                        <div class="col-8">
+                        <paper-card elevation="5" class="gift-card-extend-card">
+                            <div class="margin0 card-content">
+                                <basic-scheme id="basicSchemeGiftCard" metadata="{{schemeObj.metadata}}" start-date-modal="giftCardStartDate" behavior="{{schemeObj.behavior}}" end-date-modal="giftCardEndDate" scheme-starts="giftCardStart" scheme-ends="giftCardEnds" start-date-type="giftCardStart" end-date-type="giftCardEnds" sd-dp="stgcDp" sd-tp="stgcTp" ed-dp="eDgcDp" ed-tp="eDgcTp" flat-id="basicFlatInGiftCard" percentage-id="basicPerecentageInGift" basic-discount="basicDiscId" discount-value="{{defaultDiscount}}">
+                                </basic-scheme>
+                            </div>
+                            <div class="card-actions col-12 padding0 margin0" style="padding:0px;">
+                                <div class="col-11 margin0">&nbsp;</div>
+                                <div class="col-1 margin0">
+                                    <paper-fab mini icon="done" class="blue action" 
+                                        on-click="_onNextClick">
+                                    </paper-fab>
+                                </div>
+                            </div>
+                        </paper-card>
+                        </div>
+                    </neon-animatable>
+                    <neon-animatable>
+                        <div class="col-1 widthAt480">&nbsp;</div>
+                        <div class="col-8 locBen">
+                        <paper-card elevation="5" class="gift-card-extend-card">
+                            <div class="card-content margn0">
+                                <div class="col-12 margin0 ">
+                                    <div class="col-2 text-right gcBL" style="margin-top:6%;">
+                                        <label class="text-bold">Locations : </label>
+                                    </div>
+                                    <div class="col-10 margin0" style="margin-top:10px;">
+                                        <multi-value-suggestbox id="multi_suggest" is-multiple="multi" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/" options='{
+                                            "allow_space": false,
+                                            "allow_nonmatching": false}' 
+                                            selected-items="{{schemeObj.behavior.locationOfServices}}">
+                                        </multi-value-suggestbox>
+                                    </div>
+                                </div>
+                                <div class="col-12 margin0">
+                                    <div class="col-2 text-right  gcBL" style="margin-top:5%;">
+                                        <label class="text-bold">Benficiary :</label>
+                                    </div>
+                                    <div class="col-10 margin0" style="margin-top:10px;">
+                                        <multi-value-suggestbox is-multiple="multi" id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names/" options='{
+                                            "allow_space": false,
+                                            "allow_nonmatching": false}' 
+                                        selected-items="{{schemeObj.metadata.toIds}}">
+                                        </multi-value-suggestbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-actions  margin0 padding0 col-12 lastStepActions">
+                                <div class="arrows col-1 margin0">
+                                    <paper-fab mini icon="arrow-back" class="action" 
+                                    on-click="_onPrevClick">
+                                    </paper-fab>
+                                </div>
+                                <div class="col-5 margin0 hideIn320">&nbsp;</div>
+                                <div class="col-6 margin0">
+                                    <div class="submitButtons">
+                                        <paper-button name="createSchemeBtn" raised  on-click="submitForm"  id="saveBtn"  status="false" disabled="[[schemeObj.metadata.published]]">{{saveBtnText}}</paper-button>
+                                        <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised>{{publishBtnText}}</paper-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </paper-card>
+                        </div>
+                    </neon-animatable>
+                </neon-animated-pages>
+            </form>
+        </paper-material>
+        <iron-ajax id="giftCardAjax" content-type="application/json" method="POST" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
+    </template>
+    <script>
+        Polymer({
+            is: 'chpe-gift-card',
+            properties: {
+                schemeType: String,
+                schemeStatus: Boolean,
+                succErrMsg: String,
+                schemeObj:{
+                    type:Object,
+                    notify:true
+                },
+                currentStep:{
+                    type:Number,
+                    notify:true,
+                    value:0
+                },
+                schemeMethod:{
+                    type:String,
+                    notify:true
+                },
+                saveBtnText:{
+                    type:String
+                },
+                publishBtnText:{
+                    type:String
+                },
+                formError:{
+                    type:Boolean,
+                    notify:true,
+                    value:false
+                },
+            },
+            ready: function() {
+                this.currentStep = 0;
+                this.config = generalConfig() || {};
+                this.saveBtnText = "SAVE";
+                this.publishBtnText = "SAVE + PUBLISH";
+            },
+            listeners: {
+                'gift-card-form.iron-form-submit': 'createScheme',
+                'gift-card-form.saveBtn.onClick': 'submitForm',
+                'gift-card-form.iron-input-validate': 'enableButtons',
+                'gift-card-form.iron-form-invalid':'resetSteps'
+            },
+            observers: [
+                'schemeMethodChanged(schemeMethod)'
+            ],
+            enableButtons:function(event){
+                if(event){
+                    this.formError = event.target.invalid;
+                }
+            },
+            schemeMethodChanged:function(schemeMethod){
+                //console.log(schemeMethod);
+                if(schemeMethod=="PUT"){
+                    this.saveBtnText = "UPDATE";
+                    this.publishBtnText = "UPDATE + PUBlISH";
+                }else{
+                    this.saveBtnText = "SAVE";
+                    this.publishBtnText = "SAVE + PUBlISH";
+                }
+            },
+            //neon animations for coupon
+            _onPrevClick: function() {
+                if(this.formError===true){
+                    this.currentStep = this.currentStep;
+                }else{
+                    this.entryAnimation = 'slide-from-left-animation';
+                    this.exitAnimation = 'slide-right-animation';
+                    this.currentStep = this.currentStep === 0 ? 4 : (this.currentStep - 1);
+                }
+            },
+            _onNextClick: function() {
+                if(this.formError===true){
+                    this.currentStep = this.currentStep;
+                }else{
+                    this.entryAnimation = 'slide-from-right-animation';
+                    this.exitAnimation = 'slide-left-animation';
+                    this.currentStep = this.currentStep === 4 ? 0 : (this.currentStep + 1);
+                }
+            },
+            createScheme: function() {
+                this.formData = document.getElementById('gift-card-form').serialize();
+                this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
+                this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
+
+                this.schemeObj.metadata.type = "GIFT_CARD";
+                this.schemeObj.on = "scheme";
+
+                if(chUtils.isEmpty(this.schemeObj.behavior.locationOfServices)===false){
+                    this.schemeObj.behavior._locations = _.pluck(this.schemeObj.behavior.locationOfServices,"name");
+                }
+                if(chUtils.isEmpty(this.schemeObj.metadata.toIds)===false){
+                   this.schemeObj.metadata.toIds = _.pluck(this.schemeObj.metadata.toIds,"name");
+                }
+
+                console.log(this.schemeObj);
+
+                if (this.schemeObj !== undefined) {
+                    this.$.giftCardAjax.url =  this.config.urls.rest;
+                    this.$.giftCardAjax.method = this.schemeMethod;
+                    this.$.giftCardAjax.body = JSON.stringify(this.schemeObj);
+                    this.$.giftCardAjax.generateRequest();
+                }
+            },
+            handleResponse: function(event) {
+                if (event.detail.response != null && event.detail.response !== undefined) {
+                    document.querySelector("#schemeSuccErrMessageToast").show();
+                    console.log("Received response: " + JSON.stringify(event.detail.response));
+                    var toast = document.querySelector("#schemeSuccErrMessageToast");
+                    if(this.schemeMethod=="POST"){
+                        toast.text = this.schemeObj.metadata.type + " created successfully!...";
+                    }else{
+                        toast.text = this.schemeObj.metadata.type + " updated successfully!...";
+                    }
+                    toast.show();
+                } else {
+                    console.log(this.schemeObj);
+                    document.querySelector("#schemeSuccErrMessageToast").show();
+                    var toast = document.querySelector("#schemeSuccErrMessageToast");
+                    if(this.schemeMethod=="POST"){
+                        toast.text = "Error while creating " + this.schemeObj.metadata.type;
+                    }else{
+                         toast.text = "Error while updating " + this.schemeObj.metadata.type;
+                    }
+                }
+                setTimeout(function() {
+                    location.href="/";
+                }, 1000);
+            },
+            handleError: function(event) {
+                console.log(event.detail.error);
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
+                if(this.schemeMethod=="POST"){
+                    toast.text = "Error while creating " + this.schemeObj.metadata.type+" Please try again";
+                }else{
+                    toast.text = "Error while updating " + this.schemeObj.metadata.type+" Please try again";
+                }
+                toast.show();
+            },
+            submitForm: function(event) {
+                this.schemeObj.metadata.published = event.currentTarget.getAttribute('status');
+                document.getElementById('gift-card-form').submit();
+            },
+            resetSteps:function(event){
+                this.currentStep = 0;
+                this.formError = true; 
+                document.querySelector("#schemeSuccErrMessageToast").show();
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
+                toast.text = "Please Recheck the form, you have missed the required fields some where...!";
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,94 @@
+<script src="../../config/general.js"></script>
+<script src="../../config/schemeBase.js"></script>
+<dom-module id="cumulative-bill-amounts">
+    <style type="text/css">
+        .searchBoxInSrc{
+            width: 100%;
+        }
+        .searchBoxInSrc paper-input{
+            margin-left: 20px;
+        }
+        
+        .row{
+            width: 100%;
+            margin-top: 10px;
+        }
+        .discountBox.chpe-discount{
+            width: 320px !important;
+        }
+         paper-input {
+            margin-top: 0px !important;
+            margin-left: 10px;
+        }
+        .capRowSection{
+            border-bottom: 1px solid #ccc;
+        }
+        .singleRow{
+            margin-bottom: 20px;
+        }
+        #capBox paper-fab{
+            margin-right: -5px;
+        }
+    </style>
+    <template id="capBox">
+        <div class="col-12 capRowSection margin0" behavior="{{behaviorData}}">
+          <h4 class="col-12 margin0">Points on Cumulative Bill Amounts
+            <paper-icon-button icon="icons:add" disabled$="{{metadata.published}}" on-click="addcap"></paper-icon-button>
+          </h4>
+          <template is="dom-repeat" items="{{behaviorData.cumulativeAmountPoints}}" as="cap">
+            <div class="col-12 singleRow">
+                <div class="col-5">
+                       <paper-input name="amount" no-label-float label="Amount" 
+                       value="{{cap.amount}}"></paper-input>
+                </div>
+                 <div class="col-5">
+                        <paper-input name="points" no-label-float label="Points" 
+                       value="{{cap.points}}"></paper-input>
+                </div>
+                <div class="col-2">
+                    <paper-icon-button disabled$="{{metadata.published}}" hidden$="{{showDeleteByRow(index)}}"
+                        class="pull-right"mini icon="icons:delete" class="red" on-click="deletecap">
+                    </paper-icon-button>
+                </div>
+            </div>      
+          </template> 
+        </div>
+    </template>
+    <script>
+        Polymer({
+            'is':'cumulative-bill-amounts',
+             properties:{
+                behaviorData:{
+                    type:Object,
+                    notify:true
+                },
+                metadata:{
+                    type:Object,
+                    notify:true
+                }
+            },
+            ready:function(){
+                   // console.log(this.behavior.serviceRateCategoryDiscounts);
+            },
+            listeners:{
+                "onClick":"addcap",
+            },
+            showDeleteByRow:function(row){
+                if(row==0){
+                    return true;
+                }else{
+                    return false;
+                }
+            },
+            //add or remove src categories
+            addcap :function(e){
+                this.push('behaviorData.cumulativeAmountPoints', {amount:"", points: ""});
+            },
+            deletecap:function(e){
+                if(e.model.index!=0){
+                    this.splice('behaviorData.cumulativeAmountPoints',e.model.index,1);
+                }
+            }
+        });
+    </script>
+</dom-module>

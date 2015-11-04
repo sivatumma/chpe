@@ -1,0 +1,142 @@
+<dom-module id="user-profile">
+	<style>
+	 :host{
+	 	display: inline-block;
+	 }
+	
+	 #profileBox[show]{
+	 	visibility: visible;
+	 	width: 240px;
+	 	min-height:80px;
+	 	background: #fff;
+	 	border: 1px solid #ccc;
+	 	border-top-width: 0px;
+	 	z-index: 20;
+	 	position: absolute;
+	 	right: 20px;
+	 	border-top-right-radius: 3px;
+	 	border-top-left-radius: 3px;
+	 	margin-top: 12px;
+	 }
+	 #profileBox .profile-info,#profileBox .arrow-up , #profileBox .arrow-up-white,
+	 #profileBox .profile-actions{
+	 	display:none;
+
+	 }
+	 #profileBox[show] .profile-info,#profileBox[show] .arrow-up , #profileBox[show] .arrow-up-white, 
+	 #profileBox[show] .profile-actions{
+	 	display: block;
+	 	color: #000;
+	 	font-size: 13px;
+	 }
+	 #profileBox[show] .profile-info{
+	 	padding: 15px 0px;
+	 	float: left;
+	 	width: 100%;
+	 }
+	  #profileBox[show] .profile-info .profileImg{
+	  	float: left;
+	  	width: 33%;
+	  }
+	   #profileBox[show] .profile-info .profileInfoActions{
+	  	float: left;
+	  	width: 66%;
+	  	margin-top: 10px;
+	  	text-align: left;
+	  }
+	  #profileBox[show] .profile-info .profileInfoActions h3{
+	  	padding: 0px;
+	  	margin: 0px;
+	  }
+	 #profileBox[show] .profile-actions{
+	 	border-top:1px solid #ccc;
+	 	clear: both;
+	 	padding: 5px 0px;
+	 	width: 100%;
+	 }
+	 #profileBox[show] .profile-actions a{
+	 	color: #000;
+	 }
+	.arrow-up {
+	  width: 0; 
+	  height: 0; 
+	  border-left: 10px solid transparent;
+	  border-right: 10px solid transparent;
+	  border-bottom: 10px solid #ccc; 
+	  position:absolute; 
+	  right: 0px; 
+	  top:-10px; 
+	  left:79%;
+	}
+	.arrow-up-white {
+	  width: 0; 
+	  height: 0; 
+	  border-left: 10px solid transparent;
+	  border-right: 10px solid transparent;
+	  border-bottom: 10px solid #fff; 
+	  position:absolute; 
+	  right: 0px; 
+	  top: -10px; 
+	  left: 79%;
+	}
+
+	paper-fab{
+		background: #3F51B5;
+		color: #fff;
+	}
+
+	</style>
+	<template>
+		<paper-icon-button icon="icons:account-circle" name="avatar" on-click="openProfileInfo">
+		</paper-icon-button>
+		<div show$="{{show}}" id="profileBox">
+			<span class="arrow-up"></span>
+			<span class="arrow-up-white"></span>
+			<div class="profile-info">
+				<div class="profileImg">
+					<paper-fab icon="icons:account-circle"></paper-fab>
+				</div>
+				<div class="profileInfoActions">
+					<h3>{{userObject.username}}</h3>
+					<span>{{userObject.role}}</span>
+				</div>
+				<!-- <div class="text-right col-12"><paper-button name="account" raised>My Account</paper-button></div> -->
+			</div>
+			<div class="profile-actions text-right">
+				<paper-ripple></paper-ripple>
+				<span><a href="/ssoLogout"><paper-button name="logoutButton" raised>Sign Out</paper-button></a></span>
+			</div>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is:'user-profile',
+			ready:function(){
+				 this.config = generalConfig() || {};
+			},
+			properties:{
+				show: {
+	                type: Boolean,
+	                value: false,
+	                notify:true
+            	},
+				userObject:{
+					type:Object,
+					notify:true
+				}
+			},
+			observers:[
+				'userObjectChanged(userObject)'
+			],
+			userObjectChanged:function(userData){
+				//console.log(userData);
+			},
+			openProfileInfo:function(event){
+				if (event) { // comes first
+                	event.stopPropagation();
+            	}
+            	this.show = !this.show;
+        	}
+		});
+	</script>
+</dom-module>

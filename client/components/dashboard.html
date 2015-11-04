@@ -1,0 +1,555 @@
+<script src="../config/general.js"></script>
+
+<dom-module id="schemes-as-cards">
+    <style type="text/css">
+        :host {
+            float: left;
+            padding:0px;
+            text-align: center;
+            display: block;
+            margin: 10px 43px 10px 42px;
+            background: #fafafa;
+        }
+        
+        .cards {
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+            margin-top: 30px;
+            font-size: 16px;
+        }
+        
+        paper-card {
+            display: block;
+            width:187px;
+            height: auto;
+            margin: 10px 5px 10px 10px;
+            cursor: pointer;
+            transition: box-shadow 0.1s;
+            float: left;
+        }
+        
+        .avatar {
+            display: inline-block;
+            height: 64px;
+            width: 64px;
+            border-radius: 50%;
+            background: var(--paper-pink-500);
+            color: white;
+            line-height: 64px;
+            font-size: 30px;
+            text-align: center;
+        }
+        
+        .fancy .title {
+            position: absolute;
+            top: 30px;
+            left: 100px;
+            color: var(--paper-indigo-500);
+        }
+        
+        .fancy img {
+            width: 100%;
+        }
+        
+        .fancy .big {
+            font-size: 22px;
+            padding: 8px 0 16px;
+            color: var(--google-grey-500);
+        }
+        
+        .fancy .medium {
+            font-size: 16px;
+            padding-bottom: 8px;
+        }
+        
+        .pink {
+            --paper-card-header-color: var(--paper-pink-500);
+        }
+        
+        paper-card .header {
+            font-size: 16px !important;
+        }
+        
+        .element-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 3px;
+            border: 1px solid #e5e5e5;
+            border-spacing: 2px;
+        }
+        .element-table thead th {
+            padding: 0 24px;
+            line-height: 56px;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.54);
+            text-align: left;
+            border-bottom: 1px solid;
+            border-bottom-color: #e5e5e5;
+        }
+        .element-table thead th:first-child{
+            border-left: 1px solid #e5e5e5;
+        }
+        
+        .element-table thead th:last-child{
+            border-right: 1px solid #e5e5e5;
+        }
+        .element-table tbody tr:first-child {
+            margin-top: 8px;
+        }
+        
+        .element-table tbody tr:hover {
+            background: #f4f4f4;
+        }
+        .element-table tbody tr {
+            cursor: pointer;
+            overflow: hidden;
+            height: 48px;
+        }
+        .element-table tbody  tr td[published]{
+            color: lightgreen;
+        }
+        .element-table tbody tr td {
+            white-space: nowrap;
+            font-weight: 400;
+            font-size: 13px;
+            padding: 12px 24px;
+            text-align: left;
+        }
+        #listView {
+            display: block;
+            box-shadow: none;
+            margin: 10px 10px 0px 0px;
+            padding: 0px;
+            width: 100%;
+           
+        }
+        
+        #gridView {
+            display: block;
+
+        }
+        
+        .toogleDiv {
+            margin: 10px;
+            display: block;
+            clear: both;
+        }
+        
+        .toogleDiv iron-icon {
+            cursor: pointer;
+        }
+        .card-actions{
+           padding: 0px;
+           background: #f4f4f4;
+        }
+        /*Edit Scheme Styles */
+        .editScheme paper-icon-button{
+            padding: 0px;
+            margin:0px;
+            width: 24px;
+            height: 24px;
+        }
+        .editScheme iron-icon{
+         opacity: 0.5 !important;
+         padding: 0px;
+        }
+        .element-table tbody tr:hover iron-icon{
+            opacity: 1 !important;
+        }
+        .coupons-sec{
+            /*background: #e6ffff;*/
+            display: block;
+            width: 100%;
+            padding:0px;
+            margin:10px 0px; 
+            float: left;
+            box-shadow: none;
+        }
+        .schemes-sec{
+           /* background: #ffffe8;*/
+            display: block;
+            width: 100%;
+            padding: 0px;
+            margin:10px 0px;
+            float: left; 
+            box-shadow: none;
+        }
+        .giftcard-sec{
+            /*background: #fafafa;*/
+            width: 100%;
+            padding:0px;
+            margin:0px;
+            float: left; 
+            box-shadow: none;
+        }
+        .schemes-sec paper-card , .coupons-sec paper-card , .giftcard-sec paper-card{
+            font-size: 13px !important;
+        }
+        .schemes-sec paper-icon-button, .coupons-sec paper-icon-button , .giftcard-sec paper-icon-button{
+            padding: 7px;
+            height: 32px;
+            width: 32px;
+        }
+
+        .coupons-sec paper-card:hover,  .coupons-sec paper-card:focus{
+            /*background:#ebffff;*/
+            color: #000; 
+            transition: background-color 0.8s ease;
+        }
+        .coupons-sec paper-card .card-content{
+            padding: 0px;
+        }
+        .coupons-sec paper-card .card-content .content{
+            /*margin-left: 20px;*/
+            font-size: 12px;
+        }
+        .coupons-sec paper-card .couponIcon{
+            position: absolute;
+            width: 26px;
+            height:26px;
+            top: 5px;
+            left: 5px;
+            background: #4fc3f7;
+        }
+        .coupons-sec paper-card .couponName{
+            word-spacing:normal;
+            word-wrap:break-word;
+            white-space: nowrap;
+            float: left;
+            margin:0px 0px 0px 35px;
+            line-height: 36px;
+        }
+        .giftcard-sec paper-card .giftcardName,.schemes-sec paper-card .schemeName{
+            word-spacing:normal;
+            word-wrap:break-word;
+            white-space: nowrap;
+            text-align: left;
+        }
+         .giftcard-sec paper-card[published] ,.schemes-sec paper-card[published],
+         .coupons-sec paper-card[published] {
+            background: lightgreen;
+         }
+        .coupons-sec paper-card .actions{
+            margin-left: 10px;
+        }
+        .giftcard-sec paper-card:hover,  .giftcard-sec paper-card:focus{
+            /*background:#f5f5f5;*/
+            color: #000;
+            transition: background-color 0.8s ease; 
+        }
+        .giftcard-sec paper-card .card-content,.schemes-sec paper-card .card-content{
+            padding: 15px 0px;
+            margin: 0px 0px 0px 40px;
+            text-align: left;
+        }
+        .schemes-sec paper-card:hover,  .schemes-sec paper-card:focus{
+           /* background:#fcfcd4 ;*/
+            transition: background-color 0.8s ease;
+            color: #000; 
+        }
+        .schemes-sec paper-card .addonIcon{
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            left: 5px;
+            top:5px;
+            background: #fff;
+            transition: background-color 0.8 ease;
+        }
+        .giftcard-sec paper-card .giftCardIcon{
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: 5px;
+            left: 5px;
+            background: #fff;
+        }
+        #gridView .schemeTitle{
+           border-bottom: 1px solid #ccc;
+           margin:0px;
+           padding: 0px;
+        }
+        #gridView .schemeTitle h2{
+            padding: 5px;
+            margin: 0px;
+            float: left;
+        }
+        #gridView .title-text{
+            font-size: 16px !important;
+        }
+
+        /*media queries for list view*/
+        .listView[smallDesktop]{
+            display: none;
+        }
+   
+    </style>
+    <template>
+        <div id="gridView">
+            <paper-material elevation="0" class="coupons-sec">
+               <!--  <div class="col-12 schemeTitle">
+                    <h2 >Coupons</h2>
+                </div> -->
+                <template is="dom-repeat" items="{{couponsData}}" as="item">
+                    <paper-card elevation="1" class="cards"  on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
+                        <paper-fab class="couponIcon" mini  src="../../assets/images/c.png"></paper-fab>
+                        <div class="card-content col-12">
+                            <paper-ripple></paper-ripple>   
+                            <div class="col-12 content">
+                                <span class="couponName">{{item.metadata.name}}</span>
+                                <div class="actions pull-right margin0 paddin0">
+                                    <span><paper-icon-button icon="link"></paper-icon-button></span>
+                                    <span class="text-right"><paper-icon-button icon="icons:create" 
+                                        on-click="editScheme"  scheme-type="{{item.metadata.type}}">
+                                    </paper-icon-button><span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="card-actions" align="right">
+                               <paper-icon-button icon="link"></paper-icon-button>
+                               <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                        </div> -->
+                    </paper-card>
+
+                </template>   
+            </paper-material>
+            <paper-material class="giftcard-sec" elevation="0">
+                <!-- <div class="col-12 schemeTitle">
+                    <h2>Gift Cards</h2>
+                </div> -->
+                <template is="dom-repeat" items="{{giftCardsData}}" as="item">
+                    <paper-card elevation="2"  class="cards"  
+                    on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
+                        <paper-fab mini class="giftCardIcon" src="../../assets/images/gift-star.png">
+                        </paper-fab>
+                        <paper-ripple></paper-ripple>
+                        <div class="card-content">
+                            <span class="giftcardName">{{item.metadata.name}}</span>
+                        </div>
+                        <div class="card-actions" align="right">
+                               <paper-icon-button icon="link"></paper-icon-button>
+                               <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                        </div>
+                    </paper-card>
+                </template>
+            </paper-material>
+            <paper-material class="schemes-sec" elevation="0">
+                <!-- <div class="col-12 schemeTitle">
+                    <h2>Schemes</h2>
+                </div> -->
+                <template is="dom-repeat" items="{{addonsData}}" as="item">
+                    <paper-card elevation="2"  class="cards"  
+                    on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
+                        <paper-fab mini class="addonIcon"  src="../../assets/images/addon-plus.png"></paper-fab>
+                        <paper-ripple></paper-ripple>
+                        <div class="card-content">
+                            <span class="schemeName">{{item.metadata.name}}</span></div>
+                        <div class="card-actions" align="right">
+                               <paper-icon-button icon="link"></paper-icon-button>
+                               <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                        </div>
+                    </paper-card>
+                </template>
+            </paper-material>
+            
+        </div>
+        <paper-material elevation="1">
+            <!-- <div id="gridView">
+                <template is="dom-repeat" items="{{allSchemes}}" as="item">
+                    <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards" id="{{getId(index)}}" on-focus-out="toggleStyle" on-click="toggleStyle">
+                        <div class="card-content">{{item.metadata.name}}</div>
+                        <div class="card-actions" align="right">
+                               <paper-icon-button icon="link"></paper-icon-button>
+                               <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                        </div>
+                    </paper-card>
+                </template>
+            </div> -->
+            <div id="listView" hidden>
+                <table class="element-table responsive-table" smallDesktop$="{{smallDesktop}}">
+                    <thead>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Start Date</th>
+                        <th>Valid Upto</th>
+                        <th>Owner</th>
+                        <th>Published</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="{{listData}}" as="item">
+                            <tr>
+                                <td>{{getIndexByRow(index)}}</td>
+                                <td>{{item.metadata.name}}</td>
+                                <td>{{item.metadata.type}}</td>
+                                <td>{{item.behavior.startDate}}</td>
+                                <td>{{item.behavior.endDate}}</td>
+                                <td>{{item.metadata.createdBy}}</td>
+                                <td>{{publishedState(item.metadata.published)}}</td>
+                                <td class="editScheme" published$="[[item.metadata.published]]">
+                                    <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                    scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </paper-material>
+        <iron-ajax id="fetchSchemes" verbose content-type="application/json" method="GET" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
+    </template>
+    <script>
+        Polymer({
+            is: 'schemes-as-cards',
+            properties: {
+                allSchemes: {
+                    type: Object,
+                    notify: true
+                },
+                listData: {
+                    type: Object,
+                    notify: true
+                },
+                scheme: Object,
+                previouslySelectedId: String,
+                giftCardsData:{
+                    type:Object,
+                    notify:true
+                },
+                couponsData:{
+                    type:Object,
+                    notify:true
+                },
+                addonsData:{
+                    type:Object,
+                    notify:true
+                }
+            },
+            listeners: {
+                "onClick": "toggleStyle",
+                "onFocusOut": "toggleStyle"
+            },
+            observes: [
+                'allSchemesChanged(obj)',
+            ],
+            allSchemesChanged: function(obj) {
+                console.log(obj);
+            },
+
+            ready: function() {
+                // console.log("Hi Schemes as cards loaded....!");
+                this.scheme = {
+                    "on": "scheme",
+                    "operation": "find"
+                };
+                this.$.fetchSchemes.url =  generalConfig().urls.rest;
+                this.$.fetchSchemes.body = JSON.stringify(this.scheme);
+                this.$.fetchSchemes.generateRequest();
+                this.gridView = false;
+                this.toggleListGridIcon = "icons::view-list";
+            },
+            publishedState:function(status){
+                if(status){
+                    return 'Yes';
+                }else{
+                    return 'No';
+                }
+            },
+            getId: function(index) {
+                return "r_" + index;
+            },
+            getIndexByRow: function(index) {
+                return index + 1;
+            },
+            toggleStyle: function(event) {
+                if (this.previouslySelectedId != null) {
+                    document.querySelector(this.previouslySelectedId).style.background = '#fff';
+                    document.querySelector(this.previouslySelectedId).style.color = '#000';
+                }
+                document.querySelector('#r_' + event.model.index).style.background = 'lightblue';
+                document.querySelector('#r_' + event.model.index).style.color = '#000';
+                this.previouslySelectedId = '#r_' + event.model.index;
+            },
+            handleResponse: function(event) {
+                //console.log(event.detail.response);
+                var data = event.detail.response;
+                if (data !== undefined && data != null) {
+                    this.allSchemes = this.listData = data;
+                    this.addonsData = chUtils.getSchemesByType(this.allSchemes,"ADD_ON");
+                    this.couponsData = chUtils.getSchemesByType(this.allSchemes,"COUPON");
+                    this.giftCardsData = chUtils.getSchemesByType(this.allSchemes,"GIFT_CARD");
+                } else {
+                    this.listData = this.allSchemes = [{}];
+                }
+                if(chUtils.isEmpty(data)===false && data.length==0){
+                    document.querySelector("#schemeSuccErrMessageToast").show();
+                    var toast = document.querySelector("#schemeSuccErrMessageToast");
+                    toast.text = "No Data found....";
+                }
+            },
+            handleError: function(event) {
+                var request = event.detail.request;
+                console.log(event);
+                var error = event.detail.error;
+                console.log(event.detail.response);
+            },
+
+          /**
+           *Edit Scheme method
+           *@params schemeIndex
+           *@url based on type
+           */
+          editScheme : function(event){
+            var sName = event.model.item.metadata.name;
+            var scheme = chUtils.getSchemeByName(this.allSchemes,sName);
+            this.navigateTo(scheme);
+            console.log(schemeBase(scheme));
+
+          },
+
+          navigateTo:function(schemeObj){
+            if(schemeObj!==undefined){
+                var route = "";
+                if(schemeObj.metadata.type=="COUPON"){
+                    route = "createCoupon";
+                    app.couponAsScheme = schemeObj;
+                    app.couponMethod = "PUT";
+                }else if(schemeObj.metadata.type=="ADD_ON"){
+                    route = "createAddOn";
+                    app.addonAsScheme = schemeObj;
+                    app.addonMethod = "PUT";
+                }else if(schemeObj.metadata.type=="GIFT_CARD"){
+                    route = "createGiftCard";
+                    app.giftcardMethod = "PUT";
+                    app.giftcardAsScheme = schemeObj;
+                }
+                MoreRouting.navigateTo(route);
+                app.getCurrentPage();
+            }
+          },
+          queryChanged:function(){
+            console.log(this.displayList);
+          }
+
+        });
+    window.onresize = function(){
+        if(window.innerWidth>=768 && window.innerWidth<=979){
+           document.querySelector("#gridView").hidden = false;
+           document.querySelector(".toggleListGrid").setAttribute("view","list");
+        }
+        if(window.innerWidth>=320 && window.innerWidth<=640){
+           document.querySelector("#gridView").hidden = false;
+           if(document.querySelector(".toggleListGrid")){
+               document.querySelector(".toggleListGrid").setAttribute("view","list");
+           }
+        }
+    };
+    </script>
+</dom-module>

@@ -1,0 +1,293 @@
+<script src="../../../lib/chUtils.js"></script>
+<script src="../../config/general.js"></script>
+<script type="text/javascript"
+  src="https://www.google.com/jsapi?autoload={
+    'modules':[{
+      'name':'visualization',
+      'version':'1',
+      'packages':['corechart']
+    }]
+  }">
+</script>
+<dom-module id="preview-scheme">
+	<style type="text/css">
+		:host{
+			display: block;
+		}
+		.simple-extend-card{
+            margin: 0px auto;
+            max-width: 760px;
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+        }
+        .previewScheme{
+        	min-height: 200px;
+        	display: block;
+        	width: 92%;
+        	margin:20px 20px 0px 45px;
+
+        }
+        .cards {
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+            margin-top: 30px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .container {
+	      @apply(--layout-horizontal);
+	      @apply(--layout-wrap);
+    	}
+    	.flexchild1 {
+	      @apply(--layout-flex-1);
+	    }
+	    .flex2child {
+	      @apply(--layout-flex-2);
+	    }
+	    .flex4child {
+	      @apply(--layout-flex-4);
+	    }
+	    .row{
+	    	padding: 0px 10px;
+	    	border-bottom: 1px solid #ccc;
+	    }
+	    .section{
+	    	padding: 10px 0px 10px 0px;
+	    	border-bottom: 1px solid #ccc;
+	    }
+	    .section h1{
+	    	font-size: 20px;
+	    	font-weight: 300;
+	    	text-align: center;
+	    	padding: 0px;
+	    	margin: 0px;
+	    }
+	    .info{
+	    	font-size: 24px;
+	    	text-align: center;
+	    	font-weight: 500;
+	    	padding: 0px;
+	    	margin: 0px;
+	    }
+	    .descr-sec{
+	    	border-right: 1px solid #ccc;
+	    	border-bottom: 1px solid #ccc;
+	    }
+	    .descr-sec:last-child{
+	    	border-right: none;
+	    }
+	    .descr-sec h3{
+	    	font-size: 18px;
+	    	font-weight: 300;
+	    	margin: 0px;
+	    	padding: 10px 0px 0px 23px;
+	    }
+	   
+	    .descr-sec ul li{
+	    	line-height: 24px;
+	    	padding: 5px 0px;
+	    	list-style-type: square;
+	    }
+	    .fullDescription{
+	    	padding: 10px 20px;
+	    	margin: 0px;
+	    	border-bottom: 1px solid #ccc;
+	    }
+	    .fullDescription p{
+	    	text-align: justify;
+	    }
+	    .graphContainer{
+	    	padding: 10px 20px;
+	    	margin: 0px 0px 10px 0px;
+	    }
+	    .subText{
+	    	font-size: 12px;
+	    	font-weight: normal !important;
+	    }
+	    .graphIcon{
+	    	width: 15px;
+	    	height: 15px;
+	    	float: left;
+	    	margin-right: 5px;
+	    }
+	    .green{
+	    	background: lightgreen;
+	    }
+	    .red{
+	    	background: red;
+	    }
+	    .graphContainer img{
+	      width: 100%;
+	      height: 250px;
+	      float: left;
+	    }
+	</style>
+	<template>
+		<more-route context name="previewScheme" params="{{params}}"></more-route>
+			<!-- <template  item="{{previewData}}">
+				<paper-card elevation="3" heading="{{item.metadata.type}}"  class="cards">
+					<div class="card-content">
+						<span>{{item.metadata.name}}</span>
+					</div>
+				</paper-card>
+			</template> -->
+			<paper-material elevation="2" class="previewScheme">
+				<div class="container">
+					<div class="flexchild1"></div>
+				    <div class="flex2child section">
+				    	<h1>Unique Clients</h1>
+				    	<p class="info">1000</p>
+				    </div>
+				    <div class="flex2child section">
+						<h1>Locations</h1>
+				    	<p class="info">55</p>				    		
+				    </div>
+				    <div class="flex2child section">
+						<h1>Cities</h1>
+				    	<p class="info">03</p>	
+				    </div>
+				    <div class="flex2child section">
+						<h1>Discounts</h1>
+				    	<p class="info">5K <sub class="subText">INR</sub></p>
+				    </div>
+				     <div class="flex2child section">
+						<h1>Total Revenue</h1>
+				    	<p class="info">24L <sub class="subText">INR</sub></p>
+				    </div>
+				    <div class="flexchild1"></div>
+				</div>
+				<div class="container description">
+					<div class="flex4child descr-sec">
+						<h3>General Behavior</h3>
+						<ul>
+							<li>Lorem Ipsum is simply</li>
+							<li>when an unknown printer</li>
+							<li>It was popularised in</li>
+							<li>Lorem Ipsum is not simply </li>
+							<li>Many desktop publishing</li>
+							<li>There are many variations</li>
+						</ul>
+					</div>
+					<div class="flex4child descr-sec">
+						<h3>Combinational Discounts</h3>
+						<ul>
+							<li>Lorem Ipsum is simply</li>
+							<li>when an unknown printer</li>
+							<li>It was popularised in</li>
+							<li>Lorem Ipsum is not simply </li>
+							<li>Many desktop publishing</li>
+							<li>There are many variations</li>
+						</ul>
+					</div>
+					<div class="flex4child descr-sec">
+						<h3>Recurring Benfit Points</h3>
+						<ul>
+							<li>Lorem Ipsum is simply</li>
+							<li>when an unknown printer</li>
+							<li>It was popularised in</li>
+							<li>Lorem Ipsum is not simply </li>
+							<li>Many desktop publishing</li>
+							<li>There are many variations</li>
+						</ul>
+					</div>
+				</div>
+				<div class="container description">
+					<div class="fullDescription">
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+					</div>
+				</div>
+				<div class="graphContainer container">
+					<div class="col-5">
+					<div class="col-6 discRevenues" style="margin-bottom:10px;">
+						<h3 class="margin0 padding0">Discounts & Revenues</h3>
+					</div>
+					<div class="col-3 discRevenues">
+						<span class="graphIcon red"></span>						
+						<span>Revenues</span>
+					</div>
+					<div class="col-3 discRevenues">
+						<span class="graphIcon green"></span>
+						<span>Discounts</span>
+					</div>
+					<paper-card elevation="2">
+					<img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&chd=t:10,15,5,0,20,50,60,45,80,90,70,68|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chxt=x,y&chx=Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec&chy:10,20,20,65,80,70,40,90,110,120"/>
+						<!-- <img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&
+						chxt=x,y&chxl=0:|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|1:|0|10|20|30|40|50|60|70|80|90|120&chy:10,20,20,65,80,70,40,90,110,20|45&chd=t:10,20,40,15,80,60,80,90,85,45,33,65"/> -->
+					</paper-card>
+					</div>
+					<div class="col-1"></div>
+					<div class="col-6">
+					<div class="col-6 discRevenues" style="margin-bottom:10px;">
+						<h3 class="margin0 padding0">Discounts & Unique Customers</h3>
+					</div>
+					<div class="col-3 discRevenues">
+						<span class="graphIcon red"></span>						
+						<span>Customers</span>
+					</div>
+					<div class="col-3 discRevenues">
+						<span class="graphIcon green"></span>
+						<span>Discounts</span>
+					</div>
+					<paper-card elevation="2">
+						<img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&chd=t:0,0,50,0,10,0,0,0,500,0,500,10|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chxt=x,y"/>
+					</paper-card>
+					</div>
+					
+					<!-- <scheme-chart preview-graph-id"line-chart-1" chart-data="{{previewData1}}" 
+					chart-options="{{optionData}}"></scheme-chart> -->
+				</div>
+			</paper-material>
+		<iron-ajax  id="previewSchemeAjax" content-type="application/json"   method="GET"  
+         handle-as="json" on-error="handleError" on-response="handleResponse"  debounce-duration="300"></iron-ajax>
+	</template>
+	<script>
+		Polymer({
+			is:'preview-scheme',
+			ready:function(){
+				//this.config = generalConfig() || {};
+				app.previewSchemeName = '';
+				this.schemeName = "";
+			},
+			properties:{
+				previewData:{
+					type:Object,
+					notify:true
+				},
+				schemeName:{
+					type:String,
+					notify:true
+				}
+			},
+			observers:[ 
+				'previewSchemeChanged(params.schemeName)'
+			],
+			previewSchemeChanged:function(schemeName){
+				if(schemeName!==undefined && schemeName.length>0){
+				app.showPalet('/previewScheme');
+				app.previewSchemeName = 'Preview Scheme - '+schemeName;
+
+				this.previewData1 = [['Year', 'Sales', 'Expenses'],
+		          ['2004',  1000,      400],
+		          ['2005',  1170,      460],
+		          ['2006',  660,       1120],
+		          ['2007',  1030,      540]];
+                //this.$.previewSchemeAjax.url =  'mdb/schemes/'+schemeName;
+                //this.$.previewSchemeAjax.headers = {"API_KEY":"MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9"};
+                //this.$.previewSchemeAjax.body = JSON.stringify(this.scheme);
+                //this.$.previewSchemeAjax.generateRequest();
+				}
+			},
+			handleResponse:function(event){
+				if(chUtils.isEmpty(event.detail.response)===false){
+					this.previewData = event.detail.response;
+					console.log(event.detail.response);
+				}
+			},
+			handleError:function(event){
+				console.log(event);
+				//this.$.discountRevenueChart.drawChart();
+			},
+
+		});
+	</script>
+</dom-module>

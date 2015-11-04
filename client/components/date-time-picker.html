@@ -1,0 +1,183 @@
+
+<dom-module id="date-time-picker">
+	<style type="text/css">
+		.card-actions{
+			padding:10px;
+		}
+		paper-dialog{
+			background: #fff;
+			padding: 0px;
+		}
+		#heading{
+			width: 100px;
+		}
+		#pages{
+			width: 200px;
+		}
+		section > paper-button {
+	      background-color: var(--google-grey-300);
+	      padding: 5px;
+	    }
+	    section > paper-button:hover {
+	      background-color: var(--paper-light-blue-200);
+	      padding: 5px;
+	    }
+	    paper-dialog.colored {
+	      border: 2px solid;
+	      border-color: var(--paper-green-500);
+	      background-color: var(--paper-light-green-50);
+	      color: var(--paper-green-500);
+	    }
+	    paper-dialog.size-position {
+	      position: fixed;
+	      top:30px;
+	      left:30%;
+	      border-radius:20px;
+	    }
+
+	    .toggleLayer{
+	    	position:absolute;
+	    	z-index:-1;
+	    }
+	    
+	   
+	   paper-input{
+	   	margin-left: 10px;
+	   }
+	   
+	   paper-dialog > *:first-child , paper-dialog .timePicker{
+	   	margin: 0px !important;
+	   	padding: 0px;
+	   }
+	   .closeBtn{
+	   	 position: absolute;
+	   	 right: 0;
+	   	 z-index: 1;
+
+	   }
+	  
+	</style>
+    <template>
+     <section onclick="clickHandler(event)">
+     <paper-input name="{{dateType}}" class="date-time-picker-input"  no-label-float readonly="true" label="{{dateLabel}}"  on-tap="showDialog" id="{{dateTimeValue}}" value="{{dateModalValue}}"  ></paper-input>
+     	<paper-dialog modal id="{{dateModal}}"  class="size-position paper-date-picker-dialog padding0" with-backdrop>
+			  	<div class="datePicker margin0">
+			  		<paper-fab mini icon="icons:close" class="closeBtn" dialog-confirm autofocus>
+			  		</paper-fab>
+				  	<paper-date-picker id="{{dateId}}"></paper-date-picker>
+			  	</div>
+			  	<div class="timePicker margin0">
+					<paper-time-picker id="{{timeId}}"></paper-time-picker>
+			  	</div>
+    </paper-dialog>
+    </section>
+	 </template>
+    <script>
+    	function clickHandler(e) {
+	      var button = e.target;
+	      while (!button.hasAttribute('data-dialog') && button !== document.body) {
+	        button = button.parentElement;
+	      }
+	      if (!button.hasAttribute('data-dialog')) {
+	        return;
+	      }
+	      var id = button.getAttribute('data-dialog');
+	      var dialog = document.getElementById(id);
+	      if (dialog) {
+	        dialog.open();
+	      }
+	    }
+        Polymer({
+            is: 'date-time-picker',
+            properties: {
+                pickedDate:String,
+                pickedTime:String,
+                dateTimeValue:String,
+                dateType:{
+                	type:String,
+                	notify:true
+                },
+                dateLabel:String,
+                dateModal:String,
+                timeId:String,
+                dateId:String,
+                dateModalValue:{
+                	type:String,
+                	notify:true
+                },
+                metadata:{
+                	type:Object,
+                	notify:true
+                }
+               
+            },
+            ready:function(){
+            	var monthNames = ["January", "February", "March", "April", "May", "June",
+	                "July", "August", "September", "October", "November", "December"
+	            ];
+            	this.formatDate = function(datestr) {
+            		var date = new Date();
+            		if(datestr){
+					    date = new Date(datestr);
+            		}
+				 return  monthNames[date.getMonth()] + "-"+ ('0' + date.getDate()).slice(-2)+"-"+ date.getFullYear();
+				};
+            },
+            listeners:{
+            	'on-tap':'showDialog',
+            	'iron-overlay-closed':'getdateTime'
+            },
+            observers:[
+            	'dateModalValueChanged(dateModalValue)',
+            	'metadataChanged(metadata)'
+            ],
+            toggleLayer:function(){
+            	console.log("what happened");
+            	document.querySelector('#datePicker').style.zIndex = '-1';
+            	document.querySelector('#datePicker').class = 'toggleLayer';
+            	console.log(document.querySelector('paper-date-picker').class);
+            	console.log(document.querySelector('paper-date-picker'));
+            },
+            metadataChanged:function(metadata){
+
+            },
+            setDateTime:function(){
+            		this.pickedDate = this.formatDate(document.querySelector("#"+this.dateId).date);
+		        	this.pickedTime = document.querySelector("#"+this.timeId).time;
+		            var dateTime = this.pickedDate+' '+this.pickedTime;
+		            document.querySelector("#"+this.dateTimeValue).setAttribute("value",dateTime);
+		            var isoDate = new Date(dateTime);
+		            isoDate = isoDate.toISOString();
+		            document.querySelector("#"+this.dateTimeValue).setAttribute("isoDate",isoDate);
+            },
+            getdateTime:function(){
+		        	this.setDateTime();
+            },
+            showDialog:function(type){
+            	document.querySelector("#"+this.dateModal).open();
+            },
+            dismissDialog : function(event) {
+		        if (event.detail.confirmed) {
+		        	this.setDateTime();
+		        }
+		    },
+		    dateModalValueChanged:function(dateValue){
+		    	if(chUtils.isEmpty(dateValue)===false){
+			    	this.updateDateTime(dateValue);
+		    	}
+		    },
+		    updateDateTime:function(editDate){
+		    	if(chUtils.isEmpty(editDate)===false){
+		    		console.log(editDate);
+		    		var hours  = chUtils.getHoursByDate(editDate); 
+		    		var minutes = chUtils.getMinutesByDate(editDate);
+		    		var existedDate  =  chUtils.getYMD(editDate);
+		    		
+		    		document.querySelector("#"+this.dateId).setAttribute('date',existedDate);
+		    		document.querySelector("#"+this.timeId).setAttribute('hour',hours);
+		    		document.querySelector("#"+this.timeId).setAttribute('minute',minutes);
+		    	}
+		    }
+        });
+    </script>
+</dom-module>
