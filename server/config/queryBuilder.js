@@ -13,8 +13,8 @@ module.exports = {
 	},
 	calculateSRCDiscounts: function(SRCData,SRCAmount,SRCServices) {
 		var SRCDiscount = _.filter(SRCData, function(item) {
-			var finalservice = _.intersection(item._srcTypes, SRCServices);
-			if (finalservice.length == item._srcTypes.length)
+			var finalservice = _.intersection(item._services, SRCServices);
+			if (finalservice.length == item._services.length)
 				return item;
 		});
 		var discountAmount = chUtils.callDiscount(SRCAmount, SRCDiscount[0].discount, SRCDiscount[0].discountType);

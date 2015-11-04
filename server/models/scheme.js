@@ -87,7 +87,7 @@ module.exports = function(mongoose) {
 			// Service Rate Categories (SRC imply High Margin, low margin kind 
 			// of products categorized, grouped already)
 			serviceRateCategoryDiscounts: [{
-				srcTypes: [{
+				services: [{
 					id: {
 						type: Number
 					},
@@ -95,8 +95,8 @@ module.exports = function(mongoose) {
 						type: String
 					}
 				}],
-				_srcTypes:[
 
+				_services:[
 				{
                 type: String
                 
@@ -248,36 +248,38 @@ module.exports = function(mongoose) {
 
 		}
 		// If serviceRateCategoryDiscounts empty here we adding empty array
-		if (!this.behavior.serviceRateCategoryDiscounts) {
+
+		console.log(typeof this.behavior.serviceRateCategoryDiscounts);
+		if (typeof this.behavior.serviceRateCategoryDiscounts == undefined) {
 				this.behavior.serviceRateCategoryDiscounts = [];
 			}
 			        
         // If serviceLevelDiscounts empty here we adding empty array
-		if (!this.behavior.serviceLevelDiscounts) {
+
+		if (typeof this.behavior.serviceLevelDiscounts == undefined) {
 				this.behavior.serviceLevelDiscounts = [];
 			}
 			
 		// If advancePaidPoints empty here we adding empty array
-		if (!this.behavior.advancePaidPoints) {
+
+		if (typeof this.behavior.advancePaidPoints == undefined) {
 			this.behavior.advancePaidPoints = [];
 		}
 
 		// If billValueDiscounts empty here we adding empty array
-		if (!this.behavior.billValueDiscounts) {
+
+		if (typeof this.behavior.billValueDiscounts == undefined) {
 			this.behavior.billValueDiscounts = [];
 		}
 		
 		// If cumulativeAmountPoints empty here we adding empty array
-		if (!this.behavior.cumulativeAmountPoints) {
+
+		if (typeof this.behavior.cumulativeAmountPoints == undefined) {
 			this.behavior.cumulativeAmountPoints = [];
 		}
        
-       // If serviceLevelDiscounts empty here we adding empty array
-		if (!this.behavior.serviceLevelDiscounts) {
-			this.behavior.serviceLevelDiscounts = [];
-		}
 		// If cumulativeAmountPoints empty here we adding empty array
-		if (!this.metadata.toIds) {
+		if (typeof this.metadata.toIds == undefined) {
 			this.metadata.toIds = [];
 		}
 

@@ -13,4 +13,9 @@ client/build.html
 tmp_*.js
 *.*~
 *.out
+<<<<<<< HEAD
 chena.js
+=======
+chena.js
+javaapi
+>>>>>>> b012b284db97a4cc369935cd70b9b5617e5e6ca8
