@@ -13,7 +13,7 @@ module.exports = function(grunt) {
         },
         files: {
           // Target-specific file lists and/or options go here. 
-          "build.html":"client/index.html"
+          "build.html":"client/home.html"
         },
       },
     }

@@ -410,7 +410,7 @@
                
                 console.log(this.schemeObj);
 
-                if(this.schemeObj!==undefined && this.schemeObj.metadata.name!=="") {
+                if(this.schemeObj!==undefined) {
                     this.$.schemeAjax.url =  this.config.urls.rest;
                     this.$.schemeAjax.method = this.schemeMethod;
                     this.$.schemeAjax.body = JSON.stringify(this.schemeObj);
