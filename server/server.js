@@ -21,6 +21,7 @@ var config = require('./config/config.js'),
   expressSession = require('express-session'),
   q2m = require('query-to-mongo'),
   mongoskin = require('mongoskin'),
+  _ = require('lodash'),
   chUtils = require('../lib/chUtils.js').chUtils,
   _id_count = 0;
 
@@ -175,6 +176,39 @@ function getPreviewData(req, res) {
   });
 
 }
+function getOrverView(req,res)
+{
+
+  var scheme = mongoose.model('scheme').find(queryBuilder.getOrverView());
+  var allScheme = mongoose.model('scheme').find({});
+  var order = mongoose.model('order').find().distinct('userId');
+  var finalData = {};
+  scheme.exec().then(function(data) {
+      finalData.expdata = _.countBy(data, function(expdata) {
+        if (expdata.metadata.type == 'COUPON') return "COUPON";
+        if (expdata.metadata.type == 'ADD_ON') return "ADD_ON";
+        if (expdata.metadata.type = "GIFT_CARD") return "GIFT_CARD";
+      });
+
+      allScheme.exec().then(function(allData) {
+        finalData.totals = _.countBy(allData, function(allData) {
+       
+          if (allData.metadata.type == 'COUPON') return "COUPON";
+          if (allData.metadata.type == 'ADD_ON') return "ADD_ON";
+          if (allData.metadata.type = "GIFT_CARD") return "GIFT_CARD";
+        });
+
+      })
+    }).then(function() {
+        order.exec().then(function(orderData) {
+          finalData.totals.pepoles = orderData.length;
+       res.send(JSON.stringify(finalData));
+        })
+
+       
+  });  
+}
+
 
 function schemeApplied(req, res) {
   var o1 = mongoose.model('order').update(queryBuilder.schemeApplied(req.body), req.body);
@@ -248,7 +282,8 @@ app.get('/ssoLogout', function(req, res) {
 
 
 var User = mongoose.model('User');
-app.get('/pricingengine/previewData', getPreviewData)
+app.get('/pricingengine/previewData', getPreviewData);
+app.get('/pricingengine/overview',getOrverView);
 app.post('/pricingengine/schemeAppliedSuccessfully', schemeApplied);
 app.post('/pricingengine/suggestDiscounts', suggestDiscounts);
 app.all('/mdb/update/:modelName', updateModels);
