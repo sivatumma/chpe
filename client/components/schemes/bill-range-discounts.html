@@ -41,7 +41,7 @@
             <div class="col-12 margin0">
                 <div class="col-6">
                        <div class="col-6">
-                            <paper-input name="from" no-label-float label="From" 
+                            <paper-input name="from"  no-label-float label="From" 
                        value="{{bsd.billRange.from}}"></paper-input>
                        </div>
                        <div class="col-6">
@@ -103,7 +103,8 @@
                         },
                         discount: 0,
                         discountType: "%",
-                        maxLength:9
+                        maxLength:9,
+                        discountPattern:"^([0-10])$"
                     };
                 this.push('behaviorData.billValueDiscounts',obj);
             },
