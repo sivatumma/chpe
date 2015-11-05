@@ -212,9 +212,11 @@
 
         .giftcard-sec paper-card .giftcardName,.schemes-sec paper-card .schemeName,
         .coupons-sec paper-card .couponName{
-            word-spacing:normal;
-            word-wrap:break-word;
-            text-align: left;
+           white-space: nowrap; 
+           overflow: hidden;
+           text-overflow: ellipsis; 
+           padding: 0px;
+           margin: 0px;
         }
          .giftcard-sec paper-card[published] ,.schemes-sec paper-card[published],
          .coupons-sec paper-card[published] {
@@ -286,7 +288,7 @@
                         <paper-fab mini class="couponIcon" src="../../assets/images/c.png">
                         </paper-fab>
                         <div class="card-content coupon-card">
-                            <span class="couponName">{{item.metadata.name}}</span>
+                            <p class="couponName" title="{{item.metadata.name}}">{{item.metadata.name}}</p>
                         </div>
                         <div class="card-actions" align="right">
                                <paper-icon-button icon="link"></paper-icon-button>
@@ -309,7 +311,7 @@
                         </paper-fab>
                         <paper-ripple></paper-ripple>
                         <div class="card-content">
-                            <span class="giftcardName">{{item.metadata.name}}</span>
+                            <p class="giftcardName" title="{{item.metadata.name}}">{{item.metadata.name}}</p>
                         </div>
                         <div class="card-actions" align="right">
                                <paper-icon-button icon="link"></paper-icon-button>
@@ -320,16 +322,13 @@
                 </template>
             </paper-material>
             <paper-material class="schemes-sec" elevation="0">
-                <!-- <div class="col-12 schemeTitle">
-                    <h2>Schemes</h2>
-                </div> -->
                 <template is="dom-repeat" items="{{addonsData}}" as="item">
                     <paper-card elevation="2"  class="cards"  
                     on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
                         <paper-fab mini class="addonIcon"  src="../../assets/images/addon-plus.png"></paper-fab>
                         <paper-ripple></paper-ripple>
                         <div class="card-content">
-                            <span class="schemeName">{{item.metadata.name}}</span></div>
+                            <p title="{{item.metadata.name}}" class="schemeName">{{item.metadata.name}}</p></div>
                         <div class="card-actions" align="right">
                                <paper-icon-button icon="link"></paper-icon-button>
                                <paper-icon-button icon="icons:create" on-click="editScheme" 
