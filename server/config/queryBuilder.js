@@ -87,6 +87,19 @@ module.exports = {
 		}
 		return query;
 	},
+	getOrverView: function()
+	{
+		var query = {
+                 "behavior.startDate": {
+                     $lte: new Date()
+                 },
+                 "behavior.endDate": {
+                     $lte: new Date(new Date().setDate(new Date().getDate() + 7))
+                 }
+             };
+             return query;
+
+	},
 	shcemaFindQuery: function(query) {
 		return query;
 	},
