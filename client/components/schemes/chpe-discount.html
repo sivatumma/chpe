@@ -125,10 +125,11 @@
                 if (discountType == "%") {
                     if(this.discountModal.maxLength!==undefined){
                         this.discountModal.maxLength = this.discountLength = 10;
+                        this.discountModal.discountPattern = this.discountPattern =  "^([0-10])$";
                     }else{
-                        this.discountLength = 10;
+                        this.discountModal.maxLength = this.discountLength = 10;
+                        this.discountModal.discountPattern = this.discountPattern =  "^([0-10])$";
                     }
-                    this.discountPattern = "^([0-10])$";
                     chUtils.addClass(document.querySelector("#"+this.percentageId),"active");
                     this.discountModal.discountType = discountType; 
                 } else if(discountType=="FLAT") {
@@ -136,10 +137,11 @@
 
                     if(this.discountModal.maxLength!==undefined){
                         this.discountModal.maxLength = this.discountLength = 999;
+                        this.discountModal.discountPattern = this.discountPattern =  "^([0-999])$";
                     }else{
-                        this.discountLength = 999;
+                       this.discountModal.maxLength = this.discountLength = 999;
+                        this.discountModal.discountPattern = this.discountPattern =  "^([0-999])$";
                     }
-                    this.discountPattern = "^([0-999])$";
                     this.discountModal.discountType = discountType; 
                 }
             },

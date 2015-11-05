@@ -76,6 +76,9 @@ module.exports = function(mongoose) {
 			discount: {
 				type: Number
 			},
+			discountPattern:{
+				type:String
+			},
 			// validityPeriod: [{
 			// 	startDate: {
 			// 		type: Date
@@ -110,6 +113,9 @@ module.exports = function(mongoose) {
 				},
 				maxLength: {
 					type: Number
+				},
+				discountPattern:{
+					type:String
 				}
 			}],
 			advancePaidPoints: [{
@@ -132,6 +138,9 @@ module.exports = function(mongoose) {
 				},
 				maxLength: {
 					type: Number
+				},
+				discountPattern:{
+					type:String
 				}
 			}],
 			modeOfPaymentDiscounts: [{
@@ -149,6 +158,9 @@ module.exports = function(mongoose) {
 				maxLength: {
 					type: Number,
 					default: 9
+				},
+				discountPattern:{
+					type:String
 				}
 			}],
 			billValueDiscounts: [{
@@ -169,6 +181,9 @@ module.exports = function(mongoose) {
 				maxLength: {
 					type: Number,
 					default: 1
+				},
+				discountPattern:{
+					type:String
 				}
 			}],
 			cumulativeAmountPoints: [{
@@ -209,6 +224,9 @@ module.exports = function(mongoose) {
 				},
 				discountType: {
 					type: String
+				},
+				discountPattern:{
+					type:String
 				}
 			}],
 			createdAt: {
@@ -369,7 +387,7 @@ module.exports = function(mongoose) {
 		});
 	};
 
-	schemeSchema.pre('save', function(next) {
+/*	schemeSchema.pre('save', function(next) {
 
 		this.beforeSaveDefaultValidation();
 
@@ -382,7 +400,7 @@ module.exports = function(mongoose) {
 		}
 
 		next();
-	});
+	});*/
 	schemeSchema.pre('update', function(next) {
 		console.log(this.schema);
 		// if (this.metadata.type == "COUPON") {

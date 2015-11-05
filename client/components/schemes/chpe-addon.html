@@ -348,8 +348,9 @@
             },
             schemeObjChanged: function(schemeObj,metadata, behavior) {
                 if(metadata.published){
-                    if(document.getElementById("addon-form")){
-                        chUtils.disableInputs(metadata.published,"addon-form")
+                    var form = document.getElementById("addon-form");
+                    if(chUtils.isEmpty(form)===false){
+                        chUtils.disableInputs(metadata.published,"addon-form");
                     }
                 }
                 

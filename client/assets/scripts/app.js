@@ -105,6 +105,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     this.getCurrentPage(event.currentTarget.getAttribute('route'));
     app.setScheme();
     app.location = function(){return document.location;};
+    chUtils.disableInputs(false,"addon-form");
+    chUtils.disableInputs(false,"coupon-form");
+    chUtils.disableInputs(false,"gift-card-form");
 
   };
 
@@ -114,7 +117,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     * Exp Res : if we pass '/' , it will show homepage palet
     */
   app.showPalet = function(paletName){
-    console.log(paletName);
     app.isHome = app.isCoupon = app.isAddon =  app.isGiftCard= app.isPreviewScheme = false; 
    switch(paletName){
       case "/":
@@ -137,7 +139,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
  //setting current Palet
  app.currentPalet = function(currentPage){
-    console.log(currentPage);
     if(currentPage!==undefined){
         this.showPalet(currentPage);
       }else{

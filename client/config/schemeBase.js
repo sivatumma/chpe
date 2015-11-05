@@ -22,26 +22,30 @@ function schemeBase(scheme){    //init metadata as per schema
         endDate: "",
         discountType: "%",
         discount: 0,
+        maxLength:10,
+        discountPattern:"^([0-10])$",
         locationOfServices:[],
         serviceRateCategoryDiscounts: [{
             discount: 0,
             discountType: "%",
             services: [],
-            maxLength:9
+            maxLength:9,
+            discountPattern:"^([0-10])$",
         }],
         serviceLevelDiscounts: [{
             discount: 0,
             discountType: "%",
             services: [],
-            maxLength:9
+            maxLength:9,
+            discountPattern:"^([0-10])$",
         }],
         cumulativeAmountPoints: [{
             amount: "",
             points: ""
         }],
         doctorLevelDiscounts: [
-            {type:"user",discount:0,discountType:"%",maxLength:9},
-            {type:"system",discount:0,discountType:"%",maxLength:9}
+            {type:"user",discount:0,discountType:"%",maxLength:9,discountPattern:"^([0-10])$"},
+            {type:"system",discount:0,discountType:"%",maxLength:9,discountPattern:"^([0-10])$"}
         ],
         advancePaidPoints: [{
             points: "",
@@ -54,17 +58,20 @@ function schemeBase(scheme){    //init metadata as per schema
             },
             discount: 0,
             discountType: "%",
-            maxLength:9
+            maxLength:9,
+            discountPattern:"^([0-10])$"
         }],
       modeOfPaymentDiscounts: [{
          mop:"EPAY",
          discount: 0,
          discountType:"%",
-         maxLength:9
+         maxLength:9,
+         discountPattern:"^([0-10])$",
         },{mop:"COD",
          discount: 0,
          discountType:"%",
-         maxLength:9
+         maxLength:9,
+         discountPattern:"^([0-10])$",
         }]
     };
 

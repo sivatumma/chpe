@@ -77,6 +77,7 @@
             border-radius: 3px;
             border: 1px solid #e5e5e5;
             border-spacing: 2px;
+            table-layout: fixed;
         }
         .element-table thead th {
             padding: 0 24px;
@@ -111,19 +112,20 @@
             color: lightgreen;
         }
         .element-table tbody tr td {
-            white-space: nowrap;
             font-weight: 400;
             font-size: 13px;
-            padding: 12px 24px;
+            padding: 12px 20px;
             text-align: left;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis; 
         }
         #listView {
             display: block;
             box-shadow: none;
             margin: 10px 10px 0px 0px;
             padding: 0px;
-            width: 100%;
-           
+            width: 100%;           
         }
         
         #gridView {
@@ -187,7 +189,8 @@
         .schemes-sec paper-card , .coupons-sec paper-card , .giftcard-sec paper-card{
             font-size: 13px !important;
         }
-        .schemes-sec paper-icon-button, .coupons-sec paper-icon-button , .giftcard-sec paper-icon-button{
+        .schemes-sec paper-icon-button, .coupons-sec paper-icon-button , 
+        .giftcard-sec paper-icon-button{
             padding: 7px;
             height: 32px;
             width: 32px;
@@ -198,13 +201,8 @@
             color: #000; 
             transition: background-color 0.8s ease;
         }
-        .coupons-sec paper-card .card-content{
-            padding: 0px;
-        }
-        .coupons-sec paper-card .card-content .content{
-            /*margin-left: 20px;*/
-            font-size: 12px;
-        }
+       
+        
         .coupons-sec paper-card .couponIcon{
             position: absolute;
             width: 26px;
@@ -212,34 +210,29 @@
             top: 5px;
             left: 5px;
             background: #4fc3f7;
+            box-shadow: none;
         }
+
+        .giftcard-sec paper-card .giftcardName,.schemes-sec paper-card .schemeName,
         .coupons-sec paper-card .couponName{
-            word-spacing:normal;
-            word-wrap:break-word;
-            white-space: nowrap;
-            float: left;
-            margin:0px 0px 0px 35px;
-            line-height: 36px;
-        }
-        .giftcard-sec paper-card .giftcardName,.schemes-sec paper-card .schemeName{
-            word-spacing:normal;
-            word-wrap:break-word;
-            white-space: nowrap;
-            text-align: left;
+           white-space: nowrap; 
+           overflow: hidden;
+           text-overflow: ellipsis; 
+           padding: 0px;
+           margin: 0px;
         }
          .giftcard-sec paper-card[published] ,.schemes-sec paper-card[published],
          .coupons-sec paper-card[published] {
             background: lightgreen;
          }
-        .coupons-sec paper-card .actions{
-            margin-left: 10px;
-        }
+        
         .giftcard-sec paper-card:hover,  .giftcard-sec paper-card:focus{
             /*background:#f5f5f5;*/
             color: #000;
             transition: background-color 0.8s ease; 
         }
-        .giftcard-sec paper-card .card-content,.schemes-sec paper-card .card-content{
+
+        .giftcard-sec paper-card .card-content, .coupon-card,.schemes-sec paper-card .card-content{
             padding: 15px 0px;
             margin: 0px 0px 0px 40px;
             text-align: left;
@@ -257,6 +250,7 @@
             top:5px;
             background: #fff;
             transition: background-color 0.8 ease;
+            box-shadow: none !important;
         }
         .giftcard-sec paper-card .giftCardIcon{
             position: absolute;
@@ -265,6 +259,7 @@
             top: 5px;
             left: 5px;
             background: #fff;
+            box-shadow: none !important;
         }
         #gridView .schemeTitle{
            border-bottom: 1px solid #ccc;
@@ -284,38 +279,29 @@
         .listView[smallDesktop]{
             display: none;
         }
-   
+
     </style>
     <template>
         <div id="gridView">
             <paper-material elevation="0" class="coupons-sec">
-               <!--  <div class="col-12 schemeTitle">
-                    <h2 >Coupons</h2>
-                </div> -->
-                <template is="dom-repeat" items="{{couponsData}}" as="item">
-                    <paper-card elevation="1" class="cards"  on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
-                        <paper-fab class="couponIcon" mini  src="../../assets/images/c.png"></paper-fab>
-                        <div class="card-content col-12">
-                            <paper-ripple></paper-ripple>   
-                            <div class="col-12 content">
-                                <span class="couponName">{{item.metadata.name}}</span>
-                                <div class="actions pull-right margin0 paddin0">
-                                    <span><paper-icon-button icon="link"></paper-icon-button></span>
-                                    <span class="text-right"><paper-icon-button icon="icons:create" 
-                                        on-click="editScheme"  scheme-type="{{item.metadata.type}}">
-                                    </paper-icon-button><span>
-                                </div>
-                            </div>
+                 <template is="dom-repeat" items="{{couponsData}}" as="item">
+                    <paper-card elevation="2"  class="cards"  
+                    on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
+                        <paper-ripple></paper-ripple>
+                        <paper-fab mini class="couponIcon" src="../../assets/images/c.png">
+                        </paper-fab>
+                        <div class="card-content coupon-card">
+                            <p class="couponName" title="{{item.metadata.name}}">{{item.metadata.name}}</p>
                         </div>
-                        <!-- <div class="card-actions" align="right">
+                        <div class="card-actions" align="right">
                                <paper-icon-button icon="link"></paper-icon-button>
                                <paper-icon-button icon="icons:create" on-click="editScheme" 
                                 scheme-type="{{item.metadata.type}}"></paper-icon-button>
-                        </div> -->
+                        </div>
                     </paper-card>
-
-                </template>   
+                </template>  
             </paper-material>
+
             <paper-material class="giftcard-sec" elevation="0">
                 <!-- <div class="col-12 schemeTitle">
                     <h2>Gift Cards</h2>
@@ -323,11 +309,12 @@
                 <template is="dom-repeat" items="{{giftCardsData}}" as="item">
                     <paper-card elevation="2"  class="cards"  
                     on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
-                        <paper-fab mini class="giftCardIcon" src="../../assets/images/gift-star.png">
+                        <paper-fab mini class="giftCardIcon"
+                         src="../../assets/images/gift-star.png">
                         </paper-fab>
                         <paper-ripple></paper-ripple>
                         <div class="card-content">
-                            <span class="giftcardName">{{item.metadata.name}}</span>
+                            <p class="giftcardName" title="{{item.metadata.name}}">{{item.metadata.name}}</p>
                         </div>
                         <div class="card-actions" align="right">
                                <paper-icon-button icon="link"></paper-icon-button>
@@ -338,16 +325,13 @@
                 </template>
             </paper-material>
             <paper-material class="schemes-sec" elevation="0">
-                <!-- <div class="col-12 schemeTitle">
-                    <h2>Schemes</h2>
-                </div> -->
                 <template is="dom-repeat" items="{{addonsData}}" as="item">
                     <paper-card elevation="2"  class="cards"  
                     on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
                         <paper-fab mini class="addonIcon"  src="../../assets/images/addon-plus.png"></paper-fab>
                         <paper-ripple></paper-ripple>
                         <div class="card-content">
-                            <span class="schemeName">{{item.metadata.name}}</span></div>
+                            <p title="{{item.metadata.name}}" class="schemeName">{{item.metadata.name}}</p></div>
                         <div class="card-actions" align="right">
                                <paper-icon-button icon="link"></paper-icon-button>
                                <paper-icon-button icon="icons:create" on-click="editScheme" 
@@ -359,18 +343,6 @@
             
         </div>
         <paper-material elevation="1">
-            <!-- <div id="gridView">
-                <template is="dom-repeat" items="{{allSchemes}}" as="item">
-                    <paper-card elevation="2" heading="{{item.metadata.type}}" class="cards" id="{{getId(index)}}" on-focus-out="toggleStyle" on-click="toggleStyle">
-                        <div class="card-content">{{item.metadata.name}}</div>
-                        <div class="card-actions" align="right">
-                               <paper-icon-button icon="link"></paper-icon-button>
-                               <paper-icon-button icon="icons:create" on-click="editScheme" 
-                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
-                        </div>
-                    </paper-card>
-                </template>
-            </div> -->
             <div id="listView" hidden>
                 <table class="element-table responsive-table" smallDesktop$="{{smallDesktop}}">
                     <thead>
@@ -387,10 +359,10 @@
                         <template is="dom-repeat" items="{{listData}}" as="item">
                             <tr>
                                 <td>{{getIndexByRow(index)}}</td>
-                                <td>{{item.metadata.name}}</td>
+                                <td title="{{item.metadata.name}}">{{item.metadata.name}}</td>
                                 <td>{{item.metadata.type}}</td>
-                                <td>{{item.behavior.startDate}}</td>
-                                <td>{{item.behavior.endDate}}</td>
+                                <td title="{{item.behavior.startDate}}">{{item.behavior.startDate}}</td>
+                                <td title="{{item.behavior.endDate}}">{{item.behavior.endDate}}</td>
                                 <td>{{item.metadata.createdBy}}</td>
                                 <td>{{publishedState(item.metadata.published)}}</td>
                                 <td class="editScheme" published$="[[item.metadata.published]]">

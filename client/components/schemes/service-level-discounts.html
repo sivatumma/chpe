@@ -35,7 +35,7 @@
           <template is="dom-repeat" items="{{behaviorData.serviceLevelDiscounts}}" as="slc">
             <div class="col-12 singleRow">
                 <div class="col-6">
-                        <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceLevelDiscounts/"
+                        <multi-value-suggestbox id="multi_suggest" name="multiSuggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceLevelDiscounts/"
                                     options='{
                                         "allow_space": false,
                                         "allow_nonmatching": false
@@ -97,7 +97,7 @@
             },
             //add or remove Slc categories
             addSlc :function(e){
-                this.push('behaviorData.serviceLevelDiscounts', {discount:0,discountType:"%",maxLength:9,services:[]});
+                this.push('behaviorData.serviceLevelDiscounts', {discount:0,discountType:"%",maxLength:9,services:[],discountPattern:"^([0-10])$"});
             },
             deleteSlc:function(e){
                 if(e.model.index!=0){
