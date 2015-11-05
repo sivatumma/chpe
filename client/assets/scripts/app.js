@@ -65,6 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
 
   app.params = []; var loop=-1;
+
   //more routuing alternative method
   var template = document.querySelector('template');
   template.makeUrl = function(path, params) {
@@ -78,7 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
 
   /*
-   *Method for setting base scheme
+   *Method for resetting/setting the  base scheme
    *@use this method  
    */
   app.setScheme = function(){
@@ -94,25 +95,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
 
 
-  //Resetting edit scheme data to defaults
+ /**
+   * We should run all these methods and on page load to show path related palets on below of main toolbar
+   */
   app.setScheme();
-  app.currentPage = "";
-  app.previewSchemeName = "";
-  
+  app.currentPage;
+  app.previewSchemeName = undefined;
   app.getTitle = function(event){
     this.getCurrentPage(event.currentTarget.getAttribute('route'));
-    //app.screenTitle = event.currentTarget.getAttribute('title');
     app.setScheme();
-    //chUtils.resetForm('coupon-form');
-    //chUtils.resetForm('addon-form');
-    //chUtils.resetForm('gift-card-form');
-
     app.location = function(){return document.location;};
 
   };
 
-  //display selected tool bars 
+  /**
+    * This method used to show the current plaen name
+    * @params palentName
+    * Exp Res : if we pass '/' , it will show homepage palet
+    */
   app.showPalet = function(paletName){
+    console.log(paletName);
     app.isHome = app.isCoupon = app.isAddon =  app.isGiftCard= app.isPreviewScheme = false; 
    switch(paletName){
       case "/":
@@ -130,27 +132,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       case "/previewScheme":
        app.isPreviewScheme = true;
        break;
-     
-   }
+    }
   };
 
+ //setting current Palet
+ app.currentPalet = function(currentPage){
+    console.log(currentPage);
+    if(currentPage!==undefined){
+        this.showPalet(currentPage);
+      }else{
+        this.showPalet('/');
+      }
+ };
+ 
   //to get current path name
   app.getCurrentPage = function(name){
-    app.previewSchemeName = '';
     if(name===undefined){
       this.currentPage = location.hash.split("!")[1];
-        if(this.currentPage!==undefined){
-        this.showPalet(this.currentPage);
-        }else{
-           this.showPalet('/');
-        }
+      this.currentPalet(this.currentPage); 
     }else{
       this.currentPage = MoreRouting.getRouteByName(name).path;
-      if(this.currentPage!==undefined){
-        this.showPalet(this.currentPage);
-      }else{
-         this.showPalet('/');
-      }
+      this.currentPalet(this.currentPage); 
     }
     
   };
@@ -159,7 +161,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.getCurrentPage();
 
 
-  //home page list grid manipulations
+ /**
+   *This method is used to switch grid view to list view list view to grid view
+   * @params curentTargetAttribute 
+   * Exp Res : If list grid will display , If Grid list will display 
+   */
   app.toggleListGridIcon = "icons::view-list";
   app.listGridVar = '';
   app.toggleListGrid = function(event) {
@@ -179,18 +185,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.location = function(){return document.location;};
 
-  app.previewSchemeName = "";
-
-  //setting logged in user vinformation
-  
-  app.userInfo = {}, localStorage.sessionIndex = '';;
-  
-
+ /**
+  *This method is used to check user logged in or not in client
+  *On server hit Head Method any error will comes , user will goto sso login
+  */
   app.handleUserError = function(event){
     console.log(event.detail.error);
     window.location = '/';
   };
 
+ /**
+  *This method is used to check user logged in or not in client
+  *On server hit of  Head Method any error will comes , user will goto sso login
+  *On success user information is shown in dropdown toggle button including role and logged in username
+  */
   app.handleUserResponse = function(event,request){
     var headers = JSON.parse(request.xhr.getResponseHeader('user'));
       if(chUtils.isEmpty(headers)===false){

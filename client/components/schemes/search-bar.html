@@ -157,7 +157,8 @@
             'searchInputChanged(searchInput)'
         ],
         searchInputChanged:function(input){
-            if(input.length>0){
+            var inputExisist  = _.contains(this.suggestions,input);
+            if(input.length>0 && !inputExisist){
                 this.$.searchSchemes.url='/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/schemeNames/'+input;
                 this.$.searchSchemes.method='GET';
                 this.$.searchSchemes.headers={'API_KEY':this.config.urls.memcache.API_KEY};
@@ -202,11 +203,14 @@
         onKeyPress: function(e) {
             if (e.keyCode == 13) { // Enter
                 var q = this.searchInput;
-                if(chUtils.isEmpty(q)===false){
+                if(chUtils.isEmpty(q)===false && _.contains(this.suggestions,q)){
                     this.show = false;
                     this.searchInput = '';
                     MoreRouting.navigateTo('previewScheme', {schemeName: q});
                     app.getCurrentPage();
+                }else{
+                     this.searchInput = '';
+                     this.show = !this.show;
                 }
             }
         }

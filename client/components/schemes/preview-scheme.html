@@ -244,9 +244,7 @@
 		Polymer({
 			is:'preview-scheme',
 			ready:function(){
-				//this.config = generalConfig() || {};
-				app.previewSchemeName = '';
-				this.schemeName = "";
+				app.previewSchemeName = "";
 			},
 			properties:{
 				previewData:{
@@ -255,7 +253,8 @@
 				},
 				schemeName:{
 					type:String,
-					notify:true
+					notify:true,
+					value:""
 				}
 			},
 			observers:[ 
@@ -263,7 +262,8 @@
 			],
 			previewSchemeChanged:function(schemeName){
 				if(schemeName!==undefined && schemeName.length>0){
-				app.showPalet('/previewScheme');
+				app.isPreviewScheme = true;
+				app.isHome = false;
 				app.previewSchemeName = 'Preview Scheme - '+schemeName;
 
 				this.previewData1 = [['Year', 'Sales', 'Expenses'],
