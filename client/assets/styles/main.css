@@ -234,6 +234,8 @@ iron-pages{
   float: left;
   width: 100%;
   background: url('../images/schemeBG.jpg') repeat;
+  background-position: right  center;
+  background-size: cover;
   height:570px;
 }
 .leftnav{
@@ -242,10 +244,13 @@ iron-pages{
 .couponBg{
   background: url('../images/confectionary.png') repeat !important;
   height: 570px;
+  background-position: center  center;
 }
 .giftCardBg{
   background: url('../images/leather_1_@2X.png') repeat !important;
   height: 570px;
+  background-position: center  center;
+  background-size: cover;
 }
 /*  custom paper fab styles*/
 paper-fab {

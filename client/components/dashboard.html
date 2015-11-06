@@ -279,102 +279,117 @@
         .listView[smallDesktop]{
             display: none;
         }
+        .noschemes{
+            width: 80%;
+            position: absolute;
+        }
+      
 
     </style>
     <template>
-        <div id="gridView">
-            <paper-material elevation="0" class="coupons-sec">
-                 <template is="dom-repeat" items="{{couponsData}}" as="item">
-                    <paper-card elevation="2"  class="cards"  
-                    on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
-                        <paper-ripple></paper-ripple>
-                        <paper-fab mini class="couponIcon" src="../../assets/images/c.png">
-                        </paper-fab>
-                        <div class="card-content coupon-card">
-                            <p class="couponName" title="{{item.metadata.name}}">{{item.metadata.name}}</p>
-                        </div>
-                        <div class="card-actions" align="right">
-                               <paper-icon-button icon="link"></paper-icon-button>
-                               <paper-icon-button icon="icons:create" on-click="editScheme" 
-                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
-                        </div>
-                    </paper-card>
-                </template>  
-            </paper-material>
-
-            <paper-material class="giftcard-sec" elevation="0">
-                <!-- <div class="col-12 schemeTitle">
-                    <h2>Gift Cards</h2>
-                </div> -->
-                <template is="dom-repeat" items="{{giftCardsData}}" as="item">
-                    <paper-card elevation="2"  class="cards"  
-                    on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
-                        <paper-fab mini class="giftCardIcon"
-                         src="../../assets/images/gift-star.png">
-                        </paper-fab>
-                        <paper-ripple></paper-ripple>
-                        <div class="card-content">
-                            <p class="giftcardName" title="{{item.metadata.name}}">{{item.metadata.name}}</p>
-                        </div>
-                        <div class="card-actions" align="right">
-                               <paper-icon-button icon="link"></paper-icon-button>
-                               <paper-icon-button icon="icons:create" on-click="editScheme" 
-                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
-                        </div>
-                    </paper-card>
-                </template>
-            </paper-material>
-            <paper-material class="schemes-sec" elevation="0">
-                <template is="dom-repeat" items="{{addonsData}}" as="item">
-                    <paper-card elevation="2"  class="cards"  
-                    on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
-                        <paper-fab mini class="addonIcon"  src="../../assets/images/addon-plus.png"></paper-fab>
-                        <paper-ripple></paper-ripple>
-                        <div class="card-content">
-                            <p title="{{item.metadata.name}}" class="schemeName">{{item.metadata.name}}</p></div>
-                        <div class="card-actions" align="right">
-                               <paper-icon-button icon="link"></paper-icon-button>
-                               <paper-icon-button icon="icons:create" on-click="editScheme" 
-                                scheme-type="{{item.metadata.type}}"></paper-icon-button>
-                        </div>
-                    </paper-card>
-                </template>
-            </paper-material>
-            
-        </div>
-        <paper-material elevation="1">
-            <div id="listView" hidden>
-                <table class="element-table responsive-table" smallDesktop$="{{smallDesktop}}">
-                    <thead>
-                        <th>S.No</th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Start Date</th>
-                        <th>Valid Upto</th>
-                        <th>Owner</th>
-                        <th>Published</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                        <template is="dom-repeat" items="{{listData}}" as="item">
-                            <tr>
-                                <td>{{getIndexByRow(index)}}</td>
-                                <td title="{{item.metadata.name}}">{{item.metadata.name}}</td>
-                                <td>{{item.metadata.type}}</td>
-                                <td title="{{item.behavior.startDate}}">{{item.behavior.startDate}}</td>
-                                <td title="{{item.behavior.endDate}}">{{item.behavior.endDate}}</td>
-                                <td>{{item.metadata.createdBy}}</td>
-                                <td>{{publishedState(item.metadata.published)}}</td>
-                                <td class="editScheme" published$="[[item.metadata.published]]">
-                                    <paper-icon-button icon="icons:create" on-click="editScheme" 
+        <template is="dom-if" if="{{schemesExist}}">
+            <div id="gridView">
+                <paper-material elevation="0" class="coupons-sec">
+                     <template is="dom-repeat" items="{{couponsData}}" as="item">
+                        <paper-card elevation="2"  class="cards"  
+                        on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
+                            <paper-ripple></paper-ripple>
+                            <paper-fab mini class="couponIcon" src="../../assets/images/c.png">
+                            </paper-fab>
+                            <div class="card-content coupon-card">
+                                <p class="couponName" title="{{item.metadata.name}}">{{item.metadata.name}}</p>
+                            </div>
+                            <div class="card-actions" align="right">
+                                   <paper-icon-button icon="link"></paper-icon-button>
+                                   <paper-icon-button icon="icons:create" on-click="editScheme" 
                                     scheme-type="{{item.metadata.type}}"></paper-icon-button>
-                                </td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
+                            </div>
+                        </paper-card>
+                    </template>  
+                </paper-material>
+
+                <paper-material class="giftcard-sec" elevation="0">
+                    <!-- <div class="col-12 schemeTitle">
+                        <h2>Gift Cards</h2>
+                    </div> -->
+                    <template is="dom-repeat" items="{{giftCardsData}}" as="item">
+                        <paper-card elevation="2"  class="cards"  
+                        on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
+                            <paper-fab mini class="giftCardIcon"
+                             src="../../assets/images/gift-star.png">
+                            </paper-fab>
+                            <paper-ripple></paper-ripple>
+                            <div class="card-content">
+                                <p class="giftcardName" title="{{item.metadata.name}}">{{item.metadata.name}}</p>
+                            </div>
+                            <div class="card-actions" align="right">
+                                   <paper-icon-button icon="link"></paper-icon-button>
+                                   <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                    scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                            </div>
+                        </paper-card>
+                    </template>
+                </paper-material>
+
+                <paper-material class="schemes-sec" elevation="0">
+                    <template is="dom-repeat" items="{{addonsData}}" as="item">
+                        <paper-card elevation="2"  class="cards"  
+                        on-focus-out="toggleStyle" published$="[[item.metadata.published]]">
+                            <paper-fab mini class="addonIcon"  src="../../assets/images/addon-plus.png"></paper-fab>
+                            <paper-ripple></paper-ripple>
+                            <div class="card-content">
+                                <p title="{{item.metadata.name}}" class="schemeName">{{item.metadata.name}}</p></div>
+                            <div class="card-actions" align="right">
+                                   <paper-icon-button icon="link"></paper-icon-button>
+                                   <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                    scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                            </div>
+                        </paper-card>
+                    </template>
+                </paper-material>
+          
             </div>
-        </paper-material>
+        </template>
+        <template is="dom-if" if="{{schemesExist}}">
+            <paper-material elevation="1">
+                <div id="listView" hidden>
+                    <table class="element-table responsive-table" smallDesktop$="{{smallDesktop}}">
+                        <thead>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Start Date</th>
+                            <th>Valid Upto</th>
+                            <th>Owner</th>
+                            <th>Published</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <template is="dom-repeat" items="{{listData}}" as="item">
+                                <tr>
+                                    <td>{{getIndexByRow(index)}}</td>
+                                    <td title="{{item.metadata.name}}">{{item.metadata.name}}</td>
+                                    <td>{{item.metadata.type}}</td>
+                                    <td title="{{item.behavior.startDate}}">{{item.behavior.startDate}}</td>
+                                    <td title="{{item.behavior.endDate}}">{{item.behavior.endDate}}</td>
+                                    <td>{{item.metadata.createdBy}}</td>
+                                    <td>{{publishedState(item.metadata.published)}}</td>
+                                    <td class="editScheme" published$="[[item.metadata.published]]">
+                                        <paper-icon-button icon="icons:create" on-click="editScheme" 
+                                        scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </paper-material>
+        </template>
+        <template is="dom-if" if="{{noschemes}}">
+            <div class="card">
+              <paper-card elevation="2" class="noschemes" heading="No Data found....!"></paper-card>
+            </div>
+        </template>
         <iron-ajax id="fetchSchemes" verbose content-type="application/json" method="GET" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
     <script>
@@ -402,6 +417,14 @@
                 addonsData:{
                     type:Object,
                     notify:true
+                },
+                schemesExist:{
+                    type:Boolean,
+                    value:true
+                },
+                noschemes:{
+                    type:Boolean,
+                    value:false 
                 }
             },
             listeners: {
@@ -452,25 +475,27 @@
             handleResponse: function(event) {
                 //console.log(event.detail.response);
                 var data = event.detail.response;
-                if (data !== undefined && data != null) {
-                    this.allSchemes = this.listData = data;
-                    this.addonsData = chUtils.getSchemesByType(this.allSchemes,"ADD_ON");
-                    this.couponsData = chUtils.getSchemesByType(this.allSchemes,"COUPON");
-                    this.giftCardsData = chUtils.getSchemesByType(this.allSchemes,"GIFT_CARD");
-                } else {
-                    this.listData = this.allSchemes = [{}];
-                }
-                if(chUtils.isEmpty(data)===false && data.length==0){
-                    document.querySelector("#schemeSuccErrMessageToast").show();
-                    var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    toast.text = "No Data found....";
-                }
+                if (data !== undefined || data != null) {
+                    if(data.length!=0){
+                        this.allSchemes    =  this.listData = data;
+                        this.addonsData    =  chUtils.getSchemesByType(this.allSchemes,"ADD_ON");
+                        this.couponsData   = chUtils.getSchemesByType(this.allSchemes,"COUPON");
+                        this.giftCardsData = chUtils.getSchemesByType(this.allSchemes,"GIFT_CARD");
+                    }else{
+                        console.log("asdad");
+                        this.listData = this.allSchemes = [{}];
+                        this.noschemes = true;
+                        this.schemesExist = false;
+                    }
+                } 
             },
             handleError: function(event) {
                 var request = event.detail.request;
                 console.log(event);
                 var error = event.detail.error;
                 console.log(event.detail.response);
+                this.noschemes = true;
+                this.schemesExist = false;
             },
 
           /**
