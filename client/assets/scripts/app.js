@@ -201,7 +201,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   *On success user information is shown in dropdown toggle button including role and logged in username
   */
   app.handleUserResponse = function(event,request){
-    var headers = JSON.parse(request.xhr.getResponseHeader('user'));
+    var headers = JSON.parse(request.xhr.getResponseHeader('user')) || "";
       if(chUtils.isEmpty(headers)===false){
         app.userInfo = headers || {};
       }else{

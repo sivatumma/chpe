@@ -228,8 +228,11 @@ function updateModels(req, res) {
 function profileFetch(req, res) {
   // console.log("I am here at profileFetch function");
   // console.log("setting header: ", req.session.user || "No User");
-  res.setHeader('user', JSON.stringify(req.session.user) || "No User");
-  res.send();
+  if(req.session.user !== undefined || req.session.user !== null){
+    res.setHeader('user', JSON.stringify(req.session.user));
+    res.send();
+  }
+  else res.status(401).send();
   // res.status(500).send("hi");
 }
 
