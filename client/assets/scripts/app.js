@@ -101,6 +101,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.setScheme();
   app.currentPage;
   app.previewSchemeName = undefined;
+  app.addonTitle    =  "Create Addon";
+  app.couponTitle   =  "Create Coupon";
+  app.giftCardTitle =  "Create Gift Card";
   app.getTitle = function(event){
     this.getCurrentPage(event.currentTarget.getAttribute('route'));
     app.setScheme();
@@ -108,6 +111,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     chUtils.disableInputs(false,"addon-form");
     chUtils.disableInputs(false,"coupon-form");
     chUtils.disableInputs(false,"gift-card-form");
+    app.addonTitle    =  "Create Addon";
+    app.couponTitle   =  "Create Coupon";
+    app.giftCardTitle =  "Create Gift Card";
 
   };
 

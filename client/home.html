@@ -155,13 +155,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 <span>Schemes</span>
                             </template>
                             <template is="dom-if" if="{{isAddon}}">
-                                <span>Create Addon</span>
+                                <span>{{addonTitle}}</span>
                             </template>
                             <template is="dom-if" if="{{isCoupon}}">
-                                <span>Create Coupon</span>
+                                <span>{{couponTitle}}</span>
                             </template>
                             <template is="dom-if" if="{{isGiftCard}}">
-                                <span>Create Gift Card</span>
+                                <span>{{giftCardTitle}}</span>
                             </template>
                             <template is="dom-if" if="{{isPreviewScheme}}">
                                 <span class="preview-scheme-name">{{previewSchemeName}}</span>

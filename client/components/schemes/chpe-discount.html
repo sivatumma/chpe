@@ -74,7 +74,7 @@
                     <paper-button  toggles disabled$="{{metadata.published}}"  type="FLAT" class="discountButton" on-click="togleDiscount"  id="{{flatId}}" >Flat</paper-button>
                     </div>
                     <div class="discountInput col-6">
-                        <paper-input name="flat" style="border:none;" no-label-float label="Discount" type="number"  max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
+                        <paper-input name="flat" focused style="border:none;" no-label-float label="Discount" type="number"  maxlength="{{discountLength}}" max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
                          error-message="Max 999 if Flat ; 10 if %" value="{{discountModal.discount}}"></paper-input>
                     </div>
             </div>
@@ -87,7 +87,10 @@
             properties: {
                 discountId:String,
                 percentageId:String,
-                flatId:String,
+                flatId:{
+                    type:String,
+                    notify:true
+                },
                 discount:String,
                 discountType:String,
                 flatType:String,
@@ -104,45 +107,38 @@
         
             },
             observers: [
-                'discountModalChanged(discountModal.discountType)'
+                'discountModalChanged(discountModal.discountType)',
+                'flatIdChanged(flatId)'
               ],
             discountModalChanged:function(discountType){
+                console.log(discountType);
                 this.setDiscount(discountType);
             },
             ready:function(){
-                this.discountLength  = 10;
-                this.discountPattern = "^([0-10])$";
+               
             },
             listeners:{
               'discountToggle.onClick':'togleDiscount'
             },
-
+            flatIdChanged:function(flatId){
+                //console.log(this.discountType)
+               //this.setDiscount(discountType);
+            },
             setDiscount:function(discountType){
                 //first removing all classes and setting clicked element to active
                 chUtils.removeClass(document.querySelector("#"+this.percentageId),"active");
                 chUtils.removeClass(document.querySelector("#"+this.flatId),"active");
-
                 if (discountType == "%") {
-                    if(this.discountModal.maxLength!==undefined){
-                        this.discountModal.maxLength = this.discountLength = 10;
-                        this.discountModal.discountPattern = this.discountPattern =  "^([0-10])$";
-                    }else{
-                        this.discountModal.maxLength = this.discountLength = 10;
-                        this.discountModal.discountPattern = this.discountPattern =  "^([0-10])$";
-                    }
                     chUtils.addClass(document.querySelector("#"+this.percentageId),"active");
                     this.discountModal.discountType = discountType; 
+                        this.discountModal.discountPattern = this.discountPattern =  "^([0-10])$";
+                        this.discountModal.maxLength = this.discountLength = 10;
                 } else if(discountType=="FLAT") {
+                    console.log(discountType,this.flatId);
                     chUtils.addClass(document.querySelector("#"+this.flatId),"active");
-
-                    if(this.discountModal.maxLength!==undefined){
-                        this.discountModal.maxLength = this.discountLength = 999;
-                        this.discountModal.discountPattern = this.discountPattern =  "^([0-999])$";
-                    }else{
-                       this.discountModal.maxLength = this.discountLength = 999;
-                        this.discountModal.discountPattern = this.discountPattern =  "^([0-999])$";
-                    }
                     this.discountModal.discountType = discountType; 
+                        this.discountModal.discountPattern = this.discountPattern =  "^([0-999])$";
+                        this.discountModal.maxLength = this.discountLength = 999;
                 }
             },
 

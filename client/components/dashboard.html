@@ -518,14 +518,17 @@
                     route = "createCoupon";
                     app.couponAsScheme = schemeObj;
                     app.couponMethod = "PUT";
+                    app.couponTitle = "Update Coupon - "+schemeObj.metadata.name;
                 }else if(schemeObj.metadata.type=="ADD_ON"){
                     route = "createAddOn";
                     app.addonAsScheme = schemeObj;
                     app.addonMethod = "PUT";
+                    app.addonTitle = "Update Addon - "+schemeObj.metadata.name;
                 }else if(schemeObj.metadata.type=="GIFT_CARD"){
                     route = "createGiftCard";
                     app.giftcardMethod = "PUT";
                     app.giftcardAsScheme = schemeObj;
+                    app.giftCardTitle = "Update Gift Card - "+schemeObj.metadata.name;
                 }
                 MoreRouting.navigateTo(route);
                 app.getCurrentPage();
