@@ -57,7 +57,7 @@
 	    }
 	    .section h1{
 	    	font-size: 20px;
-	    	font-weight: 300;
+	    	font-weight: 400;
 	    	text-align: center;
 	    	padding: 0px;
 	    	margin: 0px;
@@ -121,6 +121,22 @@
 	      height: 250px;
 	      float: left;
 	    }
+	    .color-green{
+	    	color: #81c784;
+	    }
+	    .color-blue{
+	    	color: #3F51B5;
+	    }
+	    .color-pink{
+	     	color: #e91e63;
+	    }
+	    .color-light-blue{
+	    	color: #64B5F6;
+	    }
+	    .color-yellow{
+	    	color:#ffb74d;
+	    }
+
 	</style>
 	<template>
 		<more-route context name="previewScheme" params="{{params}}"></more-route>
@@ -135,23 +151,23 @@
 				<div class="container">
 					<div class="flexchild1"></div>
 				    <div class="flex2child section">
-				    	<h1>Unique Clients</h1>
+				    	<h1 class="color-blue">Unique Clients</h1>
 				    	<p class="info">1000</p>
 				    </div>
 				    <div class="flex2child section">
-						<h1>Locations</h1>
+						<h1 class="color-light-blue">Locations</h1>
 				    	<p class="info">55</p>				    		
 				    </div>
 				    <div class="flex2child section">
-						<h1>Cities</h1>
+						<h1 class="color-pink">Cities</h1>
 				    	<p class="info">03</p>	
 				    </div>
 				    <div class="flex2child section">
-						<h1>Discounts</h1>
+						<h1 class="color-yellow">Discounts</h1>
 				    	<p class="info">5K <sub class="subText">INR</sub></p>
 				    </div>
 				     <div class="flex2child section">
-						<h1>Total Revenue</h1>
+						<h1 class="color-green">Total  Revenue</h1>
 				    	<p class="info">24L <sub class="subText">INR</sub></p>
 				    </div>
 				    <div class="flexchild1"></div>
