@@ -1,3 +1,5 @@
+"use strict";
+
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	config = require("../config/config.js"),
@@ -328,6 +330,9 @@ module.exports = function(mongoose) {
 	schemeSchema.methods.beforeSaveAddOnValidation = function() {
 
 
+var promise = new Promise(function(resolve, reject) {
+
+		console.log("Inside promise");
 		//service Discount validate
 		var serviceDiscount = _.map(this.behavior.serviceLevelDiscounts, function(x) {
 			if (x.discountType == "%") {
@@ -340,7 +345,10 @@ module.exports = function(mongoose) {
 		});
 
 		if (serviceMaxval > 9) {
-			return next(new Error("serviceLevelDiscount should be below 9"));
+
+console.log("hwlo ");
+			reject(new Error("serviceLevelDiscount should be below 9"));
+			//return next(new Error("serviceLevelDiscount should be below 9"));
 		}
 
 		//billValueDiscount validate
@@ -355,7 +363,8 @@ module.exports = function(mongoose) {
 		});
 
 		if (billMaxval > 9) {
-			return next(new Error("billValueDiscounts should be below 9"));
+
+			reject(new Error("billValueDiscounts should be below 9"));
 		}
 
 		//serviceRateCategoryDiscounts validate
@@ -370,21 +379,24 @@ module.exports = function(mongoose) {
 		});
 
 		if (serviceRateMaxVal > 9) {
-			return next(new Error("serviceRateCategoryDiscounts should be below 9"));
+		reject(new Error("serviceRateCategoryDiscounts should be below 9"));
 		}
 
 		//doctorLevelDiscounts
 		if ((this.behavior.doctorLevelDiscounts.userChosenDiscount > 9 && this.behavior.doctorLevelDiscounts.userChosenDiscountType == "%") || (this.behavior.doctorLevelDiscounts.systemAllocationDiscount > 9 && this.behavior.doctorLevelDiscounts.systemAllocationDiscountType == "%")) {
-			return next(new Error("doctorLevelDiscounts discount should be less than 9"));
+			reject(new Error("doctorLevelDiscounts discount should be less than 9"));
 		}
 
 		//modeOfPaymentDiscounts validate
 		var discountPayment = null;
 		_.each(this.behavior.modeOfPaymentDiscounts, function(single, index) {
 			if (single.discount > config.configVariable[config.configVariable.loginUser].Discount && single.discountType == "%") {
-				return next(new Error(single.mop + "- NOT ALLOW DISCOUNT MORE THAN 9"))
+				reject(new Error(single.mop + "- NOT ALLOW DISCOUNT MORE THAN 9"))
 			}
 		});
+
+});
+ return promise;
 	};
 
 /*	schemeSchema.pre('save', function(next) {
