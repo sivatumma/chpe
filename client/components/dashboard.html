@@ -288,7 +288,7 @@
     </style>
     <template>
         <template is="dom-if" if="{{schemesExist}}">
-            <div id="gridView">
+            <div id="gridView" role$="{{updateUser(userRole)}}">
                 <paper-material elevation="0" class="coupons-sec">
                      <template is="dom-repeat" items="{{couponsData}}" as="item">
                         <paper-card elevation="2"  class="cards"  
@@ -302,7 +302,7 @@
                             <div class="card-actions" align="right">
                                    <paper-icon-button icon="link"></paper-icon-button>
                                    <paper-icon-button icon="icons:create" on-click="editScheme" 
-                                    scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                                    scheme-type="{{item.metadata.type}}" disabled="{{noPermissions}}"></paper-icon-button>
                             </div>
                         </paper-card>
                     </template>  
@@ -325,7 +325,7 @@
                             <div class="card-actions" align="right">
                                    <paper-icon-button icon="link"></paper-icon-button>
                                    <paper-icon-button icon="icons:create" on-click="editScheme" 
-                                    scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                                    scheme-type="{{item.metadata.type}}" disabled="{{noPermissions}}"></paper-icon-button>
                             </div>
                         </paper-card>
                     </template>
@@ -342,7 +342,7 @@
                             <div class="card-actions" align="right">
                                    <paper-icon-button icon="link"></paper-icon-button>
                                    <paper-icon-button icon="icons:create" on-click="editScheme" 
-                                    scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                                    scheme-type="{{item.metadata.type}}" disabled="{{noPermissions}}"></paper-icon-button>
                             </div>
                         </paper-card>
                     </template>
@@ -376,7 +376,8 @@
                                     <td>{{publishedState(item.metadata.published)}}</td>
                                     <td class="editScheme" published$="[[item.metadata.published]]">
                                         <paper-icon-button icon="icons:create" on-click="editScheme" 
-                                        scheme-type="{{item.metadata.type}}"></paper-icon-button>
+                                        scheme-type="{{item.metadata.type}}"  
+                                        disabled="{{noPermissions}}"></paper-icon-button>
                                     </td>
                                 </tr>
                             </template>
@@ -425,6 +426,14 @@
                 noschemes:{
                     type:Boolean,
                     value:false 
+                },
+                userRole:{
+                    type:String,
+                    notify:true
+                },
+                noPermissions:{
+                    type:Boolean,
+                    value:false
                 }
             },
             listeners: {
@@ -433,11 +442,8 @@
             },
             observes: [
                 'allSchemesChanged(obj)',
+                'userRoleChanged(userRole)'
             ],
-            allSchemesChanged: function(obj) {
-                console.log(obj);
-            },
-
             ready: function() {
                 // console.log("Hi Schemes as cards loaded....!");
                 this.scheme = {
@@ -462,6 +468,17 @@
             },
             getIndexByRow: function(index) {
                 return index + 1;
+            },
+            allSchemesChanged: function(obj) {
+                console.log(obj);
+            },
+            updateUser:function(userRole){
+                console.log(userRole);
+                if(userRole=="creator"){
+                    this.noPermissions = true;
+                }else{
+                    this.noPermissions = false;
+                }
             },
             toggleStyle: function(event) {
                 if (this.previouslySelectedId != null) {

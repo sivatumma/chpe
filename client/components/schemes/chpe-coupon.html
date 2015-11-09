@@ -154,7 +154,7 @@
                             <div class="col-6 margin0">
                                 <div class="submitButtons">
                                     <paper-button name="coupon-form.createSchemeBtn" raised  on-click="submitForm" status="false" id="saveBtn" disabled="[[schemeObj.metadata.published]]">{{saveBtnText}}</paper-button>
-                                    <paper-button name="coupon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised>{{publishBtnText}}</paper-button>
+                                    <paper-button name="coupon-form.createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised disabled="{{noPermissions}}">{{publishBtnText}}</paper-button>
                                 </div>
                             </div>
                         </div>
@@ -198,6 +198,10 @@
                 },
                 locationsMemcacheURL:{
                     type:String
+                },
+                userRole:{
+                    type:String,
+                    notify:true
                 }
             },
             ready: function() {
@@ -208,6 +212,7 @@
                 this.publishBtnText = "SAVE + PUBLISH";
                 this.formError = false;
                 this.locationsMemcacheURL = this.config.urls.memcache.locations;
+
             },
             listeners: {
                 'coupon-form.iron-form-submit': 'createScheme',
@@ -218,7 +223,8 @@
             },
             observers: [
                 'schemeMethodChanged(schemeMethod)',
-                'schemeObjChanged(schemeObj)'
+                'schemeObjChanged(schemeObj)',
+                'userRoleChanged(userRole)'
             ],
             enableButtons:function(event){
                 if(event){
@@ -227,7 +233,15 @@
             },
             schemeObjChanged:function(schemeObj){
                 if(document.getElementById("coupon-form")){
-                    chUtils.disableInputs(schemeObj.metadata.published,"coupon-form")
+                    chUtils.disableInputs(schemeObj.metadata.published,"coupon-form");
+                }
+
+            },
+            userRoleChanged:function(userRole){
+                if(userRole=="creator"|| userRole=="editor"){
+                    this.noPermissions = true;
+                }else{
+                    this.noPermissions = false;
                 }
             },
             getCurrentPage : function(){
@@ -241,6 +255,7 @@
                     this.saveBtnText = "SAVE";
                     this.publishBtnText = "SAVE + PUBlISH";
                 }
+
             },
             //neon animations for coupon
             _onPrevClick: function() {

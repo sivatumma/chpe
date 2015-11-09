@@ -223,10 +223,11 @@
                                     </div>
                                     <div class="col-5 margin0">&nbsp;</div>
                                     <div class="col-6 margin0">
+
                                         <div class="submitButtons">
                                             <paper-button name="addon-form.createSchemeBtn" raised 
                                             on-click="submitForm" status="false" id="addonSave" value="{{schemeStatus}}" disabled="[[schemeObj.metadata.published]]">{{saveBtnText}}</paper-button>
-                                            <paper-button name="addon-form.createSchemeBtn"  on-click="submitForm" id="addonPublishBtn" status="true" raised value="{{schemeStatus}}">{{publishBtnText}}</paper-button>
+                                            <paper-button name="addon-form.createSchemeBtn"  on-click="submitForm" id="addonPublishBtn" disabled="{{noPermissions}}" status="true" raised value="{{schemeStatus}}">{{publishBtnText}}</paper-button>
                                         </div>
                                     </div>
                                 </div>
@@ -323,6 +324,10 @@
                 },
                 locationsMemcacheURL:{
                     type:String
+                },
+                userRole:{
+                    type:String,
+                    notify:true
                 }
             },
             ready: function() {
@@ -337,7 +342,8 @@
             },
             observers: [
                 'schemeObjChanged(schemeObj,schemeObj.metadata,schemeObj.behavior)',
-                'schemeMethodChanged(schemeMethod)'
+                'schemeMethodChanged(schemeMethod)',
+                'userRoleChanged(userRole)'
             ],
             listeners: {
                 'addon-form.iron-form-submit': 'createScheme',
@@ -354,6 +360,13 @@
                     }
                 }
                 
+            },
+            userRoleChanged:function(userRole){
+                if(userRole=="creator"|| userRole=="editor"){
+                    this.noPermissions = true;
+                }else{
+                    this.noPermissions = false;
+                }
             },
             enableButtons: function(event) {
                 if(event){

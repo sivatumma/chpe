@@ -274,9 +274,16 @@ app.get('/ssoLogout', function(req, res) {
         }
       };
     request(options, function(error, response, body) {
-      console.log(response.headers.location);
       req.session.user = null;
-      res.redirect(response.headers.location);
+      console.log(response.statusCode);
+      if(303 == response.statusCode ){
+        console.log("redirecting to location ...");
+        res.redirect(response.headers.location);
+      }
+      else {
+        console.log(response.statuseCode, response.headers);
+        res.status(response.statusCode).send();
+      }
     });
   }
 
