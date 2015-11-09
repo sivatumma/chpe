@@ -107,22 +107,17 @@
         
             },
             observers: [
-                'discountModalChanged(discountModal.discountType)',
-                'flatIdChanged(flatId)'
+                'discountModalChanged(discountModal)',
               ],
-            discountModalChanged:function(discountType){
-                console.log(discountType);
-                this.setDiscount(discountType);
+            discountModalChanged:function(discountModal){
+                console.log(discountModal);
+                this.setDiscount(discountModal.discountType);
             },
             ready:function(){
                
             },
             listeners:{
               'discountToggle.onClick':'togleDiscount'
-            },
-            flatIdChanged:function(flatId){
-                //console.log(this.discountType)
-               //this.setDiscount(discountType);
             },
             setDiscount:function(discountType){
                 //first removing all classes and setting clicked element to active
