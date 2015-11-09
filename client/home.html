@@ -101,7 +101,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     <span>Create Coupon</span>
                                 </a>
                             </paper-item>
-                            <paper-item route="createGiftCard" on-click="getTitle" title="Create Giftcard">
+                            <paper-item route="createGiftCard" 
+                            on-click="getTitle" title="Create Giftcard">
                                 <a href="{{makeUrl('createGiftCard')}}"> 
                                     <iron-icon src="assets/images/giftcard.png"></iron-icon>
                                     <span>Create Gift Card</span>
@@ -109,6 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </paper-item>
                     </paper-menu>
                 </more-route-selector>
+                <element-overview></element-overview>
             </paper-scroll-header-panel>
 
 

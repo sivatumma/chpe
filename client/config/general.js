@@ -3,6 +3,7 @@ function generalConfig() {
 		toUseApiHost:false,
 		apiHost: '',
 		rest: '/mdb/scheme?API_KEY=MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9',
+		overview: '/pricingengine/overview?API_KEY=MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9',
 		memcache: {
 			names:'/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names',
 			locations: '/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/',
