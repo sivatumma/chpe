@@ -87,7 +87,7 @@
 
 	</style>
 	<template>
-		<paper-icon-button icon="icons:account-circle" name="avatar" on-click="openProfileInfo">
+		<paper-icon-button  icon="icons:account-circle" name="avatar" on-click="openProfileInfo">
 		</paper-icon-button>
 		<div show$="{{show}}" id="profileBox">
 			<span class="arrow-up"></span>
@@ -98,13 +98,13 @@
 				</div>
 				<div class="profileInfoActions">
 					<h3>{{userObject.username}}</h3>
-					<span>{{userObject.role}}</span>
+					<span>{{userObject.roles}}</span>
 				</div>
 				<!-- <div class="text-right col-12"><paper-button name="account" raised>My Account</paper-button></div> -->
 			</div>
 			<div class="profile-actions text-right">
 				<paper-ripple></paper-ripple>
-				<span><a href="/ssoLogout"><paper-button name="logoutButton" raised>Sign Out</paper-button></a></span>
+				<span><a href="/ssoLogout"><paper-button name="logoutButton"  raised>Sign Out</paper-button></a></span>
 			</div>
 		</div>
 	</template>
@@ -128,6 +128,9 @@
 			observers:[
 				'userObjectChanged(userObject)'
 			],
+			onblur: function () {
+		        console.log('blurred');
+		    },
 			userObjectChanged:function(userData){
 				//console.log(userData);
 			},
@@ -136,6 +139,10 @@
                 	event.stopPropagation();
             	}
             	this.show = !this.show;
+
+        	},
+        	closeProfileBox:function(event){
+        		this.show = false;
         	}
 		});
 	</script>
