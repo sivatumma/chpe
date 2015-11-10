@@ -173,7 +173,7 @@
                                 <div class="col-6 margin0">
                                     <div class="submitButtons">
                                         <paper-button name="createSchemeBtn" raised  on-click="submitForm"  id="saveBtn"  status="false" disabled="[[schemeObj.metadata.published]]">{{saveBtnText}}</paper-button>
-                                        <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised>{{publishBtnText}}</paper-button>
+                                        <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised disabled="noPermissions">{{publishBtnText}}</paper-button>
                                     </div>
                                 </div>
                             </div>
@@ -216,6 +216,10 @@
                     notify:true,
                     value:false
                 },
+                userRole:{
+                    type:String,
+                    notify:true
+                }
             },
             ready: function() {
                 this.currentStep = 0;
@@ -230,7 +234,8 @@
                 'gift-card-form.iron-form-invalid':'resetSteps'
             },
             observers: [
-                'schemeMethodChanged(schemeMethod)'
+                'schemeMethodChanged(schemeMethod)',
+                 'userRoleChanged(userRole)'
             ],
             enableButtons:function(event){
                 if(event){
@@ -245,6 +250,13 @@
                 }else{
                     this.saveBtnText = "SAVE";
                     this.publishBtnText = "SAVE + PUBlISH";
+                }
+            },
+             userRoleChanged:function(userRole){
+                if(userRole=="creator"|| userRole=="editor"){
+                    this.noPermissions = true;
+                }else{
+                    this.noPermissions = false;
                 }
             },
             //neon animations for coupon

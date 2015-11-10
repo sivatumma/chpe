@@ -118,6 +118,12 @@ module.exports = function(mongoose) {
 				},
 				discountPattern:{
 					type:String
+				},
+				flatId : {
+					type: String
+				},
+				percentageId: {
+					type: String
 				}
 			}],
 			advancePaidPoints: [{
@@ -143,6 +149,12 @@ module.exports = function(mongoose) {
 				},
 				discountPattern:{
 					type:String
+				},
+				flatId : {
+					type: String
+				},
+				percentageId: {
+					type: String
 				}
 			}],
 			modeOfPaymentDiscounts: [{
@@ -163,6 +175,12 @@ module.exports = function(mongoose) {
 				},
 				discountPattern:{
 					type:String
+				},
+				flatId : {
+					type: String
+				},
+				percentageId: {
+					type: String
 				}
 			}],
 			billValueDiscounts: [{
@@ -186,6 +204,12 @@ module.exports = function(mongoose) {
 				},
 				discountPattern:{
 					type:String
+				},
+				flatId : {
+					type: String
+				},
+				percentageId: {
+					type: String
 				}
 			}],
 			cumulativeAmountPoints: [{
@@ -229,6 +253,12 @@ module.exports = function(mongoose) {
 				},
 				discountPattern:{
 					type:String
+				},
+				flatId : {
+					type: String
+				},
+				percentageId: {
+					type: String
 				}
 			}],
 			createdAt: {

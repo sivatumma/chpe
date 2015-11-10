@@ -206,21 +206,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     <iron-pages attr-for-selected="route" selected="{{route}}">
                         <section route="home">
-                           <schemes-as-cards schemes-obj="{{allSchemes}}"></schemes-as-cards>
+                           <schemes-as-cards schemes-obj="{{allSchemes}}" 
+                           user-role="{{userInfo.roles}}"></schemes-as-cards>
                         </section>
                         <section route="createAddOn" class="addonBg">
                               <chpe-addon id="adddonComp" scheme-obj="{{addonAsScheme}}" 
-                              scheme-method="{{addonMethod}}" current-step="{{addonStage}}"></chpe-addon>
+                              scheme-method="{{addonMethod}}" current-step="{{addonStage}}" 
+                              user-role="{{userInfo.roles}}"></chpe-addon>
                         </section>
                         <section route="createCoupon" class="couponBg">
                               <chpe-coupon scheme-obj="{{couponAsScheme}}" scheme-method="{{couponMethod}}"
-                              current-step="{{couponStage}}" ></chpe-coupon>
+                              current-step="{{couponStage}}" user-role="{{userInfo.roles}}" ></chpe-coupon>
                         </section>
                         <section route="createGiftCard" class="giftCardBg">
-                              <chpe-gift-card scheme-obj="{{giftcardAsScheme}}" scheme-method="{{giftcardMethod}}" current-step="{{giftCardStage}}"></chpe-gift-card>
+                              <chpe-gift-card scheme-obj="{{giftcardAsScheme}}" scheme-method="{{giftcardMethod}}" current-step="{{giftCardStage}}" 
+                              user-role="{{userInfo.roles}}" ></chpe-gift-card>
                         </section>
                         <section route="previewScheme" class="previewSchemeBg">
-                              <preview-scheme scheme-name="{{previewSchemeName}}"></preview-scheme>
+                              <preview-scheme scheme-name="{{previewSchemeName}}" 
+                               ></preview-scheme>
                         </section>
                     </iron-pages>
 
@@ -242,10 +246,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- build:js scripts/app.js -->
     <script src="assets/scripts/app.js"></script>
     <!-- endbuild-->
+    <div align="center" style="margin:18% auto; display:none;" id="pageLoading"> 
+        <paper-spinner class="blue" active ></paper-spinner>
+    </div>
 </body>
-<div align="center" style="margin:18% auto; display:none;" id="pageLoading"> 
-    <paper-spinner class="blue" active ></paper-spinner>
-</div>
 
 </html>
 
