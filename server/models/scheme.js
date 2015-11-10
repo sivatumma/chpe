@@ -328,13 +328,13 @@ module.exports = function(mongoose) {
 		}
 	};
 	schemeSchema.methods.beforeSaveAddOnValidation = function() {
-
+var data = this;
 
 var promise = new Promise(function(resolve, reject) {
 
-		console.log("Inside promise");
+		
 		//service Discount validate
-		var serviceDiscount = _.map(this.behavior.serviceLevelDiscounts, function(x) {
+		var serviceDiscount = _.map(data.behavior.serviceLevelDiscounts, function(x) {
 			if (x.discountType == "%") {
 				return x.discount;
 			}
@@ -345,14 +345,12 @@ var promise = new Promise(function(resolve, reject) {
 		});
 
 		if (serviceMaxval > 9) {
-
-console.log("hwlo ");
 			reject(new Error("serviceLevelDiscount should be below 9"));
 			//return next(new Error("serviceLevelDiscount should be below 9"));
 		}
 
 		//billValueDiscount validate
-		var billValueDiscounts = _.map(this.behavior.billValueDiscounts, function(x) {
+		var billValueDiscounts = _.map(data.behavior.billValueDiscounts, function(x) {
 			if (x.discountType == "%") {
 				return x.discount;
 			}
@@ -368,7 +366,7 @@ console.log("hwlo ");
 		}
 
 		//serviceRateCategoryDiscounts validate
-		var serviceRateCategoryDiscounts = _.map(this.behavior.serviceRateCategoryDiscounts, function(x) {
+		var serviceRateCategoryDiscounts = _.map(data.behavior.serviceRateCategoryDiscounts, function(x) {
 			if (x.discountType == "%") {
 				return x.discount;
 			}
@@ -383,13 +381,13 @@ console.log("hwlo ");
 		}
 
 		//doctorLevelDiscounts
-		if ((this.behavior.doctorLevelDiscounts.userChosenDiscount > 9 && this.behavior.doctorLevelDiscounts.userChosenDiscountType == "%") || (this.behavior.doctorLevelDiscounts.systemAllocationDiscount > 9 && this.behavior.doctorLevelDiscounts.systemAllocationDiscountType == "%")) {
+		if ((data.behavior.doctorLevelDiscounts.userChosenDiscount > 9 && data.behavior.doctorLevelDiscounts.userChosenDiscountType == "%") || (data.behavior.doctorLevelDiscounts.systemAllocationDiscount > 9 && data.behavior.doctorLevelDiscounts.systemAllocationDiscountType == "%")) {
 			reject(new Error("doctorLevelDiscounts discount should be less than 9"));
 		}
 
 		//modeOfPaymentDiscounts validate
 		var discountPayment = null;
-		_.each(this.behavior.modeOfPaymentDiscounts, function(single, index) {
+		_.each(data.behavior.modeOfPaymentDiscounts, function(single, index) {
 			if (single.discount > config.configVariable[config.configVariable.loginUser].Discount && single.discountType == "%") {
 				reject(new Error(single.mop + "- NOT ALLOW DISCOUNT MORE THAN 9"))
 			}
@@ -399,20 +397,25 @@ console.log("hwlo ");
  return promise;
 	};
 
-/*	schemeSchema.pre('save', function(next) {
+	schemeSchema.pre('save', function(next,done) {
 
 		this.beforeSaveDefaultValidation();
 
 		if (this.metadata.type == "COUPON") {
 			this.beforeSaveCouponValidation();
 		} else if (this.metadata.type == "ADD_ON") {
-			this.beforeSaveAddOnValidation();
+			this.beforeSaveAddOnValidation().then(function(data){},function(Error){
+                  
+                  //  next(Error);
+                    done(Error);
+
+			});
 		} else if (this.metadata.type == "GIFT_CARD") {
 			this.beforeSaveGiftCardValidation();
 		}
 
 		next();
-	});*/
+	});
 	schemeSchema.pre('update', function(next) {
 		console.log(this.schema);
 		// if (this.metadata.type == "COUPON") {
