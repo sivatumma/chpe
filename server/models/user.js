@@ -259,8 +259,8 @@ module.exports = function(mongoose) {
                     'idProvider': config.authentication.idProvider,
                     'spEntityID': config.authentication.spEntityID,
                     //'relayState':  'http://' + req.ip.split(':')[3] + ':91' + req.url
-                    'relayState':  'http://172.19.6.71:91/ssoLogin'
-                    //'relayState':  'http://172.19.4.162:91/ssoLogin'
+                    // 'relayState':  'http://172.19.6.71:91/ssoLogin'
+                    'relayState':  'http://172.19.4.162:91/ssoLogin'
                 }
             }
 
@@ -275,6 +275,40 @@ module.exports = function(mongoose) {
         }
     };
 
+        
+    usersSchema.statics.ssoLogout = function(req,res, next){
+      if (req.session.user === undefined || req.session.user === null) {
+        res.redirect("unAuthorized.html");
+        //res.status(401).send("User not authorized.");
+      } else {
+        var headers = {
+            'User-Agent': 'Super Agent/0.0.1',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          options = {
+            url: 'http://172.19.4.179:8080/sso/secureLogout',
+            method: 'POST',
+            headers: headers,
+            form: {
+              'sessionIndex': req.session.user.sessionIndex,
+              'spEntityID': 'callhealth.com',
+              'idProvider': config.authentication.idProvider
+            }
+          };
+        request(options, function(error, response, body) {
+          req.session.user = null;
+          console.log(response.statusCode);
+          if(303 == response.statusCode ){
+            console.log("redirecting to location ...");
+            res.redirect(response.headers.location);
+          }
+          else {
+            console.log(response.statuseCode, response.headers);
+            res.status(response.statusCode).send();
+          }
+        });
+      }
+  }
     usersSchema.statics.authorize = function(req, res, next) {
    console.log("hewlo world");
 

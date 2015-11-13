@@ -24,7 +24,7 @@ module.exports = function(env) {
             https_port: 443
         },
         authentication:{
-            ssoEndpoint: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogin',
+            ssoEndpoint:'http://172.19.4.179:8080/sso/secureLogin',
             idProvider: 'https://172.19.4.179:9443/samlsso',
             spEntityID: 'callhealth.com'
         },

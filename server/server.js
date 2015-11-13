@@ -255,37 +255,7 @@ app.all('/ssoLogin', User.ssoLogin, function(req, res) {
   res.redirect("home.html");
 });
 
-app.get('/ssoLogout', function(req, res) {
-  if (req.session.user === undefined || req.session.user === null) {
-    res.redirect("unAuthorized.html");
-    //res.status(401).send("User not authorized.");
-  } else {
-    var headers = {
-        'User-Agent': 'Super Agent/0.0.1',
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      options = {
-        url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogout',
-        method: 'POST',
-        headers: headers,
-        form: {
-          'sessionIndex': req.session.user.sessionIndex,
-          'spEntityID': 'callhealth.com'
-        }
-      };
-    request(options, function(error, response, body) {
-      req.session.user = null;
-      console.log(response.statusCode);
-      if(303 == response.statusCode ){
-        console.log("redirecting to location ...");
-        res.redirect(response.headers.location);
-      }
-      else {
-        console.log(response.statuseCode, response.headers);
-        res.status(response.statusCode).send();
-      }
-    });
-  }
+app.get('/ssoLogout', User.ssoLogout, function(req, res) {
 
 });
 

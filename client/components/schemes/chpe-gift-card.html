@@ -173,7 +173,7 @@
                                 <div class="col-6 margin0">
                                     <div class="submitButtons">
                                         <paper-button name="createSchemeBtn" raised  on-click="submitForm"  id="saveBtn"  status="false" disabled="[[schemeObj.metadata.published]]">{{saveBtnText}}</paper-button>
-                                        <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised disabled="noPermissions">{{publishBtnText}}</paper-button>
+                                        <paper-button name="createSchemeBtn" data-args="true" on-click="submitForm" id="publishBtn" status="true" raised disabled="{{noPermissions}}">{{publishBtnText}}</paper-button>
                                     </div>
                                 </div>
                             </div>
