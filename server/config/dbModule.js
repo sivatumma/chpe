@@ -36,3 +36,4 @@ module.exports = function(props) {
 	initializeMongoModels();
 	return dbConnection();
 }
+

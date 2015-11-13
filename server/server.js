@@ -265,12 +265,13 @@ app.get('/ssoLogout', function(req, res) {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       options = {
-        url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogout',
+        url: 'http://172.19.4.179:8080/sso/secureLogout',
         method: 'POST',
         headers: headers,
         form: {
           'sessionIndex': req.session.user.sessionIndex,
-          'spEntityID': 'callhealth.com'
+          'spEntityID': 'callhealth.com',
+          'idProvider': config.authentication.idProvider
         }
       };
     request(options, function(error, response, body) {
