@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="../client/external/webcomponentsjs/webcomponents.min.js"></script>
+  <script src="../client/external/web-component-tester/browser.js"></script>
+  <script src="../client/config/general.js"></script>
+  <link rel="import" href="../client/components/elements.html">
+  <link rel="import" href="../client/components/schemes/bill-range-discounts.html">
+</head>
+<body>
+  <bill-range-discounts id="bsdDiscounts"></bill-range-discounts>
+  <script>
+    suite('<bill-range-discounts>', function() {
+      test('defines the behaviorData', function() {
+        assert.equal(document.getElementById('bsdDiscounts').behaviorData=={});
+      });
+    });
+  </script>
+</body>
+</html>
