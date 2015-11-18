@@ -206,14 +206,11 @@ module.exports = function(mongoose) {
     };
 
     usersSchema.statics.ssoLogin = function(req, res, next) {
+        console.log("Starting ssoLogin");
         
         if (config.approvedAuthorizedAPIKeys.indexOf(req.query.API_KEY) >= 0) {
             // console.log("API Key is available");
             next(); 
-        }
-      else if(req.query.API_KEY!=undefined)
-        {
-      res.send(401, {message: 'Authentication token required.'});
         }
         /*if (config.approvedAuthorizedAPIKeys.indexOf(req.query.API_KEY) == -1)
             res.end(401, {message: 'Authentication token required.'});*/
@@ -222,6 +219,7 @@ module.exports = function(mongoose) {
             next();
 
         else if(req.body && req.body.SAMLResponse != null && req.body.RelayState != 'callhealth.com'){
+            console.log("if,else,else in ssoLogin");
     
             var buf = new Buffer(req.body.SAMLResponse, 'base64'); // Ta-da
             var parseString = require('xml2js').parseString;
@@ -259,8 +257,8 @@ module.exports = function(mongoose) {
                     'idProvider': config.authentication.idProvider,
                     'spEntityID': config.authentication.spEntityID,
                     //'relayState':  'http://' + req.ip.split(':')[3] + ':91' + req.url
-                    'relayState':  'http://172.19.6.71:91/ssoLogin'
-                    //'relayState':  'http://172.19.4.162:91/ssoLogin'
+                    // 'relayState':  'http://172.19.6.71:91/ssoLogin'
+                    'relayState':  'http://172.19.4.162:91/ssoLogin'
                 }
             }
 
@@ -277,10 +275,11 @@ module.exports = function(mongoose) {
 
         
     usersSchema.statics.ssoLogout = function(req,res, next){
-      if (req.session.user === undefined || req.session.user === null) {
-        res.redirect("unAuthorized.html");
-        //res.status(401).send("User not authorized.");
-      } else {
+        console.log("Starting ssoLogout. The req.session.user = ", req.session.user);
+      // if (req.session.user === undefined || req.session.user === null) {
+      //   res.redirect("unAuthorized.html");
+      // } else {
+        console.log("Hey, req.session from jmeter is : ", req.session);
         var headers = {
             'User-Agent': 'Super Agent/0.0.1',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -308,7 +307,7 @@ module.exports = function(mongoose) {
             res.status(response.statusCode).send();
           }
         });
-      }
+      // }
   }
     usersSchema.statics.authorize = function(req, res, next) {
    console.log("hewlo world");
@@ -386,5 +385,9 @@ module.exports = function(mongoose) {
     };
 
     var User = mongoose.model('User', usersSchema);
+    
+
     return User;
+
+
 }

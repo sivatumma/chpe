@@ -14,3 +14,4 @@
             } catch (e) {}
         }, 100);
     });
+return wsServer;
