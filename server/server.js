@@ -251,7 +251,9 @@ app.route('/').get(function(req, res) {
 app.route('/checkAuthPing').head(profileFetch);
 
 app.all('/ssoLogin', User.ssoLogin, function(req, res) {
-  console.log(req.session.user);
+  console.log("req.session.user = ",req.session.user);
+  res.header("user",JSON.stringify(req.session.user));
+  console.log(req.headers, res.header || "No header in res object");
   res.redirect("home.html");
 });
 
