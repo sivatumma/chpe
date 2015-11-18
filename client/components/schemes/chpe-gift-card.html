@@ -282,7 +282,7 @@
                 this.formData = document.getElementById('gift-card-form').serialize();
                 this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
                 this.schemeObj.behavior.endDate = chUtils.toIsoString(this.schemeObj.behavior.endDate);
-
+                this.schemeObj.metadata.createdBy = app.userInfo.username;
                 this.schemeObj.metadata.type = "GIFT_CARD";
                 this.schemeObj.on = "scheme";
 
