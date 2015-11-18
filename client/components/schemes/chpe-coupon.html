@@ -279,6 +279,8 @@
             createScheme: function() {
                 this.formData = document.getElementById('coupon-form').serialize();
                 this.schemeObj.metadata.type = "COUPON";
+                this.schemeObj.metadata.createdBy = app.userInfo.username;
+                
                 if(chUtils.isEmpty(this.schemeObj.behavior.startDate)===false){
                     this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
                 }else if(chUtils.isEmpty(this.schemeObj.behavior.endDate)===false){
@@ -312,9 +314,9 @@
                     console.log("Received response: " + JSON.stringify(event.detail.response));
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
                     if(this.schemeMethod=="POST"){
-                        toast.text = this.schemeObj.metadata.type + " created successfully!...";
+                        toast.text = this.schemeObj.metadata.type + " created successfully !...";
                     }else{
-                        toast.text = this.schemeObj.metadata.type + " updated successfully!...";
+                        toast.text = this.schemeObj.metadata.type + " updated successfully !...";
                     }
                     toast.show();
                 } else {
