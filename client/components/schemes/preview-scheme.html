@@ -30,9 +30,9 @@
         .cards {
             @apply(--layout-vertical);
             @apply(--center-justified);
-            margin-top: 30px;
-            font-size: 16px;
-            margin-bottom: 10px;
+            font-size: 14px;
+            max-width: 320px;
+            margin: 10px;
         }
         .container {
 	      @apply(--layout-horizontal);
@@ -70,11 +70,10 @@
 	    	margin: 0px;
 	    }
 	    .descr-sec{
-	    	border-right: 1px solid #ccc;
 	    	border-bottom: 1px solid #ccc;
 	    }
 	    .descr-sec:last-child{
-	    	border-right: none;
+	    	border-right: 1px solid #ccc;
 	    }
 	    .descr-sec h3{
 	    	font-size: 18px;
@@ -84,7 +83,7 @@
 	    }
 	   
 	    .descr-sec ul li{
-	    	line-height: 24px;
+	    	line-height: 16px;
 	    	padding: 5px 0px;
 	    	list-style-type: square;
 	    }
@@ -174,44 +173,57 @@
 				</div>
 				<div class="container description">
 					<div class="flex4child descr-sec">
-						<h3>General Behavior</h3>
-						<ul>
-							<li>Lorem Ipsum is simply</li>
-							<li>when an unknown printer</li>
-							<li>It was popularised in</li>
-							<li>Lorem Ipsum is not simply </li>
-							<li>Many desktop publishing</li>
-							<li>There are many variations</li>
-						</ul>
+						<paper-card  elevation="2" class="cards">
+						<div class="card-content">
+							<h3>General Behavior</h3>
+							<ul>
+								<li><span>Starts at</span>:<span>{{previewData.behavior.startDate}}</span></li>
+								<li><span>Ends at</span>:<span>{{previewData.behavior.endDate}}</span></li>
+								<li><span>Available in</span>:<span>{{previewData.behavior.locations}}</span></li>
+								<li><span>Default discount</span>:<span>{{previewData.behavior.discount}}</span></li>
+								<li><span>Maximum Usages</span>:<span>{{previewData.behavior.maximumUsages}}</span>
+								</li>
+							</ul>
+						</div>
+						</paper-card>
+						
 					</div>
-					<div class="flex4child descr-sec">
-						<h3>Combinational Discounts</h3>
-						<ul>
-							<li>Lorem Ipsum is simply</li>
-							<li>when an unknown printer</li>
-							<li>It was popularised in</li>
-							<li>Lorem Ipsum is not simply </li>
-							<li>Many desktop publishing</li>
-							<li>There are many variations</li>
-						</ul>
+					<div class="flex4child descr-sec" >
+						<paper-card elevation="2" class="cards">
+							<div class="card-content">
+								<h3>Combinational Discounts</h3>
+								<ul>
+									<li>Lorem Ipsum is simply</li>
+									<li>when an unknown printer</li>
+									<li>It was popularised in</li>
+									<li>Lorem Ipsum is not simply </li>
+									<li>Many desktop publishing</li>
+									<li>There are many variations</li>
+								</ul>
+							</div>
+						</paper-card>
 					</div>
-					<div class="flex4child descr-sec">
-						<h3>Recurring Benfit Points</h3>
-						<ul>
-							<li>Lorem Ipsum is simply</li>
-							<li>when an unknown printer</li>
-							<li>It was popularised in</li>
-							<li>Lorem Ipsum is not simply </li>
-							<li>Many desktop publishing</li>
-							<li>There are many variations</li>
-						</ul>
+					<div class="flex4child descr-sec" >
+						<paper-card elevation="2" class="cards">
+							<div class="card-content">
+								<h3>Recurring Benfit Points</h3>
+								<ul>
+									<li>Lorem Ipsum is simply</li>
+									<li>when an unknown printer</li>
+									<li>It was popularised in</li>
+									<li>Lorem Ipsum is not simply </li>
+									<li>Many desktop publishing</li>
+									<li>There are many variations</li>
+								</ul>
+							</div>
+						</paper-card>
 					</div>
 				</div>
-				<div class="container description">
+				<!-- <div class="container description">
 					<div class="fullDescription">
 						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
 					</div>
-				</div>
+				</div> -->
 				<div class="graphContainer container">
 					<div class="col-5">
 					<div class="col-6 discRevenues" style="margin-bottom:10px;">
@@ -260,6 +272,7 @@
 		Polymer({
 			is:'preview-scheme',
 			ready:function(){
+				this.config = generalConfig() || {};
 				app.previewSchemeName = "";
 			},
 			properties:{
@@ -278,19 +291,19 @@
 			],
 			previewSchemeChanged:function(schemeName){
 				if(schemeName!==undefined && schemeName.length>0){
-				app.isPreviewScheme = true;
-				app.isHome = false;
-				app.previewSchemeName = 'Preview Scheme - '+schemeName;
-
+					app.isPreviewScheme = true;
+					app.isHome = false;
+					this.config = generalConfig();
+					app.previewSchemeName = 'Preview Scheme - '+schemeName;
 				this.previewData1 = [['Year', 'Sales', 'Expenses'],
 		          ['2004',  1000,      400],
 		          ['2005',  1170,      460],
 		          ['2006',  660,       1120],
 		          ['2007',  1030,      540]];
-                //this.$.previewSchemeAjax.url =  'mdb/schemes/'+schemeName;
-                //this.$.previewSchemeAjax.headers = {"API_KEY":"MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9"};
-                //this.$.previewSchemeAjax.body = JSON.stringify(this.scheme);
-                //this.$.previewSchemeAjax.generateRequest();
+		          console.log()
+                this.$.previewSchemeAjax.url =  this.config.urls.preview; 
+                this.$.previewSchemeAjax.body = JSON.stringify(this.scheme);
+                this.$.previewSchemeAjax.generateRequest();
 				}
 			},
 			handleResponse:function(event){

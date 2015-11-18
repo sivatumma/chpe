@@ -257,8 +257,8 @@ module.exports = function(mongoose) {
                     'idProvider': config.authentication.idProvider,
                     'spEntityID': config.authentication.spEntityID,
                     //'relayState':  'http://' + req.ip.split(':')[3] + ':91' + req.url
-                    // 'relayState':  'http://172.19.6.71:91/ssoLogin'
-                    'relayState':  'http://172.19.4.162:91/ssoLogin'
+                    'relayState':  'http://172.19.6.71:91/ssoLogin'
+                    //'relayState':  'http://172.19.4.162:91/ssoLogin'
                 }
             }
 

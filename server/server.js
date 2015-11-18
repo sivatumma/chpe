@@ -176,10 +176,10 @@ function getPreviewData(req, res) {
   });
 
 }
-function getOrverView(req,res)
+function getOverView(req,res)
 {
 
-  var scheme = mongoose.model('scheme').find(queryBuilder.getOrverView());
+  var scheme = mongoose.model('scheme').find(queryBuilder.getOverView());
   var allScheme = mongoose.model('scheme').find({});
   var order = mongoose.model('order').find().distinct('userId');
   var finalData = {};
@@ -296,7 +296,7 @@ app.get('/ssoLogout', User.ssoLogout, function(req, res) {
 
 var User = mongoose.model('User');
 app.get('/pricingengine/previewData', getPreviewData);
-app.get('/pricingengine/overview',getOrverView);
+app.get('/pricingengine/overview',getOverView);
 app.post('/pricingengine/schemeAppliedSuccessfully', schemeApplied);
 app.post('/pricingengine/suggestDiscounts', suggestDiscounts);
 app.all('/mdb/update/:modelName', updateModels);
