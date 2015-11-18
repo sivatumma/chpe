@@ -138,6 +138,10 @@
 	    .color-yellow{
 	    	color:#ffb74d;
 	    }
+	    .boldText{
+	    	font-weight: bold;
+	    	padding-right: 5px;
+	    }
 
 	</style>
 	<template>
@@ -154,23 +158,23 @@
 					<div class="flexchild1"></div>
 				    <div class="flex2child section">
 				    	<h1 class="color-blue">Unique Clients</h1>
-				    	<p class="info">1000</p>
+				    	<p class="info">{{orderData.uniqueUsers}}</p>
 				    </div>
 				    <div class="flex2child section">
 						<h1 class="color-light-blue">Locations</h1>
-				    	<p class="info">55</p>				    		
+				    	<p class="info">{{orderData.orderLocations}}</p>				    		
 				    </div>
 				    <div class="flex2child section">
 						<h1 class="color-pink">Cities</h1>
-				    	<p class="info">03</p>	
+				    	<p class="info">{{orderData.clients}}</p>	
 				    </div>
 				    <div class="flex2child section">
 						<h1 class="color-yellow">Discounts</h1>
-				    	<p class="info">5K <sub class="subText">INR</sub></p>
+				    	<p class="info">{{orderData.discountAmount}}<sub class="subText">INR</sub></p>
 				    </div>
 				     <div class="flex2child section">
 						<h1 class="color-green">Total  Revenue</h1>
-				    	<p class="info">24L <sub class="subText">INR</sub></p>
+				    	<p class="info">{{orderData.totalAmount}}<sub class="subText">INR</sub></p>
 				    </div>
 				    <div class="flexchild1"></div>
 				</div>
@@ -180,11 +184,11 @@
 						<div class="card-content">
 							<h3>General Behavior</h3>
 							<ul>
-								<li><span>Starts at</span>:<span>{{previewData.behavior.startDate}}</span></li>
-								<li><span>Ends at</span>:<span>{{previewData.behavior.endDate}}</span></li>
-								<li><span>Available in</span>:<span>{{splitAtttoString(previewData.behavior.locationOfServices)}}</span></li>
-								<li><span>Default discount</span>:<span>{{previewData.behavior.discount}}</span></li>
-								<li><span>Maximum Usages</span>:<span>{{previewData.behavior.maximumUsages}}</span>
+								<li><span class="boldText">Starts at:</span><span>{{formatDate(previewData.behavior.startDate)}}</span></li>
+								<li><span class="boldText">Ends at:</span><span>{{formatDate(previewData.behavior.endDate)}}</span></li>
+								<li><span class="boldText">Available in:</span><span>{{splitArrtoString(previewData.behavior.locationOfServices)}}</span></li>
+								<li><span class="boldText">Default discount:</span><span>{{previewData.behavior.discount}}</span><span>{{previewData.behavior.discounType}}</span></li>
+								<li><span class="boldText">Maximum Usages:</span><span>{{previewData.behavior.maximumUsages}}</span>
 								</li>
 							</ul>
 						</div>
@@ -254,7 +258,7 @@
 						<span>Discounts</span>
 					</div>
 					<paper-card elevation="2">
-					<img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&chd=t:10,15,5,0,20,50,60,45,80,90,70,68|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chxt=x,y&chx=Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec&chy:10,20,20,65,80,70,40,90,110,120"/>
+					<img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&chd=t:10,15,5,0,20,50,60,45,80,90,70,68|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chxt=x,y"/>
 						<!-- <img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&
 						chxt=x,y&chxl=0:|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|1:|0|10|20|30|40|50|60|70|80|90|120&chy:10,20,20,65,80,70,40,90,110,20|45&chd=t:10,20,40,15,80,60,80,90,85,45,33,65"/> -->
 					</paper-card>
@@ -300,6 +304,10 @@
 					type:String,
 					notify:true,
 					value:""
+				},
+				orderData:{
+					type:Object,
+					notify:true
 				}
 			},
 			observers:[ 
@@ -317,26 +325,32 @@
 		          ['2006',  660,       1120],
 		          ['2007',  1030,      540]];
 		          console.log()
-                this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
-                this.$.previewSchemeAjax.headers ={'API_KEY':this.config.urls.API_KEY};
+                //this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
+                this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=MYAddon'; 
+                this.$.previewSchemeAjax.headers = {'API_KEY':this.config.urls.API_KEY};
                 this.$.previewSchemeAjax.generateRequest();
 				}
 			},
 			handleResponse:function(event){
 				if(chUtils.isEmpty(event.detail.response)===false){
-					//this.previewData = event.detail.response;
-					this.previewData = JSON.parse(localStorage.scheme);
-					console.log(event.detail.response);
+					this.previewData = event.detail.response.schemeDetails[0];
+					this.orderData = event.detail.response.orderDetails;
+					console.log(event.detail.response,this.orderData,this.previewData.behavior);
 				}
 			},
 			handleError:function(event){
 				console.log(event);
 				//this.$.discountRevenueChart.drawChart();
 			},
-			splitAtttoString:function(data){
-				console.log(data);
-				return data.toString();
-			}
+			splitArrtoString:function(data){
+				if(data!==undefined){
+					var arr = _.pluck(data,"name");
+					return arr;
+				}
+			},
+			formatDate:function(startEndDate){
+				return startEndDate.split("T")[0];
+			},
 
 		});
 	</script>
