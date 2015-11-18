@@ -27,12 +27,15 @@
         	margin:20px 20px 0px 45px;
 
         }
-        .cards {
+        .cards{
             @apply(--layout-vertical);
             @apply(--center-justified);
             font-size: 14px;
             max-width: 320px;
             margin: 10px;
+        }
+        .cards .card-content{
+        	padding: 0px;
         }
         .container {
 	      @apply(--layout-horizontal);
@@ -179,7 +182,7 @@
 							<ul>
 								<li><span>Starts at</span>:<span>{{previewData.behavior.startDate}}</span></li>
 								<li><span>Ends at</span>:<span>{{previewData.behavior.endDate}}</span></li>
-								<li><span>Available in</span>:<span>{{previewData.behavior.locations}}</span></li>
+								<li><span>Available in</span>:<span>{{splitAtttoString(previewData.behavior.locationOfServices)}}</span></li>
 								<li><span>Default discount</span>:<span>{{previewData.behavior.discount}}</span></li>
 								<li><span>Maximum Usages</span>:<span>{{previewData.behavior.maximumUsages}}</span>
 								</li>
@@ -193,12 +196,15 @@
 							<div class="card-content">
 								<h3>Combinational Discounts</h3>
 								<ul>
-									<li>Lorem Ipsum is simply</li>
-									<li>when an unknown printer</li>
-									<li>It was popularised in</li>
-									<li>Lorem Ipsum is not simply </li>
+									<li>Service Rate Category Discounts</li>
+										<ul>
+											<li>Item1</li>
+											<li>Item2</li>
+											<li>Ite3</li>
+										</ul>
+									<li>Service Combination Discounts </li>
 									<li>Many desktop publishing</li>
-									<li>There are many variations</li>
+									<li>Doctor Usage Discounts</li>
 								</ul>
 							</div>
 						</paper-card>
@@ -208,12 +214,22 @@
 							<div class="card-content">
 								<h3>Recurring Benfit Points</h3>
 								<ul>
-									<li>Lorem Ipsum is simply</li>
-									<li>when an unknown printer</li>
-									<li>It was popularised in</li>
-									<li>Lorem Ipsum is not simply </li>
+									<li>Bill Slab Behaviour
+										<ul>
+											<li>Item1</li>
+											<li>Item2</li>
+											<li>Ite3</li>
+										</ul>
+									</li>
+									<li>Mode of Payment Discounts
+										<ul>
+											<li>Item1</li>
+											<li>Item2</li>
+											<li>Ite3</li>
+										</ul>
+									</li>
 									<li>Many desktop publishing</li>
-									<li>There are many variations</li>
+									<li>Doctor Usage Discounts</li>
 								</ul>
 							</div>
 						</paper-card>
@@ -301,14 +317,15 @@
 		          ['2006',  660,       1120],
 		          ['2007',  1030,      540]];
 		          console.log()
-                this.$.previewSchemeAjax.url =  this.config.urls.preview; 
-                this.$.previewSchemeAjax.body = JSON.stringify(this.scheme);
+                this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
+                this.$.previewSchemeAjax.headers ={'API_KEY':this.config.urls.API_KEY};
                 this.$.previewSchemeAjax.generateRequest();
 				}
 			},
 			handleResponse:function(event){
 				if(chUtils.isEmpty(event.detail.response)===false){
-					this.previewData = event.detail.response;
+					//this.previewData = event.detail.response;
+					this.previewData = JSON.parse(localStorage.scheme);
 					console.log(event.detail.response);
 				}
 			},
@@ -316,6 +333,10 @@
 				console.log(event);
 				//this.$.discountRevenueChart.drawChart();
 			},
+			splitAtttoString:function(data){
+				console.log(data);
+				return data.toString();
+			}
 
 		});
 	</script>
