@@ -136,5 +136,15 @@ module.exports = {
 		finalData:finalData
 		};
 		return query;
+	},
+	orderDetails: function(name) {
+		return {
+			schemeName: name
+		};
+	},
+	schemeDetails: function(name) {
+		return {
+			"metadata.name": name
+		};
 	}
 };

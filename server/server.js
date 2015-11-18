@@ -166,12 +166,17 @@ function suggestDiscounts(req, res) {
 }
 
 function getPreviewData(req, res) {
-  var queryreq = req.url.split('?');
-  var query = q2m(queryreq[1]);
-
-  var u1 = mongoose.model('order').find(query.criteria);
+ var finalData = {};
+  var u1 = mongoose.model('order').find(queryBuilder.orderDetails(req.query.name));
+  var s1 = mongoose.model('scheme').find(queryBuilder.schemeDetails(req.query.name));
   u1.exec().then(function(data) {
-    res.send( chUtils.getPreviewData(data));
+    finalData.orderDetails = chUtils.getPreviewData(data);
+
+ s1.exec().then(function(schemeData){
+
+  finalData.schemeDetails = schemeData;
+   res.send(JSON.stringify(finalData)); 
+ });
 
   });
 
