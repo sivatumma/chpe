@@ -556,16 +556,23 @@
           }
 
         });
+
+    function hideListView(){
+        document.querySelector("#gridView").hidden = false;
+        document.querySelector("#listView").hidden = true;
+        document.querySelector(".toggleListGrid").setAttribute("view","list");
+        app.toggleListGridIcon = "icons:view-list"; 
+    };
+
     window.onresize = function(){
+        if(document.querySelector("#gridView").hidden){
+            hideListView();
+        }
         if(window.innerWidth>=768 && window.innerWidth<=979){
-           document.querySelector("#gridView").hidden = false;
-           document.querySelector(".toggleListGrid").setAttribute("view","list");
+            hideListView();
         }
         if(window.innerWidth>=320 && window.innerWidth<=640){
-           document.querySelector("#gridView").hidden = false;
-           if(document.querySelector(".toggleListGrid")){
-               document.querySelector(".toggleListGrid").setAttribute("view","list");
-           }
+            hideListView();
         }
     };
     </script>
