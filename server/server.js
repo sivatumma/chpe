@@ -175,6 +175,7 @@ function getPreviewData(req, res) {
  s1.exec().then(function(schemeData){
 
   finalData.schemeDetails = schemeData;
+ finalData = chUtils.setDefaultDate(finalData);
    res.send(JSON.stringify(finalData)); 
  });
 
