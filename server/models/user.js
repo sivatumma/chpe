@@ -220,14 +220,18 @@ module.exports = function(mongoose) {
 
         else if(req.body && req.body.SAMLResponse != null && req.body.RelayState != 'callhealth.com'){
             console.log("if,else,else in ssoLogin");
-    
+
+            req.session.samlResponse = req.body.SAMLResponse;
+
             var buf = new Buffer(req.body.SAMLResponse, 'base64'); // Ta-da
             var parseString = require('xml2js').parseString;
             var xml = buf.toString();
+            console.log(xml);
             var that = this;
             parseString(xml, function(err, result) {
                 var roles = {"10002":"creator","10003":"editor","10004":"publisher"};
                 if(!err){
+                    try{
                     req.session.user = {
                         username: result['saml2p:Response']['saml2:Assertion'][0]['saml2:Subject'][0]['saml2:NameID'][0]._,
                         sessionIndex: result['saml2p:Response']['saml2:Assertion'][0]['saml2:AuthnStatement'][0].$.SessionIndex,
@@ -237,6 +241,11 @@ module.exports = function(mongoose) {
                     res.header('user', req.session.user);
 
                     next();
+
+                } catch(e){
+                    req.session.user = null;
+                    res.redirect('/ssoLogin');
+                }
                 }
             });
         }
@@ -257,8 +266,8 @@ module.exports = function(mongoose) {
                     'idProvider': config.authentication.idProvider,
                     'spEntityID': config.authentication.spEntityID,
                     //'relayState':  'http://' + req.ip.split(':')[3] + ':91' + req.url
-                    'relayState':  'http://172.19.6.71:91/ssoLogin'
-                    //'relayState':  'http://172.19.4.162:91/ssoLogin'
+                    // 'relayState':  'http://172.19.6.71:91/ssoLogin'
+                    'relayState':  'http://172.19.4.162:91/ssoLogin'
                 }
             }
 
