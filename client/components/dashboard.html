@@ -288,6 +288,7 @@
     </style>
     <template>
         <template is="dom-if" if="{{schemesExist}}">
+            
             <div id="gridView" role$="{{updateUser(userRole)}}">
                 <paper-material elevation="0" class="coupons-sec">
                      <template is="dom-repeat" items="{{couponsData}}" as="item">
