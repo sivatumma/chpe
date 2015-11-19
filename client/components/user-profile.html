@@ -104,16 +104,13 @@
 			</div>
 			<div class="profile-actions text-right">
 				<paper-ripple></paper-ripple>
-				<span><a href="http://172.19.4.162:91/ssoLogout"><paper-button name="logoutButton"  raised>Sign Out</paper-button></a></span>
+				<span><a href="{{signoutUrl}}"><paper-button name="logoutButton"  raised>Sign Out</paper-button></a></span>
 			</div>
 		</div>
 	</template>
 	<script>
 		Polymer({
 			is:'user-profile',
-			ready:function(){
-				 this.config = generalConfig() || {};
-			},
 			properties:{
 				show: {
 	                type: Boolean,
@@ -123,7 +120,15 @@
 				userObject:{
 					type:Object,
 					notify:true
+				},
+				signoutUrl:{
+					type:String,
+					notify:true
 				}
+			},
+			ready:function(){
+				 this.config = generalConfig() || {};
+				 this.signoutUrl = this.config.urls.signout;
 			},
 			observers:[
 				'userObjectChanged(userObject)'
@@ -132,7 +137,7 @@
 		        console.log('blurred');
 		    },
 			userObjectChanged:function(userData){
-				console.log(userData);
+				//console.log(userData);
 			},
 			openProfileInfo:function(event){
 				if (event) { // comes first
