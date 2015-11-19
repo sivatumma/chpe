@@ -87,7 +87,7 @@ module.exports = {
 		}
 		return query;
 	},
-	getOrverView: function()
+	getOverView: function()
 	{
 		var query = {
                  "behavior.startDate": {

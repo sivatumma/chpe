@@ -24,8 +24,12 @@ module.exports = function(env) {
             https_port: 443
         },
         authentication:{
-            ssoEndpoint:'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogin',
-            idProvider: 'https://172.19.4.179:9443/samlsso',
+            // ssoEndpoint_Host: 'http://172.19.4.179:8080/',
+            // ssoEndpoint:'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogin',
+            ssoEndpoint_SignIn: 'http://52.76.37.144:8080/sso/service/secureLogin',
+            ssoEndpoint_SignOut:'http://52.76.37.144:8080/sso/service/secureLogout',
+            // idProvider: 'https://172.19.4.179:9443/samlsso',
+            authType:'standard',
             spEntityID: 'callhealth.com'
         },
         logFiles: {
