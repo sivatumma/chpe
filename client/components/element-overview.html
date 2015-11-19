@@ -2,80 +2,82 @@
     <style type="text/css">
         :host {
             display: block;
-            position: relative;
-            background: #fff;
-            box-shadow: 0px 0px 15px 0px #888;
+            position: fixed;
             margin-top:10px;
-        }
-        
-        #cards {
-            @apply(--layout-vertical);
-            @apply(--center-justified);
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        #cards .card-content {
-            padding: 0px !important;
-        }
-        
-        paper-card {
-            width: 100%;
-            margin-bottom: 16px;
-        }
-        
-        .sepeartion {
-            width: 100%;
-            border: 1px dashed #ccc;
-            float: left;
-            margin: 5px 0px;
-        }
-        
-        #cards .card-content .singleItem {
-            float: left;
-            margin-left: 15%;
-            font-size: 14px;
-            width: 100%;
-            margin-bottom: 6px;
-        }
-        
-        #cards .card-content h4 {
-            margin-left: 12%;
-            margin-bottom: 10px;
-            margin-top: 10px;
-        }
-        
-        .heading {
-            background-color: #f4f4f4;
-            padding: 10px 30px;
-            margin: 0px;
-            border-bottom: 1px solid #ccc;
-            font-size: 16px;
-            font-weight: 400;
-        }
-        
-        .margin-bottom0 {
-            margin-bottom: 0px !important;
+            top:65%;
+            width: 250px;
         }
         .bold{
             font-weight: bold;
             padding: 0px 5px;
         }
+        .totals{
+            padding-top: 15px;
+        }
+         paper-tabs, paper-toolbar {
+        background-color: #00bcd4;
+        color: #fff;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+        margin: 0px 10px;
+      }
+      paper-toolbar paper-tabs {
+        box-shadow: none;
+      }
+      paper-tabs[noink][no-bar] paper-tab.iron-selected {
+        color: #ffff8d;
+      }
+      paper-tab.iron-selected{
+          background: lightgreen;
+        opacity: 0.7;
+        color: black;
+      }
+      paper-tabs[align-bottom] {
+        box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.15);
+      }
+      h3 {
+        font-size: 16px;
+        font-weight: 400;
+        padding-top: 20px;
+      }
+      iron-pages{
+        margin: 0px 10px;
+        padding: 10px !important;
+        background: #f4f4f4;
+        font-size: 16px;
+      }
+      iron-pages div span{
+        line-height: 24px;
+      }
     </style>
     <template>
-        <paper-card id="cards">
+    <paper-tabs selected="{{selected}}">
+      <paper-tab>Expiring</paper-tab>
+      <paper-tab>Totals</paper-tab>
+    </paper-tabs>
+    <iron-pages selected="{{selected}}">
+      <div>
+        <span class="bold">{{overViewData.expdata.COUPON}}</span>Coupons</br>
+        <span class="bold">{{overViewData.expdata.ADD_ON}}</span>Schemes</br>
+        <span class="bold">{{overViewData.expdata.GIFT_CARD}}</span>Gift Cards</br>
+      </div>
+      <div>
+        <span class="bold">{{overViewData.totals.ADD_ON}}</span>Schemes</br/>
+        <span class="bold">{{overViewData.totals.COUPON}}</span>Coupons</br/>
+        <span class="bold">{{overViewData.totals.GIFT_CARD}}</span>Gift Cards</br/>
+        <span class="bold">{{overViewData.totals.peoples}}</span>People</br/>
+        <span class="bold">{{overViewData.totals.cities}}</span>Cities</br/>
+        <span class="bold">{{overViewData.totals.countries}}</span>Countries
+      </div>
+    </iron-pages>
+       <!--  <div id="cards">
             <div class="card-content">
-                <h2 class="heading">Overview</h2>
                 <template is="dom-if" if="{{!overViewError}}">
                     <h4>Expring in a week</h4>
-                    <!-- This is section for displaying exprining data -->
                     <div class="singleItem"><span class="bold">{{overViewData.expdata.COUPON}}</span>Coupons</div>
                     <div class="singleItem"><span class="bold">{{overViewData.expdata.ADD_ON}}</span>Schemes</div>
-                    <div class="singleItem margin-bottom0"><span class="bold">{{overViewData.expdata.GIFT_CARD}}</span>Gift Cards</div>
-                   <!--  <h2>&nbsp;</h2> -->
-                    <h1 class="sepeartion"></h1>
-                    <!-- This section is for display total data -->
+                    <div class="singleItem margin-bottom0"><span class="bold">{{overViewData.expdata.GIFT_CARD}}</span>Gift Cards
+                    </div>
+                    <h4 class="pull-left">Totals</h4>
                     <div class="singleItem"><span class="bold">{{overViewData.totals.ADD_ON}}</span>Schemes</div>
                     <div class="singleItem"><span class="bold">{{overViewData.totals.COUPON}}</span>Coupons</div>
                     <div class="singleItem"><span class="bold">{{overViewData.totals.GIFT_CARD}}</span>
@@ -88,10 +90,10 @@
                     <h4>No Data found....</h4>
                 </template>
             </div>
-        </paper-card>
+        </div> -->
         <iron-ajax id="overviewAjax" auto handle-as="json" method="GET" on-error="handleError" on-response="handleResponse">
         </iron-ajax>
-    </template>
+      </template>
     <script>
         Polymer({
             is: 'element-overview',
@@ -103,6 +105,10 @@
                 overViewData: {
                     type: Object,
                     notify: true
+                },
+                 selected: {
+                  type: Number,
+                  value: 0
                 }
             },
             observers: [],
