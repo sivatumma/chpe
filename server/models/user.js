@@ -218,7 +218,7 @@ module.exports = function(mongoose) {
         else if ( req.session.user !== undefined && req.session.user !== null )
             next();
 
-        else if(req.body && req.body.SAMLResponse != null && req.body.RelayState != 'callhealth.com'){
+        else if(req.body && req.body.SAMLResponse != null){
             console.log("if,else,else in ssoLogin");
 
             req.session.samlResponse = req.body.SAMLResponse;
@@ -243,6 +243,7 @@ module.exports = function(mongoose) {
                     next();
 
                 } catch(e){
+                    console.log("Caught that sessionIndex null exception");
                     req.session.user = null;
                     res.redirect('/ssoLogin');
                 }
@@ -259,11 +260,12 @@ module.exports = function(mongoose) {
            /* console.log("This is the referer", 'http://' + req.ip.split(':')[3] + req.url, req.originalURL, req.get('Referer'), req.get('Content-Type'));*/
             // Configure the request
             var options = {
-                url: config.authentication.ssoEndpoint,
+                url: config.authentication.ssoEndpoint_SignIn,
                 method: 'POST',
                 headers: headers,
                 form: {
-                    'idProvider': config.authentication.idProvider,
+                    // 'idProvider': config.authentication.idProvider,
+                    authType:config.authentication.authType,
                     'spEntityID': config.authentication.spEntityID,
                     //'relayState':  'http://' + req.ip.split(':')[3] + ':91' + req.url
                     // 'relayState':  'http://172.19.6.71:91/ssoLogin'
@@ -273,7 +275,7 @@ module.exports = function(mongoose) {
 
             // Start the request
             request(options, function(error, response, body) {
-                if (!error && response.statusCode == 200) {
+                if (!error && response.statusCode == 202) {
                     res.redirect(unescape(JSON.parse(body).url));
                 }else{
                     console.log(response.statusCode, " .. [400 or 500]");
@@ -294,13 +296,14 @@ module.exports = function(mongoose) {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
           options = {
-            // url: 'http://172.19.4.179:8080/sso/secureLogout',
-            url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogout',
+            url: config.authentication.ssoEndpoint_SignOut,
+            // url: 'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogout',
             method: 'POST',
             headers: headers,
             form: {
               'sessionIndex': req.session.user.sessionIndex,
               'spEntityID': 'callhealth.com',
+              'authType':'standard'
               // 'idProvider': config.authentication.idProvider
             }
           };
