@@ -13,8 +13,8 @@ var path = require('path'),
 module.exports = function(env) {
     var main = {
         application: {
-            //root_path: path.join('/home', 'siva', 'Downloads', 'chpe-polymer-1.0.3'),
-            root_path: path.join('E:','Work','chpe-1.0'),
+            root_path: path.join('/home', 'siva', 'Downloads', 'chpe-polymer-1.0.3'),
+            // root_path: path.join('E:','Work','chpe-1.0'),
             //root_path: path.join('/splice(index, howMany)e', 'siva', 'Downloads', 'chpe-polymer-1.0.3'),
             // root_path: "C:\\Users\\inthiyaz.karamala.CHSPLDC\\WebstormProjects\\chpe-1.0",
             addPrefixes: process.argv[2],
@@ -24,8 +24,12 @@ module.exports = function(env) {
             https_port: 443
         },
         authentication:{
-            ssoEndpoint:'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogin',
-            idProvider: 'https://172.19.4.179:9443/samlsso',
+            // ssoEndpoint_Host: 'http://172.19.4.179:8080/',
+            // ssoEndpoint:'http://172.19.4.179:8080/CHSSO/sso/callhealth/secureLogin',
+            ssoEndpoint_SignIn: 'http://52.76.37.144:8080/sso/service/secureLogin',
+            ssoEndpoint_SignOut:'http://52.76.37.144:8080/sso/service/secureLogout',
+            // idProvider: 'https://172.19.4.179:9443/samlsso',
+            authType:'standard',
             spEntityID: 'callhealth.com'
         },
         logFiles: {
