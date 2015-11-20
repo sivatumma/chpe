@@ -59,7 +59,7 @@
 	</style>
     <template>
      <section onclick="clickHandler(event)">
-     <paper-input name="{{dateType}}" class="date-time-picker-input"  no-label-float readonly="true" label="{{dateLabel}}"  on-tap="showDialog" id="{{dateTimeValue}}" 
+     <paper-input name="{{dateType}}" class="date-time-picker-input"  no-label-float readonly="false" label="{{dateLabel}}"    on-focus="showDialog" id="{{dateTimeValue}}" 
      	value="{{dateModalValue}}"  ></paper-input>
      	<paper-dialog modal id="{{dateModal}}"  class="size-position paper-date-picker-dialog padding0" with-backdrop>
 			  	<div class="datePicker margin0">
@@ -172,6 +172,7 @@
 		    	}
 		    },
 		    updateDateTime:function(editDate){
+		    	console.log(editDate);
 		    	if(chUtils.isEmpty(editDate)===false){
 		    		//console.log(editDate);
 		    		var hours  = chUtils.getHoursByDate(editDate); 

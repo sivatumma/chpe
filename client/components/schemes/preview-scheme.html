@@ -76,7 +76,7 @@
 	    	border-bottom: 1px solid #ccc;
 	    }
 	    .descr-sec:last-child{
-	    	border-right: 1px solid #ccc;
+	    	/*border-right: 1px solid #ccc;*/
 	    }
 	    .descr-sec h3{
 	    	font-size: 18px;
@@ -142,7 +142,24 @@
 	    	font-weight: bold;
 	    	padding-right: 5px;
 	    }
-
+	    .badge{
+	    	background: #303f9f;
+		    padding: 10px;
+		    color: white;
+		    border-radius: 50%;
+		    width: 30px;
+		    height: 30px;
+		    margin: 0px auto;
+	    }
+	    .red {
+	      --paper-badge-background: var(--paper-red-300);
+	    }
+	    .orange {
+	      --paper-badge-background: var(--paper-amber-300);
+	    }
+	    .green {
+	      --paper-badge-background: var(--paper-green-300);
+	    }
 	</style>
 	<template>
 		<more-route context name="previewScheme" params="{{params}}"></more-route>
@@ -153,34 +170,44 @@
 					</div>
 				</paper-card>
 			</template> -->
-			<paper-material elevation="2" class="previewScheme">
+			<paper-material elevation="0" class="previewScheme">
 				<div class="container">
 					<div class="flexchild1"></div>
 				    <div class="flex2child section">
-				    	<h1 class="color-blue">Unique Clients</h1>
-				    	<p class="info">{{orderData.uniqueUsers}}</p>
-				    </div>
-				    <div class="flex2child section">
 						<h1 class="color-light-blue">Locations</h1>
-				    	<p class="info">{{orderData.orderLocations}}</p>				    		
+				    	<div class="badge" align="center">
+				    	<p class="info">{{orderData.orderLocations}}</p>
+				    	</div>				    		
 				    </div>
 				    <div class="flex2child section">
+				    	<h1 class="color-blue">Clients</h1>
+				    	<div class="badge" align="center">
+					    	<p class="info">{{orderData.uniqueUsers}}</p>
+				    	</div>
+				    </div>
+				    <!-- <div class="flex2child section">
 						<h1 class="color-pink">Cities</h1>
-				    	<p class="info">{{orderData.clients}}</p>	
+				    	<div class="badge" align="center">
+				    	<p class="info">{{orderData.clients}}</p>
+				    	</div>	
+				    </div> -->
+				     <div class="flex2child section">
+						<h1 class="color-green">Revenue</h1>
+				     	<div class="badge" align="center">
+				    	<p class="info">{{roundPrice(orderData.totalAmount)}}<sub class="subText">K</sub></p>
+				    	</div>
 				    </div>
 				    <div class="flex2child section">
 						<h1 class="color-yellow">Discounts</h1>
-				    	<p class="info">{{orderData.discountAmount}}<sub class="subText">INR</sub></p>
-				    </div>
-				     <div class="flex2child section">
-						<h1 class="color-green">Total  Revenue</h1>
-				    	<p class="info">{{orderData.totalAmount}}<sub class="subText">INR</sub></p>
+				    	<div class="badge" align="center">
+				    	<p class="info">{{roundPrice(orderData.discountAmount)}}<sub class="subText">K</sub></p>
+				    	</div>
 				    </div>
 				    <div class="flexchild1"></div>
 				</div>
 				<div class="container description">
 					<div class="flex4child descr-sec">
-						<paper-card  elevation="2" class="cards">
+						<paper-card  elevation="0" class="cards">
 						<div class="card-content">
 							<h3>General Behavior</h3>
 							<ul>
@@ -196,7 +223,7 @@
 						
 					</div>
 					<div class="flex4child descr-sec" >
-						<paper-card elevation="2" class="cards">
+						<paper-card elevation="0" class="cards">
 							<div class="card-content">
 								<h3>Combinational Discounts</h3>
 								<ul>
@@ -235,7 +262,7 @@
 						</paper-card>
 					</div>
 					<div class="flex4child descr-sec" >
-						<paper-card elevation="2" class="cards">
+						<paper-card elevation="0" class="cards">
 							<div class="card-content">
 								<h3>Combinational Discounts</h3>
 								<ul>
@@ -321,9 +348,7 @@
 						<img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&chd=t:0,0,50,0,10,0,0,0,500,0,500,10&chco=FF0000&chxt=x,y&chdl=Customers"/>
 					</paper-card>
 					</div>
-					
-					<!-- <scheme-chart preview-graph-id"line-chart-1" chart-data="{{previewData1}}" 
-					chart-options="{{optionData}}"></scheme-chart> -->
+
 				</div>
 			</paper-material>
 		<iron-ajax  id="previewSchemeAjax" content-type="application/json"   method="GET"  
@@ -360,12 +385,6 @@
 					app.isHome = false;
 					this.config = generalConfig();
 					app.previewSchemeName = 'Preview Scheme - '+schemeName;
-				this.previewData1 = [['Year', 'Sales', 'Expenses'],
-		          ['2004',  1000,      400],
-		          ['2005',  1170,      460],
-		          ['2006',  660,       1120],
-		          ['2007',  1030,      540]];
-		          console.log()
                 //this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
                 this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=MYAddon'; 
                 this.$.previewSchemeAjax.headers = {'API_KEY':this.config.urls.API_KEY};
@@ -398,6 +417,15 @@
 					return "No Data";
 				}
 			},
+			roundPrice:function(price){
+				if(chUtils.isEmpty(price)===false){
+					var amount = parseFloat(price/1000);
+					amount.toFixed(2);
+					return amount;
+				}else{
+					return 0;
+				}	
+			}
 
 		});
 	</script>
