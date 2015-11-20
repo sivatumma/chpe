@@ -198,6 +198,8 @@
                 if (!this.options.allow_nonmatching) this.options.allow_nonmatching = false;
                 this.selectedItems =  this.getAttribute("selected-items") || [];
                 this.suggestedItems = [];
+                this.$.item_input.setAttribute("contenteditable","true");
+
             },
             listeners:{
                 'input-changed':'addRemoveChips'
@@ -231,27 +233,27 @@
             },
             handleResponse: function(event) {
                   if(event.detail.response!=null && event.detail.response!==undefined){
-                        var el = document.querySelector('#multi_suggest');
-                        var contacts = event.detail.response;
-                        var chips = [];
-                        if(contacts.message!==undefined){
-                            console.log(contacts.message);
-                            this.$.item_input.innerText = contacts.message;
-                            this.$.item_input.style.color = "red";
-                            this.$.item_input.setAttribute("contenteditable","false");
-                        }else{
-                          this.$.item_input.style.color = "#000";
-                          this.$.item_input.setAttribute("contenteditable","true");
-                           contacts.map(function(c, index) {
-                                var contact = {
-                                    name: (c.name) || c,
-                                    id: (c.id)||index
-                                };
-                                contact._lowername = contact.name.toLowerCase();
-                                chips.push(contact);
-                            });
-                            this.suggestedItems = chips;
-                        }
+                    var el = document.querySelector('#multi_suggest');
+                    var contacts = event.detail.response;
+                    var chips = [];
+                    if(contacts.message!==undefined){
+                        console.log(contacts.message);
+                        this.$.item_input.innerText = contacts.message;
+                        this.$.item_input.style.color = "red";
+                        this.$.item_input.setAttribute("contenteditable","false");
+                    }else{
+                      this.$.item_input.style.color = "#000";
+                      this.$.item_input.setAttribute("contenteditable","true");
+                       contacts.map(function(c, index) {
+                            var contact = {
+                                name: (c.name) || c,
+                                id: (c.id)||index
+                            };
+                            contact._lowername = contact.name.toLowerCase();
+                            chips.push(contact);
+                        });
+                        this.suggestedItems = chips;
+                    }
                   }                       
              },
              handleError:function(event){

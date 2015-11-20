@@ -9,7 +9,7 @@
     .discountBox{
         display: inline-block;
         padding: 0px;
-        width:320px;
+        width:380px;
     }
    .discountButton{
         min-width:30px;
@@ -30,13 +30,13 @@
       vertical-align: middle;
       float: left;
       margin:0px;
-      width:320px;
+      width:500px;
     }
     .btn-group > paper-button {
       float: left;
       margin: 0px;
      border-radius: 0px !important;
-     width:106.66666px;
+     width:120.66666px;
 
     }
 
@@ -51,8 +51,11 @@
                     <paper-button type="button" disabled$="{{metadata.published}}" name="week" class="discountButton noRightBorder"
                     on-click="togleType" id="couponWeek" life="WEEK">WEEK</paper-button>
 
-                    <paper-button type="button" disabled$="{{metadata.published}}" name="month" class="discountButton"
-                    on-click="togleType" id="couponMonth" life="MONTH">MONTH</paper-button>
+                     <paper-button type="button" disabled$="{{metadata.published}}" name="month" 
+                    class="discountButton" on-click="togleType" id="couponFortNight" life="FORT-NIGHTLY">FORT-NIGHTLY</paper-button>
+
+                    <paper-button type="button" disabled$="{{metadata.published}}" name="month" 
+                    class="discountButton" on-click="togleType" id="couponMonth" life="MONTH">MONTH</paper-button>
                 </div>
             </div>
         </div>
@@ -85,7 +88,8 @@
                 chUtils.removeClass(document.querySelector("#couponWeek"),"active");
                 chUtils.removeClass(document.querySelector("#couponDay"),"active");
                 chUtils.removeClass(document.querySelector("#couponMonth"),"active");
-
+                chUtils.removeClass(document.querySelector("#couponFortNight"),"active");
+                
                 if (couponType == "DAY") {
                     chUtils.addClass(document.querySelector("#couponDay"),"active");
                     this.metadata.defaultLife = couponType;
@@ -96,10 +100,13 @@
                     chUtils.addClass(document.querySelector("#couponMonth"),"active");
                     this.metadata.defaultLife = couponType;
                 }
+                else if(couponType == "FORT-NIGHTLY"){
+                    chUtils.addClass(document.querySelector("#couponFortNight"),"active");
+                    this.metadata.defaultLife = couponType;
+                }
             },
             togleType:function(event){
                 var life = event.currentTarget.getAttribute('life');
-                console.log(life);
                 this.setCouponLife(life);
             }
           
