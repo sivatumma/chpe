@@ -31,12 +31,12 @@
         <div class="col-12" metadata="{{metadata}}" behavior="{{behavior}}">
             <div class="col-6">
                 <p><strong>Scheme Name</strong> must start with an Alphabet, should contain minimum of 3 characters and cannot contain special characters like #@!, etc.</p>
-                <paper-input name="name" value="{{metadata.name}}" required auto-validate pattern="^[a-zA-Z,-,0-9]{3,}[a-zA-Z,0-9]*$"  disabled$="[[disableName]]" no-label-float error-message="Recheck the Naming guidelines" label="Scheme Name">
+                <paper-input name="name" value="{{metadata.name}}" required auto-validate pattern="([a-zA-Z]+[a-zA-Z\d]{2,13})"  disabled$="[[disableName]]" no-label-float error-message="Recheck the Naming guidelines" label="Scheme Name">
                 </paper-input>
 
               <date-time-picker metadata="{{metadata}}" date-type="{{startDateType}}" date-modal-value="{{behavior.startDate}}" date-modal="{{startDateModal}}" date-time-value="{{schemeStarts}}" date-label="Start Date" date-id="{{sdDp}}" time-id="{{sdTp}}"></date-time-picker>  
 
-                <date-time-picker date-type="{{endDateType}}" metadata="{{metadata}}" date-modal="{{endDateModal}}" date-time-value="{{schemeEnds}}" date-label="End Date" date-modal-value="{{behavior.endDate}}" date-id="{{edDp}}" time-id="{{edTp}}"></date-time-picker>
+            <date-time-picker date-type="{{endDateType}}" hidden="{{couponOnly}}" metadata="{{metadata}}" date-modal="{{endDateModal}}" date-time-value="{{schemeEnds}}" date-label="End Date" date-modal-value="{{behavior.endDate}}" date-id="{{edDp}}" time-id="{{edTp}}"></date-time-picker>
 
             </div>
             <div class="col-1">&nbsp;</div>
@@ -77,7 +77,11 @@
                     notify:true
                 },
                 behavior:Object,
-                basicDiscount:String
+                basicDiscount:String,
+                couponOnly:{
+                    type:Boolean,
+                    value:false
+                }
             },
             ready: function() {
                 //this.$.basicSchemeDiscount.behavior = this.behavior; 

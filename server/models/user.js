@@ -288,7 +288,7 @@ module.exports = function(mongoose) {
       // if (req.session.user === undefined || req.session.user === null) {
       //   res.redirect("unAuthorized.html");
       // } else {
-        console.log("Hey, req.session from jmeter is : ", req.session);
+        console.log("Hey, req.session from client is : ", req.session);
         var headers = {
             'User-Agent': 'Super Agent/0.0.1',
             'Content-Type': 'application/x-www-form-urlencoded'

@@ -100,7 +100,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    */
   app.setScheme();
   app.currentPage;
-  app.previewSchemeName = undefined;
   app.addonTitle    =  "Create Addon";
   app.couponTitle   =  "Create Coupon";
   app.giftCardTitle =  "Create Gift Card";

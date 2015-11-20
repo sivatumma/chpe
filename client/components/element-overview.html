@@ -69,28 +69,6 @@
         <span class="bold">{{overViewData.totals.countries}}</span>Countries
       </div>
     </iron-pages>
-       <!--  <div id="cards">
-            <div class="card-content">
-                <template is="dom-if" if="{{!overViewError}}">
-                    <h4>Expring in a week</h4>
-                    <div class="singleItem"><span class="bold">{{overViewData.expdata.COUPON}}</span>Coupons</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.expdata.ADD_ON}}</span>Schemes</div>
-                    <div class="singleItem margin-bottom0"><span class="bold">{{overViewData.expdata.GIFT_CARD}}</span>Gift Cards
-                    </div>
-                    <h4 class="pull-left">Totals</h4>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.ADD_ON}}</span>Schemes</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.COUPON}}</span>Coupons</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.GIFT_CARD}}</span>
-                        Gift Cards</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.peoples}}</span>People</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.cities}}</span>Cities</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.countries}}</span>Countries</div>
-                </template>
-                <template is="dom-if" if="{{overViewError}}">
-                    <h4>No Data found....</h4>
-                </template>
-            </div>
-        </div> -->
         <iron-ajax id="overviewAjax" auto handle-as="json" method="GET" on-error="handleError" on-response="handleResponse">
         </iron-ajax>
       </template>
