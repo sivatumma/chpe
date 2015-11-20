@@ -166,21 +166,17 @@ function suggestDiscounts(req, res) {
 }
 
 function getPreviewData(req, res) {
- var finalData = {};
+  var finalData = {};
   var u1 = mongoose.model('order').find(queryBuilder.orderDetails(req.query.name));
   var s1 = mongoose.model('scheme').find(queryBuilder.schemeDetails(req.query.name));
   u1.exec().then(function(data) {
-    finalData.orderDetails = chUtils.getPreviewData(data);
+    s1.exec().then(function(schemeData) {
 
- s1.exec().then(function(schemeData){
-
-  finalData.schemeDetails = schemeData;
- finalData = chUtils.setDefaultDate(finalData);
-   res.send(JSON.stringify(finalData)); 
- });
+      finalData = chUtils.setDefaultDate(schemeData, data);
+      res.send(JSON.stringify(finalData));
+    });
 
   });
-
 }
 function getOverView(req,res)
 {
