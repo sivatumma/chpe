@@ -163,21 +163,27 @@ function suggestDiscounts(req, res) {
       })
     })
   })
-}
+};
 
 function getPreviewData(req, res) {
   var finalData = {};
   var u1 = mongoose.model('order').find(queryBuilder.orderDetails(req.query.name));
   var s1 = mongoose.model('scheme').find(queryBuilder.schemeDetails(req.query.name));
   u1.exec().then(function(data) {
+
     s1.exec().then(function(schemeData) {
-
-      finalData = chUtils.setDefaultDate(schemeData, data);
-      res.send(JSON.stringify(finalData));
+      if (data.length > 0) {
+        finalData = chUtils.setDefaultDate(schemeData, data);
+        res.send(JSON.stringify(finalData));
+      } else {
+        res.status(401).send({
+          status: 'Fail',
+          message: 'Schema Not Valid'
+        });
+      }
     });
-
   });
-}
+};
 function getOverView(req,res)
 {
 
