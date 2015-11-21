@@ -145,13 +145,20 @@
 	    }
 	    .badge{
 	    	/*background: #303f9f;*/
-		    padding: 10px;
-		    color: white;
-		    border:4px solid navy;
+		    padding: 10	px;
+		    color: black;
+		    border:4px solid;
+		    border-color:  #303F9F #303F9F #4CAF50 #4CAF50; 
 		    border-radius: 50%;
-		    width: 30px;
-		    height: 30px;
+		    width: 110px;
+		    height: 110px;
 		    margin: 0px auto;
+	    }
+	    .badge h1{
+	    	width: 100px;
+	    	height: 30px;
+	    	line-height: 30px;
+	    	margin-top: 30px;
 	    }
 	    .red {
 	      --paper-badge-background: var(--paper-red-300);
@@ -176,15 +183,16 @@
 				<div class="container">
 					<div class="flexchild1"></div>
 				    <div class="flex2child section">
-						<h1 class="color-light-blue">Locations</h1>
 				    	<div class="badge" align="center">
-				    	<p class="info">{{orderData.orderLocations}}</p>
+						<h1 class="color-light-blue">Locations</h1>
+				    	<span class="info">{{orderData.orderLocations}}</span>
 				    	</div>				    		
 				    </div>
 				    <div class="flex2child section">
-				    	<h1 class="color-blue">Clients</h1>
+				    	
 				    	<div class="badge" align="center">
-					    	<p class="info">{{orderData.uniqueUsers}}</p>
+				    		<h1 class="color-blue">Clients</h1>
+					    	<span class="info">{{orderData.uniqueUsers}}</span>
 				    	</div>
 				    </div>
 				    <!-- <div class="flex2child section">
@@ -194,15 +202,15 @@
 				    	</div>	
 				    </div> -->
 				     <div class="flex2child section">
-						<h1 class="color-green">Revenue</h1>
 				     	<div class="badge" align="center">
-				    	<p class="info">{{roundPrice(orderData.totalAmount)}}<sub class="subText"></sub></p>
+						<h1 class="color-green">Revenue</h1>
+				    	<span class="info">{{roundPrice(orderData.totalAmount)}}<sub class="subText"></sub></span>
 				    	</div>
 				    </div>
 				    <div class="flex2child section">
-						<h1 class="color-yellow">Discounts</h1>
 				    	<div class="badge" align="center">
-				    	<p class="info">{{roundPrice(orderData.discountAmount)}}<sub class="subText"></sub></p>
+						<h1 class="color-yellow">Discounts</h1>
+				    	<span class="info">{{roundPrice(orderData.discountAmount)}}<sub class="subText"></sub></span>
 				    	</div>
 				    </div>
 				    <div class="flexchild1"></div>
@@ -361,7 +369,7 @@
 			is:'preview-scheme',
 			ready:function(){
 				this.config = generalConfig() || {};
-				app.previewSchemeName = "";
+				//app.previewSchemeName = "";
 			},
 			properties:{
 				previewData:{
@@ -384,10 +392,9 @@
 			previewSchemeChanged:function(schemeName){
 				if(schemeName!==undefined && schemeName.length>0){
 					app.isPreviewScheme = true;
-					app.isHome = false;
 					this.config = generalConfig();
 					app.previewSchemeName = 'Preview Scheme - '+schemeName;
-                //this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
+                this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
                 this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=MYAddon'; 
                 this.$.previewSchemeAjax.headers = {'API_KEY':this.config.urls.API_KEY};
                 this.$.previewSchemeAjax.generateRequest();
@@ -395,6 +402,7 @@
 			},
 			handleResponse:function(event){
 				if(chUtils.isEmpty(event.detail.response)===false){
+					console.log(event.detail.response);
 					this.previewData = event.detail.response.schemeDetails[0];
 					this.orderData = event.detail.response.orderDetails;
 				}
