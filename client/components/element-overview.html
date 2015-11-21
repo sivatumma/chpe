@@ -11,6 +11,11 @@
             font-weight: bold;
             padding: 0px 5px;
         }
+        .specialData{
+          border:1px solid silver; 
+          padding:10px; 
+          background:#fff;
+        }
         .totals{
             padding-top: 15px;
         }
@@ -64,33 +69,13 @@
         <span class="bold">{{overViewData.totals.ADD_ON}}</span>Schemes</br/>
         <span class="bold">{{overViewData.totals.COUPON}}</span>Coupons</br/>
         <span class="bold">{{overViewData.totals.GIFT_CARD}}</span>Gift Cards</br/>
-        <span class="bold">{{overViewData.totals.peoples}}</span>People</br/>
-        <span class="bold">{{overViewData.totals.cities}}</span>Cities</br/>
-        <span class="bold">{{overViewData.totals.countries}}</span>Countries
+          <div class="specialData">
+            <span class="bold">{{overViewData.totals.peoples}}</span>People</br/>
+            <span class="bold">{{overViewData.totals.cities}}</span>Cities</br/>
+            <span class="bold">{{overViewData.totals.countries}}</span>Countries
+          </div>
       </div>
     </iron-pages>
-       <!--  <div id="cards">
-            <div class="card-content">
-                <template is="dom-if" if="{{!overViewError}}">
-                    <h4>Expring in a week</h4>
-                    <div class="singleItem"><span class="bold">{{overViewData.expdata.COUPON}}</span>Coupons</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.expdata.ADD_ON}}</span>Schemes</div>
-                    <div class="singleItem margin-bottom0"><span class="bold">{{overViewData.expdata.GIFT_CARD}}</span>Gift Cards
-                    </div>
-                    <h4 class="pull-left">Totals</h4>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.ADD_ON}}</span>Schemes</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.COUPON}}</span>Coupons</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.GIFT_CARD}}</span>
-                        Gift Cards</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.peoples}}</span>People</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.cities}}</span>Cities</div>
-                    <div class="singleItem"><span class="bold">{{overViewData.totals.countries}}</span>Countries</div>
-                </template>
-                <template is="dom-if" if="{{overViewError}}">
-                    <h4>No Data found....</h4>
-                </template>
-            </div>
-        </div> -->
         <iron-ajax id="overviewAjax" auto handle-as="json" method="GET" on-error="handleError" on-response="handleResponse">
         </iron-ajax>
       </template>
@@ -111,11 +96,14 @@
                   value: 0
                 }
             },
-            observers: [],
+            observers: ['overViewDataChanged(overViewData)'],
             ready: function() {
                 this.config = generalConfig() || {};
                 this.$.overviewAjax.url =  this.config.urls.overview;
                 this.$.overviewAjax.generateRequest();
+            },
+            overViewDataChanged:function(overViewData){
+              console.log(overViewData);
             },
             handleResponse: function(event) {
                 if(chUtils.isEmpty(event.detail.response)===false){

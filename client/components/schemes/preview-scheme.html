@@ -24,7 +24,8 @@
         	min-height: 200px;
         	display: block;
         	width: 92%;
-        	margin:20px 20px 0px 45px;
+        	background:#f0f0f0;
+        	padding:10px 20px;
 
         }
         .cards{
@@ -66,7 +67,7 @@
 	    	margin: 0px;
 	    }
 	    .info{
-	    	font-size: 24px;
+	    	font-size:20px;
 	    	text-align: center;
 	    	font-weight: 500;
 	    	padding: 0px;
@@ -143,9 +144,10 @@
 	    	padding-right: 5px;
 	    }
 	    .badge{
-	    	background: #303f9f;
+	    	/*background: #303f9f;*/
 		    padding: 10px;
 		    color: white;
+		    border:4px solid navy;
 		    border-radius: 50%;
 		    width: 30px;
 		    height: 30px;
@@ -194,13 +196,13 @@
 				     <div class="flex2child section">
 						<h1 class="color-green">Revenue</h1>
 				     	<div class="badge" align="center">
-				    	<p class="info">{{roundPrice(orderData.totalAmount)}}<sub class="subText">K</sub></p>
+				    	<p class="info">{{roundPrice(orderData.totalAmount)}}<sub class="subText"></sub></p>
 				    	</div>
 				    </div>
 				    <div class="flex2child section">
 						<h1 class="color-yellow">Discounts</h1>
 				    	<div class="badge" align="center">
-				    	<p class="info">{{roundPrice(orderData.discountAmount)}}<sub class="subText">K</sub></p>
+				    	<p class="info">{{roundPrice(orderData.discountAmount)}}<sub class="subText"></sub></p>
 				    	</div>
 				    </div>
 				    <div class="flexchild1"></div>
@@ -395,7 +397,6 @@
 				if(chUtils.isEmpty(event.detail.response)===false){
 					this.previewData = event.detail.response.schemeDetails[0];
 					this.orderData = event.detail.response.orderDetails;
-					console.log(event.detail.response,this.orderData,this.previewData.behavior);
 				}
 			},
 			handleError:function(event){
@@ -419,9 +420,7 @@
 			},
 			roundPrice:function(price){
 				if(chUtils.isEmpty(price)===false){
-					var amount = parseFloat(price/1000);
-					amount.toFixed(2);
-					return amount;
+					return Math.round(parseFloat(price/1000))+'K';
 				}else{
 					return 0;
 				}	

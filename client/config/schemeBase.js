@@ -12,7 +12,7 @@ function schemeBase(scheme){    //init metadata as per schema
         location:{longitude:0, latitude:0,ip:""},
         published: false,
         type: "",
-        defaultLife: "",
+        defaultLife: "MONTH",
     };
 
     //init behavior as per schema

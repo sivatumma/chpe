@@ -221,8 +221,6 @@ module.exports = function(mongoose) {
         else if(req.body && req.body.SAMLResponse != null){
             console.log("if,else,else in ssoLogin");
 
-            req.session.samlResponse = req.body.SAMLResponse;
-
             var buf = new Buffer(req.body.SAMLResponse, 'base64'); // Ta-da
             var parseString = require('xml2js').parseString;
             var xml = buf.toString();
@@ -268,8 +266,8 @@ module.exports = function(mongoose) {
                     authType:config.authentication.authType,
                     'spEntityID': config.authentication.spEntityID,
                     //'relayState':  'http://' + req.ip.split(':')[3] + ':91' + req.url
-                    'relayState':  'http://172.19.6.71:91/ssoLogin'
-                    //'relayState':  'http://172.19.4.162:91/ssoLogin'
+                    // 'relayState':  'http://172.19.6.71:91/ssoLogin'
+                    'relayState':  'http://172.19.4.162:91/ssoLogin'
                 }
             }
 
@@ -290,7 +288,7 @@ module.exports = function(mongoose) {
       // if (req.session.user === undefined || req.session.user === null) {
       //   res.redirect("unAuthorized.html");
       // } else {
-        console.log("Hey, req.session from jmeter is : ", req.session);
+        console.log("Hey, req.session from client is : ", req.session);
         var headers = {
             'User-Agent': 'Super Agent/0.0.1',
             'Content-Type': 'application/x-www-form-urlencoded'

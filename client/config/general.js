@@ -5,8 +5,7 @@ function generalConfig() {
 		rest: '/mdb/scheme?API_KEY=MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9',
 		overview: '/pricingengine/overview?API_KEY=MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9',
 		preview: '/pricingengine/previewData?',
-		//signout :'http://172.19.4.162:91/ssoLogout',
-		signout :'http://172.19.16.71:91/ssoLogout',
+		signout :'/ssoLogout',
 		API_KEY:'MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9',
 		memcache: {
 			names:'/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names',
