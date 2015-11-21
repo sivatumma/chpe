@@ -1,5 +1,5 @@
 {
- "name": "chpe",
+  "name": "chpe",
   "description": "Callhealth Pricing Engine",
   "version": "0.1.0",
   "private": true,
@@ -52,6 +52,7 @@
     "express-ipfilter": "^0.0.20",
     "express-session": "^1.7.6",
     "lodash": "^3.10.1",
+    "moment": "^2.10.6",
     "mongoose": "4.1.6",
     "morgan": "1.6.1",
     "node-uuid": "1.4.1",

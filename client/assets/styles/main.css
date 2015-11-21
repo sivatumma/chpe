@@ -866,8 +866,11 @@ paper-menu paper-item .card-as-thumbnail img{
     /*preview scheme*/
    .previewScheme{
     width: 100% !important;
-    padding: 5px;
+    padding: 5px !important;
     margin: 0px  !important;
+   }
+   .cards.preview-scheme{
+    max-width: 100%;
    }
     .preview-scheme-name{
       font-size: 14px;
@@ -886,19 +889,41 @@ paper-menu paper-item .card-as-thumbnail img{
       width: 100%;
       margin-bottom: 10px;
     }
-    .descr-sec{
-      font-size: 12px;
+   .graphContainer .col-5,.previewScheme .col-6 {
+      float: left;
+      width: 100% !important;
     }
-    .graphContainer .col-5{
+    .discRevenues{
       float: left;
       width: 100%;
+      margin-bottom: 10px;
     }
+    .descr-sec{
+      font-size: 12px;
+      float:left;
+      width: 100%;
 
-
+    }
+    .previewScheme .badge{
+      width: 80px;
+      height: 80px;
+    }
+    .previewScheme .badge h1{
+        width: 80px !important;
+        height: 20px !important;
+        margin-top: 10px !important;
+      }
+    .previewScheme h3{
+      font-size: 14px !important;
+    }
+    .previewScheme ul li{
+      font-size: 12px;
+    }
   }
-  @media (min-width:320px) and (max-width: 479px){
+  @media (min-width:240px) and (max-width: 479px){
       schemes-as-cards{
-       margin: 0px 40px 40px 40px;
+       margin:0px;
+       padding: 0px;
      }
      #listView.schemes-as-cards{
       width: 100%;
@@ -1002,8 +1027,8 @@ paper-menu paper-item .card-as-thumbnail img{
    }
 
    .coupons-sec paper-card .couponName{
-    float: left;
-    margin: 0px 0px 0px 35px !important;
+/*    float: left;
+    margin: 0px 0px 0px 35px !important;*/
     font-size: 11px;
    }
    paper-dialog.size-position{
@@ -1021,12 +1046,13 @@ paper-menu paper-item .card-as-thumbnail img{
   .previewScheme{
     width: 100% !important;
     margin: 0px !important;
+    padding: 0px !important;
    }
     .preview-scheme-name{
       font-size: 14px;
     }
     .section.preview-scheme h1.preview-scheme{
-      font-size: 14px;
+      font-size: 12px;
     }
     .info.preview-scheme{
       font-size: 14px;
@@ -1034,7 +1060,7 @@ paper-menu paper-item .card-as-thumbnail img{
     .graphContainer  h3{
       font-size: 12px;
     }
-    .graphContainer .col-5{
+    .graphContainer .col-5,.previewScheme .col-6 {
       float: left;
       width: 100% !important;
     }
@@ -1044,6 +1070,24 @@ paper-menu paper-item .card-as-thumbnail img{
       margin-bottom: 10px;
     }
     .descr-sec{
+      font-size: 12px;
+      float:left;
+      width: 100%;
+
+    }
+    .previewScheme .badge{
+      width: 60px;
+      height: 60px;
+    }
+    .previewScheme .badge h1{
+        width: 60px !important;
+        height: 20px !important;
+        margin-top: 10px !important;
+      }
+    .previewScheme h3{
+      font-size: 14px !important;
+    }
+    .previewScheme ul li{
       font-size: 12px;
     }
 
