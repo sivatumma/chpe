@@ -170,13 +170,39 @@ function getPreviewData(req, res) {
   var u1 = mongoose.model('order').find(queryBuilder.orderDetails(req.query.name));
   var s1 = mongoose.model('scheme').find(queryBuilder.schemeDetails(req.query.name));
   u1.exec().then(function(data) {
-    s1.exec().then(function(schemeData) {
 
-      finalData = chUtils.setDefaultDate(schemeData, data);
-      res.send(JSON.stringify(finalData));
+    s1.exec().then(function(schemeData) {
+      if (data.length > 0) {
+        finalData = chUtils.setDefaultDate(schemeData, data);
+        res.send(JSON.stringify(finalData));
+      } else {
+        res.status(401).send({
+          status: 'Fail',
+          message: 'Schema Not Valid'
+        });
+      }
+    });
+  });
+}
+function uniqueUsersData(req,res)
+{
+   var finalData = {};
+ var u1 = mongoose.model('order').find(queryBuilder.orderDetails(req.query.name));
+  var s1 = mongoose.model('scheme').find(queryBuilder.schemeDetails(req.query.name));
+    u1.exec().then(function(data) {
+    s1.exec().then(function(schemeData) {
+          if (data.length > 0) {
+            finalData = chUtils.uniqueUsersData(schemeData, data);
+            res.send(JSON.stringify(finalData));
+          } else {
+            res.status(401).send({
+              status: 'Fail',
+              message: 'Schema Not Valid'
+            });
+          }
+    });
     });
 
-  });
 }
 function getOverView(req,res)
 {
@@ -298,6 +324,7 @@ app.get('/ssoLogout', User.ssoLogout, function(req, res) {
 
 var User = mongoose.model('User');
 app.get('/pricingengine/previewData', getPreviewData);
+app.get('/pricingengine/uniqueUsers',uniqueUsersData);
 app.get('/pricingengine/overview',getOverView);
 app.post('/pricingengine/schemeAppliedSuccessfully', schemeApplied);
 app.post('/pricingengine/suggestDiscounts', suggestDiscounts);
