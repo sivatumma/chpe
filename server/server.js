@@ -175,7 +175,10 @@ function getPreviewData(req, res) {
                 if (data.length > 0) {
                   finalData = chUtils.setDefaultDate(schemeData, data);
                 } else {
-                  finalData = schemeData;
+                  finalData = {
+                    orderDetails: {},
+                    schemeDetails: schemeData
+                  };
                 }
                 res.send(JSON.stringify(finalData));
               } else {
