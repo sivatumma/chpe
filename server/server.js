@@ -169,17 +169,20 @@ function getPreviewData(req, res) {
   var finalData = {};
   var u1 = mongoose.model('order').find(queryBuilder.orderDetails(req.query.name));
   var s1 = mongoose.model('scheme').find(queryBuilder.schemeDetails(req.query.name));
-  u1.exec().then(function(data) {
-
-    s1.exec().then(function(schemeData) {
-      if (data.length > 0) {
-        finalData = chUtils.setDefaultDate(schemeData, data);
-        res.send(JSON.stringify(finalData));
-      } else {
-        res.status(401).send({
-          status: 'Fail',
-          message: 'Schema Not Valid'
-        });
+  s1.exec().then(function(schemeData) {
+        u1.exec().then(function(data) {
+              if (schemeData.length > 0) {
+                if (data.length > 0) {
+                  finalData = chUtils.setDefaultDate(schemeData, data);
+                } else {
+                  finalData = schemeData;
+                }
+                res.send(JSON.stringify(finalData));
+              } else {
+                res.status(401).send({
+                  status: 'Fail',
+                  message: 'Schema Not Valid'
+                });
       }
     });
   });
