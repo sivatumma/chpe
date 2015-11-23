@@ -100,7 +100,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    */
   app.setScheme();
   app.currentPage;
-  app.previewSchemeName = undefined;
   app.addonTitle    =  "Create Addon";
   app.couponTitle   =  "Create Coupon";
   app.giftCardTitle =  "Create Gift Card";
@@ -180,10 +179,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if (mode == "list") {
           document.querySelector("#listView").hidden = false;
           document.querySelector("#gridView").hidden = true;
-          this.toggleListGridIcon = "icons:view-module";
+          app.toggleListGridIcon = "icons:view-module";
           event.currentTarget.setAttribute('view', 'grid');
       } else {
-          this.toggleListGridIcon = "icons:view-list";
+          app.toggleListGridIcon = "icons:view-list";
           event.currentTarget.setAttribute('view', 'list');
           document.querySelector("#listView").hidden = true;
           document.querySelector("#gridView").hidden = false;

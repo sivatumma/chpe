@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="http://172.19.6.71:91/external/webcomponentsjs/webcomponents.min.js"></script>
+  <script src="http://172.19.6.71:91/external/web-component-tester/browser.js"></script>
+  <script src="http://172.19.6.71:91/config/general.js"></script>
+  <link rel="import" href="http://172.19.6.71:91/components/elements.html">
+  <link rel="import" href="http://172.19.6.71:91/components/schemes/bill-range-discounts.html">
+</head>
+<body>
+  <bill-range-discounts id="bsdDiscounts" behavior-data></bill-range-discounts>
+  <script>
+    suite('<bill-range-discounts>', function() {
+      test('defines the behaviorData', function() {
+        console.log(document.querySelector('#bsdDiscounts').getAttribute("behavior-data"));
+        assert.equal(document.querySelector('#bsdDiscounts').getAttribute("behavior-data")!==undefined);
+      });
+    });
+  </script>
+</body>
+</html>

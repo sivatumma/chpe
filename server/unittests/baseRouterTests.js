@@ -1,9 +1,18 @@
 var assert = require("assert");
-describe('Array', function() {
-  describe('#indexOf()', function () {
-    it('should return -1 when the value is not present', function () {
-      assert.equal(-1, [1,2,3].indexOf(5));
-      assert.equal(-1, [1,2,3].indexOf(0));
+
+var ws = require('../ws.js');
+
+describe('Dummy', function() {
+  describe('small check', function () {
+    it('should check if -1 == -1', function () {
+      assert.equal(-1, -1);
     });
   });
+});
+
+describe('test if ws is working', function(){
+	it("will check if the ws module is function for least", function(){
+		assert.equal(ws,require('../ws.js').Server);
+		// expect(ws).toBe(require('../ws.js').Server);
+	})
 });

@@ -7,8 +7,9 @@
             padding:0px;
             text-align: center;
             display: block;
-            margin: 10px 43px 10px 42px;
-            /*background: #fafafa;*/
+            /*margin: 10px 43px 10px 42px;*/
+            background: #f0f0f0;
+            padding:0px 30px;
             /*background: url('../../kb5.png');*/
         }
         .cards {
@@ -288,6 +289,7 @@
     </style>
     <template>
         <template is="dom-if" if="{{schemesExist}}">
+            
             <div id="gridView" role$="{{updateUser(userRole)}}">
                 <paper-material elevation="0" class="coupons-sec">
                      <template is="dom-repeat" items="{{couponsData}}" as="item">
@@ -556,16 +558,23 @@
           }
 
         });
+
+    function hideListView(){
+        document.querySelector("#gridView").hidden = false;
+        document.querySelector("#listView").hidden = true;
+        document.querySelector(".toggleListGrid").setAttribute("view","list");
+        app.toggleListGridIcon = "icons:view-list"; 
+    };
+
     window.onresize = function(){
+        if(document.querySelector("#gridView").hidden){
+            hideListView();
+        }
         if(window.innerWidth>=768 && window.innerWidth<=979){
-           document.querySelector("#gridView").hidden = false;
-           document.querySelector(".toggleListGrid").setAttribute("view","list");
+            hideListView();
         }
         if(window.innerWidth>=320 && window.innerWidth<=640){
-           document.querySelector("#gridView").hidden = false;
-           if(document.querySelector(".toggleListGrid")){
-               document.querySelector(".toggleListGrid").setAttribute("view","list");
-           }
+            hideListView();
         }
     };
     </script>

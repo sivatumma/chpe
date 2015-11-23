@@ -163,23 +163,31 @@ function suggestDiscounts(req, res) {
       })
     })
   })
-}
+};
 
 function getPreviewData(req, res) {
-  var queryreq = req.url.split('?');
-  var query = q2m(queryreq[1]);
-
-  var u1 = mongoose.model('order').find(query.criteria);
+  var finalData = {};
+  var u1 = mongoose.model('order').find(queryBuilder.orderDetails(req.query.name));
+  var s1 = mongoose.model('scheme').find(queryBuilder.schemeDetails(req.query.name));
   u1.exec().then(function(data) {
-    res.send( chUtils.getPreviewData(data));
 
+    s1.exec().then(function(schemeData) {
+      if (data.length > 0) {
+        finalData = chUtils.setDefaultDate(schemeData, data);
+        res.send(JSON.stringify(finalData));
+      } else {
+        res.status(401).send({
+          status: 'Fail',
+          message: 'Schema Not Valid'
+        });
+      }
+    });
   });
-
-}
-function getOrverView(req,res)
+};
+function getOverView(req,res)
 {
 
-  var scheme = mongoose.model('scheme').find(queryBuilder.getOrverView());
+  var scheme = mongoose.model('scheme').find(queryBuilder.getOverView());
   var allScheme = mongoose.model('scheme').find({});
   var order = mongoose.model('order').find().distinct('userId');
   var finalData = {};
@@ -251,7 +259,9 @@ app.route('/').get(function(req, res) {
 app.route('/checkAuthPing').head(profileFetch);
 
 app.all('/ssoLogin', User.ssoLogin, function(req, res) {
-  console.log(req.session.user);
+  console.log("req.session.user = ",req.session.user);
+  res.header("user",JSON.stringify(req.session.user));
+  console.log(req.headers, res.header || "No header in res object");
   res.redirect("home.html");
 });
 
@@ -294,7 +304,7 @@ app.get('/ssoLogout', User.ssoLogout, function(req, res) {
 
 var User = mongoose.model('User');
 app.get('/pricingengine/previewData', getPreviewData);
-app.get('/pricingengine/overview',getOrverView);
+app.get('/pricingengine/overview',getOverView);
 app.post('/pricingengine/schemeAppliedSuccessfully', schemeApplied);
 app.post('/pricingengine/suggestDiscounts', suggestDiscounts);
 app.all('/mdb/update/:modelName', updateModels);

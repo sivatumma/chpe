@@ -85,6 +85,10 @@
             margin: 0px;
             /*background: #4fc3f7;*/
         }
+        .couponLifeLable{
+            padding: 0px 10px;
+            line-height:36px;
+        }
         
     </style>
     <template>
@@ -102,9 +106,13 @@
                         <div class="col-8">
                         <paper-card elevation="5" class="coupon-extend-card">
                         <div class="card-content margin0">
-                            <basic-scheme id="basicScheme" metadata="{{schemeObj.metadata}}"
+                            <basic-scheme id="basicScheme" coupon-only="true" metadata="{{schemeObj.metadata}}"
                             behavior="{{schemeObj.behavior}}"  start-date-modal="couponStartDate" end-date-modal="couponEndDate" scheme-starts="couponStart" scheme-ends="couponEnds" start-date-type="couponStart" end-date-type="couponEnds" sd-dp="stcDp" sd-tp="stcTp" ed-dp="eDcDp" ed-tp="eDcTp" flat-id="basicFlatInCoupon" percentage-id="basicPerecentageInCoupon" discount-value="{{defaultDiscount}}" >
                             </basic-scheme>
+                            <div class="col-12 margin0" style="padding-bottom:10px;">
+                              <coupon-type id="selectCouponType" metadata="{{schemeObj.metadata}}">
+                              </coupon-type>
+                            </div>
                          </div>
                         <div class="card-actions col-12" style="padding:0px;margin:0px;">
                           <div class="col-11 margin0">&nbsp;</div>
@@ -126,7 +134,7 @@
                         <coupon-src-category id="srcCatCoupon" 
                                 behavior-data="{{schemeObj.behavior}}" 
                                 metadata="{{schemeObj.metadata}}"></coupon-src-category>
-                         <div class="col-6">
+                         <div class="col-12">
                             <div class="col-12" style="margin:10px 0px 0px 0px;font-weight:bold;">
                                     <label style="margin-left:10px;">Locations :</label>
                                 </div>
@@ -139,10 +147,7 @@
                                     </multi-value-suggestbox>
                                 </div>
                             </div>
-                            <div class="col-6">
-                              <coupon-type id="selectCouponType" metadata="{{schemeObj.metadata}}">
-                              </coupon-type>
-                            </div>
+                            
                         </div>
                          <div class="card-actions col-12 lastStepActions">
                             <div class="arrows col-1 margin0">
@@ -279,6 +284,8 @@
             createScheme: function() {
                 this.formData = document.getElementById('coupon-form').serialize();
                 this.schemeObj.metadata.type = "COUPON";
+                this.schemeObj.metadata.createdBy = app.userInfo.username;
+                
                 if(chUtils.isEmpty(this.schemeObj.behavior.startDate)===false){
                     this.schemeObj.behavior.startDate = chUtils.toIsoString(this.schemeObj.behavior.startDate);
                 }else if(chUtils.isEmpty(this.schemeObj.behavior.endDate)===false){
@@ -312,9 +319,9 @@
                     console.log("Received response: " + JSON.stringify(event.detail.response));
                     var toast = document.querySelector("#schemeSuccErrMessageToast");
                     if(this.schemeMethod=="POST"){
-                        toast.text = this.schemeObj.metadata.type + " created successfully!...";
+                        toast.text = this.schemeObj.metadata.type + " created successfully !...";
                     }else{
-                        toast.text = this.schemeObj.metadata.type + " updated successfully!...";
+                        toast.text = this.schemeObj.metadata.type + " updated successfully !...";
                     }
                     toast.show();
                 } else {

@@ -18,7 +18,9 @@
     "platinum-elements": "PolymerElements/platinum-elements#1.0.1",
     "more-routing": "https://github.com/PolymerLabs/more-routing.git",
     "lodash": "https://github.com/lodash/lodash.git",
-    "google-chart": "https://github.com/GoogleWebComponents/google-chart.git#~1.0.3"
+    "google-chart": "https://github.com/GoogleWebComponents/google-chart.git#~1.0.3",
+    "web-component-tester": "~3.4.0",
+    "paper-badge": "https://github.com/PolymerElements/paper-badge.git#~1.0.4"
   },
   "devDependencies": {
     "web-component-tester": "*",
