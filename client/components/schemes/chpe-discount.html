@@ -17,7 +17,7 @@
         background: #f4f4f4;
         border:1px solid #ccc;
     }
-    .active{
+    .btn-group [active]{
         color:#000 !important;
         background: lightgreen !important;
         box-shadow: none;
@@ -69,9 +69,9 @@
         <div class="col-6 margin-bottom15" metadata="{{metadata}}">
             <div class="discountBox"  id="discountToggle" layout horizontal>
                 <div class="btn-group">
-                    <paper-button  toggles disabled$="{{metadata.published}}"  class="discountButton noRightBorder active" 
+                    <paper-button  toggles disabled$="{{metadata.published}}"  class="discountButton noRightBorder" active$="{{isPercentage}}"
                     on-click="togleDiscount" type="%"  id="{{percentageId}}">%</paper-button>
-                    <paper-button  toggles disabled$="{{metadata.published}}"  type="FLAT" class="discountButton" on-click="togleDiscount"  id="{{flatId}}" >Flat</paper-button>
+                    <paper-button  toggles disabled$="{{metadata.published}}"  type="FLAT" class="discountButton" on-click="togleDiscount"  id="{{flatId}}"  active$="{{isFlat}}">Flat</paper-button>
                     </div>
                     <div class="discountInput col-6">
                         <paper-input name="flat" focused style="border:none;" no-label-float label="Discount" type="number"  maxlength="{{discountLength}}" max="{{discountLength}}" min="0"  required auto-validate pattern="{{discountPattern}}" 
@@ -103,6 +103,14 @@
                 metadata:{
                     type:Object,
                     notify:true
+                },
+                isPercentage:{
+                    type:Boolean,
+                    value:true
+                },
+                isFlat:{
+                    type:Boolean,
+                    value:false
                 }
         
             },
@@ -114,28 +122,31 @@
                 this.setDiscount(discountModal.discountType);
             },
             ready:function(){
-               
+               console.log(this.id);
             },
             listeners:{
               'discountToggle.onClick':'togleDiscount'
             },
             setDiscount:function(discountType){
+                this.isPercentage = this.isFlat = false;
                 this.flatId = this.flatId ? this.flatId : this.discountModal.flatId;
                 this.percentageId = this.percentageId ? this.percentageId : this.discountModal.percentageId;
 
                 //first removing all classes and setting clicked element to active
-                chUtils.removeClass(document.querySelector("#"+this.percentageId),"active");
-                chUtils.removeClass(document.querySelector("#"+this.flatId),"active");
+                // chUtils.removeClass(document.querySelector("#"+this.percentageId),"active");
+                // chUtils.removeClass(document.querySelector("#"+this.flatId),"active");
 
                 if (discountType == "%") {
+                    this.isPercentage = true;
                     this.discountModal.discountType = discountType; 
                    this.percentageId = this.percentageId ? this.percentageId : this.discountModal.percentageId;
 
                         this.discountModal.discountPattern = this.discountPattern =  "^([0-10])$";
                         this.discountModal.maxLength = this.discountLength = 10;
-                    chUtils.addClass(document.querySelector("#"+this.percentageId),"active");
+                    // chUtils.addClass(document.querySelector("#"+this.percentageId),"active");
 
                 } else if(discountType=="FLAT") {
+                    this.isFlat = true;
                     this.flatId = this.flatId ? this.flatId : this.discountModal.flatId;
                     console.log(discountType,this.flatId);
                     this.discountModal.discountType = discountType; 
@@ -143,7 +154,7 @@
 
                         this.discountModal.discountPattern = this.discountPattern =  "^([0-999])$";
                         this.discountModal.maxLength = this.discountLength = 999;
-                        chUtils.addClass(document.querySelector("#"+this.flatId),"active");
+                        // chUtils.addClass(document.querySelector("#"+this.flatId),"active");
                 }
 
             },
