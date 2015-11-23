@@ -99,10 +99,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    * We should run all these methods and on page load to show path related palets on below of main toolbar
    */
   app.setScheme();
-  app.currentPage;
   app.addonTitle    =  "Create Addon";
   app.couponTitle   =  "Create Coupon";
   app.giftCardTitle =  "Create Gift Card";
+
+
   app.getTitle = function(event){
     this.getCurrentPage(event.currentTarget.getAttribute('route'));
     app.setScheme();
@@ -115,6 +116,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.giftCardTitle =  "Create Gift Card";
 
   };
+
 
   /**
     * This method used to show the current plaen name
@@ -141,6 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        break;
     }
   };
+
 
  //setting current Palet
  app.currentPalet = function(currentPage){

@@ -630,6 +630,62 @@ paper-menu paper-item .card-as-thumbnail img{
   .btn-group.coupon-type > paper-button.coupon-type{
     width: 70px;
    }
+       /*preview scheme*/
+   .previewScheme{
+    width: 100% !important;
+    padding: 5px !important;
+    margin: 0px  !important;
+   }
+   .cards.preview-scheme{
+    max-width: 100%;
+   }
+    .preview-scheme-name{
+      font-size: 14px;
+    }
+    .section.preview-scheme h1.preview-scheme{
+      font-size: 14px;
+    }
+    .info.preview-scheme{
+      font-size: 14px;
+    }
+    .graphContainer  h3{
+      font-size: 12px;
+    }
+    .discRevenues{
+      float: left;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+   .graphContainer .col-5,.previewScheme .col-6 {
+      float: left;
+      width: 100% !important;
+    }
+    .discRevenues{
+      float: left;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .descr-sec{
+      font-size: 12px;
+      float:left;
+      width: 100%;
+
+    }
+    .previewScheme .badge{
+      width: 80px;
+      height: 80px;
+    }
+    .previewScheme .badge h1{
+        width: 80px !important;
+        height: 20px !important;
+        margin-top: 10px !important;
+      }
+    .previewScheme h3{
+      font-size: 14px !important;
+    }
+    .previewScheme ul li{
+      font-size: 12px;
+    }
 }
 @media (min-width:768px) and (max-width: 979px){
     #listView.schemes-as-cards,.toggleListGrid{
@@ -686,6 +742,15 @@ paper-menu paper-item .card-as-thumbnail img{
         left: 20% !important;
     }
 
+    /*preview scheme*/
+   .previewScheme{
+    width: 100% !important;
+    padding: 5px !important;
+    margin: 0px  !important;
+   }
+   .cards.preview-scheme{
+    max-width: 100%;
+   }
     .preview-scheme-name{
       font-size: 14px;
     }
@@ -703,7 +768,34 @@ paper-menu paper-item .card-as-thumbnail img{
       width: 100%;
       margin-bottom: 10px;
     }
+   .graphContainer .col-5,.previewScheme .col-6 {
+      float: left;
+      width: 100% !important;
+    }
+    .discRevenues{
+      float: left;
+      width: 100%;
+      margin-bottom: 10px;
+    }
     .descr-sec{
+      font-size: 12px;
+      float:left;
+      width: 100%;
+
+    }
+    .previewScheme .badge{
+      width: 80px;
+      height: 80px;
+    }
+    .previewScheme .badge h1{
+        width: 80px !important;
+        height: 20px !important;
+        margin-top: 10px !important;
+      }
+    .previewScheme h3{
+      font-size: 14px !important;
+    }
+    .previewScheme ul li{
       font-size: 12px;
     }
 
@@ -762,7 +854,16 @@ paper-menu paper-item .card-as-thumbnail img{
      .paper-date-picker-dialog{
         height:540px !important;
       }
-      .preview-scheme-name{
+    /*preview scheme*/
+   .previewScheme{
+    width: 100% !important;
+    padding: 5px !important;
+    margin: 0px  !important;
+   }
+   .cards.preview-scheme{
+    max-width: 100%;
+   }
+    .preview-scheme-name{
       font-size: 14px;
     }
     .section.preview-scheme h1.preview-scheme{
@@ -779,14 +880,36 @@ paper-menu paper-item .card-as-thumbnail img{
       width: 100%;
       margin-bottom: 10px;
     }
+   .graphContainer .col-5,.previewScheme .col-6 {
+      float: left;
+      width: 100% !important;
+    }
+    .discRevenues{
+      float: left;
+      width: 100%;
+      margin-bottom: 10px;
+    }
     .descr-sec{
       font-size: 12px;
+      float:left;
+      width: 100%;
+
     }
-    .previewScheme{
-      width: 100% !important;
-      padding: 5px;
-      margin: 0px  !important;
-     }
+    .previewScheme .badge{
+      width: 80px;
+      height: 80px;
+    }
+    .previewScheme .badge h1{
+        width: 80px !important;
+        height: 20px !important;
+        margin-top: 10px !important;
+      }
+    .previewScheme h3{
+      font-size: 14px !important;
+    }
+    .previewScheme ul li{
+      font-size: 12px;
+    }
 
   }
 

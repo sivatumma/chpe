@@ -23,7 +23,7 @@
         .previewScheme{
         	min-height: 200px;
         	display: block;
-        	width: 92%;
+        	/*width: 92%;*/
         	background:#f0f0f0;
         	padding:10px 20px;
 
@@ -75,6 +75,8 @@
 	    }
 	    .descr-sec{
 	    	border-bottom: 1px solid #ccc;
+	    	word-wrap:break-word;
+
 	    }
 	    .descr-sec:last-child{
 	    	/*border-right: 1px solid #ccc;*/
@@ -90,6 +92,9 @@
 	    	line-height: 16px;
 	    	padding: 5px 0px;
 	    	list-style-type: square;
+	    }
+	    .descr-sec ul li ul{
+	    	padding: 0px 15px;
 	    }
 	    .fullDescription{
 	    	padding: 10px 20px;
@@ -336,7 +341,7 @@
 						<span>Discounts</span>
 					</div> -->
 					<paper-card elevation="2">
-					<img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&chd=t:10,15,5,0,20,50,60,45,80,90,70,68|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chdl=Revenues|Discounts&chxt=x,y"/>
+					<img src="https://chart.googleapis.com/chart?cht=lc&chs=480x250&chd=t:10,15,5,0,20,50,60,45,80,90,70,68|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chdl=Revenues|Discounts&chxt=x,y"/>
 						<!-- <img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&
 						chxt=x,y&chxl=0:|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|1:|0|10|20|30|40|50|60|70|80|90|120&chy:10,20,20,65,80,70,40,90,110,20|45&chd=t:10,20,40,15,80,60,80,90,85,45,33,65"/> -->
 					</paper-card>
@@ -355,7 +360,7 @@
 						<span>Discounts</span>
 					</div> -->
 					<paper-card elevation="2">
-						<img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&chd=t:0,0,50,0,10,0,0,0,500,0,500,10&chco=FF0000&chxt=x,y&chdl=Customers"/>
+						<img src="https://chart.googleapis.com/chart?cht=lc&chs=480x250&chd=t:0,0,50,0,10,0,0,0,500,0,500,10&chco=FF0000&chxt=x,y&chdl=Customers"/>
 					</paper-card>
 					</div>
 
@@ -395,7 +400,7 @@
 					this.config = generalConfig();
 					app.previewSchemeName = 'Preview Scheme - '+schemeName;
                 this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
-                this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=MYAddon'; 
+                //this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=ASC'; 
                 this.$.previewSchemeAjax.headers = {'API_KEY':this.config.urls.API_KEY};
                 this.$.previewSchemeAjax.generateRequest();
 				}
@@ -432,7 +437,8 @@
 				}else{
 					return 0;
 				}	
-			}
+			},
+
 
 		});
 	</script>
