@@ -124,7 +124,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     * Exp Res : if we pass '/' , it will show homepage palet
     */
   app.showPalet = function(paletName){
-    app.isHome = app.isCoupon = app.isAddon =  app.isGiftCard= app.isPreviewScheme = false; 
+    app.isHome = app.isCoupon = app.isAddon =  app.isGiftCard = app.isPreviewScheme = false; 
    switch(paletName){
       case "/":
         app.isHome = true;
@@ -159,6 +159,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     if(name===undefined){
       this.currentPage = location.hash.split("!")[1];
       this.currentPalet(this.currentPage); 
+      console.log(app.isPreviewScheme);
     }else{
       this.currentPage = MoreRouting.getRouteByName(name).path;
       this.currentPalet(this.currentPage); 
