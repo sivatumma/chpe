@@ -40,8 +40,8 @@ function schemeBase(scheme){    //init metadata as per schema
             discountPattern:"^([0-10])$",
         }],
         cumulativeAmountPoints: [{
-            amount: "",
-            points: ""
+            amount: 0,
+            points: 100
         }],
         doctorLevelDiscounts: [
             {type:"user",discount:0,discountType:"%",maxLength:9,discountPattern:"^([0-10])$"},
@@ -53,8 +53,8 @@ function schemeBase(scheme){    //init metadata as per schema
         }],
         billValueDiscounts: [{
             billRange: {
-                from: "",
-                to: ""
+                from: 0,
+                to: 0
             },
             discount: 0,
             discountType: "%",
