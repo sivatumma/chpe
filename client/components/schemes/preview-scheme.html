@@ -400,7 +400,7 @@
 					this.config = generalConfig();
 					app.previewSchemeName = 'Preview Scheme - '+schemeName;
                 this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
-                //this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=ASC'; 
+                this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=ASC'; 
                 this.$.previewSchemeAjax.headers = {'API_KEY':this.config.urls.API_KEY};
                 this.$.previewSchemeAjax.generateRequest();
 				}
