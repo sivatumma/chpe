@@ -99,10 +99,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    * We should run all these methods and on page load to show path related palets on below of main toolbar
    */
   app.setScheme();
-  app.currentPage;
   app.addonTitle    =  "Create Addon";
   app.couponTitle   =  "Create Coupon";
   app.giftCardTitle =  "Create Gift Card";
+
+
   app.getTitle = function(event){
     this.getCurrentPage(event.currentTarget.getAttribute('route'));
     app.setScheme();
@@ -116,13 +117,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   };
 
+
   /**
     * This method used to show the current plaen name
     * @params palentName
     * Exp Res : if we pass '/' , it will show homepage palet
     */
   app.showPalet = function(paletName){
-    app.isHome = app.isCoupon = app.isAddon =  app.isGiftCard= app.isPreviewScheme = false; 
+    app.isHome = app.isCoupon = app.isAddon =  app.isGiftCard = app.isPreviewScheme = false; 
    switch(paletName){
       case "/":
         app.isHome = true;
@@ -142,6 +144,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
 
+
  //setting current Palet
  app.currentPalet = function(currentPage){
     if(currentPage!==undefined){
@@ -156,6 +159,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     if(name===undefined){
       this.currentPage = location.hash.split("!")[1];
       this.currentPalet(this.currentPage); 
+      console.log(app.isPreviewScheme);
     }else{
       this.currentPage = MoreRouting.getRouteByName(name).path;
       this.currentPalet(this.currentPage); 

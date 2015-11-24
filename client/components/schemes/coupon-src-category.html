@@ -43,7 +43,7 @@
                             </multi-value-suggestbox>
                 </div>
                 <div class="col-4">
-                <chpe-discount id="srcDiscount" metadata="{{metadata}}" discount-modal="{{src}}"  discount-type-id="srcDiscountId" percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
+                <chpe-discount id="{{dynamicDid(index)}}" metadata="{{metadata}}" discount-modal="{{src}}"  discount-type-id="srcDiscountId" percentage-id="{{getPercentId(index)}}" flat-id="{{getFlatId(index)}}">
                 </chpe-discount>
                 </div>
                 <div class="col-2">
@@ -76,7 +76,9 @@
                 }
             },
             ready:function(){
-                   // console.log(this.behavior.serviceRateCategoryDiscounts);
+            },
+            dynamicDid:function(index){
+                return "srcDiscount"+index;
             },
             listeners:{
                 "onClick":"addSrc",
