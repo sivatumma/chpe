@@ -159,7 +159,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     if(name===undefined){
       this.currentPage = location.hash.split("!")[1];
       this.currentPalet(this.currentPage); 
-      console.log(app.isPreviewScheme);
     }else{
       this.currentPage = MoreRouting.getRouteByName(name).path;
       this.currentPalet(this.currentPage); 

@@ -174,6 +174,18 @@
 	    .green {
 	      --paper-badge-background: var(--paper-green-300);
 	    }
+	    .noOrdersDiv{
+	    	background: #fff;
+	    	font-weight: bold;
+	    	font-size: 18px;
+	    }
+	    .noOrdersDiv p{
+	    	margin: 0px auto;
+	    }
+	    .descr-sec p{
+	    	margin:0px;
+	    	font-style: italic;
+	    }
 	</style>
 	<template>
 		<more-route context name="previewScheme" params="{{params}}"></more-route>
@@ -190,14 +202,14 @@
 				    <div class="flex2child section">
 				    	<div class="badge" align="center">
 						<h1 class="color-light-blue">Locations</h1>
-				    	<span class="info">{{orderData.orderLocations}}</span>
+				    	<span class="info">{{qDisplay(orderData.orderLocations)}}</span>
 				    	</div>				    		
 				    </div>
 				    <div class="flex2child section">
 				    	
 				    	<div class="badge" align="center">
 				    		<h1 class="color-blue">Clients</h1>
-					    	<span class="info">{{orderData.uniqueUsers}}</span>
+					    	<span class="info">{{qDisplay(orderData.uniqueUsers)}}</span>
 				    	</div>
 				    </div>
 				    <!-- <div class="flex2child section">
@@ -229,7 +241,7 @@
 								<li><span class="boldText">Starts at:</span><span>{{formatDate(previewData.behavior.startDate)}}</span></li>
 								<li><span class="boldText">Ends at:</span><span>{{formatDate(previewData.behavior.endDate)}}</span></li>
 								<li><span class="boldText">Available in:</span><span>{{splitArrtoString(previewData.behavior.locationOfServices)}}</span></li>
-								<li><span class="boldText">Default discount:</span><span>{{previewData.behavior.discount}}</span><span>{{previewData.behavior.discountType}}</span></li>
+								<li><span class="boldText">Default discount:</span><span>{{previewData.behavior.discount}}</span> <span>{{previewData.behavior.discountType}}</span></li>
 								<li><span class="boldText">Maximum Usages:</span><span>{{previewData.behavior.maximumUsages}}</span>
 								</li>
 							</ul>
@@ -243,11 +255,10 @@
 								<h3>Combinational Discounts</h3>
 								<ul>
 									<li><span class="text-bold">Service Rate Category Discounts</span>
-										<!-- <template  is="dom-if" if="{{previewData.behavior.serviceRateCategoryDiscounts.services.length=0}}">
-											<span>None for this criteria</span>
+										<template  is="dom-if" if="{{noSrcDiscounts}}">
+											<p class="italic">None for this criteria</p>
 										</template>
-										<template is="dom-if" if="{{previewData.behavior.serviceRateCategoryDiscounts.services.length!=0}}"> -->
-											<ul>
+											<ul hidden$="{{noSrcDiscounts}}">
 												<template is="dom-repeat" items="{{previewData.behavior.serviceRateCategoryDiscounts}}">
 													<li><span>{{item.discount}}</span>&nbsp;<span>{{item.discountType}}</span> for <span>{{splitArrtoString(item.services)}}</span></li>
 												</template>
@@ -255,7 +266,10 @@
 										<!-- </template> -->
 									</li>	
 									<li><span class="text-bold">Service Combination Discounts</span>
-										<ul>
+										<template  is="dom-if" if="{{noSlcDiscounts}}">
+											<p class="italic">None for this criteria</p>
+										</template>
+										<ul hidden$="{{noSlcDiscounts}}">
 											<template is="dom-repeat" items="{{previewData.behavior.serviceLevelDiscounts}}">
 												<li><span>{{item.discount}}</span>&nbsp;
 													<span>{{item.discountType}}</span> 
@@ -264,7 +278,10 @@
 										</ul>
 									</li>
 									<li><span class="text-bold">Doctor Usage Discounts</span>
-										<ul>
+										<template  is="dom-if" if="{{noDoctorUsageDiscounts}}">
+											<p class="italic">None for this criteria</p>
+										</template>
+										<ul hidden$="{{noDoctorUsageDiscounts}}">
 											<template is="dom-repeat" items="{{previewData.behavior.doctorLevelDiscounts}}">
 												<li><span>{{item.discount}}</span>&nbsp;
 													<span>{{item.discountType}}</span> 
@@ -279,15 +296,14 @@
 					<div class="col-4 descr-sec" >
 						<paper-card elevation="0" class="cards">
 							<div class="card-content">
-								<h3>Combinational Discounts</h3>
-								<ul>
+								<h3>Cumulative Discounts</h3>
+									<ul>
 									<li>
 										<span class="text-bold">Bill Slab Behaviour</span>
-										<!-- <template  is="dom-if" if="{{previewData.behavior.serviceRateCategoryDiscounts.services.length=0}}">
-											<span>None for this criteria</span>
+										<template  is="dom-if" if="{{noBillSlabs}}">
+											<p class="italic">None for this criteria</p>
 										</template>
-										<template is="dom-if" if="{{previewData.behavior.serviceRateCategoryDiscounts.services.length!=0}}"> -->
-											<ul>
+										<ul hidden$="{{noBillSlabs}}">
 												<template is="dom-repeat" 
 												items="{{previewData.behavior.billValueDiscounts}}">
 													<li>
@@ -298,10 +314,12 @@
 													</li>
 												</template>
 											</ul>
-										<!-- </template> -->
 									</li>	
 									<li><span class="text-bold">Mode of Payment Discounts</span>
-										<ul>
+										<template  is="dom-if" if="{{noMop}}">
+											<p class="italic">None for this criteria</p>
+										</template>
+										<ul hidden$="{{noMop}}">
 											<template is="dom-repeat" items="{{previewData.behavior.modeOfPaymentDiscounts}}">
 												<li><span>{{item.discount}}</span>
 													<span>{{item.discountType}}</span> If 
@@ -311,9 +329,12 @@
 										</ul>
 									</li>
 									<li><span class="text-bold">Points Accumulation Behaviour</span>
-										<ul>
-											<template is="dom-repeat" items="{{previewData.behavior.cumulativeAmountPoints}}">
-												<li><span>{{item.points}}</span> Points gets credited when account reaches ₹ <span>{{item.amount}}</span> in total value.</li>
+										<template is="dom-if" if="{{noAccumulations}}">
+											<p class="italic">None for this criteria</p>
+										</template>
+										<ul hidden$="{{noAccumulations}}">
+											<template is="dom-repeat" items="{{previewData.behavior.cumulativeAmountPoints}}" >
+												<li><span>{{defaultValue(item.points)}}</span> Points gets credited when account reaches ₹ <span>{{qDisplay(item.amount)}}</span> in total value.</li>
 											</template>
 										</ul>
 									</li>
@@ -327,7 +348,13 @@
 						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
 					</div>
 				</div> -->
-				<div class="graphContainer container">
+				<template is="dom-if" if="{{noOrders}}">
+					<div class="graphContainer noOrdersDiv container">
+						<p>No much data to draw graph</p>
+					</div>
+				</template>
+
+				<div class="graphContainer container" hidden$="{{noOrders}}">
 					<div class="col-5">
 					<div class="col-6 discRevenues" style="margin-bottom:10px;">
 						<h3 class="margin0 padding0">Discounts & Revenues</h3>
@@ -351,16 +378,8 @@
 					<div class="col-6 discRevenues" style="margin-bottom:10px;">
 						<h3 class="margin0 padding0">Unique Customers</h3>
 					</div>
-					<!-- <div class="col-3 discRevenues">
-						<span class="graphIcon red"></span>						
-						<span>Customers</span>
-					</div>
-					<div class="col-3 discRevenues">
-						<span class="graphIcon green"></span>
-						<span>Discounts</span>
-					</div> -->
 					<paper-card elevation="2">
-						<img src="https://chart.googleapis.com/chart?cht=lc&chs=480x250&chd=t:0,0,50,0,10,0,0,0,500,0,500,10&chco=FF0000&chxt=x,y&chdl=Customers"/>
+						<img src="{{uniqueUsersChartData}}"/>
 					</paper-card>
 					</div>
 
@@ -389,10 +408,48 @@
 				orderData:{
 					type:Object,
 					notify:true
+				},
+				discountRevenueChartData:{
+					type:String,
+					value:""
+				},
+				uniqueUsersChartData:{
+					type:String,
+					value:"https://chart.googleapis.com/chart?cht=lc&chs=480x250&chd=t:0,0,50,0,10,0,0,0,500,0,500,10&chco=FF0000&chxt=x,y&chdl=Customers"					
+				},
+				noOrders:{
+					type:Boolean,
+					value:false
+				},
+				noAccumulations:{
+					type:Boolean,
+					value:false
+				},
+				noMop:{
+					type:Boolean,
+					value:false
+				},
+				noSlcDiscounts:{
+					type:Boolean,
+					value:false
+				},
+				noSrcDiscounts:{
+					type:Boolean,
+					value:false
+				},
+				noBillSlabs:{
+					type:Boolean,
+					value:false
+				},
+				noDoctorUsageDiscounts:{
+					type:Boolean,
+					value:false
 				}
 			},
 			observers:[ 
-				'previewSchemeChanged(params.schemeName)'
+				'previewSchemeChanged(params.schemeName)',
+				'orderDataChanged(orderData)',
+				'previewDataChanged(previewData)'
 			],
 			previewSchemeChanged:function(schemeName){
 				if(schemeName!==undefined && schemeName.length>0){
@@ -400,14 +457,14 @@
 					this.config = generalConfig();
 					app.previewSchemeName = 'Preview Scheme - '+schemeName;
                 this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
-                this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=ASC'; 
+                //this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=ABCD'; 
                 this.$.previewSchemeAjax.headers = {'API_KEY':this.config.urls.API_KEY};
                 this.$.previewSchemeAjax.generateRequest();
 				}
 			},
 			handleResponse:function(event){
 				if(chUtils.isEmpty(event.detail.response)===false){
-					console.log(event.detail.response);
+					//console.log(event.detail.response);
 					this.previewData = event.detail.response.schemeDetails[0];
 					this.orderData = event.detail.response.orderDetails;
 				}
@@ -417,11 +474,12 @@
 				//this.$.discountRevenueChart.drawChart();
 			},
 			splitArrtoString:function(data){
-				if(data!==undefined){
+				if(data!==undefined && data.length>0){
+					console.log(data);
 					var arr = _.pluck(data,"name");
 					return arr;
 				}else{
-					return "No Data";
+					return "?";
 				}
 			},
 			formatDate:function(startEndDate){
@@ -438,7 +496,52 @@
 					return 0;
 				}	
 			},
+			qDisplay:function(x) {
+				if(typeof x == "string"){
+					return x.trim();
+				}else if(typeof x == "number"){
+					return x;
+				}else if(typeof x == 'undefined'){
+					return "?";
+				}
+			},
+			orderDataChanged:function(orderData){
+				if(Object.keys(orderData).length==0){
+					this.noOrders = true;
 
+				}
+			},
+			defaultValue :function(x){
+				if(x!==undefined || x!=='null'){
+					return 100;
+				}else{
+					return x;
+				}
+			},
+			previewDataChanged:function(previewData){
+				var behavior = previewData.behavior;
+				if(behavior.doctorLevelDiscounts!=undefined){
+					if(behavior.doctorLevelDiscounts[0].discount == 0 && behavior.doctorLevelDiscounts[1].discount==0){
+						this.noDoctorUsageDiscounts = true;
+					}
+				}
+				if(behavior.serviceLevelDiscounts.length>0 && behavior.serviceLevelDiscounts[0].services.length==0){
+						this.noSlcDiscounts = true;
+				}
+				if(behavior.serviceRateCategoryDiscounts.length>0 && behavior.serviceRateCategoryDiscounts[0].services.length==0){
+						this.noSrcDiscounts = true;
+				}
+				//console.log(behavior.billValueDiscounts[0].billRange.from);
+				if(behavior.billValueDiscounts[0].billRange.from==0 || 
+					behavior.billValueDiscounts[0].billRange.from == null){
+						this.noBillSlabs = true;
+				}
+				if(behavior.modeOfPaymentDiscounts[0].discount == 0 
+					&& behavior.modeOfPaymentDiscounts[1].discount==0){
+						this.noMop = true;
+				}
+				
+			}
 
 		});
 	</script>
