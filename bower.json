@@ -20,7 +20,8 @@
     "lodash": "https://github.com/lodash/lodash.git",
     "google-chart": "https://github.com/GoogleWebComponents/google-chart.git#~1.0.3",
     "web-component-tester": "~3.4.0",
-    "paper-badge": "https://github.com/PolymerElements/paper-badge.git#~1.0.4"
+    "paper-badge": "https://github.com/PolymerElements/paper-badge.git#~1.0.4",
+    "iron-autogrow-textarea": "https://github.com/PolymerElements/iron-autogrow-textarea.git#~1.0.10"
   },
   "devDependencies": {
     "web-component-tester": "*",
