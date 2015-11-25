@@ -3,6 +3,8 @@ dist
 bower_components
 .tmp
 C:\\nppdf32Log\\debuglog.txt
+!client/external/paper-date-picker/*
+!client/external/paper-time-picker/*
 client/external
 x.js
 .idea/
@@ -13,9 +15,5 @@ client/build.html
 tmp_*.js
 *.*~
 *.out
-<<<<<<< HEAD
-chena.js
-=======
 chena.js
 javaapi
->>>>>>> b012b284db97a4cc369935cd70b9b5617e5e6ca8
