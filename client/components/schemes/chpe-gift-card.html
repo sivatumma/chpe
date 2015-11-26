@@ -290,7 +290,7 @@
                     this.schemeObj.behavior._locations = _.pluck(this.schemeObj.behavior.locationOfServices,"name");
                 }
                 if(chUtils.isEmpty(this.schemeObj.metadata.toIds)===false){
-                   this.schemeObj.metadata.toIds = _.pluck(this.schemeObj.metadata.toIds,"name");
+                   this.schemeObj.metadata._toIds = _.pluck(this.schemeObj.metadata.toIds,"name");
                 }
 
                 console.log(this.schemeObj);
