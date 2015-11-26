@@ -35,7 +35,7 @@
           <template is="dom-repeat" name="multisuggest" items="{{behaviorData.serviceRateCategoryDiscounts}}" as="src">
             <div class="col-12 singleRow">
                 <div class="col-6">
-                        <multi-value-suggestbox id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceRateCategories/"
+                        <multi-value-suggestbox id="multi_suggest" newInput="" server-url="{{srcMemcacheURL}}"
                                     options='{
                                         "allow_space": false,
                                         "allow_nonmatching": false
@@ -73,10 +73,15 @@
                 metadata:{
                     type:Object,
                     notify:true
+                },
+                srcMemcacheURL:{
+                    type:String,
+                    notify:true
                 }
             },
             ready:function(){
-                   // console.log(this.behavior.serviceRateCategoryDiscounts);
+                this.config = generalConfig() || {};
+                this.srcMemcacheURL = this.config.urls.memcache.serviceRateCategories;
             },
             listeners:{
                 "onClick":"addSrc",
@@ -92,7 +97,7 @@
             },
             //add or remove src categories
             addSrc :function(e){
-                this.push('behaviorData.serviceRateCategoryDiscounts', {discount:0,discountType:"%",maxLength:9,services:[],discountPattern:"^([0-10])$"});
+                this.push('behaviorData.serviceRateCategoryDiscounts', {discount:0,discountType:"%",maxLength:9,services:[],discountPattern:"^[0-9]{1,10}$"});
             },
             getPercentId:function(index){
                 return "srcPercentage_"+index;

@@ -111,7 +111,7 @@
     <template>
         <div id="search" show$="{{show}}" on-click="toggleSearch">
             <paper-icon-button icon="search"></paper-icon-button>
-            <input is="iron-input" list="mylist" bind-value="{{searchInput}}" type="search" id="input" on-keyup="onKeyPress" autocomplete="off">
+            <input is="iron-input" list="mylist" bind-value="{{searchInput}}" type="search" id="input" on-keyup="onKeyPress" autocomplete="off" on-blur="clearSearch">
             <!-- <ul display$="{{list}}">
                 <template is="dom-repeat" items="{{suggestions}}" as="option">
                     <li on-tap="pickItem">{{option}}</li>
@@ -129,7 +129,6 @@
     <script>
     Polymer({
         is: 'search-bar',
-
         properties: {
             show: {
                 type: Boolean,
@@ -153,9 +152,15 @@
             this.serachObj = [];
             this.config = generalConfig() || {};
         },
+        listeners: {
+          keyup: 'hotkeys'
+        },
         observers:[
             'searchInputChanged(searchInput)'
         ],
+        clearSearch: function() {
+           this.show  = false;
+        },
         searchInputChanged:function(input){
             var inputExisist  = _.contains(this.suggestions,input);
             if(input.length>0 && !inputExisist){
@@ -199,7 +204,12 @@
                 this.$.input.focus();
             });
         },
-
+        hotkeys: function(e) {
+          // ESC
+          if (e.keyCode === 27 && Polymer.dom(e).rootTarget === this.$.input) {
+            this.show = false;
+          }
+        },
         onKeyPress: function(e) {
             if (e.keyCode == 13) { // Enter
                 var q = this.searchInput;
