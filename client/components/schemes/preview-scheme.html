@@ -368,7 +368,7 @@
 						<span>Discounts</span>
 					</div> -->
 					<paper-card elevation="2">
-					<img src="https://chart.googleapis.com/chart?cht=lc&chs=480x250&chd=t:10,15,5,0,20,50,60,45,80,90,70,68|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chdl=Revenues|Discounts&chxt=x,y"/>
+					<img src="{{discountRevenueChartData}}"/>
 						<!-- <img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&
 						chxt=x,y&chxl=0:|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|1:|0|10|20|30|40|50|60|70|80|90|120&chy:10,20,20,65,80,70,40,90,110,20|45&chd=t:10,20,40,15,80,60,80,90,85,45,33,65"/> -->
 					</paper-card>
@@ -391,10 +391,6 @@
 	<script>
 		Polymer({
 			is:'preview-scheme',
-			ready:function(){
-				this.config = generalConfig() || {};
-				//app.previewSchemeName = "";
-			},
 			properties:{
 				previewData:{
 					type:Object,
@@ -411,11 +407,15 @@
 				},
 				discountRevenueChartData:{
 					type:String,
-					value:""
+					value:"chd=t:10,15,5,0,20,50,60,45,80,90,70,68|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chdl=Revenues|Discounts&chxt=x,y"
+				},
+				chartHost:{
+					type:String,
+					value:"https://chart.googleapis.com/chart?cht=lc&chs=480x250&"
 				},
 				uniqueUsersChartData:{
 					type:String,
-					value:"https://chart.googleapis.com/chart?cht=lc&chs=480x250&chd=t:0,0,50,0,10,0,0,0,500,0,500,10&chco=FF0000&chxt=x,y&chdl=Customers"					
+					value:"chd=t:10,50,40&chxt=x,y&chxl=0:|Oct|Nov|Dec&chdl=Customers"					
 				},
 				noOrders:{
 					type:Boolean,
@@ -446,6 +446,12 @@
 					value:false
 				}
 			},
+			ready:function(){
+				this.uniqueUsersChartData = this.chartHost+this.uniqueUsersChartData;
+				this.discountRevenueChartData = this.chartHost+this.discountRevenueChartData;
+				this.config = generalConfig() || {};
+				//app.previewSchemeName = "";
+			},
 			observers:[ 
 				'previewSchemeChanged(params.schemeName)',
 				'orderDataChanged(orderData)',
@@ -457,7 +463,7 @@
 					this.config = generalConfig();
 					app.previewSchemeName = 'Preview Scheme - '+schemeName;
                 this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
-                //this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=ABCD'; 
+                //this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=MYAddon'; 
                 this.$.previewSchemeAjax.headers = {'API_KEY':this.config.urls.API_KEY};
                 this.$.previewSchemeAjax.generateRequest();
 				}
@@ -465,17 +471,18 @@
 			handleResponse:function(event){
 				if(chUtils.isEmpty(event.detail.response)===false){
 					//console.log(event.detail.response);
-					this.previewData = event.detail.response.schemeDetails[0];
+					this.previewData = event.detail.response.schemeDetails;
 					this.orderData = event.detail.response.orderDetails;
 				}
 			},
 			handleError:function(event){
 				console.log(event);
-				//this.$.discountRevenueChart.drawChart();
+				this.noOrders = this.noDoctorUsageDiscounts = this.noMop = this.noAccumulations = true;
+				this.noSlcDiscounts = this.noBillSlabs = this.noSrcDiscounts = true;
 			},
 			splitArrtoString:function(data){
 				if(data!==undefined && data.length>0){
-					console.log(data);
+					//console.log(data);
 					var arr = _.pluck(data,"name");
 					return arr;
 				}else{
@@ -486,7 +493,7 @@
 				if(startEndDate!==undefined || startEndDate!=""){
 					return startEndDate.split("T")[0];
 				}else{
-					return "No Data";
+					return "?";
 				}
 			},
 			roundPrice:function(price){
@@ -508,7 +515,19 @@
 			orderDataChanged:function(orderData){
 				if(Object.keys(orderData).length==0){
 					this.noOrders = true;
+				}else{
+					this.uniqueUsersChartData = this.chartHost+'chd=t:'+( _.values(orderData.unique_customers))+
+						'&chxt=x,y&chxl=0:|'+(_.keys(orderData.unique_customers).join("|"));
 
+					var orders = orderData.revenues_and_discounts;
+
+					this.discountRevenueChartData = this.chartHost+'chd=t:'+(_.values(orders.revenues))+'|'+
+					(_.values(orders.discounts))+'&chco=FF0000,00FF00&chdl=Revenues|Discounts&chxt=x,y&chxl=0:|'+
+					(_.keys(orders.revenues).join("|"));
+
+						/*chd=t:10,15,5,0,20,50,60,45,80,90,70,68|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chdl=Revenues|Discounts&chxt=x,y*/
+					//this.uniqueUsersChartData = this.chartHost+()+();
+					console.log(orderData.revenues_and_discounts,this.discountRevenueChartData,this.uniqueUsersChartData);
 				}
 			},
 			defaultValue :function(x){
