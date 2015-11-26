@@ -186,6 +186,10 @@
                 isMultiple:{
                     type:String,
                     notify:true
+                },
+                serverUrl:{
+                    type:String,
+                    notify:true
                 }
             },
             // Fires when the "<multi-value-suggestbox>" has been fully prepared
@@ -211,7 +215,7 @@
             },
             addRemoveChips:function(ele){
                 if (ele.detail.newInput !== undefined) {
-                    this.$.namesAsChips.url=this.attributes.url.value+ele.detail.newInput;
+                    this.$.namesAsChips.url=this.serverUrl+ele.detail.newInput;
                     this.$.namesAsChips.method='GET';
                     this.$.namesAsChips.headers={'API_KEY':this.config.urls.memcache.API_KEY};
                     this.$.namesAsChips.generateRequest();

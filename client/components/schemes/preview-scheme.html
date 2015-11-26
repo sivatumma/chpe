@@ -1,14 +1,5 @@
 <script src="../../../lib/chUtils.js"></script>
 <script src="../../config/general.js"></script>
-<!--<script type="text/javascript"
-  src="https://www.google.com/jsapi?autoload={
-    'modules':[{
-      'name':'visualization',
-      'version':'1',
-      'packages':['corechart']
-    }]
-  }">
-</script>-->
 <dom-module id="preview-scheme">
 	<style type="text/css">
 		:host{
@@ -212,12 +203,6 @@
 					    	<span class="info">{{qDisplay(orderData.uniqueUsers)}}</span>
 				    	</div>
 				    </div>
-				    <!-- <div class="flex2child section">
-						<h1 class="color-pink">Cities</h1>
-				    	<div class="badge" align="center">
-				    	<p class="info">{{orderData.clients}}</p>
-				    	</div>	
-				    </div> -->
 				     <div class="flex2child section">
 				     	<div class="badge" align="center">
 						<h1 class="color-green">Revenue</h1>
@@ -343,11 +328,7 @@
 						</paper-card>
 					</div>
 				</div>
-				<!-- <div class="container description">
-					<div class="fullDescription">
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-					</div>
-				</div> -->
+
 				<template is="dom-if" if="{{noOrders}}">
 					<div class="graphContainer noOrdersDiv container">
 						<p>No much data to draw graph</p>
@@ -359,18 +340,8 @@
 					<div class="col-6 discRevenues" style="margin-bottom:10px;">
 						<h3 class="margin0 padding0">Discounts & Revenues</h3>
 					</div>
-					<!-- <div class="col-3 discRevenues">
-						<span class="graphIcon red"></span>						
-						<span>Revenues</span>
-					</div>
-					<div class="col-3 discRevenues">
-						<span class="graphIcon green"></span>
-						<span>Discounts</span>
-					</div> -->
 					<paper-card elevation="2">
 					<img src="{{discountRevenueChartData}}"/>
-						<!-- <img src="https://chart.googleapis.com/chart?cht=lc&chs=440x250&
-						chxt=x,y&chxl=0:|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|1:|0|10|20|30|40|50|60|70|80|90|120&chy:10,20,20,65,80,70,40,90,110,20|45&chd=t:10,20,40,15,80,60,80,90,85,45,33,65"/> -->
 					</paper-card>
 					</div>
 					<div class="col-1"></div>
@@ -525,8 +496,6 @@
 					(_.values(orders.discounts))+'&chco=FF0000,00FF00&chdl=Revenues|Discounts&chxt=x,y&chxl=0:|'+
 					(_.keys(orders.revenues).join("|"));
 
-						/*chd=t:10,15,5,0,20,50,60,45,80,90,70,68|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chdl=Revenues|Discounts&chxt=x,y*/
-					//this.uniqueUsersChartData = this.chartHost+()+();
 					console.log(orderData.revenues_and_discounts,this.discountRevenueChartData,this.uniqueUsersChartData);
 				}
 			},

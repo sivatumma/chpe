@@ -59,7 +59,7 @@
 	</style>
     <template>
      <section onclick="clickHandler(event)">
-     <paper-input name="{{dateType}}" class="date-time-picker-input"  no-label-float readonly="false" label="{{dateLabel}}"    on-focus="showDialog" id="{{dateTimeValue}}" 
+     <paper-input name="{{dateType}}" class="date-time-picker-input"  no-label-float readonly="true" label="{{dateLabel}}"    on-focus="showDialog" id="{{dateTimeValue}}" 
      	value="{{dateModalValue}}"  ></paper-input>
      	<paper-dialog modal id="{{dateModal}}"  class="size-position paper-date-picker-dialog padding0" with-backdrop>
 			  	<div class="datePicker margin0">
@@ -121,7 +121,7 @@
             		if(datestr){
 					    date = new Date(datestr);
             		}
-				 return  monthNames[date.getMonth()] + "-"+ ('0' + date.getDate()).slice(-2)+"-"+ date.getFullYear();
+					 return  monthNames[date.getMonth()] + "-"+ ('0' + date.getDate()).slice(-2)+"-"+ date.getFullYear();
 				};
             },
             listeners:{
@@ -140,7 +140,7 @@
             	console.log(document.querySelector('paper-date-picker'));
             },
             metadataChanged:function(metadata){
-
+            	//console.log(metadata);
             },
             setDateTime:function(){
             		this.pickedDate = this.formatDate(document.querySelector("#"+this.dateId).date);
@@ -156,6 +156,7 @@
             },
             showDialog:function(type){
             	var arr = ["couponStartDate","giftCardStartDate","addOnStartDate"];
+            	//console.log(this.metadata);
             	if(this.metadata.published && _.contains(arr,this.dateModal)){
             	}else{
 	            	document.querySelector("#"+this.dateModal).open();

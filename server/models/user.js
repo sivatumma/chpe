@@ -273,7 +273,7 @@ module.exports = function(mongoose) {
 
             // Start the request
             request(options, function(error, response, body) {
-                if (!error && response.statusCode == 202) {
+                if (!error && response.statusCode == 200) {
                     res.redirect(unescape(JSON.parse(body).url));
                 }else{
                     console.log(response.statusCode, " .. [400 or 500]");

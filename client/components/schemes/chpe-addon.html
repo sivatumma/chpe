@@ -126,7 +126,7 @@
                                             <label style="margin-left:10px;">Locations :</label>
                                         </div>
                                         <div class="col-10 margin0">
-                                            <multi-value-suggestbox is-multiple="multi" id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/" options='{
+                                            <multi-value-suggestbox is-multiple="multi" id="multi_suggest" newInput="" server-url="{{locationsMemcacheURL}}" options='{
                                                 "allow_space": false,
                                                 "allow_nonmatching": false}'selected-items="{{schemeObj.behavior.locationOfServices}}">
                                             </multi-value-suggestbox>
@@ -261,21 +261,6 @@
                         </paper-item>
                        
                     </paper-menu>
-                    <!-- <paper-card elevation="{{selected}}"  class="card-as-thumbnail active">
-                        <img src="../../assets/images/addon-thumb1.png"  />
-                    </paper-card>
-                
-                    <paper-card elevation="{{selected}}" class="card-as-thumbnail">
-                        <img src="../../assets/images/addon-thumb1.png"  />
-                    </paper-card>
-                
-                    <paper-card elevation="{{selected}}" class="card-as-thumbnail">
-                        <img  src="../../assets/images/addon-thumb1.png"  />
-                    </paper-card>
-                
-                    <paper-card elevation="{{selected}}" class="card-as-thumbnail">
-                        <img src="../../assets/images/addon-thumb1.png"  />
-                    </paper-card> -->
                 </div>
             </div>
         </paper-material>
@@ -323,7 +308,8 @@
                     value:false
                 },
                 locationsMemcacheURL:{
-                    type:String
+                    type:String,
+                    notify:true
                 },
                 userRole:{
                     type:String,
@@ -469,15 +455,20 @@
                 toast.show();
             },
             submitForm: function(event) {
-                this.schemeObj.metadata.published = event.currentTarget.getAttribute('status');
+                var status = event.currentTarget.getAttribute('status');
+                this.schemeObj.metadata.published  = (status=="false")?false:true;
                 document.getElementById('addon-form').submit();
             },
             resetSteps:function(event){
+               if(event.target.name.invalid){
                 this.currentStep = 0; 
-                this.formError = true; 
+               }else{
+                 this.currentStep = this.currentStep;
+               }
                 document.querySelector("#schemeSuccErrMessageToast").show();
                 var toast = document.querySelector("#schemeSuccErrMessageToast");
                 toast.text = "Please Recheck the form, you have missed the required fields some where...!";
+                this.schemeObj.metadata.published = false;
             }
         });
 
