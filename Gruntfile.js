@@ -16,7 +16,11 @@ module.exports = function(grunt) {
           "build.html":"client/home.html"
         },
       },
+    },
+    jshint: {
+      all: ['Gruntfile.js', 'client/**/*.js', 'test/**/*.js', 'client/**/*.html', 'test/**/*.html']
     }
+
 
   });
   // grunt.loadNpmTasks('grunt-contrib-jshint');

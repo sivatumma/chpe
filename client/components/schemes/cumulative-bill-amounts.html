@@ -74,18 +74,18 @@
                 "onClick":"addcap",
             },
             showDeleteByRow:function(row){
-                if(row==0){
+                if(row===0){
                     return true;
                 }else{
                     return false;
                 }
             },
             //add or remove src categories
-            addcap :function(e){
+            addcap :function(){
                 this.push('behaviorData.cumulativeAmountPoints', {amount:0, points: 100});
             },
             deletecap:function(e){
-                if(e.model.index!=0){
+                if(e.model.index!==0){
                     this.splice('behaviorData.cumulativeAmountPoints',e.model.index,1);
                 }
             }

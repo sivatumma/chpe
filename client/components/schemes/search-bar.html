@@ -162,6 +162,7 @@
            this.show  = false;
         },
         searchInputChanged:function(input){
+            input = input.trim();
             var inputExisist  = _.contains(this.suggestions,input);
             if(input.length>0 && !inputExisist){
                 this.$.searchSchemes.url='/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/schemeNames/'+input;
@@ -172,7 +173,7 @@
             }
         },
         handleResponse: function(event) {
-          if(event.detail.response!=null && event.detail.response!==undefined){
+          if(event.detail.response!==null && event.detail.response!==undefined){
                 this.suggestions = event.detail.response;
                 console.log(this.suggestions);
             }else{
@@ -211,7 +212,7 @@
           }
         },
         onKeyPress: function(e) {
-            if (e.keyCode == 13) { // Enter
+            if (e.keyCode === 13) { // Enter
                 var q = this.searchInput;
                 if(chUtils.isEmpty(q)===false && _.contains(this.suggestions,q)){
                     this.show = false;

@@ -180,13 +180,7 @@
 	</style>
 	<template>
 		<more-route context name="previewScheme" params="{{params}}"></more-route>
-			<!-- <template  item="{{previewData}}">
-				<paper-card elevation="3" heading="{{item.metadata.type}}"  class="cards">
-					<div class="card-content">
-						<span>{{item.metadata.name}}</span>
-					</div>
-				</paper-card>
-			</template> -->
+
 			<paper-material elevation="0" class="previewScheme">
 				<div class="container">
 					<div class="flexchild1"></div>
@@ -434,14 +428,12 @@
 					this.config = generalConfig();
 					app.previewSchemeName = 'Preview Scheme - '+schemeName;
                 this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
-                //this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=MYAddon'; 
                 this.$.previewSchemeAjax.headers = {'API_KEY':this.config.urls.API_KEY};
                 this.$.previewSchemeAjax.generateRequest();
 				}
 			},
 			handleResponse:function(event){
 				if(chUtils.isEmpty(event.detail.response)===false){
-					//console.log(event.detail.response);
 					this.previewData = event.detail.response.schemeDetails;
 					this.orderData = event.detail.response.orderDetails;
 				}
@@ -461,7 +453,7 @@
 				}
 			},
 			formatDate:function(startEndDate){
-				if(startEndDate!==undefined || startEndDate!=""){
+				if(startEndDate!==undefined || startEndDate!==""){
 					return startEndDate.split("T")[0];
 				}else{
 					return "?";
@@ -475,16 +467,16 @@
 				}	
 			},
 			qDisplay:function(x) {
-				if(typeof x == "string"){
+				if(typeof x === "string"){
 					return x.trim();
-				}else if(typeof x == "number"){
+				}else if(typeof x === "number"){
 					return x;
-				}else if(typeof x == 'undefined'){
+				}else if(typeof x === 'undefined'){
 					return "?";
 				}
 			},
 			orderDataChanged:function(orderData){
-				if(Object.keys(orderData).length==0){
+				if(Object.keys(orderData).length===0){
 					this.noOrders = true;
 				}else{
 					this.uniqueUsersChartData = this.chartHost+'chd=t:'+( _.values(orderData.unique_customers))+
@@ -500,7 +492,7 @@
 				}
 			},
 			defaultValue :function(x){
-				if(x!==undefined || x!=='null'){
+				if(x!==undefined || x!==null){
 					return 100;
 				}else{
 					return x;
@@ -508,24 +500,23 @@
 			},
 			previewDataChanged:function(previewData){
 				var behavior = previewData.behavior;
-				if(behavior.doctorLevelDiscounts!=undefined){
-					if(behavior.doctorLevelDiscounts[0].discount == 0 && behavior.doctorLevelDiscounts[1].discount==0){
+				if(behavior.doctorLevelDiscounts!==undefined){
+					if(behavior.doctorLevelDiscounts[0].discount === 0 && behavior.doctorLevelDiscounts[1].discount===0){
 						this.noDoctorUsageDiscounts = true;
 					}
 				}
-				if(behavior.serviceLevelDiscounts.length>0 && behavior.serviceLevelDiscounts[0].services.length==0){
+				if(behavior.serviceLevelDiscounts.length>0 && behavior.serviceLevelDiscounts[0].services.length===0){
 						this.noSlcDiscounts = true;
 				}
-				if(behavior.serviceRateCategoryDiscounts.length>0 && behavior.serviceRateCategoryDiscounts[0].services.length==0){
+				if(behavior.serviceRateCategoryDiscounts.length>0 && behavior.serviceRateCategoryDiscounts[0].services.length===0){
 						this.noSrcDiscounts = true;
 				}
 				//console.log(behavior.billValueDiscounts[0].billRange.from);
-				if(behavior.billValueDiscounts[0].billRange.from==0 || 
-					behavior.billValueDiscounts[0].billRange.from == null){
+				if(behavior.billValueDiscounts[0].billRange.from===0 || 
+					behavior.billValueDiscounts[0].billRange.from === null){
 						this.noBillSlabs = true;
 				}
-				if(behavior.modeOfPaymentDiscounts[0].discount == 0 
-					&& behavior.modeOfPaymentDiscounts[1].discount==0){
+				if(behavior.modeOfPaymentDiscounts[0].discount === 0 && behavior.modeOfPaymentDiscounts[1].discount===0){
 						this.noMop = true;
 				}
 				

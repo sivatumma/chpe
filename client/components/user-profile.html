@@ -131,15 +131,9 @@
 				 this.config = generalConfig() || {};
 				 this.signoutUrl = this.config.urls.signout;
 			},
-			observers:[
-				'userObjectChanged(userObject)'
-			],
 	        listeners: {
 	          keyup: 'hotkeys'
 	        },
-			userObjectChanged:function(userData){
-				//console.log(userData);
-			},
 			openProfileInfo:function(event){
 				 if (event) {
 			        event.stopPropagation();
@@ -157,7 +151,7 @@
 		            this.show = false;
 		          }
 		    },
-        	closeProfileBox:function(event){
+        	closeProfileBox:function(){
         		this.show = false;
         	},
 

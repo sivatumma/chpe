@@ -91,17 +91,17 @@
                 chUtils.removeClass(document.querySelector("#couponMonth"),"active");
                 chUtils.removeClass(document.querySelector("#couponFortNight"),"active");
                 
-                if (couponType == "DAY") {
+                if (couponType === "DAY") {
                     chUtils.addClass(document.querySelector("#couponDay"),"active");
                     this.metadata.defaultLife = couponType;
-                } else if(couponType == "WEEK"){
+                } else if(couponType === "WEEK"){
                     chUtils.addClass(document.querySelector("#couponWeek"),"active");
                     this.metadata.defaultLife = couponType;
-                }else if(couponType == "MONTH"){
+                }else if(couponType === "MONTH"){
                     chUtils.addClass(document.querySelector("#couponMonth"),"active");
                     this.metadata.defaultLife = couponType;
                 }
-                else if(couponType == "FORT-NIGHTLY"){
+                else if(couponType === "FORT-NIGHTLY"){
                     chUtils.addClass(document.querySelector("#couponFortNight"),"active");
                     this.metadata.defaultLife = couponType;
                 }

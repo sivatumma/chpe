@@ -85,7 +85,7 @@
                this.slcMemcacheURL = this.config.urls.memcache.serviceRateCategories;
             },
             showDeleteByRow:function(row){
-                if(row==0){
+                if(row===0){
                     return true;
                 }else{
                     return false;
@@ -101,11 +101,11 @@
                 "onClick":"addSlc",
             },
             //add or remove Slc categories
-            addSlc :function(e){
+            addSlc :function(){
                 this.push('behaviorData.serviceLevelDiscounts', {discount:0,discountType:"%",maxLength:9,services:[],discountPattern:"^[0-9]{1,10}$"});
             },
             deleteSlc:function(e){
-                if(e.model.index!=0){
+                if(e.model.index!==0){
                     this.splice('behaviorData.serviceLevelDiscounts',e.model.index,1);
                 }
             }

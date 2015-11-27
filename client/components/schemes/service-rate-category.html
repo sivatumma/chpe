@@ -81,7 +81,7 @@
             },
             ready:function(){
                 this.config = generalConfig() || {};
-                this.srcMemcacheURL = this.config.urls.memcache.serviceRateCategories;
+                this.srcMemcacheURL = this.config.urls.memcache.serviceLevelDiscounts;
             },
             listeners:{
                 "onClick":"addSrc",
@@ -89,14 +89,14 @@
                 "food-array-change":"doChange"
             },
             showDeleteByRow:function(row){
-                if(row==0){
+                if(row===0){
                     return true;
                 }else{
                     return false;
                 }
             },
             //add or remove src categories
-            addSrc :function(e){
+            addSrc :function(){
                 this.push('behaviorData.serviceRateCategoryDiscounts', {discount:0,discountType:"%",maxLength:9,services:[],discountPattern:"^[0-9]{1,10}$"});
             },
             getPercentId:function(index){
@@ -106,7 +106,7 @@
                 return "srcFlat_"+index;
             },
             deleteSrc:function(e){
-                if(e.model.index!=0){
+                if(e.model.index!==0){
                     this.splice('behaviorData.serviceRateCategoryDiscounts',e.model.index,1);
                 }
             },

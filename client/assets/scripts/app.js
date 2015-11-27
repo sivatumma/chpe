@@ -64,18 +64,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
 
-  app.params = []; var loop=-1;
+  app.params = [];
 
   //more routuing alternative method
   var template = document.querySelector('template');
   template.makeUrl = function(path, params) {
-    var params = params ? JSON.parse(params) : {};
+    var parameters = parameters ? JSON.parse(params) : {};
     app.params = app.params?app.params:[];
-    if(params.name!==undefined){
-     this.push('params',params);
-      console.log(this.params,path);
+    if(parameters.name!==undefined){
+     this.push('params',parameters);
+      console.log(this.parameters,path);
     }
-    return MoreRouting.urlFor(path, {name:params.name});
+    return MoreRouting.urlFor(path, {name:parameters.name});
   };
 
   /*
@@ -83,8 +83,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    *@use this method  
    */
   app.setScheme = function(){
-    app.addonMethod   =  app.couponMethod = app.giftcardMethod = "POST"; 
-    app.saveBtnText   = "SAVE"; app.publishBtnText   = "SAVE + PUBLISH";
+    app.addonMethod   =  app.couponMethod = app.giftcardMethod = 'POST'; 
+    app.saveBtnText   = 'SAVE'; app.publishBtnText   = 'SAVE + PUBLISH';
     app.addonAsScheme = schemeBase();
     app.couponAsScheme = schemeBase();
     app.giftcardAsScheme = schemeBase(); 
@@ -99,21 +99,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    * We should run all these methods and on page load to show path related palets on below of main toolbar
    */
   app.setScheme();
-  app.addonTitle    =  "Create Addon";
-  app.couponTitle   =  "Create Coupon";
-  app.giftCardTitle =  "Create Gift Card";
+  app.addonTitle    =  'Create Addon';
+  app.couponTitle   =  'Create Coupon';
+  app.giftCardTitle =  'Create Gift Card';
 
 
   app.getTitle = function(event){
     this.getCurrentPage(event.currentTarget.getAttribute('route'));
     app.setScheme();
     app.location = function(){return document.location;};
-    chUtils.disableInputs(false,"addon-form");
-    chUtils.disableInputs(false,"coupon-form");
-    chUtils.disableInputs(false,"gift-card-form");
-    app.addonTitle    =  "Create Addon";
-    app.couponTitle   =  "Create Coupon";
-    app.giftCardTitle =  "Create Gift Card";
+    chUtils.disableInputs(false,'addon-form');
+    chUtils.disableInputs(false,'coupon-form');
+    chUtils.disableInputs(false,'gift-card-form');
+    app.addonTitle    =  'Create Addon';
+    app.couponTitle   =  'Create Coupon';
+    app.giftCardTitle =  'Create Gift Card';
 
   };
 
@@ -126,19 +126,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.showPalet = function(paletName){
     app.isHome = app.isCoupon = app.isAddon =  app.isGiftCard = app.isPreviewScheme = false; 
    switch(paletName){
-      case "/":
+      case '/':
         app.isHome = true;
         break;
-      case "/createAddOn":
+      case '/createAddOn':
         app.isAddon  = true;
         break;
-      case "/createCoupon":
+      case '/createCoupon':
         app.isCoupon = true;
         break;
-      case "/createGiftCard":
+      case '/createGiftCard':
         app.isGiftCard = true;
         break;
-      case "/previewScheme":
+      case '/previewScheme':
        app.isPreviewScheme = true;
        break;
     }
@@ -157,7 +157,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   //to get current path name
   app.getCurrentPage = function(name){
     if(name===undefined){
-      this.currentPage = location.hash.split("!")[1];
+      this.currentPage = location.hash.split('!')[1];
       this.currentPalet(this.currentPage); 
     }else{
       this.currentPage = MoreRouting.getRouteByName(name).path;
@@ -175,20 +175,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    * @params curentTargetAttribute 
    * Exp Res : If list grid will display , If Grid list will display 
    */
-  app.toggleListGridIcon = "icons::view-list";
+  app.toggleListGridIcon = 'icons::view-list';
   app.listGridVar = '';
   app.toggleListGrid = function(event) {
-    var mode = event.currentTarget.getAttribute('view') || listGridVar;
-      if (mode == "list") {
-          document.querySelector("#listView").hidden = false;
-          document.querySelector("#gridView").hidden = true;
-          app.toggleListGridIcon = "icons:view-module";
+    var mode = event.currentTarget.getAttribute('view') || app.listGridVar;
+      if (mode === 'list') {
+          document.querySelector('#listView').hidden = false;
+          document.querySelector('#gridView').hidden = true;
+          app.toggleListGridIcon = 'icons:view-module';
           event.currentTarget.setAttribute('view', 'grid');
       } else {
-          app.toggleListGridIcon = "icons:view-list";
+          app.toggleListGridIcon = 'icons:view-list';
           event.currentTarget.setAttribute('view', 'list');
-          document.querySelector("#listView").hidden = true;
-          document.querySelector("#gridView").hidden = false;
+          document.querySelector('#listView').hidden = true;
+          document.querySelector('#gridView').hidden = false;
       }
   };
 
@@ -209,7 +209,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   *On success user information is shown in dropdown toggle button including role and logged in username
   */
   app.handleUserResponse = function(event,request){
-    var headers = JSON.parse(request.xhr.getResponseHeader('user')) || "";
+    var headers = JSON.parse(request.xhr.getResponseHeader('user')) || '';
       if(chUtils.isEmpty(headers)===false){
         app.userInfo = headers || {};
       }else{

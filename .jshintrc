@@ -10,7 +10,7 @@
   "indent": 2,
   "latedef": true,
   "noarg": true,
-  "quotmark": "single",
+  "quotmark": false,
   "undef": true,
   "unused": true,
   "globals": {
@@ -19,6 +19,11 @@
     "Polymer": true,
     "Platform": true,
     "page": true,
-    "app": true
+    "app": true,
+    "schemeBase":true,
+    "chUtils":true,
+    "MoreRouting":true,
+    "generalConfig":true,
+    "_":true
   }
 }

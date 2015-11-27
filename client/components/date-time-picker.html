@@ -113,15 +113,14 @@
                
             },
             ready:function(){
-            	var monthNames = ["January", "February", "March", "April", "May", "June",
-	                "July", "August", "September", "October", "November", "December"
-	            ];
+            	var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+	                'July', 'August', 'September', 'October', 'November', 'December'];
             	this.formatDate = function(datestr) {
             		var date = new Date();
             		if(datestr){
 					    date = new Date(datestr);
             		}
-					 return  monthNames[date.getMonth()] + "-"+ ('0' + date.getDate()).slice(-2)+"-"+ date.getFullYear();
+					 return  monthNames[date.getMonth()] + '-'+ ('0' + date.getDate()).slice(-2)+'-'+ date.getFullYear();
 				};
             },
             listeners:{
@@ -130,36 +129,32 @@
             },
             observers:[
             	'dateModalValueChanged(dateModalValue)',
-            	'metadataChanged(metadata)'
             ],
             toggleLayer:function(){
-            	console.log("what happened");
+            	console.log('what happened');
             	document.querySelector('#datePicker').style.zIndex = '-1';
             	document.querySelector('#datePicker').class = 'toggleLayer';
             	console.log(document.querySelector('paper-date-picker').class);
             	console.log(document.querySelector('paper-date-picker'));
             },
-            metadataChanged:function(metadata){
-            	//console.log(metadata);
-            },
             setDateTime:function(){
-            		this.pickedDate = this.formatDate(document.querySelector("#"+this.dateId).date);
-		        	this.pickedTime = document.querySelector("#"+this.timeId).time;
+            		this.pickedDate = this.formatDate(document.querySelector('#'+this.dateId).date);
+		        	this.pickedTime = document.querySelector('#'+this.timeId).time;
 		            var dateTime = this.pickedDate+' '+this.pickedTime;
-		            document.querySelector("#"+this.dateTimeValue).setAttribute("value",dateTime);
+		            document.querySelector('#'+this.dateTimeValue).setAttribute('value',dateTime);
 		            var isoDate = new Date(dateTime);
 		            isoDate = isoDate.toISOString();
-		            document.querySelector("#"+this.dateTimeValue).setAttribute("isoDate",isoDate);
+		            document.querySelector('#'+this.dateTimeValue).setAttribute('isoDate',isoDate);
             },
             getdateTime:function(){
 		        	this.setDateTime();
             },
-            showDialog:function(type){
-            	var arr = ["couponStartDate","giftCardStartDate","addOnStartDate"];
+            showDialog:function(){
+            	var arr = ['couponStartDate','giftCardStartDate','addOnStartDate'];
             	//console.log(this.metadata);
             	if(this.metadata.published && _.contains(arr,this.dateModal)){
             	}else{
-	            	document.querySelector("#"+this.dateModal).open();
+	            	document.querySelector('#'+this.dateModal).open();
             	}
             },
             dismissDialog : function(event) {
@@ -180,9 +175,9 @@
 		    		var minutes = chUtils.getMinutesByDate(editDate);
 		    		var existedDate  =  chUtils.getYMD(editDate);
 		    		
-		    		document.querySelector("#"+this.dateId).setAttribute('date',existedDate);
-		    		document.querySelector("#"+this.timeId).setAttribute('hour',hours);
-		    		document.querySelector("#"+this.timeId).setAttribute('minute',minutes);
+		    		document.querySelector('#'+this.dateId).setAttribute('date',existedDate);
+		    		document.querySelector('#'+this.timeId).setAttribute('hour',hours);
+		    		document.querySelector('#'+this.timeId).setAttribute('minute',minutes);
 		    	}
 		    }
         });
