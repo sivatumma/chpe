@@ -269,7 +269,7 @@
         <iron-ajax id="schemeAjax" content-type="application/json" method="{{schemeMethod}}" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
     <script>
-        var toast = document.querySelector("#schemeSuccErrMessageToast");
+       
         Polymer({
             is: 'chpe-addon',
             properties: {
@@ -419,6 +419,7 @@
                 }
             },
             handleResponse: function(event) {
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
                 if (event.detail.response !== null && event.detail.response !== undefined) {
                     console.log("Received response: " + JSON.stringify(event.detail.response));
                     if(this.schemeMethod==="POST"){
@@ -442,6 +443,7 @@
             },
             handleError: function(event) {
                 var error = event.detail.error;
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
                 console.log(error);
                 if(this.schemeMethod==="POST"){
                     toast.text = "Error while creating " + this.schemeObj.metadata.type+" Please try again";
@@ -456,12 +458,12 @@
                 document.getElementById('addon-form').submit();
             },
             resetSteps:function(event){
+              var toast = document.querySelector("#schemeSuccErrMessageToast");
                if(event.target.name.invalid){
                 this.currentStep = 0; 
                }else{
                  this.currentStep = this.currentStep;
                }
-                var toast = document.querySelector("#schemeSuccErrMessageToast");
                 toast.text = "Please Recheck the form, you have missed the required fields some where...!";
                 this.schemeObj.metadata.published = false;
                 toast.show();

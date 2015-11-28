@@ -186,7 +186,6 @@
         <iron-ajax id="giftCardAjax" content-type="application/json" method="POST" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
     <script>
-        var toast = document.querySelector("#schemeSuccErrMessageToast");
         Polymer({
             is: 'chpe-gift-card',
             properties: {
@@ -315,6 +314,7 @@
                 }
             },
             handleResponse: function(event) {
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
                 if (event.detail.response !== null && event.detail.response !== undefined) {
                     console.log("Received response: " + JSON.stringify(event.detail.response));
                     if(this.schemeMethod==="POST"){
@@ -337,6 +337,7 @@
                 }, 1000);
             },
             handleError: function(event) {
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
                 console.log(event.detail.error);
                 if(this.schemeMethod==="POST"){
                     toast.text = "Error while creating " + this.schemeObj.metadata.type+" Please try again";
@@ -351,6 +352,7 @@
                 document.getElementById('gift-card-form').submit();
             },
             resetSteps:function(event){
+              var toast = document.querySelector("#schemeSuccErrMessageToast");
                if(event.target.name.invalid){
                 this.currentStep = 0; 
                }else{

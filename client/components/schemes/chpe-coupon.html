@@ -172,7 +172,6 @@
         <iron-ajax id="couponAjax" content-type="application/json" method="POST" params='{}' handle-as="json" on-error="handleError" on-response="handleResponse"></iron-ajax>
     </template>
     <script>
-        var toast = document.querySelector("#schemeSuccErrMessageToast");
         Polymer({
             is: 'chpe-coupon',
             properties: {
@@ -315,6 +314,7 @@
                 }
             },
             handleResponse: function(event) {
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
                 if (event.detail.response !== null && event.detail.response !== undefined) {
 
                     console.log("Received response: " + JSON.stringify(event.detail.response));
@@ -338,6 +338,7 @@
                 }, 1000);
             },
             handleError: function(event) {
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
                 var error = event.detail.error;
                 console.log(error);
                 if(this.schemeMethod==="POST"){
@@ -354,6 +355,7 @@
                 
             },
             resetSteps:function(event){
+               var toast = document.querySelector("#schemeSuccErrMessageToast");
                if(event.target.name.invalid){
                 this.currentStep = 0; 
                }else{
