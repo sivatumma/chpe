@@ -18,12 +18,12 @@ module.exports = function(grunt) {
       },
     },
     jshint: {
-      all: ['Gruntfile.js', 'client/**/*.js', 'test/**/*.js', 'client/**/*.html', 'test/**/*.html']
+      all: ['Gruntfile.js', 'client/*.js', 'client/components/*.html']
     }
 
 
   });
-  // grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   // grunt.loadNpmTasks('grunt-contrib-watch');
   // grunt.loadNpmTasks('grunt-contrib-copy');
   // grunt.loadNpmTasks('grunt-contrib-jasmine');
