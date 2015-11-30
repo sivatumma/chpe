@@ -13,6 +13,7 @@
   "quotmark": false,
   "undef": true,
   "unused": true,
+  "extract":"auto",
   "globals": {
     "wrap": true,
     "unwrap": true,
