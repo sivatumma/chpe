@@ -17,8 +17,37 @@ module.exports = function(grunt) {
         },
       },
     },
-    jshint: {
-      all: ['Gruntfile.js', 'client/*.js', 'client/components/*.html']
+   jshint: {
+      js: {
+        options: {
+          jshintrc: '.jshintrc'
+        },
+        src: ['Gruntfile.js', 'client/assets/scripts/*.js']
+      },
+      html: {
+        options: {
+          extract: 'always',
+          undef: true,
+          browser: true,
+          globals: {
+           "wrap": true,
+           "unwrap": true,
+           "Polymer": true,
+           "Platform": true,
+           "page": true,
+           "app": true,
+           "schemeBase":true,
+           "chUtils":true,
+           "MoreRouting":true,
+           "generalConfig":true,
+           "_":true,
+           "google":true
+          }
+        },
+        files: {
+          src: ['client/components/*.html']
+        }
+      }
     }
 
 
