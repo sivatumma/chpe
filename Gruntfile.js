@@ -4,15 +4,17 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     vulcanize: {
       default: {
-        options: {
-          // Task-specific options go here. 
-          abspath: ""
-        },
         files: {
-          // Target-specific file lists and/or options go here. 
-          "build.html":"client/home.html"
+          "./build.html":["home.html"]
         },
       },
+      abspath: {
+        options: {
+          abspath: '/home/siva/Downloads/chpe-polymer-1.0.3/client',
+          nonull: true,
+          target: 'home.html'
+        }
+      }
     },
     jshint: {
       options: {
@@ -53,8 +55,6 @@ module.exports = function(grunt) {
         }
       }
     }
-
-
   });
   grunt.loadNpmTasks('grunt-contrib-jshint');
   // grunt.loadNpmTasks('grunt-contrib-watch');

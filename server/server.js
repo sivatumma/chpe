@@ -268,7 +268,8 @@ app.all('/ssoLogin', User.ssoLogin, function(req, res) {
   console.log("req.session.user = ",req.session.user);
   res.header("user",JSON.stringify(req.session.user));
   console.log(req.headers, res.header || "No header in res object");
-  res.redirect("home.html");
+  // res.redirect("home.html");
+  res.redirect("build.html");
 });
 
 app.get('/ssoLogout', User.ssoLogout, function(req, res) {
