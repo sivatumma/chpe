@@ -25,12 +25,14 @@ module.exports = function(grunt) {
         options: {
           jshintrc: '.jshintrc'
         },
-        src: ['Gruntfile.js', 'client/assets/scripts/*.js']
+        src: ['Gruntfile.js', 'client/assets/scripts/*.js','client/config/*.js']
       },
       html: {
         options: {
           extract: 'always',
           undef: true,
+          latedef: true,
+          unused: false,
           browser: true,
           globals: {
            "wrap": true,
@@ -44,7 +46,9 @@ module.exports = function(grunt) {
            "MoreRouting":true,
            "generalConfig":true,
            "_":true,
-           "google":true
+           "google":true,
+           "console":true,
+           "module":true
           }
         },
         files: {

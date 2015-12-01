@@ -1,8 +1,10 @@
-function schemeBase(scheme){    //init metadata as per schema
-    if (scheme == undefined || scheme == null) scheme = {
-        "metadata": {},
-        "behavior": {}
-    };
+function schemeBase(scheme){
+    if (scheme === undefined || scheme === null) {
+        scheme = {
+            "metadata": {},
+            "behavior": {}
+        };
+    }
 
     var metadata = {
         name: "",
@@ -82,4 +84,6 @@ function schemeBase(scheme){    //init metadata as per schema
 
 }
 var module = module || {};
-if (typeof module != undefined && module != null && module.exports) module.exports = schemeBase();
+if (typeof module !== undefined && module !== null && module.exports) {
+    module.exports = schemeBase();
+}

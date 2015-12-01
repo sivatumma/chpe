@@ -188,8 +188,8 @@
                         <input type="text" placeholder="Username" name="username" id="username">
                         <input type="password" placeholder="Password" name="password" id="password">
                     </div>
-                    <span id="submitButton" onClick="submitForm();">
-                        </span>
+                    <span id="submitButton">
+                    </span>
                     </form>
                 </div>
             </td>
@@ -201,32 +201,17 @@
         //check user logged in status
         config.user();
 
-        function ajaxRequest() {
-            var activexmodes = ["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
-            if (window.ActiveXObject) { //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
-                for (var i = 0; i < activexmodes.length; i++) {
-                    try {
-                        return new ActiveXObject(activexmodes[i])
-                    } catch (e) {
-                        //suppress error
-                    }
-                }
-            } else if (window.XMLHttpRequest) // if Mozilla, Safari etc
-                return new XMLHttpRequest()
-            else
-                return false
-        }
-
         //validating the form and submit
         var usernameError = true,
             passwordError = true,
             username = document.getElementById('username'),
             password = document.getElementById('password'),
+            submitButton = document.getElementById('submitButton'),
             userCreds = {};
 
 
         username.onkeyup = function() {
-            if (username.value.length != 0) {
+            if (username.value.length !== 0) {
                 usernameError = true;
                 username.style.border = "1px solid #ccc";
             } else {
@@ -236,29 +221,29 @@
             }
         };
         password.onkeyup = function() {
-            if (password.value.length != 0) {
+            if (password.value.length !== 0) {
                 passwordError = true;
-                console.log("Ok password");
+                //console.log("Ok password");
                 password.style.border = "1px solid #ccc";
             } else {
                 passwordError = false;
-                console.log("Error password");
+                //console.log("Error password");
                 password.style.border = "1px solid #ff0000";
                 document.getElementById("errorMessage").setAttribute("class", "hide");
             }
         };
 
         //handle response
-        var loginRequest = new ajaxRequest();
+        var loginRequest = new XMLHttpRequest();
 
         loginRequest.onload = function() {
-            if (loginRequest.status == 200) {
+            if (loginRequest.status === 200) {
                 var response = JSON.parse(loginRequest.response);
                 localStorage.userName = response.username;
                 localStorage.userRole = response.roles;
                 localStorage.loggedIn = true;
                 localStorage.userToken = loginRequest.getResponseHeader('token');
-                localStorage.token_expires = loginRequest.getResponseHeader('token_expires');
+                localStorage.tokenExpires = loginRequest.getResponseHeader('token_expires');
                 config.user();
             } else {
                 document.getElementById("errorMessage").setAttribute("class", "show");
@@ -268,10 +253,10 @@
         
         //submitting form if username and password enters
 
-        var submitForm = function() {
+       submitButton.onlclick = function() {
             userCreds = {};
-            if ((username.value == "" && password.value == "") ||
-                (username.value == "" || password.value == "")) {
+            if ((username.value === "" && password.value === "") ||
+                (username.value === "" || password.value === "")) {
                 document.getElementById("errorMessage").setAttribute("class", "show");
             } else if (passwordError && usernameError) {
                 document.getElementById("errorMessage").setAttribute("class", "hide");

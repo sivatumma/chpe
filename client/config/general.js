@@ -22,8 +22,7 @@ function generalConfig() {
 		schemeType: ""
 	};
 	var userStatus = function() {
-            if (localStorage !== undefined &&
-                (localStorage.userName !== undefined || localStorage.userName != "") && localStorage.loggedIn) {
+            if (localStorage !== undefined && (localStorage.userName !== undefined || localStorage.userName !== "") && localStorage.loggedIn) {
                 window.location = "dashboard.html";
             }
     };

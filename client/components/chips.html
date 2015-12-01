@@ -260,17 +260,17 @@
                 this.setFocus();
             },
 
-            suggestionTapped: function(event) {
+            suggestionTapped: function(event){
                 // reset input
                 if(this.isMultiple==='multi'){
-                    this.push('selectedItems',{id:event.target.id,name:event.target.innerText});
+                    this.push('selectedItems',{"id":event.target.id,"name":event.target.innerText});
                 }else{
-                     this.selectedItems = [{id:event.target.id,name:event.target.innerText}];
+                     this.selectedItems = [{"id":event.target.id,"name":event.target.innerText}];
                 }
                 this.$.itemInput.innerText = '';
                 this.resetSuggestions();
             },
-            suggestionHovered: function() {
+            suggestionHovered: function(){
                 removeClass(this.$.itemList.querySelector('#suggest_menu li.active'), 'active');
             },
             removeTapped: function(event) {
@@ -296,14 +296,14 @@
                         var topSuggestion = this.$.itemList.querySelector('#suggest_menu li');
                         if (activeSuggestion) {
                             if(this.isMultiple==='multi'){
-                                this.push('selectedItems',{id:activeSuggestion.id,name:activeSuggestion.innerText});
+                                this.push('selectedItems',{"id":activeSuggestion.id,"name":activeSuggestion.innerText});
                             }else{
-                                 this.selectedItems = [{id:activeSuggestion.id,name:activeSuggestion.innerText}];
+                                 this.selectedItems = [{"id":activeSuggestion.id,"name":activeSuggestion.innerText}];
                             }
                             this.$.itemInput.innerText = '';
                             this.resetSuggestions();
                         } else if ((this.options.allowNonmatching === true && this.$.itemInput.innerText.length > 0) ||this.$.itemInput.innerText === topSuggestion.innerText) {
-                            this.push('selectedItems',{id:event.target.id,name:event.target.innerText});
+                            this.push('selectedItems',{"id":event.target.id,"name":event.target.innerText});
                             this.$.itemInput.innerText = '';
                             this.resetSuggestions();
                         }
