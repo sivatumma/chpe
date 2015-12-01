@@ -138,13 +138,13 @@
                 this.flatId = this.flatId ? this.flatId : this.discountModal.flatId;
                 this.percentageId = this.percentageId ? this.percentageId : this.discountModal.percentageId;
 
-                if (discountType == "%") {
+                if (discountType === "%") {
                     this.isPercentage = true;
                     this.discountModal.discountType = discountType; 
                     this.discountModal.discountPattern = this.discountPattern = "^[0-9]{1,10}$";
                     this.discountModal.maxLength = this.discountLength = 9;
 
-                } else if(discountType=="FLAT") {
+                } else if(discountType=== "FLAT") {
                     this.isFlat = true;
                     this.discountModal.discountType = discountType; 
                     this.discountModal.discountPattern = this.discountPattern = "^[0-999]{1,999}$";

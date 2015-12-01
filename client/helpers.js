@@ -4,7 +4,7 @@
  */
 
 function qDisplay(x) {
-	return (typeof x != "number") ? (x.trim() || '?') : x;
+	return (typeof x !== "number") ? (x.trim() || '?') : x;
 }
 
 /**
@@ -18,6 +18,6 @@ function arrayToString(arr){
 //check if it is zero
 
 function isZero(x){
-	return (typeof x == 'number' && x==0)?100:x;
+	return (typeof x === 'number' && x===0)?100:x;
 }
 

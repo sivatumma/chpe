@@ -88,14 +88,14 @@
                 return "bsdFlat_"+index;
             },
             showDeleteByRow:function(row){
-                if(row==0){
+                if(row===0){
                     return true;
                 }else{
                     return false;
                 }
             },
             //add or remove src categories
-            addBsd :function(e){
+            addBsd :function(){
                 var obj = {
                         billRange: {
                             from: 0,
@@ -109,7 +109,7 @@
                 this.push('behaviorData.billValueDiscounts',obj);
             },
             deleteBsd:function(e){
-                if(e.model.index!=0){
+                if(e.model.index!==0){
                     this.splice('behaviorData.billValueDiscounts',e.model.index,1);
                 }
             },

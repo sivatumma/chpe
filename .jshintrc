@@ -25,6 +25,7 @@
     "chUtils":true,
     "MoreRouting":true,
     "generalConfig":true,
-    "_":true
+    "_":true,
+    "google":true
   }
 }

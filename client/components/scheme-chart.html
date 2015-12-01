@@ -1,3 +1,4 @@
+
 <dom-module id="scheme-chart">
 	<template>
 		  <div id="{{previewGraphId}}"  style="width: 900px; height: 500px"></div>
@@ -34,7 +35,7 @@
 			chartDataChanged:function(chartData){
 			 	if(chUtils.isEmpty(chartData)===false){
 				 	console.log(google);
-			 		console.log(this.chartData,this.chartOptions,this.previewGraphId)
+			 		console.log(this.chartData,this.chartOptions,this.previewGraphId);
 			 		google.setOnLoadCallback(this.drawChart());
 			 	}
 			},

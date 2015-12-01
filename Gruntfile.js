@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         options: {
           jshintrc: '.jshintrc'
         },
-        src: ['Gruntfile.js', 'client/*.js']
+        src: ['Gruntfile.js', 'client/assets/scripts/*.js']
       },
       html: {
         options: {
@@ -33,7 +33,18 @@ module.exports = function(grunt) {
           undef: true,
           browser: true,
           globals: {
-            foo: true
+           "wrap": true,
+           "unwrap": true,
+           "Polymer": true,
+           "Platform": true,
+           "page": true,
+           "app": true,
+           "schemeBase":true,
+           "chUtils":true,
+           "MoreRouting":true,
+           "generalConfig":true,
+           "_":true,
+           "google":true
           }
         },
         files: {
