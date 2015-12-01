@@ -6,10 +6,7 @@ module.exports = function(grunt) {
       default: {
         options: {
           // Task-specific options go here. 
-          // abspath: "/home/siva/Downloads/chpe-polymer-1.0.3/client",
-        },
-        path: {
-          resolve: '/home/siva/Downloads/chpe-polymer-1.0.3'
+          abspath: ""
         },
         files: {
           // Target-specific file lists and/or options go here. 
