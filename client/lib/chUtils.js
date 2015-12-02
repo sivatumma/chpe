@@ -1,5 +1,5 @@
-var _ = typeof require == 'function' ? require("lodash") : _;
-var moment = typeof require == 'function' ? require("moment") : moment;
+var _ = typeof require === 'function' ? require("lodash") : _;
+var moment = typeof require === 'function' ? require("moment") : moment;
 
 (function(chUtils) {
     /********************************************************************
@@ -34,7 +34,7 @@ var moment = typeof require == 'function' ? require("moment") : moment;
       "July", "August", "September", "October", "November", "December"
     ];
 
-    if (schemeData[0].metadata.type == "COUPON") {
+    if (schemeData[0].metadata.type === "COUPON") {
       var startDate = moment(schemeData[0].behavior.startDate.toISOString("DD/MM/YYYY"), 'YYYY-M-DD HH:mm:ss');
       var endDate = moment(schemeData[0].behavior.endDate.toISOString("DD/MM/YYYY"), 'YYYY-M-DD HH:mm:ss');
       var datediff = endDate.diff(startDate, 'days');
@@ -76,10 +76,10 @@ var moment = typeof require == 'function' ? require("moment") : moment;
         });
       } else {
 
-        for (var i = 1; i <= 5; i++) {
-          discounts[i + " Week " + monthNames[month - 1]] = 0;
-          revenues[i + " Week " + monthNames[month - 1]] = 0;
-          unique_data[i + " Week " + monthNames[month - 1]] = 0;
+        for (var k = 1; k <= 5; k++) {
+          discounts[k + " Week " + monthNames[month - 1]] = 0;
+          revenues[k + " Week " + monthNames[month - 1]] = 0;
+          unique_data[k + " Week " + monthNames[month - 1]] = 0;
         }
         _.each(groupedByMonth, function(item, key) {
 
@@ -151,7 +151,7 @@ var moment = typeof require == 'function' ? require("moment") : moment;
         _.each(item, function(itemData, DataKey) {
           total = parseInt(total) + parseInt(itemData.billAmount);
           Distotal = parseInt(Distotal) + parseInt(itemData.finalAmount);
-        })
+        });
 
         revenues[monthNames[dYearDate[1] - 1] + " " + dYearDate[0]] = total;
         discounts[monthNames[dYearDate[1] - 1] + " " + dYearDate[0]] = Distotal;
@@ -205,12 +205,12 @@ var moment = typeof require == 'function' ? require("moment") : moment;
     chUtils.callDiscount = function(actualAmount, discount, discountType) {
         var afterDiscount = "";
 
-        if (discountType == "%") {
+        if (discountType === "%") {
            // afterDiscount = chUtils.perfectValue(actualAmount - (actualAmount * discount / 100));
             afterDiscount = chUtils.perfectValue(actualAmount * discount / 100);
 
         }
-        if (discountType == "Flat") {
+        if (discountType === "Flat") {
            // afterDiscount = chUtils.perfectValue(actualAmount - discount);
             afterDiscount = chUtils.perfectValue(discount);
 
@@ -260,7 +260,7 @@ var moment = typeof require == 'function' ? require("moment") : moment;
 
   //getYMDbyIsoDate returns date format in YYYY-MM-DD : HH
     chUtils.getYMDbyIsoDate = function(date){
-        if(date!==undefined && date!==null){
+        if(date!== undefined && date!== null){
             var mydate =  new Date(date);
             return mydate.getFullYear() + "-" + ('0' + (mydate.getMonth() + 1)).slice(-2) + "-" + ('0' + mydate.getDate()).slice(-2);
         }
@@ -274,7 +274,7 @@ var moment = typeof require == 'function' ? require("moment") : moment;
 
     chUtils.isEmpty = function(ostr){
         //ostr means object or string
-        if(ostr===undefined || ostr===null || ostr==""){
+        if(ostr===undefined || ostr===null || ostr===""){
             return true;
         }else{
             return false;
@@ -288,7 +288,7 @@ var moment = typeof require == 'function' ? require("moment") : moment;
       */
     chUtils.getSchemeByName = function(schemes,sName){
        var item =  _.find(schemes, function(item) {
-            return item.metadata.name == sName; 
+            return item.metadata.name === sName; 
         });
        if(chUtils.isEmpty(item)===false){
          return item;
@@ -301,7 +301,7 @@ var moment = typeof require == 'function' ? require("moment") : moment;
       *@result array of objects matched to scheme type
       */
     chUtils.getSchemesByType = function(allSchemes,type){
-      var items = _.filter(allSchemes, function(item){return item.metadata.type == type ? item : false;});
+      var items = _.filter(allSchemes, function(item){return item.metadata.type === type ? item : false;});
 
        if(chUtils.isEmpty(items)===false){
          return items;
@@ -330,15 +330,15 @@ var moment = typeof require == 'function' ? require("moment") : moment;
       *@params scheme status (Published or not)
       */
     chUtils.disableInputs = function(schemeStatus,formId){
-        if(formId!==null && formId!==undefined){
+        if(formId!== null && formId!== undefined){
           var inputElements = document.getElementById(formId).elements;
           if(schemeStatus){
-            for(el in inputElements){
-                inputElements[el].readOnly  = true;
+            for(var x in inputElements){
+                inputElements[x].readOnly  = true;
             }
           }else{
-            for(el in inputElements){
-              inputElements[el].readOnly  = false;
+            for(var y in inputElements){
+              inputElements[y].readOnly  = false;
             }
           }
         }
@@ -365,15 +365,18 @@ var moment = typeof require == 'function' ? require("moment") : moment;
 
 
     chUtils.arrayEquals = function(a1, a2) {
-        if (!a1 || !a2)
+        if (!a1 || !a2){
             return false;
-        if (a1.length != a2.length)
+        }
+        if (a1.length !== a2.length){
             return false;
+        }
         for (var i = 0, l = a1.length; i < l; i++) {
             if (a1[i] instanceof Array && a2[i] instanceof Array) {
-                if (!a1[i].equals(a2[i]))
+                if (!a1[i].equals(a2[i])){
                     return false;
-            } else if (a1[i] != a2[i]) {
+                }
+            } else if (a1[i] !== a2[i]) {
                 return false;
             }
         }
