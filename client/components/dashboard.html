@@ -576,7 +576,7 @@
     }
 
     window.onresize = function(){
-        if(document.querySelector('#gridView')!==undefined && document.querySelector('#gridView').hidden){
+        if(document.querySelector('#gridView')!==undefined && document.querySelector('#gridView').hidden!==null){
             hideListView();
         }
         if(window.innerWidth>=768 && window.innerWidth<=979){
