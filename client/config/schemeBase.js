@@ -1,8 +1,10 @@
-function schemeBase(scheme){    //init metadata as per schema
-    if (scheme == undefined || scheme == null) scheme = {
-        "metadata": {},
-        "behavior": {}
-    };
+function schemeBase(scheme){
+    if (scheme === undefined || scheme === null) {
+        scheme = {
+            "metadata": {},
+            "behavior": {}
+        };
+    }
 
     var metadata = {
         name: "",
@@ -23,29 +25,29 @@ function schemeBase(scheme){    //init metadata as per schema
         discountType: "%",
         discount: 0,
         maxLength:10,
-        discountPattern:"^([0-10])$",
+        discountPattern:"^[0-9]{1,10}$",
         locationOfServices:[],
         serviceRateCategoryDiscounts: [{
             discount: 0,
             discountType: "%",
             services: [],
             maxLength:9,
-            discountPattern:"^([0-10])$",
+            discountPattern:"^[0-9]{1,10}$",
         }],
         serviceLevelDiscounts: [{
             discount: 0,
             discountType: "%",
             services: [],
             maxLength:9,
-            discountPattern:"^([0-10])$",
+            discountPattern:"^[0-9]{1,10}$",
         }],
         cumulativeAmountPoints: [{
-            amount: "",
-            points: ""
+            amount: 0,
+            points: 100
         }],
         doctorLevelDiscounts: [
-            {type:"user",discount:0,discountType:"%",maxLength:9,discountPattern:"^([0-10])$"},
-            {type:"system",discount:0,discountType:"%",maxLength:9,discountPattern:"^([0-10])$"}
+            {type:"user",discount:0,discountType:"%",maxLength:9,discountPattern:"^[0-9]{1,10}$"},
+            {type:"system",discount:0,discountType:"%",maxLength:9,discountPattern:"^[0-9]{1,10}$"}
         ],
         advancePaidPoints: [{
             points: "",
@@ -53,25 +55,25 @@ function schemeBase(scheme){    //init metadata as per schema
         }],
         billValueDiscounts: [{
             billRange: {
-                from: "",
-                to: ""
+                from: 0,
+                to: 0
             },
             discount: 0,
             discountType: "%",
             maxLength:9,
-            discountPattern:"^([0-10])$"
+            discountPattern:"^[0-9]{1,10}$"
         }],
       modeOfPaymentDiscounts: [{
          mop:"EPAY",
          discount: 0,
          discountType:"%",
          maxLength:9,
-         discountPattern:"^([0-10])$",
+         discountPattern:"^[0-9]{1,10}$",
         },{mop:"COD",
          discount: 0,
          discountType:"%",
          maxLength:9,
-         discountPattern:"^([0-10])$",
+         discountPattern:"^[0-9]{1,10}$",
         }]
     };
 
@@ -82,4 +84,6 @@ function schemeBase(scheme){    //init metadata as per schema
 
 }
 var module = module || {};
-if (typeof module != undefined && module != null && module.exports) module.exports = schemeBase();
+if (typeof module !== undefined && module !== null && module.exports) {
+    module.exports = schemeBase();
+}

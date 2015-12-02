@@ -43,7 +43,7 @@
 
             <div class="col-5">
                 <p>Maximum Usages allowed per Customer.</p>
-                <paper-input name="Maximum Usages" no-label-float label="Maximum Usages" type="number" value="{{behavior.maximumUsages}}" max="100" min="10"></paper-input>
+                <paper-input name="Maximum Usages" disabled$="{{metadata.published}}" no-label-float label="Maximum Usages" type="number" value="{{behavior.maximumUsages}}" max="100" min="10"></paper-input>
 
             <div>
                 <p><strong>Default discount</strong> for this product. If you assume line item wise discounts, leave blank.</p>

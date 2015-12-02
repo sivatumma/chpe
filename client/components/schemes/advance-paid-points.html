@@ -71,23 +71,21 @@
 
             },
             listeners:{
-                "onClick":"addApd",
+                'onClick':'addApd',
             },
             showDeleteByRow:function(row){
-                if(row==0){
+                if(row===0){
                     return true;
                 }else{
                     return false;
                 }
             },
-            //add or remove src categories
-            addApd :function(e){
-                this.push('behaviorData.advancePaidPoints', {amount:"",points:""});
+            addApd :function(){
+                this.push('behaviorData.advancePaidPoints', {amount:'',points:''});
                 this.rowCount = false;
-           ;
             },
             deleteApd:function(e){
-                if(e.model.index!=0){
+                if(e.model.index!==0){
                     this.splice('behaviorData.advancePaidPoints',e.model.index,1);
                     this.rowCount = false;
                 }

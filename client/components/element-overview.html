@@ -96,14 +96,10 @@
                   value: 0
                 }
             },
-            observers: ['overViewDataChanged(overViewData)'],
             ready: function() {
                 this.config = generalConfig() || {};
                 this.$.overviewAjax.url =  this.config.urls.overview;
                 this.$.overviewAjax.generateRequest();
-            },
-            overViewDataChanged:function(overViewData){
-              //console.log(overViewData);
             },
             handleResponse: function(event) {
                 if(chUtils.isEmpty(event.detail.response)===false){

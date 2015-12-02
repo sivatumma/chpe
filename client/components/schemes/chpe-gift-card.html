@@ -143,7 +143,7 @@
                                         <label class="text-bold">Locations : </label>
                                     </div>
                                     <div class="col-10 margin0" style="margin-top:10px;">
-                                        <multi-value-suggestbox id="multi_suggest" is-multiple="multi" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/" options='{
+                                        <multi-value-suggestbox id="multi_suggest" is-multiple="multi" newInput="" server-url="{{memecacheLocations}}" options='{
                                             "allow_space": false,
                                             "allow_nonmatching": false}' 
                                             selected-items="{{schemeObj.behavior.locationOfServices}}">
@@ -155,7 +155,7 @@
                                         <label class="text-bold">Benficiary :</label>
                                     </div>
                                     <div class="col-10 margin0" style="margin-top:10px;">
-                                        <multi-value-suggestbox is-multiple="multi" id="multi_suggest" newInput="" url="/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names/" options='{
+                                        <multi-value-suggestbox is-multiple="multi" id="multi_suggest" newInput="" server-url="{{memecacheNames}}" options='{
                                             "allow_space": false,
                                             "allow_nonmatching": false}' 
                                         selected-items="{{schemeObj.metadata.toIds}}">
@@ -219,11 +219,22 @@
                 userRole:{
                     type:String,
                     notify:true
+                },
+                memecacheLocations:{
+                    type:String,
+                    notify:true
+                },
+                memecacheNames:{
+                    type:String,
+                    notify:true
                 }
             },
             ready: function() {
                 this.currentStep = 0;
                 this.config = generalConfig() || {};
+                this.memecacheLocations = this.config.urls.memcache.locations;
+                this.memecacheNames = this.config.urls.memcache.names;
+
                 this.saveBtnText = "SAVE";
                 this.publishBtnText = "SAVE + PUBLISH";
             },
@@ -244,7 +255,7 @@
             },
             schemeMethodChanged:function(schemeMethod){
                 //console.log(schemeMethod);
-                if(schemeMethod=="PUT"){
+                if(schemeMethod==="PUT"){
                     this.saveBtnText = "UPDATE";
                     this.publishBtnText = "UPDATE + PUBlISH";
                 }else{
@@ -253,7 +264,7 @@
                 }
             },
              userRoleChanged:function(userRole){
-                if(userRole=="creator"|| userRole=="editor"){
+                if(userRole==="creator"|| userRole==="editor"){
                     this.noPermissions = true;
                 }else{
                     this.noPermissions = false;
@@ -290,7 +301,7 @@
                     this.schemeObj.behavior._locations = _.pluck(this.schemeObj.behavior.locationOfServices,"name");
                 }
                 if(chUtils.isEmpty(this.schemeObj.metadata.toIds)===false){
-                   this.schemeObj.metadata.toIds = _.pluck(this.schemeObj.metadata.toIds,"name");
+                   this.schemeObj.metadata._toIds = _.pluck(this.schemeObj.metadata.toIds,"name");
                 }
 
                 console.log(this.schemeObj);
@@ -303,11 +314,10 @@
                 }
             },
             handleResponse: function(event) {
-                if (event.detail.response != null && event.detail.response !== undefined) {
-                    document.querySelector("#schemeSuccErrMessageToast").show();
+                var toast = document.querySelector("#schemeSuccErrMessageToast");
+                if (event.detail.response !== null && event.detail.response !== undefined) {
                     console.log("Received response: " + JSON.stringify(event.detail.response));
-                    var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    if(this.schemeMethod=="POST"){
+                    if(this.schemeMethod==="POST"){
                         toast.text = this.schemeObj.metadata.type + " created successfully!...";
                     }else{
                         toast.text = this.schemeObj.metadata.type + " updated successfully!...";
@@ -315,22 +325,21 @@
                     toast.show();
                 } else {
                     console.log(this.schemeObj);
-                    document.querySelector("#schemeSuccErrMessageToast").show();
-                    var toast = document.querySelector("#schemeSuccErrMessageToast");
-                    if(this.schemeMethod=="POST"){
+                    if(this.schemeMethod==="POST"){
                         toast.text = "Error while creating " + this.schemeObj.metadata.type;
                     }else{
                          toast.text = "Error while updating " + this.schemeObj.metadata.type;
                     }
+                    toast.show();
                 }
                 setTimeout(function() {
                     location.href="/";
                 }, 1000);
             },
             handleError: function(event) {
-                console.log(event.detail.error);
                 var toast = document.querySelector("#schemeSuccErrMessageToast");
-                if(this.schemeMethod=="POST"){
+                console.log(event.detail.error);
+                if(this.schemeMethod==="POST"){
                     toast.text = "Error while creating " + this.schemeObj.metadata.type+" Please try again";
                 }else{
                     toast.text = "Error while updating " + this.schemeObj.metadata.type+" Please try again";
@@ -338,15 +347,21 @@
                 toast.show();
             },
             submitForm: function(event) {
-                this.schemeObj.metadata.published = event.currentTarget.getAttribute('status');
+                var status = event.currentTarget.getAttribute('status');
+                this.schemeObj.metadata.published  = (status==="false")?false:true;
                 document.getElementById('gift-card-form').submit();
             },
             resetSteps:function(event){
-                this.currentStep = 0;
-                this.formError = true; 
-                document.querySelector("#schemeSuccErrMessageToast").show();
-                var toast = document.querySelector("#schemeSuccErrMessageToast");
-                toast.text = "Please Recheck the form, you have missed the required fields some where...!";
+              var toast = document.querySelector("#schemeSuccErrMessageToast");
+               if(event.target.name.invalid){
+                this.currentStep = 0; 
+               }else{
+                 this.currentStep = this.currentStep;
+               } 
+               toast.text = "Please Recheck the form, you have missed the required fields some where...!";
+               this.schemeObj.metadata.published = false;
+               toast.show();
+
             }
         });
     </script>

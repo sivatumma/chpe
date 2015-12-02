@@ -1,3 +1,4 @@
+
 <dom-module id="user-profile">
 	<style>
 	 :host{
@@ -87,7 +88,8 @@
 
 	</style>
 	<template>
-		<paper-icon-button  icon="icons:account-circle" name="avatar" on-click="openProfileInfo">
+		<paper-icon-button  icon="icons:account-circle" name="avatar" id="input" 
+		on-tap="openProfileInfo">
 		</paper-icon-button>
 		<div show$="{{show}}" id="profileBox">
 			<span class="arrow-up"></span>
@@ -130,25 +132,30 @@
 				 this.config = generalConfig() || {};
 				 this.signoutUrl = this.config.urls.signout;
 			},
-			observers:[
-				'userObjectChanged(userObject)'
-			],
-			onblur: function () {
-		        console.log('blurred');
-		    },
-			userObjectChanged:function(userData){
-				//console.log(userData);
-			},
+	        listeners: {
+	          keyup: 'hotkeys'
+	        },
 			openProfileInfo:function(event){
-				if (event) { // comes first
-                	event.stopPropagation();
-            	}
-            	this.show = !this.show;
+				 if (event) {
+			        event.stopPropagation();
+			      }
+			      if (event.target === this.$.profileBox) {
+			        return;
+			      }
+			    this.show = !this.show;
 
-        	},
-        	closeProfileBox:function(event){
+        	} ,
+        	hotkeys: function(e) {
+		          // ESC
+		          console.log(e);
+		          if (e.keyCode === 27 && Polymer.dom(e).rootTarget === this.$.profileBox) {
+		            this.show = false;
+		          }
+		    },
+        	closeProfileBox:function(){
         		this.show = false;
-        	}
+        	},
+
 		});
 	</script>
 </dom-module>

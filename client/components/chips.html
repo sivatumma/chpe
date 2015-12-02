@@ -6,18 +6,18 @@
                 padding: 0;
                 list-style: none;
             }
-            ul#item_list {
+            ul#itemList {
                 display: block;
                 border-bottom: 2px solid rgb(63,81,181);
                 padding-left: 10px;
                 margin: 20px 5px;
             }
-            ul#item_list > li {
+            ul#itemList > li {
                 display: inline-block;
                 position: relative;
                 vertical-align: middle;
             }
-            ul#item_list > li:not(#item_entry) {
+            ul#itemList > li:not(#item_entry) {
                 border: 1px solid #ccd5e4;
                 border-radius:16px;
                 background-color:rgb(224,224,224);
@@ -31,7 +31,7 @@
                     margin: 5px;
                     padding: 0px 10px 0px 6px
             }
-            ul#item_list > li > a {
+            ul#itemList > li > a {
               
                 font-size: 14px;
                 font-weight: bold;
@@ -42,7 +42,7 @@
                 width: 10px;
                 cursor: pointer;
             }
-            ul#item_list > li > a::after {
+            ul#itemList > li > a::after {
                 content: 'X';
             }
             #item_entry {
@@ -89,17 +89,17 @@
             }
         </style>
     <template>
-        <ul id="item_list"  style="width: {{options.box_width}};" on-tap="elementTapped">
+        <ul id="itemList"  style="width: {{options.boxWidth}};" on-tap="elementTapped">
             <template id="items"  is="dom-repeat" items="{{selectedItems}}">
-                <li style="max-width: calc( {{options.box_width}} - 25px);">
+                <li style="max-width: calc( {{options.boxWidth}} - 25px);">
                     <span id="{{item.id}}">{{item.name}}</span>
                     <a on-tap="removeTapped"></a>
                 </li>
             </template>
             <li id="item_entry">
-                <div style="line-height: {{options.box_height}};">
-                    <span id="item_input"
-                        style="max-width: calc( {{options.box_width}} - 5px);"
+                <div style="line-height: {{options.boxHeight}};">
+                    <span id="itemInput"
+                        style="max-width: calc( {{options.boxWidth}} - 5px);"
                         contenteditable="true"
                         on-keydown="keydownHandler"
                         on-keyup="keyupHandler" on-focusout="focusoutHandler">
@@ -155,7 +155,7 @@
                 element.className = element.className.replace(new RegExp('(?:^|\\s)'+cName+'(?!\\S)'), '');
             }
         };
-
+        var inputChanged = false;
         Polymer({
             is:'multi-value-suggestbox',
             properties: {
@@ -186,32 +186,30 @@
                 isMultiple:{
                     type:String,
                     notify:true
+                },
+                serverUrl:{
+                    type:String,
+                    notify:true
                 }
             },
-            // Fires when the "<multi-value-suggestbox>" has been fully prepared
             ready: function() {
                 this.config = generalConfig() || {};
                 // if not set by user, use default values
-                if (!this.options.box_width) this.options.box_width = "200px";
-                if (!this.options.box_height) this.options.box_height = "40px";
-                if (!this.options.allow_space) this.options.allow_space = false;
-                if (!this.options.allow_nonmatching) this.options.allow_nonmatching = false;
+                if (!this.options.boxWidth) this.options.boxWidth = "200px";
+                if (!this.options.boxHeight) this.options.boxHeight = "40px";
+                if (!this.options.allowSpace) this.options.allowSpace = false;
+                if (!this.options.allowNonmatching) this.options.allowNonmatching = false;
                 this.selectedItems =  this.getAttribute("selected-items") || [];
                 this.suggestedItems = [];
-                this.$.item_input.setAttribute("contenteditable","true");
+                this.$.itemInput.setAttribute("contenteditable","true");
 
             },
             listeners:{
                 'input-changed':'addRemoveChips'
             },
-            observers:[
-                'isMultipleChanged(isMultiple)'
-            ],
-            isMultipleChanged:function(isMultiple){
-            },
             addRemoveChips:function(ele){
                 if (ele.detail.newInput !== undefined) {
-                    this.$.namesAsChips.url=this.attributes.url.value+ele.detail.newInput;
+                    this.$.namesAsChips.url=this.serverUrl+ele.detail.newInput;
                     this.$.namesAsChips.method='GET';
                     this.$.namesAsChips.headers={'API_KEY':this.config.urls.memcache.API_KEY};
                     this.$.namesAsChips.generateRequest();
@@ -219,8 +217,8 @@
             },
             loadChips:function(response){
                 var contacts = response;
-                    return contacts.map(function(c, index) {
-                        var cParts = c.split(' ');
+                    return contacts.map(function(c) {
+                        //var cParts = c.split(' ');
                         var contact = {
                             name: c
                         };
@@ -229,21 +227,20 @@
                  });
             },
             focusoutHandler:function(){
-                //this.$.item_input.asyncresetSuggestions();
+                //this.$.itemInput.asyncresetSuggestions();
             },
             handleResponse: function(event) {
-                  if(event.detail.response!=null && event.detail.response!==undefined){
-                    var el = document.querySelector('#multi_suggest');
+                  if(event.detail.response!==null && event.detail.response!==undefined){
                     var contacts = event.detail.response;
                     var chips = [];
                     if(contacts.message!==undefined){
                         console.log(contacts.message);
-                        this.$.item_input.innerText = contacts.message;
-                        this.$.item_input.style.color = "red";
-                        this.$.item_input.setAttribute("contenteditable","false");
+                        this.$.itemInput.innerText = contacts.message;
+                        this.$.itemInput.style.color = "red";
+                        this.$.itemInput.setAttribute("contenteditable","false");
                     }else{
-                      this.$.item_input.style.color = "#000";
-                      this.$.item_input.setAttribute("contenteditable","true");
+                      this.$.itemInput.style.color = "#000";
+                      this.$.itemInput.setAttribute("contenteditable","true");
                        contacts.map(function(c, index) {
                             var contact = {
                                 name: (c.name) || c,
@@ -256,33 +253,30 @@
                     }
                   }                       
              },
-             handleError:function(event){
+            handleError:function(event){
                 console.log(event);
              },
-            elementTapped: function(event, detail, sender) {
+            elementTapped: function() {
                 this.setFocus();
             },
 
-            suggestionTapped: function(event, detail, sender) {
+            suggestionTapped: function(event){
                 // reset input
-                if(this.isMultiple=="multi"){
-                    this.push('selectedItems',{id:event.target.id,name:event.target.innerText});
+                if(this.isMultiple==='multi'){
+                    this.push('selectedItems',{"id":event.target.id,"name":event.target.innerText});
                 }else{
-                     this.selectedItems = [{id:event.target.id,name:event.target.innerText}];
+                     this.selectedItems = [{"id":event.target.id,"name":event.target.innerText}];
                 }
-                this.$.item_input.innerText = '';
-
+                this.$.itemInput.innerText = '';
                 this.resetSuggestions();
             },
-            suggestionHovered: function(event, detail, sender) {
-                removeClass(this.$.item_list.querySelector('#suggest_menu li.active'), 'active');
-                addClass(sender, 'active');
+            suggestionHovered: function(){
+                removeClass(this.$.itemList.querySelector('#suggest_menu li.active'), 'active');
             },
-
-            removeTapped: function(event, detail, sender) {
+            removeTapped: function(event) {
                 this.splice('selectedItems',calculateLiIndex(event.target.parentNode), 1);
             },
-            keydownHandler: function(event, detail, sender) {
+            keydownHandler: function(event) {
                 var activeSuggestion;
                 switch(event.keyCode) {
                     case 8:  // backspace
@@ -292,24 +286,25 @@
                         break;
 
                     case 32:  // spacebar
-                        if (this.options.allow_space === true) {
+                        if (this.options.allowSpace === true) {
                             break;
                         }
+                        break;
                         // else fall through
                     case 13:  // enter
-                        activeSuggestion = this.$.item_list.querySelector('#suggest_menu li.active');
-                        var topSuggestion = this.$.item_list.querySelector('#suggest_menu li');
+                        activeSuggestion = this.$.itemList.querySelector('#suggest_menu li.active');
+                        var topSuggestion = this.$.itemList.querySelector('#suggest_menu li');
                         if (activeSuggestion) {
-                            if(this.isMultiple=="multi"){
-                                this.push('selectedItems',{id:activeSuggestion.id,name:activeSuggestion.innerText});
+                            if(this.isMultiple==='multi'){
+                                this.push('selectedItems',{"id":activeSuggestion.id,"name":activeSuggestion.innerText});
                             }else{
-                                 this.selectedItems = [{id:activeSuggestion.id,name:activeSuggestion.innerText}];
+                                 this.selectedItems = [{"id":activeSuggestion.id,"name":activeSuggestion.innerText}];
                             }
-                            this.$.item_input.innerText = '';
+                            this.$.itemInput.innerText = '';
                             this.resetSuggestions();
-                        } else if ((this.options.allow_nonmatching === true && this.$.item_input.innerText.length > 0) ||this.$.item_input.innerText === topSuggestion.innerText) {
-                            this.push('selectedItems',{id:event.target.id,name:event.target.innerText});
-                            this.$.item_input.innerText = '';
+                        } else if ((this.options.allowNonmatching === true && this.$.itemInput.innerText.length > 0) ||this.$.itemInput.innerText === topSuggestion.innerText) {
+                            this.push('selectedItems',{"id":event.target.id,"name":event.target.innerText});
+                            this.$.itemInput.innerText = '';
                             this.resetSuggestions();
                         }
                         inputChanged = false;
@@ -317,7 +312,7 @@
                         break;
 
                     case 27:  // escape
-                        if (this.options.allow_nonmatching === true || this.suggestedItems.length > 0) {
+                        if (this.options.allowNonmatching === true || this.suggestedItems.length > 0) {
                             this.resetSuggestions();
                             event.preventDefault();
                         }
@@ -325,33 +320,32 @@
                         break;
 
                     case 38:  // up arrow
-                        activeSuggestion = this.$.item_list.querySelector('#suggest_menu li.active');
+                        activeSuggestion = this.$.itemList.querySelector('#suggest_menu li.active');
                         var prev = getPreviousLi(activeSuggestion);
                         removeClass(activeSuggestion, 'active');
                         if (prev) {
                             addClass(prev, 'active');
                         } else {
-                            addClass(this.$.item_list.querySelector('#suggest_menu li:last-of-type'), 'active');
+                            addClass(this.$.itemList.querySelector('#suggest_menu li:last-of-type'), 'active');
                         }
                         inputChanged = false;
                         break;
 
                     case 40:  // down arrow
-                        activeSuggestion = this.$.item_list.querySelector('#suggest_menu li.active');
-                        var next = this.$.item_list.querySelector('#suggest_menu li.active ~ li');
+                        activeSuggestion = this.$.itemList.querySelector('#suggest_menu li.active');
+                        var next = this.$.itemList.querySelector('#suggest_menu li.active ~ li');
                         removeClass(activeSuggestion, 'active');
                         if (next) {
                             addClass(next, 'active');
                         } else {
-                            addClass(this.$.item_list.querySelector('#suggest_menu li'), 'active');
+                            addClass(this.$.itemList.querySelector('#suggest_menu li'), 'active');
                         }
                         inputChanged = false;
                         break;
                 }
             },
-            keyupHandler: function(event, detail, sender) {
-                var inputChanged = true;
-                var activeSuggestion;
+            keyupHandler: function(event) {
+                inputChanged = true;
                 switch(event.keyCode) {
                     case 8:  // backspace
                         if (event.target.innerText.length === 0) {
@@ -378,7 +372,7 @@
             },
 
             fireInputChangedEvent: function() {
-                this.fire('input-changed', { newInput: this.$.item_input.innerText });
+                this.fire('input-changed', { newInput: this.$.itemInput.innerText });
             },
 
             resetSuggestions: function() {
@@ -387,7 +381,7 @@
                 }
             },
             setFocus: function() {
-                this.$.item_input.focus();
+                this.$.itemInput.focus();
             }
         });
     
