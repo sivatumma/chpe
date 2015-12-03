@@ -68,7 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   //more routuing alternative method
   var template = document.querySelector('template');
-  template.makeUrl = function(path, params) {
+  app.makeUrl = function(path, params) {
     var parameters = parameters ? JSON.parse(params) : {};
     app.params = app.params?app.params:[];
     if(parameters.name!==undefined){
