@@ -55,7 +55,7 @@ describe('get Scheme Data', function() {
 						"BLS": "1425.69",
 						"MOP": "947.07",
 						"finalAmount": 17994,
-						"_id": "561f3ca26d1c6dd80652572f"
+						"_id": "562612f33a26bf5c062671a3"
 					})
 					.expect(200).end(function(err, res) {
 						expect(JSON.parse(res.text).nModified).to.eql(1);
@@ -95,13 +95,41 @@ describe('get Scheme Data', function() {
 			"SRCServices": ["High Level Products", "Low Level Products"]
 
 		})
+	.expect(200).end(function(err, res) {
+		expect(JSON.parse(res.text)).to.have.property('billAmount');
+		expect(JSON.parse(res.text)).to.have.property('finalAmount');
+		expect(JSON.parse(res.text)).to.have.property('_id');
+		done();
+	});
+});
+	//Test case for get single scheme
+	it('web api is not working for getting scheme data', function(done) {
+	api.get('/mdb/scheme/a109')
+		.set('Accept', 'application/json')
 		.expect(200).end(function(err, res) {
-
-			expect(JSON.parse(res.text)).to.have.property('billAmount');
-			expect(JSON.parse(res.text)).to.have.property('finalAmount');
-			expect(JSON.parse(res.text)).to.have.property('_id');
-
+			expect(JSON.parse(res.text)[0]).to.have.property('behavior');
+			expect(JSON.parse(res.text)[0]).to.have.property('metadata');
+			expect(JSON.parse(res.text)[0].metadata).to.have.property('toIds');
+			expect(JSON.parse(res.text)[0].metadata).to.have.property('type');
+			expect(JSON.parse(res.text)[0].metadata).to.have.property('name');
+			expect(JSON.parse(res.text)[0].metadata).to.have.property('published');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('maximumUsages');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('endDate');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('startDate');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('serviceLevelDiscounts');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('locationOfServices');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('cumulativeAmountPoints');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('billValueDiscounts');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('modeOfPaymentDiscounts');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('doctorLevelDiscounts');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('defaultDiscount');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('discountType');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('serviceRateCategoryDiscounts');
+			expect(JSON.parse(res.text)[0].behavior).to.have.property('advancePaidPoints');
 			done();
 		});
 });
+
+
+
 });
