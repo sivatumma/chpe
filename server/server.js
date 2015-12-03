@@ -1,4 +1,4 @@
-var config = require('./config/config.js'),
+var config = require('./config/config.js')('dev'),
   fs = require('fs'),
   uuid = require('node-uuid'),
   path = require('path'),
@@ -268,8 +268,17 @@ app.all('/ssoLogin', User.ssoLogin, function(req, res) {
   console.log("req.session.user = ",req.session.user);
   res.header("user",JSON.stringify(req.session.user));
   console.log(req.headers, res.header || "No header in res object");
-  res.redirect("home.html");
-  //res.redirect("build.html");
+
+  switch(process.env.env){
+    case 'dev':
+      res.redirect('home.html');
+      break;
+    case 'prod':
+      res.redirect('build.html');
+      break;
+    default:
+      res.status(200).send("What is your env ? dev or prod ?");
+  }
 });
 
 app.get('/ssoLogout', User.ssoLogout, function(req, res) {

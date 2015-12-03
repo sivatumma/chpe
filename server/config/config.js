@@ -13,8 +13,8 @@ var path = require('path'),
 module.exports = function(env) {
     var main = {
         application: {
-           // root_path: path.join('/home', 'siva', 'Downloads', 'chpe-polymer-1.0.3'),
-            root_path: path.join('E:','Work','chpe-1.0'),
+           root_path: path.join('/home', 'siva', 'Downloads', 'chpe-polymer-1.0.3'),
+            // root_path: path.join('E:','Work','chpe-1.0'),
             //root_path: path.join('/splice(index, howMany)e', 'siva', 'Downloads', 'chpe-polymer-1.0.3'),
             // root_path: "C:\\Users\\inthiyaz.karamala.CHSPLDC\\WebstormProjects\\chpe-1.0",
             addPrefixes: process.argv[2],
@@ -82,7 +82,6 @@ module.exports = function(env) {
     };
     var dev = {
         database: 'mongodb://172.19.4.162/pricingEngine',
-        env: 'development',
         old_pricing_engine_app_root: path.join('C:', 'work', 'PricingEngine', 'baseUI'),
         pricing_engine_app_root: path.join('C:', 'work', 'chpe', 'src-ui', 'html'),
         services_json_path: path.join('C:', 'work', 'chpe', 'src-ui', 'services.json')
@@ -90,7 +89,6 @@ module.exports = function(env) {
     var prod = {
         database: 'mongodb://localhost/pricingEngine',
         temp: path.join('/', 'tmp'),
-        env: 'production',
         certificates_dir: path.join('/', 'etc', 'ssl', 'self-signed'),
         // mobile_app_root:path.join('/','opt','cisco-pricing_engine-mobile-app'),
         // portal_app_root:path.join('/','opt','cisco-pricing_engine-portal-app'),
@@ -101,3 +99,4 @@ module.exports = function(env) {
     }
     return _.extend(main, (env == 'dev') ? dev : prod);
 }()
+
