@@ -335,7 +335,9 @@
 						<h3 class="margin0 padding0">Discounts & Revenues</h3>
 					</div>
 					<paper-card elevation="2">
-					<img src="{{discountRevenueChartData}}"/>
+						<template is="dom-if" if="{{!noOrders}}">
+							<img src="{{discountRevenueChartData}}"/>
+						</template>
 					</paper-card>
 					</div>
 					<div class="col-1"></div>
@@ -344,7 +346,9 @@
 						<h3 class="margin0 padding0">Unique Customers</h3>
 					</div>
 					<paper-card elevation="2">
-						<img src="{{uniqueUsersChartData}}"/>
+						<template is="dom-if" if="{{!noOrders}}">
+							<img src="{{uniqueUsersChartData}}"/>
+						</template>
 					</paper-card>
 					</div>
 
@@ -372,7 +376,6 @@
 				},
 				discountRevenueChartData:{
 					type:String,
-					value:"chd=t:10,15,5,0,20,50,60,45,80,90,70,68|20,25,30,40,25,65,40,10,20,30,25,40&chco=FF0000,00FF00&chdl=Revenues|Discounts&chxt=x,y"
 				},
 				chartHost:{
 					type:String,
@@ -380,7 +383,6 @@
 				},
 				uniqueUsersChartData:{
 					type:String,
-					value:"chd=t:10,50,40&chxt=x,y&chxl=0:|Oct|Nov|Dec&chdl=Customers"					
 				},
 				noOrders:{
 					type:Boolean,
@@ -428,6 +430,7 @@
 					this.config = generalConfig();
 					app.previewSchemeName = 'Preview Scheme - '+schemeName;
                 this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name='+schemeName; 
+                //this.$.previewSchemeAjax.url 	 =  this.config.urls.preview+'name=MYAddon'; 
                 this.$.previewSchemeAjax.headers = {'API_KEY':this.config.urls.API_KEY};
                 this.$.previewSchemeAjax.generateRequest();
 				}

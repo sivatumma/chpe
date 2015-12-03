@@ -289,7 +289,7 @@
     </style>
     <template>
         <template is="dom-if" if="{{schemesExist}}">
-            <div align="center" style="margin:18% auto;" hidden="{{schemesLoader}}"> 
+            <div align="center" style="margin:18% auto;width:100%;" hidden="{{schemesLoader}}"> 
                 <paper-spinner class="blue" active ></paper-spinner>
             </div>
             <div id="gridView" role$="{{updateUser(userRole)}}">
@@ -576,7 +576,7 @@
     }
 
     window.onresize = function(){
-        if(document.querySelector('#gridView')!==undefined && document.querySelector('#gridView').hidden!==null){
+        if(document.querySelector('#gridView')!==null && document.querySelector('#gridView')!==undefined){
             hideListView();
         }
         if(window.innerWidth>=768 && window.innerWidth<=979){
