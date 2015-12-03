@@ -3,16 +3,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     vulcanize: {
-      default: {
-        files: {
-          "./build.html":["home.html"]
-        },
-      },
-      abspath: {
+      dist: {
         options: {
-          abspath: '/home/siva/Downloads/chpe-polymer-1.0.3/client',
-          nonull: true,
-          target: 'home.html'
+          abspath: 'client/',
+          targetUrl: '/home.html'
+        },
+        files: {
+          'client/build.html': 'client/home.html'
         }
       }
     },
@@ -24,7 +21,7 @@ module.exports = function(grunt) {
         options: {
           jshintrc: '.jshintrc'
         },
-        src: ['Gruntfile.js', 'client/assets/scripts/*.js','client/config/*.js']
+        src: ['Gruntfile.js', 'client/assets/scripts/*.js', 'client/config/*.js']
       },
       html: {
         options: {
@@ -34,20 +31,20 @@ module.exports = function(grunt) {
           unused: false,
           browser: true,
           globals: {
-           "wrap": true,
-           "unwrap": true,
-           "Polymer": true,
-           "Platform": true,
-           "page": true,
-           "app": true,
-           "schemeBase":true,
-           "chUtils":true,
-           "MoreRouting":true,
-           "generalConfig":true,
-           "_":true,
-           "google":true,
-           "console":true,
-           "module":true
+            "wrap": true,
+            "unwrap": true,
+            "Polymer": true,
+            "Platform": true,
+            "page": true,
+            "app": true,
+            "schemeBase": true,
+            "chUtils": true,
+            "MoreRouting": true,
+            "generalConfig": true,
+            "_": true,
+            "google": true,
+            "console": true,
+            "module": true
           }
         },
         files: {
@@ -55,10 +52,10 @@ module.exports = function(grunt) {
         }
       }
     },
-    concatCss:{},
-    concat:{
+    concatCss: {},
+    concat: {
       dist: {
-        src: ["client/external/lodash/lodash.min.js","client/config/*.js","client/lib/*.js","client/assets/scripts/*.js",],
+        src: ["client/external/lodash/lodash.min.js", "client/config/*.js", "client/lib/*.js", "client/assets/scripts/*.js", ],
         dest: 'client/<%= pkg.name %>_concat.js'
       },
       options: {
@@ -77,10 +74,10 @@ module.exports = function(grunt) {
         }]
       }
     },
-    uglify:{
-      myTarget:{
-        files:[{
-          src:  'client/<%= pkg.name %>_concat.js',
+    uglify: {
+      myTarget: {
+        files: [{
+          src: 'client/<%= pkg.name %>_concat.js',
           dest: 'client/assets/scripts/app.min.js'
         }]
       }
@@ -92,10 +89,11 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-copy');
   // grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  // grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-vulcanize');
 
-  grunt.registerTask('default', ['jshint','concat','cssmin','uglify','vulcanize']);
+  // grunt.registerTask('default', ['jshint','concat','cssmin','uglify','vulcanize']);
+  grunt.registerTask('default', ['vulcanize']);
 
 };
