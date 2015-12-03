@@ -55,7 +55,7 @@ module.exports = function(grunt) {
         }
       }
     },
-    concat_css:{},
+    concatCss:{},
     concat:{
       dist: {
         src: ["client/external/lodash/lodash.min.js","client/config/*.js","client/lib/*.js","client/assets/scripts/*.js",],
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
       }
     },
     uglify:{
-      my_target:{
+      myTarget:{
         files:[{
           src:  'client/<%= pkg.name %>_concat.js',
           dest: 'client/assets/scripts/app.min.js'
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+  //grunt.loadNpmTasks('grunt-contrib-watch');
   // grunt.loadNpmTasks('grunt-contrib-copy');
   // grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -96,6 +96,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-vulcanize');
 
-  grunt.registerTask('default', ['concat']);
+  grunt.registerTask('default', ['jshint','concat','cssmin','uglify','vulcanize']);
 
 };

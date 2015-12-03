@@ -14,7 +14,7 @@
     "grunt-contrib-csslint": "^0.5.0",
     "grunt-contrib-cssmin": "^0.14.0",
     "grunt-contrib-jasmine": "^0.8.2",
-    "grunt-contrib-jshint": "git://github.com/gruntjs/grunt-contrib-jshint.git",
+    "grunt-contrib-jshint": "^0.11.3",
     "grunt-contrib-uglify": "^0.11.0",
     "grunt-contrib-watch": "*",
     "grunt-usemin": "^3.0.0",
