@@ -96,7 +96,7 @@ function fetchModels(req, res) {
   // var queryreq = req.url.split('?');
   // var query = q2m(queryreq[1]);
   var u1 = mongoose.model(req.params.modelName);
-  u1.find({}, function(err, data) {
+  u1.find(modelId, function(err, data) {
     if (err) res.status(500).send({
       status: "fail",
       message: err.message
