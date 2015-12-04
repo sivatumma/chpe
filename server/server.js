@@ -273,10 +273,10 @@ app.all('/ssoLogin', User.ssoLogin, function(req, res) {
   console.log(process.env);
   console.log("===================================================================================");
   switch(process.env.env){
-    case 'development':
-      res.redirect('build.html');
+    case 'dev':
+      res.redirect('home.html');
       break;
-    case 'development':
+    case 'prod':
       res.redirect('build.html');
       break;
     default:
