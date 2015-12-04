@@ -236,33 +236,7 @@
                     </neon-animatable>
                 </neon-animated-pages>
             </form>
-            <div class="stickyFooter" hidden>
-                <div  align="center">
-                    <paper-menu selected="{{selected}}">
-                        <paper-item>
-                            <paper-card  class="card-as-thumbnail active">
-                                    <img src="../../assets/images/addon-thumb1.png"  />
-                            </paper-card>
-                        </paper-item>
-                        <paper-item>
-                            <paper-card  class="card-as-thumbnail active">
-                                    <img src="../../assets/images/addon-thumb2.png"  />
-                            </paper-card>
-                        </paper-item>
-                        <paper-item>
-                            <paper-card   class="card-as-thumbnail active">
-                                    <img src="../../assets/images/addon-thumb3.png"  />
-                            </paper-card>
-                        </paper-item>
-                        <paper-item>
-                            <paper-card   class="card-as-thumbnail active">
-                                    <img src="../../assets/images/addon-thumb4.png"  />
-                            </paper-card>
-                        </paper-item>
-                       
-                    </paper-menu>
-                </div>
-            </div>
+
         </paper-material>
 
         
@@ -437,7 +411,9 @@
                     }
                     toast.show();
                 }
+
                 setTimeout(function() {
+                    app.pageIsLoaded = false;
                     location.href="/";
                 }, 1000);
             },

@@ -67,12 +67,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-toolbar id="drawerToolbar">
                     <a href="/">
                     <span class="paper-font-title">
-                        <img src="assets/images/ch-logo.png"/ width="200px" height="30px"></span>
+                        <img src="{{logoImg}}"/></span>
                     </a>
                 </paper-toolbar>
 
                 <div class="favicon">
-                    <img  src="assets/images/schemes-logo.png" />
+                    <img  src="{{schemeLogoImg}}" />
                     <h3>Schemes</h3>
                 </div>
                 <!-- Drawer Content -->
@@ -86,20 +86,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </paper-item>
                             <paper-item route="createAddOn" on-click="getTitle" title="Create Addon">
                                 <a  href="{{makeUrl('createAddOn')}}"> 
-                                    <iron-icon src="assets/images/addon.png"></iron-icon>
+                                    <iron-icon src="{{createAddonImg}}"></iron-icon>
                                     <span>Create Addon</span>
                                 </a>
                             </paper-item>
                             <paper-item route="createCoupon" on-click="getTitle" title="Create Coupon">
                                 <a href="{{makeUrl('createCoupon')}}"> 
-                                    <iron-icon src="assets/images/coupon.png"></iron-icon>
+                                    <iron-icon src="{{createCouponImg}}"></iron-icon>
                                     <span>Create Coupon</span>
                                 </a>
                             </paper-item>
                             <paper-item route="createGiftCard" 
                             on-click="getTitle" title="Create Giftcard">
                                 <a href="{{makeUrl('createGiftCard')}}"> 
-                                    <iron-icon src="assets/images/giftcard.png"></iron-icon>
+                                    <iron-icon src="{{createGiftCardImg}}"></iron-icon>
                                     <span>Create Gift Card</span>
                                 </a>
                             </paper-item>
@@ -214,16 +214,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          method="HEAD" on-error="handleUserError" 
          on-response="handleUserResponse"></iron-ajax>
 
+        <div align="center" class="pageLoader" hidden$="{{pageIsLoaded}}"> 
+            <div class="innerLoadContent">
+                <paper-spinner class="blue" active ></paper-spinner>
+            </div>
+        </div>
 
     </template>
     </div>
-
     <!-- build:js scripts/app.js -->
     <script src="assets/scripts/app.min.js"></script>
     <!-- endbuild-->
-    <div align="center" style="margin:18% auto; display:none;" id="pageLoading"> 
-        <paper-spinner class="blue" active ></paper-spinner>
-    </div>
 </body>
 
 </html>

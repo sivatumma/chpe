@@ -1216,3 +1216,17 @@ paper-menu paper-item .card-as-thumbnail img{
     }
 
 }
+
+
+/*page loader styles*/
+.pageLoader{
+  height:100%;
+  width:100%;
+  position:absolute;
+  background:#f4f4f4;
+  z-index: 10000;
+}
+.innerLoadContent{
+  position: relative;
+  top:40%;
+}

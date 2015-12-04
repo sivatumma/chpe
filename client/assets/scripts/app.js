@@ -23,7 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     console.log('Our app is ready to rock!');
-   
+
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
@@ -64,10 +64,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
 
+  //setting all images sources here
+
+  app.createAddonImg = 'assets/images/addon.png';
+  app.createCouponImg = 'assets/images/coupon.png';
+  app.createGiftCardImg = 'assets/images/giftcard.png';
+  app.couponIcon = '../../assets/images/c.png';
+  app.giftCardIcon = '../../assets/images/gift-star.png';
+  app.addonIcon = '../../assets/images/addon-plus.png';
+  app.logoImg = 'assets/images/ch-logo.png';
+  app.schemeLogoImg = 'assets/images/schemes-logo.png';
+
+  //setting page loader is false defaultly
+  app.pageIsLoaded = false;
+
   app.params = [];
 
   //more routuing alternative method
-  var template = document.querySelector('template');
   app.makeUrl = function(path, params) {
     var parameters = parameters ? JSON.parse(params) : {};
     app.params = app.params?app.params:[];
@@ -201,6 +214,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.handleUserError = function(event){
     console.log(event.detail.error);
     window.location = '/';
+    app.pageIsLoaded = false;
   };
 
  /**
@@ -212,9 +226,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var headers = JSON.parse(request.xhr.getResponseHeader('user')) || '';
       if(chUtils.isEmpty(headers)===false){
         app.userInfo = headers || {};
+        app.pageIsLoaded = true;
       }else{
         app.userInfo =  {};
         window.location = '/';
+        app.pageIsLoaded = false;
       }
   };
 

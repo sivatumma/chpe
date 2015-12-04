@@ -323,6 +323,7 @@
                         toast.text = this.schemeObj.metadata.type + " updated successfully!...";
                     }
                     toast.show();
+
                 } else {
                     console.log(this.schemeObj);
                     if(this.schemeMethod==="POST"){
@@ -331,8 +332,10 @@
                          toast.text = "Error while updating " + this.schemeObj.metadata.type;
                     }
                     toast.show();
+
                 }
                 setTimeout(function() {
+                    app.pageIsLoaded = false;
                     location.href="/";
                 }, 1000);
             },
