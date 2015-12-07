@@ -269,9 +269,6 @@ app.all('/ssoLogin', User.ssoLogin, function(req, res) {
   res.header("user",JSON.stringify(req.session.user));
   console.log(req.headers, res.header || "No header in res object");
 
-  console.log("===================================================================================");
-  console.log(process.env);
-  console.log("===================================================================================");
   switch(process.env.env){
     case 'dev':
       res.redirect('home.html');
@@ -294,7 +291,7 @@ app.get('/ssoLogout', User.ssoLogout, function(req, res) {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       options = {
-        url: 'http://172.19.4.179:8080/sso/secureLogout',
+        url: config.authentication.ssoEndpoint_SignOut,
         method: 'POST',
         headers: headers,
         form: {

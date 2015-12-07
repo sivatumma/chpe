@@ -78,7 +78,7 @@ module.exports = function(grunt) {
       }
     },
     uglify: {
-      dist:{
+      dist: {
         src: 'client/assets/scripts/<%= pkg.name %>_concat.js',
         dest: 'client/assets/scripts/app.min.js'
       }
@@ -95,7 +95,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-vulcanize');
 
-  grunt.registerTask('default', ['clean','jshint','concat','cssmin','uglify','vulcanize']);
+  grunt.registerTask('default', ['clean', 'jshint', 'concat', 'cssmin', 'uglify', 'vulcanize']);
   // grunt.registerTask('default', ['vulcanize']);
 
 };

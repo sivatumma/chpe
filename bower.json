@@ -1,5 +1,5 @@
 {
-  "name": "polymer-starter-kit",
+  "name": "Pricing Engine - Schemes",
   "private": true,
   "dependencies": {
     "am-step-progress": "https://github.com/MasterAM/am-step-progress.git#~0.0.1",

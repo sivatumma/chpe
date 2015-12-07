@@ -437,7 +437,7 @@
 			},
 			handleResponse:function(event){
 				if(chUtils.isEmpty(event.detail.response)===false){
-					this.previewData = event.detail.response.schemeDetails;
+					this.previewData = event.detail.response.schemeDetails[0];
 					this.orderData = event.detail.response.orderDetails;
 				}
 			},
@@ -479,7 +479,7 @@
 				}
 			},
 			orderDataChanged:function(orderData){
-				if(Object.keys(orderData).length===0){
+				if(Object.keys(orderData).length===0 || orderData.length>0){
 					this.noOrders = true;
 				}else{
 					this.uniqueUsersChartData = this.chartHost+'chd=t:'+( _.values(orderData.unique_customers))+

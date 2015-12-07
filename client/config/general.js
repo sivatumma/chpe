@@ -8,11 +8,11 @@ function generalConfig() {
 		signout :'/ssoLogout',
 		API_KEY:'MEDIBUS-12ed15e7-bc20-45c5-88dc-684bb32a9dd9',
 		memcache: {
-			names:'/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/names/',
-			locations: '/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/locations/',
-			serviceLevelDiscounts: '/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceLevelDiscounts/',
-			serviceRateCategories: '/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/serviceRateCategories/',
-			schemeNames: '/api/proxy?url=http://52.76.37.144:8080/javaapi/rest/schemeNames',
+			names:'/api/proxy?url=http://172.17.1.61:8080/javaapi/rest/names/',
+			locations: '/api/proxy?url=http://172.17.1.61:8080/javaapi/rest/locations/',
+			serviceLevelDiscounts: '/api/proxy?url=http://172.17.1.61:8080/javaapi/rest/serviceLevelDiscounts/',
+			serviceRateCategories: '/api/proxy?url=http://172.17.1.61:8080/javaapi/rest/serviceRateCategories/',
+			schemeNames: '/api/proxy?url=http://172.17.1.61:8080/javaapi/rest/schemeNames',
 			API_KEY:'52d0747f-2bb1-438e-879a-84726c4f90d0'
 		}
 	};
