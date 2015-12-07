@@ -284,7 +284,14 @@
             width: 80%;
             position: absolute;
         }
-      
+        .subTxt{
+            color:silver;
+            font-size:11px;
+            float:left;
+            margin-top:5px;
+            clear:both;
+            width:100%;
+        }
 
     </style>
     <template>
@@ -299,10 +306,10 @@
                             <paper-fab mini class="couponIcon" src="{{couponIcon}}">
                             </paper-fab>
                             <div class="card-content coupon-card">
-                                <p class="couponName" title="{{item.metadata.name}}">{{item.metadata.name}}</p>
+                                <p class="couponName" title="{{item.metadata.name}}">{{item.metadata.name}}<span class="subTxt">{{item.metadata.defaultLife}}</span></p>
                             </div>
                             <div class="card-actions" align="right">
-                                   <paper-icon-button icon="link"></paper-icon-button>
+                                   <paper-icon-button icon="link" on-tap="goToPreview"></paper-icon-button>
                                    <paper-icon-button icon="icons:create" on-click="editScheme" 
                                     scheme-type="{{item.metadata.type}}" disabled="{{noPermissions}}"></paper-icon-button>
                             </div>
@@ -324,7 +331,7 @@
                                 <p class="giftcardName" title="{{item.metadata.name}}">{{item.metadata.name}}</p>
                             </div>
                             <div class="card-actions" align="right">
-                                   <paper-icon-button icon="link"></paper-icon-button>
+                                   <paper-icon-button icon="link" on-tap="goToPreview"></paper-icon-button>
                                    <paper-icon-button icon="icons:create" on-click="editScheme" 
                                     scheme-type="{{item.metadata.type}}" disabled="{{noPermissions}}"></paper-icon-button>
                             </div>
@@ -341,7 +348,7 @@
                             <div class="card-content">
                                 <p title="{{item.metadata.name}}" class="schemeName">{{item.metadata.name}}</p></div>
                             <div class="card-actions" align="right">
-                                   <paper-icon-button icon="link"></paper-icon-button>
+                                   <paper-icon-button icon="link" on-tap="goToPreview"></paper-icon-button>
                                    <paper-icon-button icon="icons:create" on-click="editScheme" 
                                     scheme-type="{{item.metadata.type}}" disabled="{{noPermissions}}"></paper-icon-button>
                             </div>
@@ -546,7 +553,12 @@
             var scheme = chUtils.getSchemeByName(this.allSchemes,sName);
             this.navigateTo(scheme);
             // console.log(schemeBase(scheme));
+          },
 
+          goToPreview:function(event){
+            var psName = event.model.item.metadata.name; //psName stands preview scheme name
+             MoreRouting.navigateTo('previewScheme', {schemeName: psName});
+             app.showPalet('/previewScheme');
           },
 
           navigateTo:function(schemeObj){
@@ -581,8 +593,10 @@
     function hideListView(){
         document.querySelector('#gridView').hidden = false;
         document.querySelector('#listView').hidden = true;
-        document.querySelector('.toggleListGrid').setAttribute('view','list');
-        app.toggleListGridIcon = 'icons:view-list'; 
+        if(document.querySelector('.toggleListGrid')!==null){
+            document.querySelector('.toggleListGrid').setAttribute('view','list');
+            app.toggleListGridIcon = 'icons:view-list'; 
+        }
     }
 
     window.onresize = function(){
