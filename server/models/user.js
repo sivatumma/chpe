@@ -215,11 +215,11 @@ module.exports = function(mongoose) {
         /*if (config.approvedAuthorizedAPIKeys.indexOf(req.query.API_KEY) == -1)
             res.end(401, {message: 'Authentication token required.'});*/
 
-        else if ( req.session.user !== undefined && req.session.user !== null )
-            next();
+        // else if ( req.session.user !== undefined && req.session.user !== null )
+        //     next();
 
         else if(req.body && req.body.SAMLResponse != null){
-            console.log("if,else,else in ssoLogin");
+            console.log("We got the SAML Response in response, means an authorized user");
 
             var buf = new Buffer(req.body.SAMLResponse, 'base64'); // Ta-da
             var parseString = require('xml2js').parseString;
@@ -249,6 +249,7 @@ module.exports = function(mongoose) {
             });
         }
         else {
+            console.log("We don't have any SAML Response in the current call, assuming a fresh request so making a fresh request to SSO");
             // Set the headers
             var headers = {
                 'User-Agent': 'Super Agent/0.0.1',
@@ -275,6 +276,7 @@ module.exports = function(mongoose) {
                 if (!error && response.statusCode == 200) {
                     res.redirect(unescape(JSON.parse(body).url));
                 }else{
+                    console.log("On a SSO login request, we got something non-error, but not 200 OK. What is it ?");
                     console.log(response.statusCode, " .. [400 or 500]");
                 }
             });

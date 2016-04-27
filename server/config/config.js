@@ -25,7 +25,7 @@ module.exports = function(env) {
         authentication:{
             ssoEndpoint_SignIn: 'http://172.17.1.61:8080/sso/service/secureLogin',
             ssoEndpoint_SignOut:'http://172.17.1.61:8080/sso/service/secureLogout',
-            relayState: 'http://172.17.1.61:91/ssoLogin',
+            relayState: 'http://172.25.3.76:91/ssoLogin',
             authType:'standard',
             spEntityID: 'callhealth.com'
         },
